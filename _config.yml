@@ -41,7 +41,10 @@ logo:                  /assets/img/profile.png
 author:
   # Used by `jekyll-feed`:
   name:                <Jaehyuk> <Kim>
-  email:               <kjh8661@gmail.com>
+  email:		  kjh8661@gmail.com
+  social:
+     email:               kjh8661@gmail.com
+     github:             James1verse27
   # # Used by `jekyll-seo-tag`:
   # twitter:             <username>
 
@@ -362,8 +365,8 @@ plugins:
 # social:
 #   name:                <firstname> <lastname>
 #   links:
-     - kjh8661@gmail.com
-     - https://github.com/James1verse27
+#     - https://twitter.com/<username>
+#     - https://github.com/<username>
 
 
 # Plugin Configs
