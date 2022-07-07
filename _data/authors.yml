@@ -19,8 +19,8 @@ author1:
     path:            https://via.placeholder.com/128x128
     # srcset is optional, but can be used to provide higher res versions for retina displays
     srcset:
-      1x:            https://via.placeholder.com/128x128
-      2x:            https://via.placeholder.com/256x256
+      1x:            /assets/img/profile.png
+      2x:            /assets/img/profile.png
 
   # Social media icons in sidebar
   # Comment/uncommet to show/hide
@@ -29,7 +29,7 @@ author1:
     #twitter:         <username>
     github:          James1verse27
     email:           kjh8661@gmail.com
-    linkedin:        <firstname-lastname-string>
+    linkedin:        jaehyuk-kim-337684244
     # rss:             https://<url>/feed.xml
     # facebook:        <username>
     # google:          <number>
