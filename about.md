@@ -5,14 +5,14 @@ permalink: /about/
 
 # About
 
-<!--author-->
+안녕하세요, 김재혁입니다.
+공부하며 배운 것을 나누는 삶을 살아가길 원합니다.
+모든 은혜 하나님께 영광 올려 드리며 하나님의 마음이 있는 곳에 손을 내미는 사람이 되고자 합니다.
 
-안녕하세요, 김재혁입니다.    
+[Korea Univ Biostatistics](https://kubiostat.korea.ac.kr/) 
 
-Currently @ [CILAB](https://kubiostat.korea.ac.kr/), Korea
-> Anomaly detection
 
-[CV, last updated at 2021.06](/assets/cv/CV.pdf)
+[CV, last updated at 2022.07](/assets/cv/CV.pdf)
 
 ## Education
 - 고려대학교 의과대학 의학통계학전공 석사과정 재학 (Mar 2022 - Present)
