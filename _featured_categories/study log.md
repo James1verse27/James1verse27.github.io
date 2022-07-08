@@ -3,14 +3,14 @@
 layout: list
 
 # The title of the tag's page.
-title: Research
+title: Study log
 
 # The name of the tag, used in a post's front matter (e.g. tags: [<slug>]).
-slug: research
+slug: study log
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  배움의 경험을 나눕니다.
+  배움의 발자취
 
 # (Optional) You can disable grouping posts by date.
 # no_groups: true

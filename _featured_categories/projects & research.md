@@ -3,14 +3,14 @@
 layout: list
 
 # The title of the tag's page.
-title: Projects
+title: Projects & Research
 
 # The name of the tag, used in a post's front matter (e.g. tags: [<slug>]).
-slug: projects
+slug: projects & research
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  데이터 분석 경험을 나눕니다.
+  연구의 발자취
 
 # (Optional) You can disable grouping posts by date.
 # no_groups: true
