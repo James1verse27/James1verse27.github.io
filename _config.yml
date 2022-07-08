@@ -43,8 +43,10 @@ author:
   name:                <Jaehyuk> <Kim>
   email:		  kjh8661@gmail.com
   social:
-     email:               kjh8661@gmail.com
-     github:             James1verse27
+    github:         James1verse27
+    email:           kjh8661@gmail.com
+    linkedin:        jaehyuk-kim-337684244
+    download:        https://kubiostat.korea.ac.kr/
   # # Used by `jekyll-seo-tag`:
   # twitter:             <username>
 
