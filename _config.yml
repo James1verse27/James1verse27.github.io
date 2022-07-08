@@ -53,13 +53,13 @@ author:
 # Add links to the sidebar.
 menu:
   - title:             Projects & Research
-    url:               /research/
+    url:               /_posts/research/
   - title:             Study log
-    url:               /study/
+    url:               /_posts/study/
   - title:             Blog
     url:               /blog/
   - title:             About
-    url:               /about/
+    url:               /_posts/about/
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
