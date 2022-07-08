@@ -1,6 +1,6 @@
 # 👋 Hello!
 
-<img src="https://github.com/James1verse27/James1verse27.github.io/tree/main/assets/icons/icons.png">
+<img src="https://raw.githubusercontent.com/James1verse27/James1verse27.github.io/main/assets/icons/favicon.ico">
 
 ### ✉ You can reach me
 
