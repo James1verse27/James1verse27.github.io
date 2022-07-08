@@ -53,9 +53,9 @@ author:
 # Add links to the sidebar.
 menu:
   - title:             Projects & Research
-    url:               /projects & research/
+    url:               /research/
   - title:             Study log
-    url:               /study log/
+    url:               /study/
   - title:             Blog
     url:               /blog/
   - title:             About
