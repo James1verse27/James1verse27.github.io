@@ -30,7 +30,6 @@ author1:
     github:          James1verse27
     email:           kjh8661@gmail.com
     linkedin:        jaehyuk-kim-337684244
-    download:        https://kubiostat.korea.ac.kr/
     # rss:             https://<url>/feed.xml
     # facebook:        <username>
     # google:          <number>
@@ -65,6 +64,7 @@ author1:
     # stumbleupon:     <username>
     # paypal:          <username>
     # keybase          <username>
+    # download:        <url>
 
 # Another author (optional)
 author2:
