@@ -52,10 +52,10 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title:             Projects
-    url:               /projects/
-  - title:             Research
-    url:               /research/
+  - title:             Projects & Research
+    url:               /projects & research/
+  - title:             Study log
+    url:               /study log/
   - title:             Blog
     url:               /blog/
   - title:             About
