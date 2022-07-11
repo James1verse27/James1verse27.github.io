@@ -47,7 +47,7 @@ display(img_PIL)
 ```
 
     
-![png](/study/img/output_7_0.png)
+![png](/study/img//study/img/output_7_0.png)
     
 
 
@@ -219,7 +219,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -1219,7 +1219,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -2286,13 +2286,13 @@ display(img_PIL)
 
 
     
-![png](output_11_0.png)
+![png](/study/img/output_11_0.png)
     
 
 
 
     
-![png](output_11_1.png)
+![png](/study/img/output_11_1.png)
     
 
 
@@ -2307,7 +2307,7 @@ display(img_PIL)
 
 
     
-![png](output_13_0.png)
+![png](/study/img/output_13_0.png)
     
 
 
@@ -2337,7 +2337,7 @@ display(img_PIL)
 
 
     
-![png](output_16_0.png)
+![png](/study/img/output_16_0.png)
     
 
 
@@ -2354,7 +2354,7 @@ display(img_PIL)
 
 
     
-![png](output_19_0.png)
+![png](/study/img/output_19_0.png)
     
 
 
@@ -2527,7 +2527,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -3527,7 +3527,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -4475,13 +4475,13 @@ display(img_PIL)
 
 
     
-![png](output_23_0.png)
+![png](/study/img/output_23_0.png)
     
 
 
 
     
-![png](output_23_1.png)
+![png](/study/img/output_23_1.png)
     
 
 
@@ -4599,7 +4599,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -5599,7 +5599,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -5986,13 +5986,13 @@ display(img_PIL)
 
 
     
-![png](output_27_0.png)
+![png](/study/img/output_27_0.png)
     
 
 
 
     
-![png](output_27_1.png)
+![png](/study/img/output_27_1.png)
     
 
 
@@ -6105,7 +6105,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -7105,7 +7105,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -7254,7 +7254,7 @@ display(img_PIL)
 
 
     
-![png](output_31_0.png)
+![png](/study/img/output_31_0.png)
     
 
 
@@ -7355,7 +7355,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -8355,7 +8355,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -8444,7 +8444,7 @@ display(img_PIL)
 
 
     
-![png](output_34_0.png)
+![png](/study/img/output_34_0.png)
     
 
 
@@ -8462,13 +8462,13 @@ display(img_PIL)
 
 
     
-![png](output_36_0.png)
+![png](/study/img/output_36_0.png)
     
 
 
 
     
-![png](output_36_1.png)
+![png](/study/img/output_36_1.png)
     
 
 
@@ -8581,7 +8581,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -9581,7 +9581,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -9703,7 +9703,7 @@ display(img_PIL)
 
 
     
-![png](output_40_0.png)
+![png](/study/img/output_40_0.png)
     
 
 
@@ -9802,7 +9802,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -10802,7 +10802,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -10881,7 +10881,7 @@ display(img_PIL)
 
 
     
-![png](output_44_0.png)
+![png](/study/img/output_44_0.png)
     
 
 
@@ -10995,7 +10995,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -11995,7 +11995,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -12120,13 +12120,13 @@ display(img_PIL)
 
 
     
-![png](output_48_0.png)
+![png](/study/img/output_48_0.png)
     
 
 
 
     
-![png](output_48_1.png)
+![png](/study/img/output_48_1.png)
     
 
 
@@ -12227,7 +12227,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -13227,7 +13227,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -13314,7 +13314,7 @@ display(img_PIL)
 
 
     
-![png](output_52_0.png)
+![png](/study/img/output_52_0.png)
     
 
 
@@ -13472,7 +13472,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -14472,7 +14472,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -14958,13 +14958,13 @@ display(img_PIL)
 
 
     
-![png](output_56_0.png)
+![png](/study/img/output_56_0.png)
     
 
 
 
     
-![png](output_56_1.png)
+![png](/study/img/output_56_1.png)
     
 
 
@@ -15109,7 +15109,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -16109,7 +16109,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -16509,13 +16509,13 @@ display(img_PIL)
 
 
     
-![png](output_60_0.png)
+![png](/study/img/output_60_0.png)
     
 
 
 
     
-![png](output_60_1.png)
+![png](/study/img/output_60_1.png)
     
 
 
@@ -16654,7 +16654,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -17654,7 +17654,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -19188,7 +19188,7 @@ display(img_PIL)
 
 
     
-![png](output_64_0.png)
+![png](/study/img/output_64_0.png)
     
 
 
@@ -19295,7 +19295,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -20295,7 +20295,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -20397,13 +20397,13 @@ display(img_PIL)
 
 
     
-![png](output_68_0.png)
+![png](/study/img/output_68_0.png)
     
 
 
 
     
-![png](output_68_1.png)
+![png](/study/img/output_68_1.png)
     
 
 
@@ -20508,7 +20508,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -21508,7 +21508,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -21600,13 +21600,13 @@ display(img_PIL)
 
 
     
-![png](output_73_0.png)
+![png](/study/img/output_73_0.png)
     
 
 
 
     
-![png](output_73_1.png)
+![png](/study/img/output_73_1.png)
     
 
 
@@ -21723,7 +21723,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -22723,7 +22723,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -23028,7 +23028,7 @@ display(img_PIL)
 
 
     
-![png](output_77_0.png)
+![png](/study/img/output_77_0.png)
     
 
 
@@ -23153,7 +23153,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -24153,7 +24153,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -24382,7 +24382,7 @@ display(img_PIL)
 
 
     
-![png](output_81_0.png)
+![png](/study/img/output_81_0.png)
     
 
 
@@ -24487,7 +24487,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -25487,7 +25487,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -25599,7 +25599,7 @@ display(img_PIL)
 
 
     
-![png](output_85_0.png)
+![png](/study/img/output_85_0.png)
     
 
 
@@ -25697,7 +25697,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -26697,7 +26697,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -26786,7 +26786,7 @@ display(img_PIL)
 
 
     
-![png](output_89_0.png)
+![png](/study/img/output_89_0.png)
     
 
 
@@ -26885,7 +26885,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -27885,7 +27885,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -28150,7 +28150,7 @@ display(img_PIL)
 
 
     
-![png](output_93_0.png)
+![png](/study/img/output_93_0.png)
     
 
 
@@ -28250,7 +28250,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -29250,7 +29250,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -29648,7 +29648,7 @@ display(img_PIL)
 
 
     
-![png](output_97_0.png)
+![png](/study/img/output_97_0.png)
     
 
 
@@ -29940,7 +29940,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -30940,7 +30940,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -31231,7 +31231,7 @@ display(img_PIL)
 
 
     
-![png](output_101_0.png)
+![png](/study/img/output_101_0.png)
     
 
 
@@ -31334,7 +31334,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -32334,7 +32334,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {   }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -32702,7 +32702,7 @@ display(img_PIL)
 
 
     
-![png](output_105_0.png)
+![png](/study/img/output_105_0.png)
     
 
 
@@ -32808,7 +32808,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -33808,7 +33808,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
@@ -33929,7 +33929,7 @@ display(img_PIL)
 
 
     
-![png](output_109_0.png)
+![png](/study/img/output_109_0.png)
     
 
 
@@ -34034,7 +34034,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -35034,7 +35034,7 @@ a:link { color: #0000ff }
     font-style: normal;
     font-weight: normal;
 }
-a:visited { color: #800080 }
+a:visited {  }
 .warnbanner {
     background-color: #fafbfe;
     color: #112277;
