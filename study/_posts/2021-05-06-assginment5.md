@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[의학통계학방법론] Assignment5"
+title:  "[의학통계학방법론] Assignment1"
 subtitle : "첫 과제"
 category : Study
 tags: R
@@ -10,13 +10,14 @@ last_modified_at: 2022-07-11
 * this unordered seed list will be replaced by the toc
 {:toc}
 
+
 <p style="font-size:40px">의학통계방법론 1조 5주차 과제</p>
 <p style="font-size:20px">김재혁, 정지현</p>
 2022-04-07
 
 **뒤로가기를 누르시면 목차로 되돌아옵니다.**
 
-# SAS 프로그램 결과 
+# SAS 프로그램 결과 <a class="anchor" id="sas--------"></a>
 
 
 ```python
@@ -31,9 +32,9 @@ sas=saspy.SASsession()
 
 winlocal 입력
 
-## 10장 
+## 10장
 
-### EXAMPLE 10.1 
+### EXAMPLE 10.1
 
 
 ```python
@@ -45,9 +46,8 @@ img_PIL.show()
 display(img_PIL)
 ```
 
-
     
-![png](output_8_0.png)
+![png](/study/img/output_7_0.png)
     
 
 
@@ -2272,7 +2272,7 @@ $$
 
 **사후검정(Tukey's HSD test)을 통해 어떠한 그룹의 평균이 차이가 있는지 살펴보았으며, 1-3, 3-4, 2-1, 2-4간 차이가 있음을 알 수 있다.**
 
-### EXAMPLE 10.1a  <a class="anchor" id="example-101a"></a>
+### EXAMPLE 10.1a
 
 
 ```python
@@ -2286,17 +2286,17 @@ display(img_PIL)
 
 
     
-![png](output_12_0.png)
+![png](output_11_0.png)
     
 
 
 
     
-![png](output_12_1.png)
+![png](output_11_1.png)
     
 
 
-### EXAMPLE 10.1b  <a class="anchor" id="example-101b"></a>
+### EXAMPLE 10.1b
 
 
 ```python
@@ -2307,7 +2307,7 @@ display(img_PIL)
 
 
     
-![png](output_14_0.png)
+![png](output_13_0.png)
     
 
 
@@ -2337,13 +2337,13 @@ display(img_PIL)
 
 
     
-![png](output_17_0.png)
+![png](output_16_0.png)
     
 
 
 **p-value가 0.000283으로 유의수준 0.05보다 매우 작기 때문에 귀무가설을 기각할 수 있고 따라서 유의수준 5%하에 식단에 따른 돼지의 몸무게 모평균 차이가 있다고 말할 수 있다.**
 
-### EXAMPLE 10.2  <a class="anchor" id="example-102"></a>
+### EXAMPLE 10.2
 
 
 ```python
@@ -2354,7 +2354,7 @@ display(img_PIL)
 
 
     
-![png](output_20_0.png)
+![png](output_19_0.png)
     
 
 
@@ -4461,7 +4461,7 @@ $$
 
 **p=0.2410 으로 귀무가설을 기각하지않으므로 기술자들의 Determinations of phosphorus content는 다르다고 할 수 없다.**
 
-### EXAMPLE 10.3  <a class="anchor" id="example-103"></a>
+### EXAMPLE 10.3
 
 
 ```python
@@ -4475,13 +4475,13 @@ display(img_PIL)
 
 
     
-![png](output_24_0.png)
+![png](output_23_0.png)
     
 
 
 
     
-![png](output_24_1.png)
+![png](output_23_1.png)
     
 
 
@@ -5972,7 +5972,7 @@ $$
 
 **하지만 Welch 검정은 데이터의 분포가 매우 치우친 경우 귀무가설을 쉽게 기각하므로 분포의 형태를 잘 살펴 보아야 한다. 각 그룹당 왜도를 확인하였을 때 -0.1487695,0.26299788,-0.2292905 그렇게 크게 한쪽으로 치우쳐 있지 않으므로 괜찮다고 보여진다.**
 
-### EXAMPLE 10.4  <a class="anchor" id="example-104"></a>
+### EXAMPLE 10.4
 
 
 ```python
@@ -5986,13 +5986,13 @@ display(img_PIL)
 
 
     
-![png](output_28_0.png)
+![png](output_27_0.png)
     
 
 
 
     
-![png](output_28_1.png)
+![png](output_27_1.png)
     
 
 
@@ -7243,7 +7243,7 @@ $$
 
 
 
-### EXAMPLE 10.5  <a class="anchor" id="example-105"></a>
+### EXAMPLE 10.5
 
 
 ```python
@@ -7254,7 +7254,7 @@ display(img_PIL)
 
 
     
-![png](output_32_0.png)
+![png](output_31_0.png)
     
 
 
@@ -8444,11 +8444,11 @@ display(img_PIL)
 
 
     
-![png](output_35_0.png)
+![png](output_34_0.png)
     
 
 
-### EXAMPLE 10.6  <a class="anchor" id="example-106"></a>
+### EXAMPLE 10.6
 
 
 ```python
@@ -8462,13 +8462,13 @@ display(img_PIL)
 
 
     
-![png](output_37_0.png)
+![png](output_36_0.png)
     
 
 
 
     
-![png](output_37_1.png)
+![png](output_36_1.png)
     
 
 
@@ -9692,7 +9692,7 @@ $$
 
 **k=4, v1=k-1=3, δ=3.5kg, s2=9.383kg2, n=18일 때, power가 0.8로 좋은 검정력을 보임을 알 수 있다.**
 
-### EXAMPLE 10.7  <a class="anchor" id="example-107"></a>
+### EXAMPLE 10.7
 
 
 ```python
@@ -9703,7 +9703,7 @@ display(img_PIL)
 
 
     
-![png](output_41_0.png)
+![png](output_40_0.png)
     
 
 
@@ -10870,7 +10870,7 @@ $$
 
 **k=4, n=10, v2=4(10-1)=36, v1=3, v2=36, 1-β=0.90, α=0.05에서 최소검출차는 5.5kg 이다.**
 
-### EXAMPLE 10.8  <a class="anchor" id="example-108"></a>
+### EXAMPLE 10.8
 
 
 ```python
@@ -10881,7 +10881,7 @@ display(img_PIL)
 
 
     
-![png](output_45_0.png)
+![png](output_44_0.png)
     
 
 
@@ -12105,7 +12105,7 @@ $$
 
 **k=4라 가정하고 power를 산출해보면 0.80이므로 그룹 수는 4개라 할 수 있다.**
 
-### EXAMPLE 10.9  <a class="anchor" id="example-109"></a>
+### EXAMPLE 10.9
 
 
 ```python
@@ -12120,13 +12120,13 @@ display(img_PIL)
 
 
     
-![png](output_49_0.png)
+![png](output_48_0.png)
     
 
 
 
     
-![png](output_49_1.png)
+![png](output_48_1.png)
     
 
 
@@ -13303,7 +13303,7 @@ $$
 
 **이 랜덤효과 모델의 검정력은 약 0.24임을 알 수 있다.**
 
-### EXAMPLE 10.10  <a class="anchor" id="example-1010"></a>
+### EXAMPLE 10.10
 
 
 ```python
@@ -13314,7 +13314,7 @@ display(img_PIL)
 
 
     
-![png](output_53_0.png)
+![png](output_52_0.png)
     
 
 
@@ -14944,7 +14944,7 @@ $$
 
 **데이터가 등분산성을 만족하고 그룹별 샘플 사이즈가 동일하기 때문에 사후검정으로 Tukey’s test(HSD)를 이용한 결과 그룹1과 그룹2, 그룹3과 그룹1이 차이가 있게 나왔다. 따라서 허브에서의 개체수 분포와 관목식물에서의 개체수 분포가 다르고, 허브에서의 개체수 분포와 나무에서의 개체수 분포가 다르다고 말할 수 있다.**
 
-### EXAMPLE 10.11  <a class="anchor" id="example-1011"></a>
+### EXAMPLE 10.11
 
 
 ```python
@@ -14958,13 +14958,13 @@ display(img_PIL)
 
 
     
-![png](output_57_0.png)
+![png](output_56_0.png)
     
 
 
 
     
-![png](output_57_1.png)
+![png](output_56_1.png)
     
 
 
@@ -16495,7 +16495,7 @@ $$
 
 **p=0.0076로 귀무가설을 기각하므로 PH는 모든 네 개 연못이 같다고 할 수 없다.**
 
-### EXAMPLE 10.12  <a class="anchor" id="example-1012"></a>
+### EXAMPLE 10.12
 
 
 ```python
@@ -16509,13 +16509,13 @@ display(img_PIL)
 
 
     
-![png](output_61_0.png)
+![png](output_60_0.png)
     
 
 
 
     
-![png](output_61_1.png)
+![png](output_60_1.png)
     
 
 
@@ -19177,7 +19177,7 @@ $$
 
 **p=0.0133로 귀무가설을 기각하므로 느릅 나무 높이의 모집단 중앙값이 건물의 방향에 따라 다르다고 말할 수 있다.**
 
-### EXAMPLE 10.13  <a class="anchor" id="example-1013"></a>
+### EXAMPLE 10.13
 
 
 ```python
@@ -19188,7 +19188,7 @@ display(img_PIL)
 
 
     
-![png](output_65_0.png)
+![png](output_64_0.png)
     
 
 
@@ -20383,7 +20383,7 @@ $$
 
 **p=0.9243으로 귀무가설을 기각할 수 없으므로, 모든 그룹의 모분산 다르다고 할 근거가 없다.**
 
-### EXAMPLE 10.14  <a class="anchor" id="example-1014"></a>
+### EXAMPLE 10.14
 
 
 ```python
@@ -20397,13 +20397,13 @@ display(img_PIL)
 
 
     
-![png](output_69_0.png)
+![png](output_68_0.png)
     
 
 
 
     
-![png](output_69_1.png)
+![png](output_68_1.png)
     
 
 
@@ -21584,9 +21584,9 @@ $$
 
 **그룹 수가 여러 개일 때 변동계수의 동일성 검정을 위해 주어진 공식을 사용하여 검정통계량을 구한 결과 0.37이었고, 임계값은 7.815였다. 따라서 귀무가설을 기각할 수 없고 그룹별 변동계수가 같지 않다고 말할만한 충분한 근거가 없다.**
 
-## 11장 <a class="anchor" id="11-"></a>
+## 11장
 
-### EXAMPLE 11.1  <a class="anchor" id="example-111"></a>
+### EXAMPLE 11.1
 
 
 ```python
@@ -21600,13 +21600,13 @@ display(img_PIL)
 
 
     
-![png](output_74_0.png)
+![png](output_73_0.png)
     
 
 
 
     
-![png](output_74_1.png)
+![png](output_73_1.png)
     
 
 
@@ -23017,7 +23017,7 @@ $H_A$ : **Mean strontium concentrations are not the same in all five bodies of w
 **그룹간에 차이가 있음을 알 수 있다.**
 
 
-### EXAMPLE 11.2  <a class="anchor" id="example-112"></a>
+### EXAMPLE 11.2
 
 
 ```python
@@ -23028,7 +23028,7 @@ display(img_PIL)
 
 
     
-![png](output_78_0.png)
+![png](output_77_0.png)
     
 
 
@@ -24371,7 +24371,7 @@ a:visited { color: #800080 }
 
 **사후검정을 통해 2-1,4/ 3-1,4 그룹간 유의한 차이가 있음을 알 수 있다.**
 
-### EXAMPLE 11.3  <a class="anchor" id="example-113"></a>
+### EXAMPLE 11.3
 
 
 ```python
@@ -24382,7 +24382,7 @@ display(img_PIL)
 
 
     
-![png](output_82_0.png)
+![png](output_81_0.png)
     
 
 
@@ -25588,7 +25588,7 @@ a:visited { color: #800080 }
 
 **pond=1 vs pond=2,3,4의 95% 신뢰구간 (6.69,12.76)**
 
-### EXAMPLE 11.4  <a class="anchor" id="example-114"></a>
+### EXAMPLE 11.4
 
 
 ```python
@@ -25599,7 +25599,7 @@ display(img_PIL)
 
 
     
-![png](output_86_0.png)
+![png](output_85_0.png)
     
 
 
@@ -26775,7 +26775,7 @@ $H_A$ : $\mu_2 < \mu_A$
 
 **-> 즉 2번 그룹의 평균이 다른 그룹보다 작다고 할 수 있다.**
 
-### EXAMPLE 11.5  <a class="anchor" id="example-115"></a>
+### EXAMPLE 11.5
 
 
 ```python
@@ -26786,7 +26786,7 @@ display(img_PIL)
 
 
     
-![png](output_90_0.png)
+![png](output_89_0.png)
     
 
 
@@ -28139,7 +28139,7 @@ a:visited { color: #800080 }
 **쉐페 검정에서 그룹간 비교를 시행하였으며, 예를 들어 2,3,4 그룹와 1,5번 비교를 시도해보았다.**
 
 
-### EXAMPLE 11.6  <a class="anchor" id="example-116"></a>
+### EXAMPLE 11.6
 
 
 ```python
@@ -28150,7 +28150,7 @@ display(img_PIL)
 
 
     
-![png](output_94_0.png)
+![png](output_93_0.png)
     
 
 
@@ -29637,7 +29637,7 @@ a:visited { color: #800080 }
 
 **2,3,4 그룹을 묶어서 그룹별 95% CI를 구하였으며, estimate 구문을 활용하였다.**
 
-### EXAMPLE 11.7  <a class="anchor" id="example-117"></a>
+### EXAMPLE 11.7
 
 
 ```python
@@ -29648,7 +29648,7 @@ display(img_PIL)
 
 
     
-![png](output_98_0.png)
+![png](output_97_0.png)
     
 
 
@@ -31220,7 +31220,7 @@ a:visited { color: #800080 }
 
 **전체적인 결론: 파리의 풍부함은 식물 높이 3과 2에서는 동일하지만 높이 1에서는 다르다.**
 
-### EXAMPLE 11.8  <a class="anchor" id="example-118"></a>
+### EXAMPLE 11.8
 
 
 ```python
@@ -31231,7 +31231,7 @@ display(img_PIL)
 
 
     
-![png](output_102_0.png)
+![png](output_101_0.png)
     
 
 
@@ -32691,7 +32691,7 @@ a:visited { color: #800080 }
 
 **사후검정을 통해 3-1, 4-1 그룹간 유의한 차이가 있는 것을 알 수 있다.**
 
-### EXAMPLE 11.9  <a class="anchor" id="example-119"></a>
+### EXAMPLE 11.9
 
 
 ```python
@@ -32702,7 +32702,7 @@ display(img_PIL)
 
 
     
-![png](output_106_0.png)
+![png](output_105_0.png)
     
 
 
@@ -33918,7 +33918,7 @@ $H_A$ : **Median of populaion B≠Median of population A**
 
 **중위수를 이용한 사후검정 방법이다. 3그룹과 2그룹간에 유의한 차이가 있었다.**
 
-### EXAMPLE 11.10  <a class="anchor" id="example-1110"></a>
+### EXAMPLE 11.10
 
 
 ```python
@@ -33929,7 +33929,7 @@ display(img_PIL)
 
 
     
-![png](output_110_0.png)
+![png](output_109_0.png)
     
 
 
