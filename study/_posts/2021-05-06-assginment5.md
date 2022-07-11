@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[의학통계학방법론] Assignment1"
+title:  "[의학통계학방법론] test1"
 subtitle : "첫 과제"
 category : Study
 tags: R
