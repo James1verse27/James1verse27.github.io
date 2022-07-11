@@ -219,7 +219,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -2527,7 +2526,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -4599,7 +4597,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -6105,7 +6102,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -7355,7 +7351,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -8581,7 +8576,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -9802,7 +9796,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -10995,7 +10988,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -12227,7 +12219,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -13472,7 +13463,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -15109,7 +15099,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -16654,7 +16643,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -19295,7 +19283,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -20508,7 +20495,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -21723,7 +21709,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -23153,7 +23138,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -24487,7 +24471,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -25697,7 +25680,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -26885,7 +26867,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -28250,7 +28231,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {}
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -29940,7 +29920,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -31334,7 +31313,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -32808,7 +32786,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -34034,7 +34011,6 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active {  }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
