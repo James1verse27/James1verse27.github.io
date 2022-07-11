@@ -7,7 +7,6 @@ tags: R
 date: 2022-07-11
 last_modified_at: 2022-07-11
 ---
-
 * this unordered seed list will be replaced by the toc
 {:toc}
 
@@ -140,7 +139,7 @@ proc print data=CLDiffs; run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -2448,7 +2447,7 @@ title;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -4520,7 +4519,7 @@ proc print data=moments; run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -6026,7 +6025,7 @@ run;quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -7276,7 +7275,7 @@ run;quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -8502,7 +8501,7 @@ run;quit; /*결과 p=1.7139117*/
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -9723,7 +9722,7 @@ run;quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -10916,7 +10915,7 @@ run;quit; /*k=4일때 power=0.80임을 알수있음*/
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -12148,7 +12147,7 @@ run;quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -13393,7 +13392,7 @@ quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -15030,7 +15029,7 @@ quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -16575,7 +16574,7 @@ run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -19216,7 +19215,7 @@ proc print data=Bartlett; run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -20429,7 +20428,7 @@ run; quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -21644,7 +21643,7 @@ run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -23074,7 +23073,7 @@ run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -24408,7 +24407,7 @@ proc print data=Estimates; run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -25618,7 +25617,7 @@ run;quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -26806,7 +26805,7 @@ run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -28171,7 +28170,7 @@ quit;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -29861,7 +29860,7 @@ run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -31255,7 +31254,7 @@ run;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -32729,7 +32728,7 @@ proc iml;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
@@ -33955,7 +33954,7 @@ proc iml;
 
 
 
-
+<!DOCTYPE html>
 <html lang="ko" xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
