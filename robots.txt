@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://james1verse27.github.io/sitemap.xml
