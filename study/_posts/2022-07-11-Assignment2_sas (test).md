@@ -106,20 +106,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -133,13 +133,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -151,7 +151,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -210,7 +210,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -835,7 +835,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -907,7 +907,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -1249,20 +1249,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -1276,13 +1276,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -1294,7 +1294,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -1353,7 +1353,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -1978,7 +1978,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -2050,7 +2050,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -2458,20 +2458,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -2485,13 +2485,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -2503,7 +2503,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -2562,7 +2562,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -3187,7 +3187,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -3259,7 +3259,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -3598,20 +3598,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -3625,13 +3625,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -3643,7 +3643,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -3702,7 +3702,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -4327,7 +4327,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -4399,7 +4399,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -4805,20 +4805,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -4832,13 +4832,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -4850,7 +4850,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -4909,7 +4909,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -5534,7 +5534,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -5606,7 +5606,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -5997,20 +5997,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -6024,13 +6024,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -6042,7 +6042,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -6101,7 +6101,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -6726,7 +6726,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -6798,7 +6798,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -7248,20 +7248,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -7275,13 +7275,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -7293,7 +7293,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -7352,7 +7352,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -7977,7 +7977,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -8049,7 +8049,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -8452,20 +8452,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -8479,13 +8479,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -8497,7 +8497,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -8556,7 +8556,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -9181,7 +9181,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -9253,7 +9253,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -9675,20 +9675,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -9702,13 +9702,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -9720,7 +9720,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -9779,7 +9779,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -10404,7 +10404,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -10476,7 +10476,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -11749,20 +11749,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -11776,13 +11776,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -11794,7 +11794,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -11853,7 +11853,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -12478,7 +12478,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -12550,7 +12550,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -13047,20 +13047,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -13074,13 +13074,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -13092,7 +13092,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -13151,7 +13151,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -13776,7 +13776,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -13848,7 +13848,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -14354,20 +14354,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -14381,13 +14381,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -14399,7 +14399,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -14458,7 +14458,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -15083,7 +15083,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -15155,7 +15155,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -15646,20 +15646,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -15673,13 +15673,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -15691,7 +15691,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -15750,7 +15750,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -16375,7 +16375,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -16447,7 +16447,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -17036,20 +17036,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -17063,13 +17063,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -17081,7 +17081,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -17140,7 +17140,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -17765,7 +17765,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -17837,7 +17837,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -18315,20 +18315,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -18342,13 +18342,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -18360,7 +18360,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -18419,7 +18419,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -19044,7 +19044,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -19116,7 +19116,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -19705,20 +19705,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -19732,13 +19732,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -19750,7 +19750,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -19809,7 +19809,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -20434,7 +20434,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -20506,7 +20506,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -20884,20 +20884,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -20911,13 +20911,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -20929,7 +20929,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -20988,7 +20988,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -21613,7 +21613,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -21685,7 +21685,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -22074,20 +22074,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -22101,13 +22101,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -22119,7 +22119,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -22178,7 +22178,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -22803,7 +22803,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -22875,7 +22875,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -23274,20 +23274,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -23301,13 +23301,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -23319,7 +23319,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -23378,7 +23378,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -24003,7 +24003,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -24075,7 +24075,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -24566,20 +24566,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -24593,13 +24593,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -24611,7 +24611,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -24670,7 +24670,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -25295,7 +25295,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -25367,7 +25367,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
@@ -25835,20 +25835,20 @@ svg:not(:root) { overflow: hidden }
 figure { margin: 0 }
 table { border-collapse: collapse; border-spacing: 0 }
 .layoutcontainer { border-collapse: separate; border-spacing: 0 }
-p { margin-top: 0; text-align: left }
-h1.heading1 { text-align: left }
-h2.heading2 { text-align: left }
-h3.heading3 { text-align: left }
-h4.heading4 { text-align: left }
-h5.heading5 { text-align: left }
-h6.heading6 { text-align: left }
-span { text-align: left }
+p { margin-top: 0; text-align: center }
+h1.heading1 { text-align: center }
+h2.heading2 { text-align: center }
+h3.heading3 { text-align: center }
+h4.heading4 { text-align: center }
+h5.heading5 { text-align: center }
+h6.heading6 { text-align: center }
+span { text-align: center }
 table { margin-bottom: 1em }
-td, th { text-align: left; padding: 3px 6px; vertical-align: top }
+td, th { text-align: center; padding: 3px 6px; vertical-align: top }
 td[class$="fixed"], th[class$="fixed"] { white-space: pre }
 section, article { padding-top: 1px; padding-bottom: 8px }
 hr.pagebreak { height: 0px; border: 0; border-bottom: 1px solid #c0c0c0; margin: 1em 0 }
-.stacked-value { text-align: left; display: block }
+.stacked-value { text-align: center; display: block }
 .stacked-cell > .stacked-value, td.data > td.data, th.data > td.data, th.data > th.data, td.data > th.data, th.header > th.header { border: 0 }
 .stacked-cell > div.data { border-width: 0 }
 .systitleandfootercontainer { white-space: nowrap; margin-bottom: 1em }
@@ -25862,13 +25862,13 @@ p.note, p.warning, p.error, p.fatal { display: table }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner,
 .notecontent, .warncontent, .errorcontent, .fatalcontent { display: table-cell; padding: 0.5em }
 .notebanner, .warnbanner, .errorbanner, .fatalbanner { padding-right: 0 }
-.body > div > ol li { text-align: left }
+.body > div > ol li { text-align: center }
 .beforecaption > h4 { margin-top: 0; margin-bottom: 0 }
 .c { text-align: center }
-.r { text-align: right }
-.l { text-align: left }
+.r { text-align: center }
+.l { text-align: center }
 .j { text-align: justify }
-.d { text-align: right }
+.d { text-align: center }
 .b { vertical-align: bottom }
 .m { vertical-align: middle }
 .t { vertical-align: top }
@@ -25880,7 +25880,7 @@ p.note, p.warning, p.error, p.fatal { display: table }
     font-style: normal;
     font-weight: bold;
 }
-a:active { color: #800080 }
+a:hover { color: #800080 }
 .aftercaption {
     background-color: #fafbfe;
     border-spacing: 0;
@@ -25939,7 +25939,7 @@ a:active { color: #800080 }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
     width: 100%;
 }
@@ -26564,7 +26564,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     vertical-align: top;
 }
 .pages {
@@ -26636,7 +26636,7 @@ a:link { color: #0000ff }
     font-size:  normal;
     font-style: normal;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
 }
 .proctitle {
     background-color: #fafbfe;
