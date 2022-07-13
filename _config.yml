@@ -144,9 +144,9 @@ defaults:
   - scope:
       type:            posts
     values:
-      #comments:        true
+      comments:        true
       # https://applause-button.com/
-      #applause_button:       true
+      applause_button:       true
       
   # `jekyll-seo-tag` will mark collection outputs as `BlogPosting`,
   # but we want them to be `WebPage`s:
