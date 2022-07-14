@@ -71,26 +71,10 @@ Left here for reference, feel free to delete.
 <link rel="stylesheet" href="https://unpkg.com/applause-button/dist/applause-button.css">
 <script src="https://unpkg.com/applause-button/dist/applause-button.js"></script>
 
-<script type="text/javascript">
-  window.MathJax = {
-      AuthorInit: function () {
-      MathJax.Hub.Register.StartupHook("Begin",function () {
-          MathJax.Hub.Queue(function () {
-              var math = document.getElementsByClassName("MathJax");
-              for(var i=0; i<math.length; i++){
-                  var w = math[i].offsetWidth, W = math[i].parentNode.offsetWidth-0;
-                  if (w > W) {
-                      math[i].style.fontSize = (100*W/w)+"%";
-                  }
-              }
-          });
-      });
-      }
-  };
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"
-  type="text/javascript"></script>
-  
+gitbook.events.bind("page.change", function() {
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+}
+
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
       TeX: {
