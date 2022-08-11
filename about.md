@@ -9,6 +9,8 @@ permalink: /about/
 공부하며 배운 것을 나누는 삶을 살아가길 원합니다.<br>
 모든 은혜 하나님께 영광 올려 드리며 하나님의 마음이 있는 곳에 손을 내미는 사람이 되고자 합니다.
 
+[YouTube](https://youtube.com/channel/UCZDwj2k8FJU11FwbxM1JJkw/)
+
 [Korea Univ Biostatistics](https://kubiostat.korea.ac.kr/) 
 
 [CV, last updated at 2022.07](/assets/cv/CV.pdf)
@@ -20,7 +22,7 @@ permalink: /about/
 
 
 ## Experience
-- 고려대학교 구로병원 통계상담실 연구조교 (Mar 2022 - Aug 2022)
+- 고려대학교 구로병원 통계상담실 연구조교 (Mar 2022 - Feb 2023)
 - 농업인 업무상 질병 및 손상조사 (국립농업과학원) 농업인 재해조사 조사원 (Jun 2021 - Jul 2021)
 - 2020년 보건의료빅데이터를 활용한 창업경진대회 참가 (보건복지부) (Jun 2020)
 
@@ -31,15 +33,11 @@ permalink: /about/
 - 호서대학교 2020-2학기 성적우수장학금
 
 
-## Languages
-- TOEIC ()
-
-
 ## Certifications
 - 의료기기 RA (취득예정)
 - SAS Base (2022 취득예정)
-- SQLD (2022 취득예정)
-- ADsP (2022 취득예정)
+- SQLD (Sep 2022)
+- ADsP (Sep 2022)
 - 사회조사분석사 2급 (Sep 2020)
 
 
