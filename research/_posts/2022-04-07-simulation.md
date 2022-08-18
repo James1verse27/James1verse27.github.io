@@ -4,7 +4,6 @@ title:  "[Simulation] Statistical Errors"
 category : research
 tag: [R, Simulation, markdown]
 toc: true
-author_profile: True
 ---
 * this unordered seed list will be replaced by the toc
 {:toc}
@@ -14,3 +13,4 @@ author_profile: True
 
 # Type I error & Type II error
 
+To Be Continued...
