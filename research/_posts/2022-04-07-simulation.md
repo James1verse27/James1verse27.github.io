@@ -14,3 +14,7 @@ toc: true
 # Type I error & Type II error
 
 To Be Continued...
+
+$x_i$
+
+$$x_i$$
