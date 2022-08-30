@@ -5,6 +5,8 @@ permalink: /about/
 
 # About
 
+![](/assets/img/about.png)
+
 안녕하세요, 김재혁입니다.<br>
 공부하며 배운 것을 나누는 삶을 살아가길 원합니다.<br>
 모든 은혜 하나님께 영광 올려 드리며 하나님의 마음이 있는 곳에 손을 내미는 사람이 되고자 합니다.
@@ -12,9 +14,6 @@ permalink: /about/
 [Korea Univ Biostatistics](https://kubiostat.korea.ac.kr/) 
 
 [CV, last updated at 2022.07](/assets/cv/CV.pdf)
-
-
-![](/assets/img/about.png)
 
 
 ## Education
