@@ -14,6 +14,9 @@ permalink: /about/
 [CV, last updated at 2022.07](/assets/cv/CV.pdf)
 
 
+![](/assets/img/about.png)
+
+
 ## Education
 - 고려대학교 의과대학 의학통계학전공 석사과정 재학 (Mar 2022 - Present)
 - 호서대학교 인문사회대학 응용통계학과 졸업 (Feb 2016 - Feb 2022)
