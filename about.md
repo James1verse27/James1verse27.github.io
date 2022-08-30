@@ -12,6 +12,7 @@ permalink: /about/
 
 ![](/assets/img/about.png)
 
+
 [Korea Univ Biostatistics](https://kubiostat.korea.ac.kr/) 
 
 [CV, last updated at 2022.07](/assets/cv/CV.pdf)
