@@ -35,7 +35,6 @@ permalink: /about/
 
 
 ## Certifications
-- 의료기기 RA (취득예정)
 - SAS Base (2022 취득예정)
 - SQLD (Sep 2022)
 - ADsP (Sep 2022)
