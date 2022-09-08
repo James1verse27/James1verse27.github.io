@@ -359,7 +359,7 @@ N(0,6) N(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-2-1.png)
+![](/research/img/simlulation/unnamed-chunk-2-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -670,7 +670,7 @@ U(0,6) U(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-3-1.png)
+![](/research/img/simlulation/unnamed-chunk-3-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -981,7 +981,7 @@ chisq(6) chisq(6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-4-1.png)
+![](/research/img/simlulation/unnamed-chunk-4-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -1292,7 +1292,7 @@ exp(1/6) exp(1/6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-5-1.png)
+![](/research/img/simlulation/unnamed-chunk-5-1.png)
 
 ## N=10000,등분산,표본크기가 다른 경우
 
@@ -1566,7 +1566,7 @@ N(0,6) N(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-6-1.png)
+![](/research/img/simlulation/unnamed-chunk-6-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -1838,7 +1838,7 @@ U(0,6) U(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-7-1.png)
+![](/research/img/simlulation/unnamed-chunk-7-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -2110,7 +2110,7 @@ chisq(6) chisq(6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-8-1.png)
+![](/research/img/simlulation/unnamed-chunk-8-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -2382,7 +2382,7 @@ exp(1/6) exp(1/6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-9-1.png)
+![](/research/img/simlulation/unnamed-chunk-9-1.png)
 
 ## N=10000, 분산이 다르고, 표본크기는 같은 경우
 
@@ -2695,7 +2695,7 @@ N(0,4) N(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-10-1.png)
+![](/research/img/simlulation/unnamed-chunk-10-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -3006,7 +3006,7 @@ U(0,4.0)+1 U(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-11-1.png)
+![](/research/img/simlulation/unnamed-chunk-11-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -3317,7 +3317,7 @@ chisq(4)+2 chisq(6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-12-1.png)
+![](/research/img/simlulation/unnamed-chunk-12-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -3628,7 +3628,7 @@ exp(1/4)+2 exp(1/6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-13-1.png)
+![](/research/img/simlulation/unnamed-chunk-13-1.png)
 
 # Type II error
 
@@ -3943,7 +3943,7 @@ N(0,6)+2 N(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-14-1.png)
+![](/research/img/simlulation/unnamed-chunk-14-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -4253,7 +4253,7 @@ U(0,6)+0.5 U(0,6) Wilcoxon
 </tr>
 </tbody>
 </table>
-![]/research/img/simlulation/unnamed-chunk-15-1.png)
+![](/research/img/simlulation/unnamed-chunk-15-1.png)
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 \[Table 15\] Type II error, 등분산,표본크기가 같은 경우: Chi-squared
@@ -4563,7 +4563,7 @@ chisq(6)+0.5 chisq(6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-16-1.png)
+![](/research/img/simlulation/unnamed-chunk-16-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -4874,7 +4874,7 @@ exp(1/6)+0.5 exp(1/6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-17-1.png)
+![](/research/img/simlulation/unnamed-chunk-17-1.png)
 
 ## N=10000,등분산,표본크기가 다른 경우
 
@@ -5148,7 +5148,7 @@ N(0,6)+0.5 N(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-18-1.png)
+![](/research/img/simlulation/unnamed-chunk-18-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -5420,7 +5420,7 @@ U(0,6)+0.5 U(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-19-1.png)
+![](/research/img/simlulation/unnamed-chunk-19-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -5692,7 +5692,7 @@ chisq(6)+0.5 chisq(6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-20-1.png)
+![](/research/img/simlulation/unnamed-chunk-20-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -5964,7 +5964,7 @@ exp(1/6)+0.5 exp(1/6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-21-1.png)
+![](/research/img/simlulation/unnamed-chunk-21-1.png)
 
 ## N=10000, 분산이 다르고, 표본크기는 같은 경우
 
@@ -6277,7 +6277,7 @@ N(0,4)+0.5 N(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-22-1.png)
+![](/research/img/simlulation/unnamed-chunk-22-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -6588,7 +6588,7 @@ U(0,4.0)+1.5 U(0,6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-23-1.png)
+![](/research/img/simlulation/unnamed-chunk-23-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -6899,7 +6899,7 @@ chisq(4)+2.5 chisq(6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-24-1.png)
+![](/research/img/simlulation/unnamed-chunk-24-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -7210,4 +7210,4 @@ exp(1/4)+2.5 exp(1/6) Wilcoxon
 </tbody>
 </table>
 
-![]/research/img/simlulation/unnamed-chunk-25-1.png)
+![](/research/img/simlulation/unnamed-chunk-25-1.png)
