@@ -52,7 +52,8 @@ n.simulations <- 10000
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 1\] 두 그룹의 표본크기, 분산 같은 경우: Normal distribution
+\[Table 1\] Type I error, 등분산,표본크기가 같은 경우: Normal
+distribution
 </caption>
 <thead>
 <tr>
@@ -84,22 +85,22 @@ n100
 N(0,1) N(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.0550
+0.0485
 </td>
 <td style="text-align:right;">
-0.0501
+0.0507
 </td>
 <td style="text-align:right;">
-0.0495
+0.0505
 </td>
 <td style="text-align:right;">
-0.0509
+0.0539
 </td>
 <td style="text-align:right;">
-0.0519
+0.0484
 </td>
 <td style="text-align:right;">
-0.0502
+0.0492
 </td>
 </tr>
 <tr>
@@ -107,22 +108,22 @@ N(0,1) N(0,1) t-test
 N(0,1) N(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0316
+0.0333
 </td>
 <td style="text-align:right;">
-0.0414
+0.0398
 </td>
 <td style="text-align:right;">
-0.0499
+0.0478
 </td>
 <td style="text-align:right;">
-0.0517
+0.0457
 </td>
 <td style="text-align:right;">
-0.0483
+0.0495
 </td>
 <td style="text-align:right;">
-0.0481
+0.0503
 </td>
 </tr>
 <tr>
@@ -130,22 +131,22 @@ N(0,1) N(0,1) Wilcoxon
 N(0,2) N(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.0513
+0.0516
 </td>
 <td style="text-align:right;">
-0.0524
+0.0447
 </td>
 <td style="text-align:right;">
-0.0522
+0.0483
 </td>
 <td style="text-align:right;">
-0.0523
+0.0491
 </td>
 <td style="text-align:right;">
-0.0557
+0.0528
 </td>
 <td style="text-align:right;">
-0.0529
+0.0472
 </td>
 </tr>
 <tr>
@@ -153,22 +154,22 @@ N(0,2) N(0,2) t-test
 N(0,2) N(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0306
+0.0325
 </td>
 <td style="text-align:right;">
-0.0397
+0.0448
 </td>
 <td style="text-align:right;">
-0.0458
+0.0470
 </td>
 <td style="text-align:right;">
-0.0502
+0.0469
 </td>
 <td style="text-align:right;">
-0.0553
+0.0514
 </td>
 <td style="text-align:right;">
-0.0501
+0.0495
 </td>
 </tr>
 <tr>
@@ -176,22 +177,22 @@ N(0,2) N(0,2) Wilcoxon
 N(0,3) N(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.0519
+0.0464
 </td>
 <td style="text-align:right;">
-0.0466
+0.0499
 </td>
 <td style="text-align:right;">
-0.0545
+0.0484
 </td>
 <td style="text-align:right;">
-0.0538
+0.0494
 </td>
 <td style="text-align:right;">
-0.0459
+0.0523
 </td>
 <td style="text-align:right;">
-0.0532
+0.0461
 </td>
 </tr>
 <tr>
@@ -199,22 +200,22 @@ N(0,3) N(0,3) t-test
 N(0,3) N(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0324
+0.0331
 </td>
 <td style="text-align:right;">
-0.0444
+0.0414
 </td>
 <td style="text-align:right;">
-0.0477
+0.0501
 </td>
 <td style="text-align:right;">
-0.0461
+0.0491
 </td>
 <td style="text-align:right;">
-0.0521
+0.0505
 </td>
 <td style="text-align:right;">
-0.0507
+0.0509
 </td>
 </tr>
 <tr>
@@ -222,22 +223,22 @@ N(0,3) N(0,3) Wilcoxon
 N(0,4) N(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.0470
+0.0473
 </td>
 <td style="text-align:right;">
-0.0475
+0.0520
 </td>
 <td style="text-align:right;">
-0.0494
+0.0512
 </td>
 <td style="text-align:right;">
-0.0507
+0.0508
 </td>
 <td style="text-align:right;">
-0.0485
+0.0500
 </td>
 <td style="text-align:right;">
-0.0510
+0.0480
 </td>
 </tr>
 <tr>
@@ -245,88 +246,19 @@ N(0,4) N(0,4) t-test
 N(0,4) N(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0332
+0.0322
 </td>
 <td style="text-align:right;">
-0.0418
+0.0442
 </td>
 <td style="text-align:right;">
-0.0500
+0.0488
 </td>
 <td style="text-align:right;">
-0.0497
+0.0495
 </td>
 <td style="text-align:right;">
-0.0535
-</td>
-<td style="text-align:right;">
-0.0501
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-N(0,5) N(0,5) t-test
-</td>
-<td style="text-align:right;">
-0.0528
-</td>
-<td style="text-align:right;">
-0.0477
-</td>
-<td style="text-align:right;">
-0.0542
-</td>
-<td style="text-align:right;">
-0.0485
-</td>
-<td style="text-align:right;">
-0.0513
-</td>
-<td style="text-align:right;">
-0.0517
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-N(0,5) N(0,5) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0317
-</td>
-<td style="text-align:right;">
-0.0455
-</td>
-<td style="text-align:right;">
-0.0498
-</td>
-<td style="text-align:right;">
-0.0479
-</td>
-<td style="text-align:right;">
-0.0496
-</td>
-<td style="text-align:right;">
-0.0464
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-N(0,6) N(0,6) t-test
-</td>
-<td style="text-align:right;">
-0.0499
-</td>
-<td style="text-align:right;">
-0.0511
-</td>
-<td style="text-align:right;">
-0.0498
-</td>
-<td style="text-align:right;">
-0.0466
-</td>
-<td style="text-align:right;">
-0.0511
+0.0506
 </td>
 <td style="text-align:right;">
 0.0484
@@ -334,35 +266,105 @@ N(0,6) N(0,6) t-test
 </tr>
 <tr>
 <td style="text-align:left;">
-N(0,6) N(0,6) Wilcoxon
+N(0,5) N(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.0308
+0.0521
 </td>
 <td style="text-align:right;">
-0.0452
+0.0538
 </td>
 <td style="text-align:right;">
-0.0531
+0.0493
+</td>
+<td style="text-align:right;">
+0.0518
+</td>
+<td style="text-align:right;">
+0.0468
+</td>
+<td style="text-align:right;">
+0.0494
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N(0,5) N(0,5) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0316
+</td>
+<td style="text-align:right;">
+0.0447
 </td>
 <td style="text-align:right;">
 0.0517
 </td>
 <td style="text-align:right;">
-0.0470
+0.0503
 </td>
 <td style="text-align:right;">
-0.0509
+0.0500
+</td>
+<td style="text-align:right;">
+0.0483
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N(0,6) N(0,6) t-test
+</td>
+<td style="text-align:right;">
+0.0493
+</td>
+<td style="text-align:right;">
+0.0549
+</td>
+<td style="text-align:right;">
+0.0498
+</td>
+<td style="text-align:right;">
+0.0506
+</td>
+<td style="text-align:right;">
+0.0562
+</td>
+<td style="text-align:right;">
+0.0523
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N(0,6) N(0,6) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0331
+</td>
+<td style="text-align:right;">
+0.0429
+</td>
+<td style="text-align:right;">
+0.0498
+</td>
+<td style="text-align:right;">
+0.0480
+</td>
+<td style="text-align:right;">
+0.0494
+</td>
+<td style="text-align:right;">
+0.0516
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-2-1.png)
+![]/research/img/simlulation/unnamed-chunk-2-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 2\] 두 그룹의 표본크기, 분산 같은 경우: Uniform distribution
+\[Table 2\] Type I error, 등분산,표본크기가 같은 경우: Uniform
+distribution
 </caption>
 <thead>
 <tr>
@@ -394,22 +396,22 @@ n100
 U(0,1) U(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.0542
+0.0563
 </td>
 <td style="text-align:right;">
-0.0488
+0.0539
 </td>
 <td style="text-align:right;">
-0.0509
+0.0517
 </td>
 <td style="text-align:right;">
-0.0541
+0.0485
 </td>
 <td style="text-align:right;">
-0.0480
+0.0540
 </td>
 <td style="text-align:right;">
-0.0513
+0.0494
 </td>
 </tr>
 <tr>
@@ -417,65 +419,19 @@ U(0,1) U(0,1) t-test
 U(0,1) U(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0300
+0.0311
 </td>
 <td style="text-align:right;">
-0.0445
+0.0454
 </td>
 <td style="text-align:right;">
-0.0486
+0.0509
 </td>
 <td style="text-align:right;">
-0.0531
+0.0489
 </td>
 <td style="text-align:right;">
-0.0500
-</td>
-<td style="text-align:right;">
-0.0496
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,2) U(0,2) t-test
-</td>
-<td style="text-align:right;">
-0.0502
-</td>
-<td style="text-align:right;">
-0.0556
-</td>
-<td style="text-align:right;">
-0.0517
-</td>
-<td style="text-align:right;">
-0.0491
-</td>
-<td style="text-align:right;">
-0.0471
-</td>
-<td style="text-align:right;">
-0.0517
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,2) U(0,2) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0347
-</td>
-<td style="text-align:right;">
-0.0449
-</td>
-<td style="text-align:right;">
-0.0533
-</td>
-<td style="text-align:right;">
-0.0495
-</td>
-<td style="text-align:right;">
-0.0503
+0.0509
 </td>
 <td style="text-align:right;">
 0.0504
@@ -483,25 +439,71 @@ U(0,2) U(0,2) Wilcoxon
 </tr>
 <tr>
 <td style="text-align:left;">
-U(0,3) U(0,3) t-test
+U(0,2) U(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.0574
+0.0561
 </td>
 <td style="text-align:right;">
-0.0491
+0.0522
 </td>
 <td style="text-align:right;">
-0.0520
+0.0490
+</td>
+<td style="text-align:right;">
+0.0527
 </td>
 <td style="text-align:right;">
 0.0516
 </td>
 <td style="text-align:right;">
-0.0488
+0.0511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,2) U(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0491
+0.0285
+</td>
+<td style="text-align:right;">
+0.0405
+</td>
+<td style="text-align:right;">
+0.0525
+</td>
+<td style="text-align:right;">
+0.0490
+</td>
+<td style="text-align:right;">
+0.0504
+</td>
+<td style="text-align:right;">
+0.0510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,3) U(0,3) t-test
+</td>
+<td style="text-align:right;">
+0.0555
+</td>
+<td style="text-align:right;">
+0.0492
+</td>
+<td style="text-align:right;">
+0.0516
+</td>
+<td style="text-align:right;">
+0.0530
+</td>
+<td style="text-align:right;">
+0.0508
+</td>
+<td style="text-align:right;">
+0.0526
 </td>
 </tr>
 <tr>
@@ -509,22 +511,22 @@ U(0,3) U(0,3) t-test
 U(0,3) U(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0284
+0.0347
 </td>
 <td style="text-align:right;">
-0.0470
+0.0440
 </td>
 <td style="text-align:right;">
-0.0469
+0.0475
 </td>
 <td style="text-align:right;">
-0.0513
+0.0489
 </td>
 <td style="text-align:right;">
-0.0540
+0.0541
 </td>
 <td style="text-align:right;">
-0.0482
+0.0481
 </td>
 </tr>
 <tr>
@@ -532,22 +534,22 @@ U(0,3) U(0,3) Wilcoxon
 U(0,4) U(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.0570
-</td>
-<td style="text-align:right;">
-0.0539
-</td>
-<td style="text-align:right;">
 0.0494
 </td>
 <td style="text-align:right;">
-0.0526
+0.0487
 </td>
 <td style="text-align:right;">
-0.0557
+0.0499
 </td>
 <td style="text-align:right;">
-0.0500
+0.0488
+</td>
+<td style="text-align:right;">
+0.0530
+</td>
+<td style="text-align:right;">
+0.0520
 </td>
 </tr>
 <tr>
@@ -555,22 +557,22 @@ U(0,4) U(0,4) t-test
 U(0,4) U(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0312
+0.0294
 </td>
 <td style="text-align:right;">
-0.0426
+0.0436
 </td>
 <td style="text-align:right;">
-0.0501
+0.0461
 </td>
 <td style="text-align:right;">
-0.0507
+0.0498
 </td>
 <td style="text-align:right;">
-0.0519
+0.0528
 </td>
 <td style="text-align:right;">
-0.0513
+0.0516
 </td>
 </tr>
 <tr>
@@ -578,13 +580,13 @@ U(0,4) U(0,4) Wilcoxon
 U(0,5) U(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.0527
+0.0554
 </td>
 <td style="text-align:right;">
-0.0494
+0.0489
 </td>
 <td style="text-align:right;">
-0.0485
+0.0526
 </td>
 <td style="text-align:right;">
 0.0496
@@ -593,7 +595,7 @@ U(0,5) U(0,5) t-test
 0.0512
 </td>
 <td style="text-align:right;">
-0.0507
+0.0489
 </td>
 </tr>
 <tr>
@@ -601,22 +603,22 @@ U(0,5) U(0,5) t-test
 U(0,5) U(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0313
+0.0319
 </td>
 <td style="text-align:right;">
-0.0426
+0.0388
 </td>
 <td style="text-align:right;">
-0.0473
+0.0487
 </td>
 <td style="text-align:right;">
-0.0496
+0.0488
 </td>
 <td style="text-align:right;">
-0.0505
+0.0492
 </td>
 <td style="text-align:right;">
-0.0469
+0.0509
 </td>
 </tr>
 <tr>
@@ -624,22 +626,22 @@ U(0,5) U(0,5) Wilcoxon
 U(0,6) U(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.0548
+0.0500
 </td>
 <td style="text-align:right;">
-0.0493
+0.0567
 </td>
 <td style="text-align:right;">
-0.0493
+0.0488
 </td>
 <td style="text-align:right;">
-0.0480
+0.0487
 </td>
 <td style="text-align:right;">
-0.0526
+0.0469
 </td>
 <td style="text-align:right;">
-0.0531
+0.0463
 </td>
 </tr>
 <tr>
@@ -647,32 +649,33 @@ U(0,6) U(0,6) t-test
 U(0,6) U(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0283
+0.0291
 </td>
 <td style="text-align:right;">
-0.0401
+0.0443
 </td>
 <td style="text-align:right;">
-0.0465
+0.0500
 </td>
 <td style="text-align:right;">
-0.0479
+0.0461
 </td>
 <td style="text-align:right;">
-0.0491
+0.0505
 </td>
 <td style="text-align:right;">
-0.0504
+0.0488
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-3-1.png)
+![]/research/img/simlulation/unnamed-chunk-3-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 3\] 두 그룹의 표본크기, 분산 같은 경우: Chi-squared distribution
+\[Table 3\] Type I error, 등분산,표본크기가 같은 경우: Chi-squared
+distribution
 </caption>
 <thead>
 <tr>
@@ -704,22 +707,22 @@ n100
 chisq(1) chisq(1) t-test
 </td>
 <td style="text-align:right;">
-0.0299
+0.0303
 </td>
 <td style="text-align:right;">
-0.0389
+0.0403
 </td>
 <td style="text-align:right;">
-0.0488
+0.0463
 </td>
 <td style="text-align:right;">
-0.0449
+0.0445
 </td>
 <td style="text-align:right;">
-0.0487
+0.0463
 </td>
 <td style="text-align:right;">
-0.0487
+0.0468
 </td>
 </tr>
 <tr>
@@ -727,22 +730,22 @@ chisq(1) chisq(1) t-test
 chisq(1) chisq(1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0286
+0.0313
 </td>
 <td style="text-align:right;">
-0.0412
+0.0438
 </td>
 <td style="text-align:right;">
-0.0492
+0.0493
 </td>
 <td style="text-align:right;">
-0.0477
+0.0482
 </td>
 <td style="text-align:right;">
-0.0524
+0.0508
 </td>
 <td style="text-align:right;">
-0.0533
+0.0517
 </td>
 </tr>
 <tr>
@@ -750,22 +753,22 @@ chisq(1) chisq(1) Wilcoxon
 chisq(2) chisq(2) t-test
 </td>
 <td style="text-align:right;">
-0.0382
+0.0399
 </td>
 <td style="text-align:right;">
-0.0445
+0.0418
 </td>
 <td style="text-align:right;">
-0.0487
+0.0469
 </td>
 <td style="text-align:right;">
-0.0466
+0.0448
 </td>
 <td style="text-align:right;">
-0.0508
+0.0458
 </td>
 <td style="text-align:right;">
-0.0489
+0.0485
 </td>
 </tr>
 <tr>
@@ -776,19 +779,19 @@ chisq(2) chisq(2) Wilcoxon
 0.0306
 </td>
 <td style="text-align:right;">
-0.0426
+0.0428
 </td>
 <td style="text-align:right;">
-0.0461
+0.0474
 </td>
 <td style="text-align:right;">
-0.0541
+0.0507
 </td>
 <td style="text-align:right;">
-0.0524
+0.0492
 </td>
 <td style="text-align:right;">
-0.0508
+0.0497
 </td>
 </tr>
 <tr>
@@ -796,22 +799,22 @@ chisq(2) chisq(2) Wilcoxon
 chisq(3) chisq(3) t-test
 </td>
 <td style="text-align:right;">
-0.0434
+0.0408
 </td>
 <td style="text-align:right;">
-0.0441
+0.0485
 </td>
 <td style="text-align:right;">
-0.0490
+0.0447
 </td>
 <td style="text-align:right;">
-0.0472
+0.0506
 </td>
 <td style="text-align:right;">
-0.0489
+0.0510
 </td>
 <td style="text-align:right;">
-0.0481
+0.0527
 </td>
 </tr>
 <tr>
@@ -819,22 +822,22 @@ chisq(3) chisq(3) t-test
 chisq(3) chisq(3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0322
+0.0310
 </td>
 <td style="text-align:right;">
 0.0396
 </td>
 <td style="text-align:right;">
-0.0505
+0.0488
 </td>
 <td style="text-align:right;">
-0.0475
+0.0502
 </td>
 <td style="text-align:right;">
-0.0463
+0.0516
 </td>
 <td style="text-align:right;">
-0.0514
+0.0493
 </td>
 </tr>
 <tr>
@@ -842,22 +845,22 @@ chisq(3) chisq(3) Wilcoxon
 chisq(4) chisq(4) t-test
 </td>
 <td style="text-align:right;">
-0.0420
+0.0475
 </td>
 <td style="text-align:right;">
-0.0473
+0.0523
 </td>
 <td style="text-align:right;">
-0.0483
+0.0446
 </td>
 <td style="text-align:right;">
-0.0532
+0.0493
 </td>
 <td style="text-align:right;">
-0.0485
+0.0482
 </td>
 <td style="text-align:right;">
-0.0490
+0.0484
 </td>
 </tr>
 <tr>
@@ -865,22 +868,22 @@ chisq(4) chisq(4) t-test
 chisq(4) chisq(4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0307
+0.0312
 </td>
 <td style="text-align:right;">
-0.0462
+0.0419
 </td>
 <td style="text-align:right;">
-0.0461
+0.0492
 </td>
 <td style="text-align:right;">
-0.0510
+0.0471
 </td>
 <td style="text-align:right;">
-0.0469
+0.0482
 </td>
 <td style="text-align:right;">
-0.0483
+0.0515
 </td>
 </tr>
 <tr>
@@ -888,22 +891,22 @@ chisq(4) chisq(4) Wilcoxon
 chisq(5) chisq(5) t-test
 </td>
 <td style="text-align:right;">
-0.0425
-</td>
-<td style="text-align:right;">
-0.0476
-</td>
-<td style="text-align:right;">
-0.0505
-</td>
-<td style="text-align:right;">
 0.0462
 </td>
 <td style="text-align:right;">
-0.0493
+0.0497
 </td>
 <td style="text-align:right;">
-0.0495
+0.0460
+</td>
+<td style="text-align:right;">
+0.0501
+</td>
+<td style="text-align:right;">
+0.0508
+</td>
+<td style="text-align:right;">
+0.0525
 </td>
 </tr>
 <tr>
@@ -911,22 +914,22 @@ chisq(5) chisq(5) t-test
 chisq(5) chisq(5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0313
+0.0315
 </td>
 <td style="text-align:right;">
-0.0426
+0.0466
 </td>
 <td style="text-align:right;">
-0.0486
+0.0497
 </td>
 <td style="text-align:right;">
-0.0492
+0.0510
 </td>
 <td style="text-align:right;">
-0.0513
+0.0505
 </td>
 <td style="text-align:right;">
-0.0502
+0.0497
 </td>
 </tr>
 <tr>
@@ -934,22 +937,22 @@ chisq(5) chisq(5) Wilcoxon
 chisq(6) chisq(6) t-test
 </td>
 <td style="text-align:right;">
-0.0472
+0.0448
+</td>
+<td style="text-align:right;">
+0.0469
+</td>
+<td style="text-align:right;">
+0.0478
 </td>
 <td style="text-align:right;">
 0.0482
 </td>
 <td style="text-align:right;">
-0.0485
+0.0568
 </td>
 <td style="text-align:right;">
-0.0496
-</td>
-<td style="text-align:right;">
-0.0500
-</td>
-<td style="text-align:right;">
-0.0460
+0.0511
 </td>
 </tr>
 <tr>
@@ -957,19 +960,19 @@ chisq(6) chisq(6) t-test
 chisq(6) chisq(6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0324
+0.0303
 </td>
 <td style="text-align:right;">
-0.0414
+0.0404
 </td>
 <td style="text-align:right;">
-0.0477
+0.0532
 </td>
 <td style="text-align:right;">
-0.0503
+0.0497
 </td>
 <td style="text-align:right;">
-0.0495
+0.0472
 </td>
 <td style="text-align:right;">
 0.0490
@@ -978,11 +981,12 @@ chisq(6) chisq(6) Wilcoxon
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-4-1.png)
+![]/research/img/simlulation/unnamed-chunk-4-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 4\] 두 그룹의 표본크기, 분산 같은 경우: Exponential distribution
+\[Table 4\] Type I error, 등분산,표본크기가 같은 경우: Exponential
+distribution
 </caption>
 <thead>
 <tr>
@@ -1014,19 +1018,19 @@ n100
 exp(1/1) exp(1/1) t-test
 </td>
 <td style="text-align:right;">
-0.0377
+0.0370
 </td>
 <td style="text-align:right;">
-0.0433
+0.0438
 </td>
 <td style="text-align:right;">
-0.0480
+0.0514
 </td>
 <td style="text-align:right;">
-0.0485
+0.0502
 </td>
 <td style="text-align:right;">
-0.0543
+0.0504
 </td>
 <td style="text-align:right;">
 0.0486
@@ -1037,22 +1041,22 @@ exp(1/1) exp(1/1) t-test
 exp(1/1) exp(1/1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0334
+0.0293
 </td>
 <td style="text-align:right;">
-0.0452
+0.0417
 </td>
 <td style="text-align:right;">
-0.0528
+0.0462
 </td>
 <td style="text-align:right;">
-0.0518
+0.0494
 </td>
 <td style="text-align:right;">
-0.0532
+0.0525
 </td>
 <td style="text-align:right;">
-0.0536
+0.0493
 </td>
 </tr>
 <tr>
@@ -1060,22 +1064,22 @@ exp(1/1) exp(1/1) Wilcoxon
 exp(1/2) exp(1/2) t-test
 </td>
 <td style="text-align:right;">
-0.0412
+0.0395
 </td>
 <td style="text-align:right;">
-0.0429
+0.0441
 </td>
 <td style="text-align:right;">
-0.0477
+0.0504
 </td>
 <td style="text-align:right;">
-0.0484
+0.0514
 </td>
 <td style="text-align:right;">
-0.0482
+0.0508
 </td>
 <td style="text-align:right;">
-0.0464
+0.0470
 </td>
 </tr>
 <tr>
@@ -1083,22 +1087,22 @@ exp(1/2) exp(1/2) t-test
 exp(1/2) exp(1/2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0306
+0.0313
 </td>
 <td style="text-align:right;">
-0.0423
+0.0412
 </td>
 <td style="text-align:right;">
-0.0486
+0.0483
 </td>
 <td style="text-align:right;">
-0.0474
+0.0498
 </td>
 <td style="text-align:right;">
-0.0511
+0.0519
 </td>
 <td style="text-align:right;">
-0.0515
+0.0497
 </td>
 </tr>
 <tr>
@@ -1106,22 +1110,22 @@ exp(1/2) exp(1/2) Wilcoxon
 exp(1/3) exp(1/3) t-test
 </td>
 <td style="text-align:right;">
-0.0372
+0.0412
 </td>
 <td style="text-align:right;">
-0.0456
-</td>
-<td style="text-align:right;">
-0.0461
-</td>
-<td style="text-align:right;">
-0.0491
+0.0443
 </td>
 <td style="text-align:right;">
 0.0503
 </td>
 <td style="text-align:right;">
-0.0518
+0.0511
+</td>
+<td style="text-align:right;">
+0.0453
+</td>
+<td style="text-align:right;">
+0.0483
 </td>
 </tr>
 <tr>
@@ -1129,22 +1133,22 @@ exp(1/3) exp(1/3) t-test
 exp(1/3) exp(1/3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0313
+0.0321
 </td>
 <td style="text-align:right;">
-0.0443
+0.0439
 </td>
 <td style="text-align:right;">
-0.0494
+0.0461
 </td>
 <td style="text-align:right;">
-0.0498
+0.0517
 </td>
 <td style="text-align:right;">
-0.0508
+0.0522
 </td>
 <td style="text-align:right;">
-0.0481
+0.0519
 </td>
 </tr>
 <tr>
@@ -1152,22 +1156,22 @@ exp(1/3) exp(1/3) Wilcoxon
 exp(1/4) exp(1/4) t-test
 </td>
 <td style="text-align:right;">
-0.0406
+0.0397
 </td>
 <td style="text-align:right;">
-0.0422
+0.0427
 </td>
 <td style="text-align:right;">
-0.0469
+0.0466
 </td>
 <td style="text-align:right;">
-0.0506
+0.0503
 </td>
 <td style="text-align:right;">
-0.0516
+0.0535
 </td>
 <td style="text-align:right;">
-0.0495
+0.0482
 </td>
 </tr>
 <tr>
@@ -1175,22 +1179,22 @@ exp(1/4) exp(1/4) t-test
 exp(1/4) exp(1/4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0313
+0.0293
 </td>
 <td style="text-align:right;">
-0.0420
+0.0466
 </td>
 <td style="text-align:right;">
-0.0488
+0.0512
 </td>
 <td style="text-align:right;">
-0.0472
+0.0469
 </td>
 <td style="text-align:right;">
-0.0491
+0.0509
 </td>
 <td style="text-align:right;">
-0.0517
+0.0521
 </td>
 </tr>
 <tr>
@@ -1198,22 +1202,22 @@ exp(1/4) exp(1/4) Wilcoxon
 exp(1/5) exp(1/5) t-test
 </td>
 <td style="text-align:right;">
-0.0381
+0.0369
 </td>
 <td style="text-align:right;">
-0.0412
+0.0452
+</td>
+<td style="text-align:right;">
+0.0458
 </td>
 <td style="text-align:right;">
 0.0475
 </td>
 <td style="text-align:right;">
-0.0481
+0.0506
 </td>
 <td style="text-align:right;">
-0.0487
-</td>
-<td style="text-align:right;">
-0.0453
+0.0491
 </td>
 </tr>
 <tr>
@@ -1221,22 +1225,22 @@ exp(1/5) exp(1/5) t-test
 exp(1/5) exp(1/5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0326
+0.0328
 </td>
 <td style="text-align:right;">
-0.0419
+0.0455
 </td>
 <td style="text-align:right;">
-0.0496
+0.0501
 </td>
 <td style="text-align:right;">
-0.0542
+0.0483
 </td>
 <td style="text-align:right;">
-0.0505
+0.0516
 </td>
 <td style="text-align:right;">
-0.0492
+0.0524
 </td>
 </tr>
 <tr>
@@ -1244,22 +1248,22 @@ exp(1/5) exp(1/5) Wilcoxon
 exp(1/6) exp(1/6) t-test
 </td>
 <td style="text-align:right;">
-0.0366
+0.0377
 </td>
 <td style="text-align:right;">
-0.0451
+0.0426
 </td>
 <td style="text-align:right;">
-0.0443
+0.0473
 </td>
 <td style="text-align:right;">
-0.0483
+0.0509
 </td>
 <td style="text-align:right;">
-0.0458
+0.0512
 </td>
 <td style="text-align:right;">
-0.0495
+0.0516
 </td>
 </tr>
 <tr>
@@ -1267,34 +1271,34 @@ exp(1/6) exp(1/6) t-test
 exp(1/6) exp(1/6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0304
+0.0287
 </td>
 <td style="text-align:right;">
-0.0441
+0.0426
 </td>
 <td style="text-align:right;">
-0.0487
+0.0519
 </td>
 <td style="text-align:right;">
-0.0515
+0.0505
 </td>
 <td style="text-align:right;">
-0.0485
+0.0507
 </td>
 <td style="text-align:right;">
-0.0509
+0.0473
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-5-1.png)
+![]/research/img/simlulation/unnamed-chunk-5-1.png)
 
 ## N=10000,등분산,표본크기가 다른 경우
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 5\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Normal
+\[Table 5\] Type I error, 등분산,표본크기가 다른 경우: Normal
 distribution
 </caption>
 <thead>
@@ -1324,19 +1328,19 @@ n105, n35
 N(0,1) N(0,1) t-test
 </td>
 <td style="text-align:right;">
+0.0495
+</td>
+<td style="text-align:right;">
+0.0520
+</td>
+<td style="text-align:right;">
+0.0479
+</td>
+<td style="text-align:right;">
 0.0496
 </td>
 <td style="text-align:right;">
-0.0500
-</td>
-<td style="text-align:right;">
-0.0512
-</td>
-<td style="text-align:right;">
-0.0483
-</td>
-<td style="text-align:right;">
-0.0502
+0.0535
 </td>
 </tr>
 <tr>
@@ -1344,19 +1348,19 @@ N(0,1) N(0,1) t-test
 N(0,1) N(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0442
+0.0433
 </td>
 <td style="text-align:right;">
-0.0489
+0.0528
 </td>
 <td style="text-align:right;">
-0.0469
+0.0512
 </td>
 <td style="text-align:right;">
-0.0494
+0.0477
 </td>
 <td style="text-align:right;">
-0.0463
+0.0515
 </td>
 </tr>
 <tr>
@@ -1364,19 +1368,19 @@ N(0,1) N(0,1) Wilcoxon
 N(0,2) N(0,2) t-test
 </td>
 <td style="text-align:right;">
+0.0480
+</td>
+<td style="text-align:right;">
 0.0523
 </td>
 <td style="text-align:right;">
-0.0508
+0.0506
 </td>
 <td style="text-align:right;">
-0.0529
+0.0497
 </td>
 <td style="text-align:right;">
-0.0482
-</td>
-<td style="text-align:right;">
-0.0503
+0.0494
 </td>
 </tr>
 <tr>
@@ -1387,16 +1391,16 @@ N(0,2) N(0,2) Wilcoxon
 0.0392
 </td>
 <td style="text-align:right;">
-0.0494
+0.0528
 </td>
 <td style="text-align:right;">
-0.0490
+0.0516
 </td>
 <td style="text-align:right;">
-0.0511
+0.0467
 </td>
 <td style="text-align:right;">
-0.0502
+0.0489
 </td>
 </tr>
 <tr>
@@ -1404,19 +1408,19 @@ N(0,2) N(0,2) Wilcoxon
 N(0,3) N(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.0474
+0.0493
 </td>
 <td style="text-align:right;">
-0.0476
+0.0525
 </td>
 <td style="text-align:right;">
-0.0501
+0.0490
 </td>
 <td style="text-align:right;">
-0.0491
+0.0515
 </td>
 <td style="text-align:right;">
-0.0474
+0.0471
 </td>
 </tr>
 <tr>
@@ -1424,19 +1428,19 @@ N(0,3) N(0,3) t-test
 N(0,3) N(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0391
+0.0425
 </td>
 <td style="text-align:right;">
-0.0517
+0.0450
 </td>
 <td style="text-align:right;">
-0.0501
+0.0516
 </td>
 <td style="text-align:right;">
-0.0474
+0.0494
 </td>
 <td style="text-align:right;">
-0.0518
+0.0499
 </td>
 </tr>
 <tr>
@@ -1444,19 +1448,19 @@ N(0,3) N(0,3) Wilcoxon
 N(0,4) N(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.0515
+0.0487
 </td>
 <td style="text-align:right;">
-0.0499
+0.0483
 </td>
 <td style="text-align:right;">
-0.0500
+0.0538
 </td>
 <td style="text-align:right;">
-0.0522
+0.0490
 </td>
 <td style="text-align:right;">
-0.0507
+0.0496
 </td>
 </tr>
 <tr>
@@ -1464,19 +1468,19 @@ N(0,4) N(0,4) t-test
 N(0,4) N(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0424
+0.0371
 </td>
 <td style="text-align:right;">
-0.0465
+0.0479
 </td>
 <td style="text-align:right;">
-0.0534
+0.0498
 </td>
 <td style="text-align:right;">
-0.0514
+0.0503
 </td>
 <td style="text-align:right;">
-0.0497
+0.0508
 </td>
 </tr>
 <tr>
@@ -1484,19 +1488,19 @@ N(0,4) N(0,4) Wilcoxon
 N(0,5) N(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.0472
+0.0488
 </td>
 <td style="text-align:right;">
-0.0515
+0.0477
 </td>
 <td style="text-align:right;">
-0.0482
+0.0483
 </td>
 <td style="text-align:right;">
-0.0536
+0.0505
 </td>
 <td style="text-align:right;">
-0.0516
+0.0487
 </td>
 </tr>
 <tr>
@@ -1504,16 +1508,16 @@ N(0,5) N(0,5) t-test
 N(0,5) N(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0420
+0.0433
 </td>
 <td style="text-align:right;">
-0.0521
+0.0520
 </td>
 <td style="text-align:right;">
-0.0521
+0.0468
 </td>
 <td style="text-align:right;">
-0.0507
+0.0505
 </td>
 <td style="text-align:right;">
 0.0497
@@ -1524,19 +1528,19 @@ N(0,5) N(0,5) Wilcoxon
 N(0,6) N(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.0479
+0.0509
 </td>
 <td style="text-align:right;">
-0.0515
+0.0508
+</td>
+<td style="text-align:right;">
+0.0484
 </td>
 <td style="text-align:right;">
 0.0485
 </td>
 <td style="text-align:right;">
-0.0473
-</td>
-<td style="text-align:right;">
-0.0478
+0.0494
 </td>
 </tr>
 <tr>
@@ -1544,29 +1548,29 @@ N(0,6) N(0,6) t-test
 N(0,6) N(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0434
+0.0429
 </td>
 <td style="text-align:right;">
-0.0495
+0.0468
 </td>
 <td style="text-align:right;">
-0.0478
+0.0475
 </td>
 <td style="text-align:right;">
-0.0479
+0.0490
 </td>
 <td style="text-align:right;">
-0.0478
+0.0450
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-6-1.png)
+![]/research/img/simlulation/unnamed-chunk-6-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 6\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Uniform
+\[Table 6\] Type I error, 등분산,표본크기가 다른 경우: Uniform
 distribution
 </caption>
 <thead>
@@ -1596,19 +1600,19 @@ n105, n35
 U(0,1) U(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.0479
+0.0511
 </td>
 <td style="text-align:right;">
-0.0498
+0.0509
 </td>
 <td style="text-align:right;">
-0.0484
+0.0463
 </td>
 <td style="text-align:right;">
-0.0482
+0.0490
 </td>
 <td style="text-align:right;">
-0.0504
+0.0488
 </td>
 </tr>
 <tr>
@@ -1616,19 +1620,19 @@ U(0,1) U(0,1) t-test
 U(0,1) U(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0406
+0.0403
 </td>
 <td style="text-align:right;">
-0.0503
+0.0511
 </td>
 <td style="text-align:right;">
-0.0518
+0.0536
 </td>
 <td style="text-align:right;">
-0.0503
+0.0521
 </td>
 <td style="text-align:right;">
-0.0490
+0.0483
 </td>
 </tr>
 <tr>
@@ -1636,84 +1640,13 @@ U(0,1) U(0,1) Wilcoxon
 U(0,2) U(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.0503
+0.0544
 </td>
 <td style="text-align:right;">
-0.0518
+0.0566
 </td>
 <td style="text-align:right;">
-0.0482
-</td>
-<td style="text-align:right;">
-0.0466
-</td>
-<td style="text-align:right;">
-0.0501
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,2) U(0,2) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0478
-</td>
-<td style="text-align:right;">
-0.0469
-</td>
-<td style="text-align:right;">
-0.0492
-</td>
-<td style="text-align:right;">
-0.0507
-</td>
-<td style="text-align:right;">
-0.0506
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,3) U(0,3) t-test
-</td>
-<td style="text-align:right;">
-0.0517
-</td>
-<td style="text-align:right;">
-0.0489
-</td>
-<td style="text-align:right;">
-0.0534
-</td>
-<td style="text-align:right;">
-0.0494
-</td>
-<td style="text-align:right;">
-0.0505
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,3) U(0,3) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0384
-</td>
-<td style="text-align:right;">
-0.0486
-</td>
-<td style="text-align:right;">
-0.0490
-</td>
-<td style="text-align:right;">
-0.0484
-</td>
-<td style="text-align:right;">
-0.0489
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,4) U(0,4) t-test
+0.0511
 </td>
 <td style="text-align:right;">
 0.0531
@@ -1721,14 +1654,85 @@ U(0,4) U(0,4) t-test
 <td style="text-align:right;">
 0.0497
 </td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,2) U(0,2) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0431
+</td>
+<td style="text-align:right;">
+0.0493
+</td>
+<td style="text-align:right;">
+0.0532
+</td>
+<td style="text-align:right;">
+0.0516
+</td>
 <td style="text-align:right;">
 0.0508
 </td>
-<td style="text-align:right;">
-0.0492
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,3) U(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.0456
+0.0498
+</td>
+<td style="text-align:right;">
+0.0533
+</td>
+<td style="text-align:right;">
+0.0521
+</td>
+<td style="text-align:right;">
+0.0480
+</td>
+<td style="text-align:right;">
+0.0471
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,3) U(0,3) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0399
+</td>
+<td style="text-align:right;">
+0.0493
+</td>
+<td style="text-align:right;">
+0.0484
+</td>
+<td style="text-align:right;">
+0.0495
+</td>
+<td style="text-align:right;">
+0.0477
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,4) U(0,4) t-test
+</td>
+<td style="text-align:right;">
+0.0511
+</td>
+<td style="text-align:right;">
+0.0515
+</td>
+<td style="text-align:right;">
+0.0472
+</td>
+<td style="text-align:right;">
+0.0441
+</td>
+<td style="text-align:right;">
+0.0528
 </td>
 </tr>
 <tr>
@@ -1739,16 +1743,16 @@ U(0,4) U(0,4) Wilcoxon
 0.0409
 </td>
 <td style="text-align:right;">
-0.0461
+0.0519
 </td>
 <td style="text-align:right;">
-0.0454
+0.0456
 </td>
 <td style="text-align:right;">
-0.0444
+0.0503
 </td>
 <td style="text-align:right;">
-0.0541
+0.0491
 </td>
 </tr>
 <tr>
@@ -1756,19 +1760,19 @@ U(0,4) U(0,4) Wilcoxon
 U(0,5) U(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.0481
+0.0499
 </td>
 <td style="text-align:right;">
-0.0494
+0.0523
 </td>
 <td style="text-align:right;">
-0.0512
+0.0506
 </td>
 <td style="text-align:right;">
-0.0479
+0.0508
 </td>
 <td style="text-align:right;">
-0.0537
+0.0487
 </td>
 </tr>
 <tr>
@@ -1776,19 +1780,19 @@ U(0,5) U(0,5) t-test
 U(0,5) U(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0437
+0.0425
 </td>
 <td style="text-align:right;">
-0.0471
+0.0527
 </td>
 <td style="text-align:right;">
-0.0475
+0.0482
 </td>
 <td style="text-align:right;">
-0.0483
+0.0456
 </td>
 <td style="text-align:right;">
-0.0498
+0.0470
 </td>
 </tr>
 <tr>
@@ -1796,19 +1800,19 @@ U(0,5) U(0,5) Wilcoxon
 U(0,6) U(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.0515
+0.0561
 </td>
 <td style="text-align:right;">
-0.0499
+0.0516
 </td>
 <td style="text-align:right;">
-0.0519
+0.0471
 </td>
 <td style="text-align:right;">
-0.0484
+0.0506
 </td>
 <td style="text-align:right;">
-0.0532
+0.0491
 </td>
 </tr>
 <tr>
@@ -1816,29 +1820,29 @@ U(0,6) U(0,6) t-test
 U(0,6) U(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0427
+0.0390
 </td>
 <td style="text-align:right;">
-0.0484
+0.0499
 </td>
 <td style="text-align:right;">
-0.0481
+0.0510
 </td>
 <td style="text-align:right;">
-0.0473
+0.0494
 </td>
 <td style="text-align:right;">
-0.0470
+0.0518
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-7-1.png)
+![]/research/img/simlulation/unnamed-chunk-7-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 7\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Chi-squared
+\[Table 7\] Type I error, 등분산,표본크기가 다른 경우: Chi-squared
 distribution
 </caption>
 <thead>
@@ -1868,19 +1872,19 @@ n105, n35
 chisq(1) chisq(1) t-test
 </td>
 <td style="text-align:right;">
-0.0393
+0.0451
 </td>
 <td style="text-align:right;">
-0.0424
+0.0440
 </td>
 <td style="text-align:right;">
-0.0418
+0.0460
 </td>
 <td style="text-align:right;">
-0.0445
+0.0469
 </td>
 <td style="text-align:right;">
-0.0480
+0.0508
 </td>
 </tr>
 <tr>
@@ -1888,19 +1892,19 @@ chisq(1) chisq(1) t-test
 chisq(1) chisq(1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0394
+0.0434
 </td>
 <td style="text-align:right;">
-0.0459
+0.0482
 </td>
 <td style="text-align:right;">
-0.0509
+0.0499
 </td>
 <td style="text-align:right;">
-0.0487
+0.0478
 </td>
 <td style="text-align:right;">
-0.0497
+0.0486
 </td>
 </tr>
 <tr>
@@ -1908,19 +1912,19 @@ chisq(1) chisq(1) Wilcoxon
 chisq(2) chisq(2) t-test
 </td>
 <td style="text-align:right;">
-0.0446
-</td>
-<td style="text-align:right;">
-0.0459
-</td>
-<td style="text-align:right;">
-0.0465
+0.0404
 </td>
 <td style="text-align:right;">
 0.0493
 </td>
 <td style="text-align:right;">
-0.0516
+0.0457
+</td>
+<td style="text-align:right;">
+0.0490
+</td>
+<td style="text-align:right;">
+0.0445
 </td>
 </tr>
 <tr>
@@ -1928,19 +1932,19 @@ chisq(2) chisq(2) t-test
 chisq(2) chisq(2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0453
+0.0392
 </td>
 <td style="text-align:right;">
-0.0489
+0.0505
 </td>
 <td style="text-align:right;">
-0.0511
+0.0482
 </td>
 <td style="text-align:right;">
-0.0479
+0.0494
 </td>
 <td style="text-align:right;">
-0.0488
+0.0517
 </td>
 </tr>
 <tr>
@@ -1948,19 +1952,19 @@ chisq(2) chisq(2) Wilcoxon
 chisq(3) chisq(3) t-test
 </td>
 <td style="text-align:right;">
-0.0453
+0.0465
 </td>
 <td style="text-align:right;">
-0.0444
+0.0519
 </td>
 <td style="text-align:right;">
-0.0480
+0.0504
 </td>
 <td style="text-align:right;">
-0.0501
+0.0485
 </td>
 <td style="text-align:right;">
-0.0469
+0.0504
 </td>
 </tr>
 <tr>
@@ -1968,16 +1972,16 @@ chisq(3) chisq(3) t-test
 chisq(3) chisq(3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0419
+0.0414
 </td>
 <td style="text-align:right;">
-0.0507
+0.0557
 </td>
 <td style="text-align:right;">
-0.0472
+0.0534
 </td>
 <td style="text-align:right;">
-0.0509
+0.0508
 </td>
 <td style="text-align:right;">
 0.0485
@@ -1988,19 +1992,19 @@ chisq(3) chisq(3) Wilcoxon
 chisq(4) chisq(4) t-test
 </td>
 <td style="text-align:right;">
-0.0468
+0.0430
 </td>
 <td style="text-align:right;">
-0.0474
+0.0483
 </td>
 <td style="text-align:right;">
-0.0475
+0.0510
 </td>
 <td style="text-align:right;">
-0.0472
+0.0520
 </td>
 <td style="text-align:right;">
-0.0473
+0.0492
 </td>
 </tr>
 <tr>
@@ -2008,19 +2012,19 @@ chisq(4) chisq(4) t-test
 chisq(4) chisq(4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0404
+0.0428
 </td>
 <td style="text-align:right;">
-0.0529
+0.0476
 </td>
 <td style="text-align:right;">
-0.0489
+0.0486
 </td>
 <td style="text-align:right;">
-0.0512
+0.0500
 </td>
 <td style="text-align:right;">
-0.0492
+0.0503
 </td>
 </tr>
 <tr>
@@ -2028,19 +2032,19 @@ chisq(4) chisq(4) Wilcoxon
 chisq(5) chisq(5) t-test
 </td>
 <td style="text-align:right;">
-0.0437
+0.0484
 </td>
 <td style="text-align:right;">
-0.0499
+0.0532
 </td>
 <td style="text-align:right;">
-0.0509
+0.0478
 </td>
 <td style="text-align:right;">
-0.0521
+0.0484
 </td>
 <td style="text-align:right;">
-0.0506
+0.0461
 </td>
 </tr>
 <tr>
@@ -2048,19 +2052,19 @@ chisq(5) chisq(5) t-test
 chisq(5) chisq(5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0410
+0.0416
 </td>
 <td style="text-align:right;">
-0.0485
+0.0478
 </td>
 <td style="text-align:right;">
-0.0475
+0.0496
 </td>
 <td style="text-align:right;">
-0.0476
+0.0493
 </td>
 <td style="text-align:right;">
-0.0470
+0.0482
 </td>
 </tr>
 <tr>
@@ -2068,19 +2072,19 @@ chisq(5) chisq(5) Wilcoxon
 chisq(6) chisq(6) t-test
 </td>
 <td style="text-align:right;">
-0.0470
+0.0448
 </td>
 <td style="text-align:right;">
-0.0453
+0.0482
 </td>
 <td style="text-align:right;">
-0.0492
+0.0494
 </td>
 <td style="text-align:right;">
-0.0500
+0.0494
 </td>
 <td style="text-align:right;">
-0.0472
+0.0501
 </td>
 </tr>
 <tr>
@@ -2088,29 +2092,29 @@ chisq(6) chisq(6) t-test
 chisq(6) chisq(6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0406
+0.0456
 </td>
 <td style="text-align:right;">
-0.0507
+0.0543
 </td>
 <td style="text-align:right;">
-0.0472
+0.0500
 </td>
 <td style="text-align:right;">
-0.0502
+0.0490
 </td>
 <td style="text-align:right;">
-0.0486
+0.0476
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-8-1.png)
+![]/research/img/simlulation/unnamed-chunk-8-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 8\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Exponential
+\[Table 8\] Type I error, 등분산,표본크기가 다른 경우: Exponential
 distribution
 </caption>
 <thead>
@@ -2140,19 +2144,19 @@ n105, n35
 exp(1/1) exp(1/1) t-test
 </td>
 <td style="text-align:right;">
-0.0441
+0.0416
 </td>
 <td style="text-align:right;">
-0.0453
+0.0477
 </td>
 <td style="text-align:right;">
-0.0466
+0.0447
 </td>
 <td style="text-align:right;">
-0.0506
+0.0442
 </td>
 <td style="text-align:right;">
-0.0483
+0.0432
 </td>
 </tr>
 <tr>
@@ -2160,19 +2164,19 @@ exp(1/1) exp(1/1) t-test
 exp(1/1) exp(1/1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0430
+0.0419
 </td>
 <td style="text-align:right;">
-0.0491
+0.0507
 </td>
 <td style="text-align:right;">
-0.0473
+0.0486
 </td>
 <td style="text-align:right;">
-0.0525
+0.0480
 </td>
 <td style="text-align:right;">
-0.0485
+0.0533
 </td>
 </tr>
 <tr>
@@ -2180,19 +2184,19 @@ exp(1/1) exp(1/1) Wilcoxon
 exp(1/2) exp(1/2) t-test
 </td>
 <td style="text-align:right;">
-0.0459
+0.0494
 </td>
 <td style="text-align:right;">
-0.0485
+0.0426
 </td>
 <td style="text-align:right;">
-0.0451
+0.0487
 </td>
 <td style="text-align:right;">
-0.0465
+0.0489
 </td>
 <td style="text-align:right;">
-0.0501
+0.0499
 </td>
 </tr>
 <tr>
@@ -2200,19 +2204,19 @@ exp(1/2) exp(1/2) t-test
 exp(1/2) exp(1/2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0395
+0.0411
 </td>
 <td style="text-align:right;">
-0.0478
+0.0509
 </td>
 <td style="text-align:right;">
-0.0491
+0.0486
 </td>
 <td style="text-align:right;">
-0.0508
+0.0485
 </td>
 <td style="text-align:right;">
-0.0505
+0.0462
 </td>
 </tr>
 <tr>
@@ -2220,19 +2224,19 @@ exp(1/2) exp(1/2) Wilcoxon
 exp(1/3) exp(1/3) t-test
 </td>
 <td style="text-align:right;">
-0.0458
+0.0468
 </td>
 <td style="text-align:right;">
-0.0493
+0.0476
 </td>
 <td style="text-align:right;">
-0.0448
+0.0434
 </td>
 <td style="text-align:right;">
-0.0512
+0.0532
 </td>
 <td style="text-align:right;">
-0.0516
+0.0479
 </td>
 </tr>
 <tr>
@@ -2240,19 +2244,19 @@ exp(1/3) exp(1/3) t-test
 exp(1/3) exp(1/3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0434
+0.0433
 </td>
 <td style="text-align:right;">
-0.0457
+0.0519
 </td>
 <td style="text-align:right;">
-0.0459
+0.0493
 </td>
 <td style="text-align:right;">
-0.0513
+0.0545
 </td>
 <td style="text-align:right;">
-0.0454
+0.0509
 </td>
 </tr>
 <tr>
@@ -2260,19 +2264,19 @@ exp(1/3) exp(1/3) Wilcoxon
 exp(1/4) exp(1/4) t-test
 </td>
 <td style="text-align:right;">
-0.0456
+0.0446
 </td>
 <td style="text-align:right;">
-0.0474
+0.0482
 </td>
 <td style="text-align:right;">
-0.0496
+0.0461
 </td>
 <td style="text-align:right;">
-0.0493
+0.0483
 </td>
 <td style="text-align:right;">
-0.0508
+0.0484
 </td>
 </tr>
 <tr>
@@ -2280,19 +2284,19 @@ exp(1/4) exp(1/4) t-test
 exp(1/4) exp(1/4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0427
+0.0388
 </td>
 <td style="text-align:right;">
-0.0508
+0.0456
 </td>
 <td style="text-align:right;">
-0.0472
-</td>
-<td style="text-align:right;">
-0.0512
+0.0463
 </td>
 <td style="text-align:right;">
 0.0487
+</td>
+<td style="text-align:right;">
+0.0483
 </td>
 </tr>
 <tr>
@@ -2300,19 +2304,19 @@ exp(1/4) exp(1/4) Wilcoxon
 exp(1/5) exp(1/5) t-test
 </td>
 <td style="text-align:right;">
-0.0458
-</td>
-<td style="text-align:right;">
-0.0503
-</td>
-<td style="text-align:right;">
-0.0484
-</td>
-<td style="text-align:right;">
-0.0499
+0.0462
 </td>
 <td style="text-align:right;">
 0.0467
+</td>
+<td style="text-align:right;">
+0.0468
+</td>
+<td style="text-align:right;">
+0.0506
+</td>
+<td style="text-align:right;">
+0.0520
 </td>
 </tr>
 <tr>
@@ -2320,19 +2324,19 @@ exp(1/5) exp(1/5) t-test
 exp(1/5) exp(1/5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0409
+0.0415
 </td>
 <td style="text-align:right;">
-0.0505
+0.0497
 </td>
 <td style="text-align:right;">
-0.0499
+0.0467
 </td>
 <td style="text-align:right;">
-0.0531
+0.0498
 </td>
 <td style="text-align:right;">
-0.0491
+0.0501
 </td>
 </tr>
 <tr>
@@ -2340,19 +2344,19 @@ exp(1/5) exp(1/5) Wilcoxon
 exp(1/6) exp(1/6) t-test
 </td>
 <td style="text-align:right;">
-0.0495
+0.0426
 </td>
 <td style="text-align:right;">
-0.0511
+0.0503
 </td>
 <td style="text-align:right;">
-0.0472
+0.0492
 </td>
 <td style="text-align:right;">
-0.0472
+0.0500
 </td>
 <td style="text-align:right;">
-0.0529
+0.0498
 </td>
 </tr>
 <tr>
@@ -2360,31 +2364,32 @@ exp(1/6) exp(1/6) t-test
 exp(1/6) exp(1/6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0388
+0.0406
 </td>
 <td style="text-align:right;">
-0.0496
+0.0480
 </td>
 <td style="text-align:right;">
-0.0440
-</td>
-<td style="text-align:right;">
-0.0484
+0.0514
 </td>
 <td style="text-align:right;">
 0.0520
+</td>
+<td style="text-align:right;">
+0.0515
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-9-1.png)
+![]/research/img/simlulation/unnamed-chunk-9-1.png)
 
-## N=10000, 표본크기는 같고 분산이 다른 경우
+## N=10000, 분산이 다르고, 표본크기는 같은 경우
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 9\] 두 그룹의 표본크기 같고, 분산 다른 경우: Normal distribution
+\[Table 9\] Type I error, 분산이 다르고, 표본크기는 같은 경우: Normal
+distribution
 </caption>
 <thead>
 <tr>
@@ -2416,22 +2421,22 @@ n100
 N(0,1.5) N(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.0533
+0.0491
 </td>
 <td style="text-align:right;">
-0.0514
+0.0505
 </td>
 <td style="text-align:right;">
-0.0476
+0.0511
 </td>
 <td style="text-align:right;">
-0.0478
+0.0513
 </td>
 <td style="text-align:right;">
-0.0502
+0.0505
 </td>
 <td style="text-align:right;">
-0.0530
+0.0516
 </td>
 </tr>
 <tr>
@@ -2439,22 +2444,22 @@ N(0,1.5) N(0,1) t-test
 N(0,1.5) N(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0365
+0.0322
 </td>
 <td style="text-align:right;">
-0.0462
+0.0417
 </td>
 <td style="text-align:right;">
-0.0524
+0.0508
 </td>
 <td style="text-align:right;">
-0.0493
+0.0450
 </td>
 <td style="text-align:right;">
-0.0518
+0.0516
 </td>
 <td style="text-align:right;">
-0.0558
+0.0498
 </td>
 </tr>
 <tr>
@@ -2462,22 +2467,22 @@ N(0,1.5) N(0,1) Wilcoxon
 N(0,2) N(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.0502
-</td>
-<td style="text-align:right;">
-0.0511
-</td>
-<td style="text-align:right;">
-0.0492
-</td>
-<td style="text-align:right;">
 0.0504
 </td>
 <td style="text-align:right;">
-0.0484
+0.0517
 </td>
 <td style="text-align:right;">
-0.0503
+0.0512
+</td>
+<td style="text-align:right;">
+0.0488
+</td>
+<td style="text-align:right;">
+0.0477
+</td>
+<td style="text-align:right;">
+0.0502
 </td>
 </tr>
 <tr>
@@ -2485,22 +2490,22 @@ N(0,2) N(0,2) t-test
 N(0,2) N(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0295
+0.0319
 </td>
 <td style="text-align:right;">
-0.0457
+0.0437
 </td>
 <td style="text-align:right;">
-0.0490
+0.0494
 </td>
 <td style="text-align:right;">
-0.0478
+0.0484
 </td>
 <td style="text-align:right;">
-0.0527
+0.0532
 </td>
 <td style="text-align:right;">
-0.0510
+0.0521
 </td>
 </tr>
 <tr>
@@ -2508,22 +2513,22 @@ N(0,2) N(0,2) Wilcoxon
 N(0,2.5) N(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.0463
+0.0501
 </td>
 <td style="text-align:right;">
-0.0508
+0.0480
 </td>
 <td style="text-align:right;">
-0.0488
+0.0476
 </td>
 <td style="text-align:right;">
-0.0495
+0.0515
 </td>
 <td style="text-align:right;">
-0.0541
+0.0520
 </td>
 <td style="text-align:right;">
-0.0510
+0.0469
 </td>
 </tr>
 <tr>
@@ -2531,22 +2536,22 @@ N(0,2.5) N(0,3) t-test
 N(0,2.5) N(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0343
+0.0300
 </td>
 <td style="text-align:right;">
-0.0421
+0.0436
 </td>
 <td style="text-align:right;">
-0.0456
+0.0474
 </td>
 <td style="text-align:right;">
-0.0470
+0.0497
 </td>
 <td style="text-align:right;">
-0.0507
+0.0497
 </td>
 <td style="text-align:right;">
-0.0495
+0.0460
 </td>
 </tr>
 <tr>
@@ -2554,22 +2559,22 @@ N(0,2.5) N(0,3) Wilcoxon
 N(0,3) N(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.0493
+0.0499
 </td>
 <td style="text-align:right;">
-0.0469
+0.0487
 </td>
 <td style="text-align:right;">
-0.0511
+0.0505
 </td>
 <td style="text-align:right;">
-0.0506
+0.0490
 </td>
 <td style="text-align:right;">
-0.0503
+0.0485
 </td>
 <td style="text-align:right;">
-0.0489
+0.0545
 </td>
 </tr>
 <tr>
@@ -2577,22 +2582,22 @@ N(0,3) N(0,4) t-test
 N(0,3) N(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0325
+0.0315
 </td>
 <td style="text-align:right;">
-0.0411
+0.0425
 </td>
 <td style="text-align:right;">
-0.0507
+0.0520
 </td>
 <td style="text-align:right;">
-0.0496
+0.0451
 </td>
 <td style="text-align:right;">
-0.0528
+0.0487
 </td>
 <td style="text-align:right;">
-0.0504
+0.0485
 </td>
 </tr>
 <tr>
@@ -2600,22 +2605,22 @@ N(0,3) N(0,4) Wilcoxon
 N(0,3.5) N(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.0501
+0.0548
 </td>
 <td style="text-align:right;">
-0.0498
+0.0542
 </td>
 <td style="text-align:right;">
-0.0516
+0.0508
 </td>
 <td style="text-align:right;">
-0.0464
+0.0519
 </td>
 <td style="text-align:right;">
-0.0532
+0.0466
 </td>
 <td style="text-align:right;">
-0.0506
+0.0478
 </td>
 </tr>
 <tr>
@@ -2623,22 +2628,22 @@ N(0,3.5) N(0,5) t-test
 N(0,3.5) N(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0288
+0.0296
 </td>
 <td style="text-align:right;">
-0.0438
+0.0470
 </td>
 <td style="text-align:right;">
-0.0467
+0.0512
 </td>
 <td style="text-align:right;">
-0.0475
+0.0513
 </td>
 <td style="text-align:right;">
-0.0514
+0.0517
 </td>
 <td style="text-align:right;">
-0.0482
+0.0472
 </td>
 </tr>
 <tr>
@@ -2646,22 +2651,22 @@ N(0,3.5) N(0,5) Wilcoxon
 N(0,4) N(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.0496
+0.0492
 </td>
 <td style="text-align:right;">
-0.0555
+0.0502
 </td>
 <td style="text-align:right;">
-0.0535
+0.0505
 </td>
 <td style="text-align:right;">
-0.0468
+0.0509
 </td>
 <td style="text-align:right;">
-0.0497
+0.0505
 </td>
 <td style="text-align:right;">
-0.0506
+0.0462
 </td>
 </tr>
 <tr>
@@ -2669,32 +2674,32 @@ N(0,4) N(0,6) t-test
 N(0,4) N(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0296
+0.0339
 </td>
 <td style="text-align:right;">
-0.0408
+0.0425
 </td>
 <td style="text-align:right;">
-0.0476
+0.0482
 </td>
 <td style="text-align:right;">
-0.0526
+0.0571
 </td>
 <td style="text-align:right;">
-0.0513
+0.0500
 </td>
 <td style="text-align:right;">
-0.0497
+0.0503
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-10-1.png)
+![]/research/img/simlulation/unnamed-chunk-10-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 10\] 두 그룹의 표본크기 같고, 분산 다른 경우: Uniform
+\[Table 10\] Type I error, 분산이 다르고, 표본크기는 같은 경우: Uniform
 distribution
 </caption>
 <thead>
@@ -2727,157 +2732,19 @@ n100
 U(0,2.46)-0.73 U(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.0762
+0.0766
 </td>
 <td style="text-align:right;">
-0.0627
-</td>
-<td style="text-align:right;">
-0.0544
-</td>
-<td style="text-align:right;">
-0.0512
-</td>
-<td style="text-align:right;">
-0.0547
-</td>
-<td style="text-align:right;">
-0.0474
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,2.46)-0.73 U(0,1) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0491
-</td>
-<td style="text-align:right;">
-0.0582
-</td>
-<td style="text-align:right;">
-0.0669
-</td>
-<td style="text-align:right;">
-0.0712
-</td>
-<td style="text-align:right;">
-0.0704
-</td>
-<td style="text-align:right;">
-0.0739
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,2.84)-0.42 U(0,2) t-test
-</td>
-<td style="text-align:right;">
-0.0620
+0.0602
 </td>
 <td style="text-align:right;">
 0.0537
 </td>
 <td style="text-align:right;">
-0.0551
-</td>
-<td style="text-align:right;">
-0.0508
-</td>
-<td style="text-align:right;">
-0.0477
-</td>
-<td style="text-align:right;">
-0.0531
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,2.84)-0.42 U(0,2) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0358
-</td>
-<td style="text-align:right;">
-0.0467
-</td>
-<td style="text-align:right;">
-0.0553
-</td>
-<td style="text-align:right;">
-0.0568
-</td>
-<td style="text-align:right;">
-0.0527
-</td>
-<td style="text-align:right;">
-0.0611
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,3.16)-0.08 U(0,3) t-test
-</td>
-<td style="text-align:right;">
-0.0542
-</td>
-<td style="text-align:right;">
-0.0482
-</td>
-<td style="text-align:right;">
 0.0524
 </td>
 <td style="text-align:right;">
-0.0507
-</td>
-<td style="text-align:right;">
-0.0513
-</td>
-<td style="text-align:right;">
-0.0495
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,3.16)-0.08 U(0,3) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0341
-</td>
-<td style="text-align:right;">
-0.0436
-</td>
-<td style="text-align:right;">
-0.0499
-</td>
-<td style="text-align:right;">
-0.0473
-</td>
-<td style="text-align:right;">
-0.0494
-</td>
-<td style="text-align:right;">
-0.0532
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,3.5)+0.25 U(0,4) t-test
-</td>
-<td style="text-align:right;">
-0.0564
-</td>
-<td style="text-align:right;">
-0.0521
-</td>
-<td style="text-align:right;">
-0.0501
-</td>
-<td style="text-align:right;">
-0.0462
-</td>
-<td style="text-align:right;">
-0.0487
+0.0467
 </td>
 <td style="text-align:right;">
 0.0522
@@ -2885,25 +2752,163 @@ U(0,3.5)+0.25 U(0,4) t-test
 </tr>
 <tr>
 <td style="text-align:left;">
-U(0,3.5)+0.25 U(0,4) Wilcoxon
+U(0,2.46)-0.73 U(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0323
+0.0509
 </td>
 <td style="text-align:right;">
-0.0457
+0.0611
 </td>
 <td style="text-align:right;">
-0.0503
+0.0696
 </td>
 <td style="text-align:right;">
-0.0493
+0.0681
+</td>
+<td style="text-align:right;">
+0.0701
+</td>
+<td style="text-align:right;">
+0.0730
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,2.84)-0.42 U(0,2) t-test
+</td>
+<td style="text-align:right;">
+0.0585
+</td>
+<td style="text-align:right;">
+0.0525
+</td>
+<td style="text-align:right;">
+0.0487
+</td>
+<td style="text-align:right;">
+0.0504
+</td>
+<td style="text-align:right;">
+0.0465
+</td>
+<td style="text-align:right;">
+0.0512
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,2.84)-0.42 U(0,2) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0328
+</td>
+<td style="text-align:right;">
+0.0497
+</td>
+<td style="text-align:right;">
+0.0527
+</td>
+<td style="text-align:right;">
+0.0541
+</td>
+<td style="text-align:right;">
+0.0544
 </td>
 <td style="text-align:right;">
 0.0535
 </td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,3.16)-0.08 U(0,3) t-test
+</td>
+<td style="text-align:right;">
+0.0579
+</td>
+<td style="text-align:right;">
+0.0528
+</td>
+<td style="text-align:right;">
+0.0499
+</td>
+<td style="text-align:right;">
+0.0495
+</td>
+<td style="text-align:right;">
+0.0518
+</td>
+<td style="text-align:right;">
+0.0544
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,3.16)-0.08 U(0,3) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0298
+</td>
+<td style="text-align:right;">
+0.0446
+</td>
+<td style="text-align:right;">
+0.0473
+</td>
+<td style="text-align:right;">
+0.0480
+</td>
+<td style="text-align:right;">
+0.0526
+</td>
+<td style="text-align:right;">
+0.0466
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,3.5)+0.25 U(0,4) t-test
+</td>
+<td style="text-align:right;">
+0.0536
+</td>
+<td style="text-align:right;">
+0.0541
+</td>
+<td style="text-align:right;">
+0.0508
+</td>
+<td style="text-align:right;">
+0.0494
+</td>
+<td style="text-align:right;">
+0.0520
+</td>
+<td style="text-align:right;">
+0.0482
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U(0,3.5)+0.25 U(0,4) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0326
+</td>
+<td style="text-align:right;">
+0.0442
+</td>
+<td style="text-align:right;">
+0.0488
+</td>
 <td style="text-align:right;">
 0.0531
+</td>
+<td style="text-align:right;">
+0.0495
+</td>
+<td style="text-align:right;">
+0.0502
 </td>
 </tr>
 <tr>
@@ -2911,42 +2916,19 @@ U(0,3.5)+0.25 U(0,4) Wilcoxon
 U(0,3.76)+0.62 U(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.0566
+0.0550
 </td>
 <td style="text-align:right;">
-0.0540
+0.0523
+</td>
+<td style="text-align:right;">
+0.0522
+</td>
+<td style="text-align:right;">
+0.0485
 </td>
 <td style="text-align:right;">
 0.0505
-</td>
-<td style="text-align:right;">
-0.0503
-</td>
-<td style="text-align:right;">
-0.0458
-</td>
-<td style="text-align:right;">
-0.0519
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U(0,3.76)+0.62 U(0,5) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.0354
-</td>
-<td style="text-align:right;">
-0.0469
-</td>
-<td style="text-align:right;">
-0.0541
-</td>
-<td style="text-align:right;">
-0.0519
-</td>
-<td style="text-align:right;">
-0.0492
 </td>
 <td style="text-align:right;">
 0.0525
@@ -2954,25 +2936,48 @@ U(0,3.76)+0.62 U(0,5) Wilcoxon
 </tr>
 <tr>
 <td style="text-align:left;">
+U(0,3.76)+0.62 U(0,5) Wilcoxon
+</td>
+<td style="text-align:right;">
+0.0341
+</td>
+<td style="text-align:right;">
+0.0476
+</td>
+<td style="text-align:right;">
+0.0500
+</td>
+<td style="text-align:right;">
+0.0504
+</td>
+<td style="text-align:right;">
+0.0509
+</td>
+<td style="text-align:right;">
+0.0544
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 U(0,4.0)+1 U(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.0615
+0.0613
 </td>
 <td style="text-align:right;">
-0.0529
+0.0567
 </td>
 <td style="text-align:right;">
-0.0513
+0.0510
 </td>
 <td style="text-align:right;">
-0.0528
+0.0501
 </td>
 <td style="text-align:right;">
-0.0511
+0.0516
 </td>
 <td style="text-align:right;">
-0.0493
+0.0516
 </td>
 </tr>
 <tr>
@@ -2980,33 +2985,33 @@ U(0,4.0)+1 U(0,6) t-test
 U(0,4.0)+1 U(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0385
+0.0395
 </td>
 <td style="text-align:right;">
-0.0494
+0.0496
 </td>
 <td style="text-align:right;">
-0.0567
+0.0521
 </td>
 <td style="text-align:right;">
-0.0584
+0.0535
 </td>
 <td style="text-align:right;">
-0.0526
+0.0569
 </td>
 <td style="text-align:right;">
-0.0555
+0.0538
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-11-1.png)
+![]/research/img/simlulation/unnamed-chunk-11-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 11\] 두 그룹의 표본크기 같고, 분산 다른 경우: Chi-squared
-distribution
+\[Table 11\] Type I error, 분산이 다르고, 표본크기는 같은 경우:
+Chi-squared distribution
 </caption>
 <thead>
 <tr>
@@ -3041,19 +3046,19 @@ chisq(1.5)-0.5 chisq(1) t-test
 0.0423
 </td>
 <td style="text-align:right;">
-0.0462
+0.0455
 </td>
 <td style="text-align:right;">
-0.0479
+0.0442
 </td>
 <td style="text-align:right;">
-0.0492
+0.0488
 </td>
 <td style="text-align:right;">
-0.0480
+0.0531
 </td>
 <td style="text-align:right;">
-0.0490
+0.0493
 </td>
 </tr>
 <tr>
@@ -3061,22 +3066,22 @@ chisq(1.5)-0.5 chisq(1) t-test
 chisq(1.5)-0.5 chisq(1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0451
+0.0447
 </td>
 <td style="text-align:right;">
-0.0719
+0.0713
 </td>
 <td style="text-align:right;">
-0.1286
+0.1353
 </td>
 <td style="text-align:right;">
-0.2136
+0.2049
 </td>
 <td style="text-align:right;">
-0.2934
+0.2868
 </td>
 <td style="text-align:right;">
-0.3617
+0.3530
 </td>
 </tr>
 <tr>
@@ -3084,22 +3089,22 @@ chisq(1.5)-0.5 chisq(1) Wilcoxon
 chisq(2)-0 chisq(2) t-test
 </td>
 <td style="text-align:right;">
-0.0384
+0.0374
 </td>
 <td style="text-align:right;">
-0.0430
+0.0451
 </td>
 <td style="text-align:right;">
-0.0487
+0.0474
 </td>
 <td style="text-align:right;">
-0.0466
+0.0494
 </td>
 <td style="text-align:right;">
-0.0518
+0.0493
 </td>
 <td style="text-align:right;">
-0.0506
+0.0519
 </td>
 </tr>
 <tr>
@@ -3110,19 +3115,19 @@ chisq(2)-0 chisq(2) Wilcoxon
 0.0320
 </td>
 <td style="text-align:right;">
-0.0434
+0.0435
 </td>
 <td style="text-align:right;">
-0.0485
+0.0510
 </td>
 <td style="text-align:right;">
-0.0511
+0.0484
 </td>
 <td style="text-align:right;">
-0.0500
+0.0499
 </td>
 <td style="text-align:right;">
-0.0491
+0.0466
 </td>
 </tr>
 <tr>
@@ -3130,22 +3135,22 @@ chisq(2)-0 chisq(2) Wilcoxon
 chisq(2.5)+0.5 chisq(3) t-test
 </td>
 <td style="text-align:right;">
-0.0402
+0.0417
 </td>
 <td style="text-align:right;">
-0.0448
+0.0459
 </td>
 <td style="text-align:right;">
-0.0464
+0.0476
 </td>
 <td style="text-align:right;">
-0.0511
+0.0494
 </td>
 <td style="text-align:right;">
-0.0489
+0.0466
 </td>
 <td style="text-align:right;">
-0.0475
+0.0531
 </td>
 </tr>
 <tr>
@@ -3153,22 +3158,22 @@ chisq(2.5)+0.5 chisq(3) t-test
 chisq(2.5)+0.5 chisq(3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0303
+0.0319
 </td>
 <td style="text-align:right;">
-0.0430
+0.0452
 </td>
 <td style="text-align:right;">
-0.0564
+0.0520
 </td>
 <td style="text-align:right;">
-0.0571
+0.0601
 </td>
 <td style="text-align:right;">
-0.0597
+0.0651
 </td>
 <td style="text-align:right;">
-0.0681
+0.0642
 </td>
 </tr>
 <tr>
@@ -3176,22 +3181,22 @@ chisq(2.5)+0.5 chisq(3) Wilcoxon
 chisq(3)+1 chisq(4) t-test
 </td>
 <td style="text-align:right;">
-0.0472
-</td>
-<td style="text-align:right;">
 0.0459
 </td>
 <td style="text-align:right;">
-0.0493
+0.0491
 </td>
 <td style="text-align:right;">
-0.0509
+0.0520
 </td>
 <td style="text-align:right;">
-0.0527
+0.0475
 </td>
 <td style="text-align:right;">
-0.0507
+0.0536
+</td>
+<td style="text-align:right;">
+0.0518
 </td>
 </tr>
 <tr>
@@ -3199,22 +3204,22 @@ chisq(3)+1 chisq(4) t-test
 chisq(3)+1 chisq(4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0335
+0.0325
 </td>
 <td style="text-align:right;">
-0.0424
+0.0422
 </td>
 <td style="text-align:right;">
-0.0569
+0.0558
 </td>
 <td style="text-align:right;">
-0.0593
+0.0590
 </td>
 <td style="text-align:right;">
-0.0668
+0.0658
 </td>
 <td style="text-align:right;">
-0.0728
+0.0705
 </td>
 </tr>
 <tr>
@@ -3222,22 +3227,22 @@ chisq(3)+1 chisq(4) Wilcoxon
 chisq(3.5)+1.5 chisq(5) t-test
 </td>
 <td style="text-align:right;">
-0.0481
+0.0463
 </td>
 <td style="text-align:right;">
-0.0506
+0.0478
 </td>
 <td style="text-align:right;">
-0.0502
+0.0463
 </td>
 <td style="text-align:right;">
-0.0534
+0.0449
 </td>
 <td style="text-align:right;">
-0.0473
+0.0497
 </td>
 <td style="text-align:right;">
-0.0496
+0.0461
 </td>
 </tr>
 <tr>
@@ -3245,22 +3250,22 @@ chisq(3.5)+1.5 chisq(5) t-test
 chisq(3.5)+1.5 chisq(5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0303
+0.0318
 </td>
 <td style="text-align:right;">
-0.0456
+0.0475
 </td>
 <td style="text-align:right;">
-0.0542
+0.0601
 </td>
 <td style="text-align:right;">
-0.0602
+0.0628
 </td>
 <td style="text-align:right;">
-0.0613
+0.0658
 </td>
 <td style="text-align:right;">
-0.0759
+0.0747
 </td>
 </tr>
 <tr>
@@ -3268,22 +3273,22 @@ chisq(3.5)+1.5 chisq(5) Wilcoxon
 chisq(4)+2 chisq(6) t-test
 </td>
 <td style="text-align:right;">
-0.0465
+0.0440
 </td>
 <td style="text-align:right;">
-0.0482
+0.0515
 </td>
 <td style="text-align:right;">
-0.0505
+0.0508
 </td>
 <td style="text-align:right;">
-0.0504
+0.0486
 </td>
 <td style="text-align:right;">
-0.0482
+0.0462
 </td>
 <td style="text-align:right;">
-0.0510
+0.0489
 </td>
 </tr>
 <tr>
@@ -3291,33 +3296,33 @@ chisq(4)+2 chisq(6) t-test
 chisq(4)+2 chisq(6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0326
+0.0327
 </td>
 <td style="text-align:right;">
-0.0472
+0.0453
 </td>
 <td style="text-align:right;">
-0.0555
+0.0562
 </td>
 <td style="text-align:right;">
-0.0652
+0.0596
 </td>
 <td style="text-align:right;">
-0.0645
+0.0675
 </td>
 <td style="text-align:right;">
-0.0668
+0.0711
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-12-1.png)
+![]/research/img/simlulation/unnamed-chunk-12-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 12\] 두 그룹의 표본크기 같고, 분산 다른 경우: Exponential
-distribution
+\[Table 12\] Type I error, 분산이 다르고, 표본크기는 같은 경우:
+Exponential distribution
 </caption>
 <thead>
 <tr>
@@ -3349,22 +3354,22 @@ n100
 exp(1/1.5)-0.5 exp(1/1) t-test
 </td>
 <td style="text-align:right;">
-0.0582
+0.0560
+</td>
+<td style="text-align:right;">
+0.0534
 </td>
 <td style="text-align:right;">
 0.0561
 </td>
 <td style="text-align:right;">
-0.0559
+0.0511
 </td>
 <td style="text-align:right;">
-0.0494
+0.0491
 </td>
 <td style="text-align:right;">
-0.0517
-</td>
-<td style="text-align:right;">
-0.0476
+0.0525
 </td>
 </tr>
 <tr>
@@ -3372,22 +3377,22 @@ exp(1/1.5)-0.5 exp(1/1) t-test
 exp(1/1.5)-0.5 exp(1/1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0478
+0.0460
 </td>
 <td style="text-align:right;">
-0.0738
+0.0808
 </td>
 <td style="text-align:right;">
-0.1357
+0.1411
 </td>
 <td style="text-align:right;">
-0.2326
+0.2372
 </td>
 <td style="text-align:right;">
-0.3230
+0.3157
 </td>
 <td style="text-align:right;">
-0.4193
+0.4020
 </td>
 </tr>
 <tr>
@@ -3395,22 +3400,22 @@ exp(1/1.5)-0.5 exp(1/1) Wilcoxon
 exp(1/2)-0 exp(1/2) t-test
 </td>
 <td style="text-align:right;">
-0.0388
+0.0425
 </td>
 <td style="text-align:right;">
-0.0422
+0.0446
 </td>
 <td style="text-align:right;">
-0.0444
+0.0456
 </td>
 <td style="text-align:right;">
-0.0470
+0.0502
 </td>
 <td style="text-align:right;">
-0.0542
+0.0481
 </td>
 <td style="text-align:right;">
-0.0507
+0.0453
 </td>
 </tr>
 <tr>
@@ -3418,22 +3423,22 @@ exp(1/2)-0 exp(1/2) t-test
 exp(1/2)-0 exp(1/2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0290
+0.0318
 </td>
 <td style="text-align:right;">
-0.0419
+0.0444
 </td>
 <td style="text-align:right;">
-0.0501
+0.0493
+</td>
+<td style="text-align:right;">
+0.0497
 </td>
 <td style="text-align:right;">
 0.0490
 </td>
 <td style="text-align:right;">
-0.0500
-</td>
-<td style="text-align:right;">
-0.0472
+0.0502
 </td>
 </tr>
 <tr>
@@ -3441,22 +3446,22 @@ exp(1/2)-0 exp(1/2) Wilcoxon
 exp(1/2.5)+0.5 exp(1/3) t-test
 </td>
 <td style="text-align:right;">
-0.0465
+0.0423
 </td>
 <td style="text-align:right;">
-0.0435
+0.0512
 </td>
 <td style="text-align:right;">
 0.0500
 </td>
 <td style="text-align:right;">
-0.0484
+0.0512
 </td>
 <td style="text-align:right;">
-0.0522
+0.0463
 </td>
 <td style="text-align:right;">
-0.0530
+0.0481
 </td>
 </tr>
 <tr>
@@ -3464,22 +3469,22 @@ exp(1/2.5)+0.5 exp(1/3) t-test
 exp(1/2.5)+0.5 exp(1/3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0359
+0.0357
 </td>
 <td style="text-align:right;">
-0.0535
+0.0500
 </td>
 <td style="text-align:right;">
-0.0800
+0.0782
 </td>
 <td style="text-align:right;">
-0.1074
+0.1075
 </td>
 <td style="text-align:right;">
-0.1297
+0.1250
 </td>
 <td style="text-align:right;">
-0.1570
+0.1588
 </td>
 </tr>
 <tr>
@@ -3487,22 +3492,22 @@ exp(1/2.5)+0.5 exp(1/3) Wilcoxon
 exp(1/3)+1 exp(1/4) t-test
 </td>
 <td style="text-align:right;">
-0.0443
+0.0481
 </td>
 <td style="text-align:right;">
-0.0477
+0.0491
 </td>
 <td style="text-align:right;">
-0.0486
+0.0522
 </td>
 <td style="text-align:right;">
-0.0516
+0.0503
 </td>
 <td style="text-align:right;">
-0.0504
+0.0502
 </td>
 <td style="text-align:right;">
-0.0537
+0.0519
 </td>
 </tr>
 <tr>
@@ -3510,22 +3515,22 @@ exp(1/3)+1 exp(1/4) t-test
 exp(1/3)+1 exp(1/4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0419
+0.0406
 </td>
 <td style="text-align:right;">
-0.0582
+0.0623
 </td>
 <td style="text-align:right;">
-0.1079
+0.1011
 </td>
 <td style="text-align:right;">
-0.1547
+0.1607
 </td>
 <td style="text-align:right;">
-0.2165
+0.2247
 </td>
 <td style="text-align:right;">
-0.2708
+0.2654
 </td>
 </tr>
 <tr>
@@ -3533,22 +3538,22 @@ exp(1/3)+1 exp(1/4) Wilcoxon
 exp(1/3.5)+1.5 exp(1/5) t-test
 </td>
 <td style="text-align:right;">
-0.0516
+0.0470
 </td>
 <td style="text-align:right;">
-0.0514
+0.0509
 </td>
 <td style="text-align:right;">
-0.0519
+0.0513
 </td>
 <td style="text-align:right;">
-0.0494
+0.0496
 </td>
 <td style="text-align:right;">
-0.0488
+0.0508
 </td>
 <td style="text-align:right;">
-0.0528
+0.0499
 </td>
 </tr>
 <tr>
@@ -3556,22 +3561,22 @@ exp(1/3.5)+1.5 exp(1/5) t-test
 exp(1/3.5)+1.5 exp(1/5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0427
+0.0434
 </td>
 <td style="text-align:right;">
-0.0722
+0.0790
 </td>
 <td style="text-align:right;">
-0.1299
+0.1274
 </td>
 <td style="text-align:right;">
-0.2034
+0.1948
 </td>
 <td style="text-align:right;">
-0.2742
+0.2842
 </td>
 <td style="text-align:right;">
-0.3560
+0.3566
 </td>
 </tr>
 <tr>
@@ -3579,22 +3584,22 @@ exp(1/3.5)+1.5 exp(1/5) Wilcoxon
 exp(1/4)+2 exp(1/6) t-test
 </td>
 <td style="text-align:right;">
-0.0534
+0.0543
 </td>
 <td style="text-align:right;">
-0.0564
+0.0538
 </td>
 <td style="text-align:right;">
-0.0531
+0.0490
 </td>
 <td style="text-align:right;">
-0.0535
+0.0551
 </td>
 <td style="text-align:right;">
-0.0499
+0.0529
 </td>
 <td style="text-align:right;">
-0.0491
+0.0478
 </td>
 </tr>
 <tr>
@@ -3602,28 +3607,28 @@ exp(1/4)+2 exp(1/6) t-test
 exp(1/4)+2 exp(1/6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.0442
+0.0478
 </td>
 <td style="text-align:right;">
-0.0785
+0.0803
 </td>
 <td style="text-align:right;">
-0.1414
+0.1413
 </td>
 <td style="text-align:right;">
-0.2278
+0.2288
 </td>
 <td style="text-align:right;">
-0.3236
+0.3243
 </td>
 <td style="text-align:right;">
-0.4090
+0.4027
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-13-1.png)
+![]/research/img/simlulation/unnamed-chunk-13-1.png)
 
 # Type II error
 
@@ -3631,7 +3636,8 @@ exp(1/4)+2 exp(1/6) Wilcoxon
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 13\] 두 그룹의 표본크기, 분산 같은 경우: Normal distribution
+\[Table 13\] Type II error, 등분산,표본크기가 같은 경우: Normal
+distribution
 </caption>
 <thead>
 <tr>
@@ -3663,10 +3669,10 @@ n100
 N(0,1)+2 N(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.2073
+0.2015
 </td>
 <td style="text-align:right;">
-0.0132
+0.0106
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3686,10 +3692,10 @@ N(0,1)+2 N(0,1) t-test
 N(0,1)+2 N(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.3185
+0.3302
 </td>
 <td style="text-align:right;">
-0.0202
+0.0184
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3709,13 +3715,13 @@ N(0,1)+2 N(0,1) Wilcoxon
 N(0,2)+2 N(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.5039
+0.4979
 </td>
 <td style="text-align:right;">
-0.1542
+0.1562
 </td>
 <td style="text-align:right;">
-0.0017
+0.0012
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3732,13 +3738,13 @@ N(0,2)+2 N(0,2) t-test
 N(0,2)+2 N(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.6148
+0.6124
 </td>
 <td style="text-align:right;">
-0.1936
+0.1946
 </td>
 <td style="text-align:right;">
-0.0030
+0.0022
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3755,13 +3761,13 @@ N(0,2)+2 N(0,2) Wilcoxon
 N(0,3)+2 N(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.6328
+0.6311
 </td>
 <td style="text-align:right;">
-0.3127
+0.3075
 </td>
 <td style="text-align:right;">
-0.0228
+0.0207
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3778,16 +3784,16 @@ N(0,3)+2 N(0,3) t-test
 N(0,3)+2 N(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.7276
+0.7363
 </td>
 <td style="text-align:right;">
-0.3659
+0.3640
 </td>
 <td style="text-align:right;">
-0.0259
+0.0232
 </td>
 <td style="text-align:right;">
-0.0005
+0.0000
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3801,13 +3807,13 @@ N(0,3)+2 N(0,3) Wilcoxon
 N(0,4)+2 N(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.7172
+0.7117
 </td>
 <td style="text-align:right;">
-0.4388
+0.4324
 </td>
 <td style="text-align:right;">
-0.0606
+0.0674
 </td>
 <td style="text-align:right;">
 0.0006
@@ -3824,16 +3830,16 @@ N(0,4)+2 N(0,4) t-test
 N(0,4)+2 N(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.7879
+0.7942
 </td>
 <td style="text-align:right;">
-0.4851
+0.4862
 </td>
 <td style="text-align:right;">
-0.0778
+0.0790
 </td>
 <td style="text-align:right;">
-0.0020
+0.0022
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3847,39 +3853,16 @@ N(0,4)+2 N(0,4) Wilcoxon
 N(0,5)+2 N(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.7586
+0.7675
 </td>
 <td style="text-align:right;">
-0.5343
+0.5337
 </td>
 <td style="text-align:right;">
-0.1289
+0.1320
 </td>
 <td style="text-align:right;">
-0.0071
-</td>
-<td style="text-align:right;">
-0.0003
-</td>
-<td style="text-align:right;">
-1e-04
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-N(0,5)+2 N(0,5) Wilcoxon
-</td>
-<td style="text-align:right;">
-0.8293
-</td>
-<td style="text-align:right;">
-0.5699
-</td>
-<td style="text-align:right;">
-0.1500
-</td>
-<td style="text-align:right;">
-0.0085
+0.0059
 </td>
 <td style="text-align:right;">
 0.0002
@@ -3890,22 +3873,22 @@ N(0,5)+2 N(0,5) Wilcoxon
 </tr>
 <tr>
 <td style="text-align:left;">
-N(0,6)+2 N(0,6) t-test
+N(0,5)+2 N(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.7862
+0.8319
 </td>
 <td style="text-align:right;">
-0.5883
+0.5752
 </td>
 <td style="text-align:right;">
-0.1944
+0.1478
 </td>
 <td style="text-align:right;">
-0.0189
+0.0099
 </td>
 <td style="text-align:right;">
-0.0015
+0.0007
 </td>
 <td style="text-align:right;">
 0e+00
@@ -3913,22 +3896,45 @@ N(0,6)+2 N(0,6) t-test
 </tr>
 <tr>
 <td style="text-align:left;">
+N(0,6)+2 N(0,6) t-test
+</td>
+<td style="text-align:right;">
+0.7932
+</td>
+<td style="text-align:right;">
+0.5935
+</td>
+<td style="text-align:right;">
+0.1912
+</td>
+<td style="text-align:right;">
+0.0203
+</td>
+<td style="text-align:right;">
+0.0011
+</td>
+<td style="text-align:right;">
+1e-04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 N(0,6)+2 N(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8569
+0.8518
 </td>
 <td style="text-align:right;">
-0.6412
+0.6353
 </td>
 <td style="text-align:right;">
-0.2169
+0.2185
 </td>
 <td style="text-align:right;">
-0.0221
+0.0253
 </td>
 <td style="text-align:right;">
-0.0019
+0.0022
 </td>
 <td style="text-align:right;">
 1e-04
@@ -3937,11 +3943,12 @@ N(0,6)+2 N(0,6) Wilcoxon
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-14-1.png)
+![]/research/img/simlulation/unnamed-chunk-14-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 14\] 두 그룹의 표본크기, 분산 같은 경우: Uniform distribution
+\[Table 14\] Type II error, 등분산,표본크기가 같은 경우: Uniform
+distribution
 </caption>
 <thead>
 <tr>
@@ -3973,10 +3980,10 @@ n100
 U(0,1)+0.5 U(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.3479
+0.3608
 </td>
 <td style="text-align:right;">
-0.0333
+0.0337
 </td>
 <td style="text-align:right;">
 0.0000
@@ -3996,13 +4003,13 @@ U(0,1)+0.5 U(0,1) t-test
 U(0,1)+0.5 U(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.5009
+0.4950
 </td>
 <td style="text-align:right;">
-0.0898
+0.0861
 </td>
 <td style="text-align:right;">
-0.0004
+0.0003
 </td>
 <td style="text-align:right;">
 0.0000
@@ -4019,19 +4026,19 @@ U(0,1)+0.5 U(0,1) Wilcoxon
 U(0,2)+0.5 U(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.7929
+0.8003
 </td>
 <td style="text-align:right;">
-0.5724
+0.5697
 </td>
 <td style="text-align:right;">
-0.1505
+0.1489
 </td>
 <td style="text-align:right;">
-0.0084
+0.0100
 </td>
 <td style="text-align:right;">
-0.0004
+0.0002
 </td>
 <td style="text-align:right;">
 0.0000
@@ -4042,22 +4049,22 @@ U(0,2)+0.5 U(0,2) t-test
 U(0,2)+0.5 U(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8673
+0.8698
 </td>
 <td style="text-align:right;">
-0.6346
+0.6298
 </td>
 <td style="text-align:right;">
-0.2141
+0.2128
 </td>
 <td style="text-align:right;">
-0.0214
+0.0232
 </td>
 <td style="text-align:right;">
 0.0015
 </td>
 <td style="text-align:right;">
-0.0002
+0.0001
 </td>
 </tr>
 <tr>
@@ -4065,22 +4072,22 @@ U(0,2)+0.5 U(0,2) Wilcoxon
 U(0,3)+0.5 U(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.8871
+0.8769
 </td>
 <td style="text-align:right;">
-0.7733
+0.7790
 </td>
 <td style="text-align:right;">
-0.4975
+0.4942
 </td>
 <td style="text-align:right;">
-0.1781
+0.1854
 </td>
 <td style="text-align:right;">
-0.0611
+0.0605
 </td>
 <td style="text-align:right;">
-0.0176
+0.0175
 </td>
 </tr>
 <tr>
@@ -4088,22 +4095,22 @@ U(0,3)+0.5 U(0,3) t-test
 U(0,3)+0.5 U(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9249
+0.9243
 </td>
 <td style="text-align:right;">
-0.8131
+0.8113
 </td>
 <td style="text-align:right;">
-0.5308
+0.5301
 </td>
 <td style="text-align:right;">
-0.2428
+0.2365
 </td>
 <td style="text-align:right;">
-0.0836
+0.0851
 </td>
 <td style="text-align:right;">
-0.0303
+0.0336
 </td>
 </tr>
 <tr>
@@ -4111,22 +4118,22 @@ U(0,3)+0.5 U(0,3) Wilcoxon
 U(0,4)+0.5 U(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.9117
+0.9116
 </td>
 <td style="text-align:right;">
-0.8523
+0.8586
 </td>
 <td style="text-align:right;">
-0.6825
+0.6865
 </td>
 <td style="text-align:right;">
-0.4317
+0.4351
 </td>
 <td style="text-align:right;">
-0.2532
+0.2514
 </td>
 <td style="text-align:right;">
-0.1409
+0.1337
 </td>
 </tr>
 <tr>
@@ -4134,22 +4141,22 @@ U(0,4)+0.5 U(0,4) t-test
 U(0,4)+0.5 U(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9484
+0.9402
 </td>
 <td style="text-align:right;">
-0.8799
+0.8790
 </td>
 <td style="text-align:right;">
-0.7068
+0.7038
 </td>
 <td style="text-align:right;">
-0.4702
+0.4739
 </td>
 <td style="text-align:right;">
-0.2885
+0.2840
 </td>
 <td style="text-align:right;">
-0.1703
+0.1782
 </td>
 </tr>
 <tr>
@@ -4157,22 +4164,22 @@ U(0,4)+0.5 U(0,4) Wilcoxon
 U(0,5)+0.5 U(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.9260
+0.9258
 </td>
 <td style="text-align:right;">
-0.8894
+0.8896
 </td>
 <td style="text-align:right;">
-0.7799
+0.7850
 </td>
 <td style="text-align:right;">
-0.5979
+0.5961
 </td>
 <td style="text-align:right;">
-0.4488
+0.4447
 </td>
 <td style="text-align:right;">
-0.3164
+0.3243
 </td>
 </tr>
 <tr>
@@ -4180,22 +4187,22 @@ U(0,5)+0.5 U(0,5) t-test
 U(0,5)+0.5 U(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9540
+0.9511
 </td>
 <td style="text-align:right;">
-0.9072
+0.9050
 </td>
 <td style="text-align:right;">
-0.7970
+0.7981
 </td>
 <td style="text-align:right;">
-0.6263
+0.6280
 </td>
 <td style="text-align:right;">
-0.4688
+0.4619
 </td>
 <td style="text-align:right;">
-0.3427
+0.3566
 </td>
 </tr>
 <tr>
@@ -4203,22 +4210,22 @@ U(0,5)+0.5 U(0,5) Wilcoxon
 U(0,6)+0.5 U(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.9275
+0.9326
 </td>
 <td style="text-align:right;">
-0.9097
+0.9132
 </td>
 <td style="text-align:right;">
-0.8344
+0.8319
 </td>
 <td style="text-align:right;">
-0.6963
+0.7012
 </td>
 <td style="text-align:right;">
-0.5838
+0.5866
 </td>
 <td style="text-align:right;">
-0.4774
+0.4772
 </td>
 </tr>
 <tr>
@@ -4226,30 +4233,30 @@ U(0,6)+0.5 U(0,6) t-test
 U(0,6)+0.5 U(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9606
+0.9576
 </td>
 <td style="text-align:right;">
-0.9217
+0.9220
 </td>
 <td style="text-align:right;">
-0.8465
+0.8399
 </td>
 <td style="text-align:right;">
-0.7201
+0.7185
 </td>
 <td style="text-align:right;">
-0.6139
+0.6009
 </td>
 <td style="text-align:right;">
-0.4970
+0.4969
 </td>
 </tr>
 </tbody>
 </table>
-![](/research/img/simlulation/unnamed-chunk-15-1.png)
+![]/research/img/simlulation/unnamed-chunk-15-1.png)
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 15\] 두 그룹의 표본크기, 분산 같은 경우: Chi-squared
+\[Table 15\] Type II error, 등분산,표본크기가 같은 경우: Chi-squared
 distribution
 </caption>
 <thead>
@@ -4282,22 +4289,22 @@ n100
 chisq(1)+0.5 chisq(1) t-test
 </td>
 <td style="text-align:right;">
-0.8932
+0.8868
 </td>
 <td style="text-align:right;">
-0.8446
+0.8364
 </td>
 <td style="text-align:right;">
-0.7194
+0.7319
 </td>
 <td style="text-align:right;">
-0.5492
+0.5456
 </td>
 <td style="text-align:right;">
-0.4030
+0.4094
 </td>
 <td style="text-align:right;">
-0.2929
+0.2921
 </td>
 </tr>
 <tr>
@@ -4305,22 +4312,22 @@ chisq(1)+0.5 chisq(1) t-test
 chisq(1)+0.5 chisq(1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8680
+0.8646
 </td>
 <td style="text-align:right;">
-0.6789
+0.6730
 </td>
 <td style="text-align:right;">
-0.2989
+0.3034
 </td>
 <td style="text-align:right;">
-0.0643
+0.0587
 </td>
 <td style="text-align:right;">
-0.0105
+0.0089
 </td>
 <td style="text-align:right;">
-0.0012
+0.0014
 </td>
 </tr>
 <tr>
@@ -4328,22 +4335,22 @@ chisq(1)+0.5 chisq(1) Wilcoxon
 chisq(2)+0.5 chisq(2) t-test
 </td>
 <td style="text-align:right;">
-0.9345
+0.9380
 </td>
 <td style="text-align:right;">
-0.9162
+0.9113
 </td>
 <td style="text-align:right;">
-0.8508
+0.8486
 </td>
 <td style="text-align:right;">
-0.7566
+0.7532
 </td>
 <td style="text-align:right;">
-0.6524
+0.6582
 </td>
 <td style="text-align:right;">
-0.5621
+0.5668
 </td>
 </tr>
 <tr>
@@ -4351,22 +4358,22 @@ chisq(2)+0.5 chisq(2) t-test
 chisq(2)+0.5 chisq(2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9437
+0.9384
 </td>
 <td style="text-align:right;">
-0.8811
+0.8819
 </td>
 <td style="text-align:right;">
-0.7330
+0.7402
 </td>
 <td style="text-align:right;">
-0.5207
+0.5223
 </td>
 <td style="text-align:right;">
-0.3485
+0.3436
 </td>
 <td style="text-align:right;">
-0.2265
+0.2203
 </td>
 </tr>
 <tr>
@@ -4374,22 +4381,22 @@ chisq(2)+0.5 chisq(2) Wilcoxon
 chisq(3)+0.5 chisq(3) t-test
 </td>
 <td style="text-align:right;">
-0.9454
+0.9441
 </td>
 <td style="text-align:right;">
-0.9271
+0.9277
 </td>
 <td style="text-align:right;">
-0.8843
+0.8911
 </td>
 <td style="text-align:right;">
-0.8217
+0.8188
 </td>
 <td style="text-align:right;">
-0.7648
+0.7542
 </td>
 <td style="text-align:right;">
-0.6943
+0.6946
 </td>
 </tr>
 <tr>
@@ -4397,22 +4404,22 @@ chisq(3)+0.5 chisq(3) t-test
 chisq(3)+0.5 chisq(3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9566
+0.9558
 </td>
 <td style="text-align:right;">
-0.9246
+0.9238
 </td>
 <td style="text-align:right;">
-0.8450
+0.8460
 </td>
 <td style="text-align:right;">
-0.7297
+0.7337
 </td>
 <td style="text-align:right;">
-0.6297
+0.6281
 </td>
 <td style="text-align:right;">
-0.5288
+0.5287
 </td>
 </tr>
 <tr>
@@ -4420,22 +4427,22 @@ chisq(3)+0.5 chisq(3) Wilcoxon
 chisq(4)+0.5 chisq(4) t-test
 </td>
 <td style="text-align:right;">
-0.9517
+0.9458
 </td>
 <td style="text-align:right;">
-0.9282
+0.9308
 </td>
 <td style="text-align:right;">
-0.9052
+0.9085
 </td>
 <td style="text-align:right;">
-0.8574
+0.8590
 </td>
 <td style="text-align:right;">
-0.8124
+0.8033
 </td>
 <td style="text-align:right;">
-0.7586
+0.7619
 </td>
 </tr>
 <tr>
@@ -4443,22 +4450,22 @@ chisq(4)+0.5 chisq(4) t-test
 chisq(4)+0.5 chisq(4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9629
+0.9602
 </td>
 <td style="text-align:right;">
-0.9339
+0.9379
 </td>
 <td style="text-align:right;">
-0.8910
+0.8803
 </td>
 <td style="text-align:right;">
-0.8058
+0.8055
 </td>
 <td style="text-align:right;">
-0.7453
+0.7402
 </td>
 <td style="text-align:right;">
-0.6735
+0.6787
 </td>
 </tr>
 <tr>
@@ -4466,22 +4473,22 @@ chisq(4)+0.5 chisq(4) Wilcoxon
 chisq(5)+0.5 chisq(5) t-test
 </td>
 <td style="text-align:right;">
-0.9453
+0.9461
 </td>
 <td style="text-align:right;">
-0.9355
+0.9334
 </td>
 <td style="text-align:right;">
-0.9172
+0.9079
 </td>
 <td style="text-align:right;">
-0.8707
+0.8742
 </td>
 <td style="text-align:right;">
-0.8334
+0.8436
 </td>
 <td style="text-align:right;">
-0.8007
+0.7979
 </td>
 </tr>
 <tr>
@@ -4489,22 +4496,22 @@ chisq(5)+0.5 chisq(5) t-test
 chisq(5)+0.5 chisq(5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9631
+0.9660
 </td>
 <td style="text-align:right;">
-0.9398
+0.9447
 </td>
 <td style="text-align:right;">
-0.9035
+0.9051
 </td>
 <td style="text-align:right;">
-0.8570
+0.8568
 </td>
 <td style="text-align:right;">
-0.8010
+0.8019
 </td>
 <td style="text-align:right;">
-0.7459
+0.7467
 </td>
 </tr>
 <tr>
@@ -4512,22 +4519,22 @@ chisq(5)+0.5 chisq(5) Wilcoxon
 chisq(6)+0.5 chisq(6) t-test
 </td>
 <td style="text-align:right;">
-0.9481
+0.9506
 </td>
 <td style="text-align:right;">
-0.9412
+0.9377
 </td>
 <td style="text-align:right;">
-0.9176
+0.9211
 </td>
 <td style="text-align:right;">
-0.8909
+0.8911
 </td>
 <td style="text-align:right;">
-0.8569
+0.8522
 </td>
 <td style="text-align:right;">
-0.8268
+0.8236
 </td>
 </tr>
 <tr>
@@ -4535,32 +4542,32 @@ chisq(6)+0.5 chisq(6) t-test
 chisq(6)+0.5 chisq(6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9649
+0.9618
 </td>
 <td style="text-align:right;">
-0.9444
+0.9405
 </td>
 <td style="text-align:right;">
-0.9191
+0.9131
 </td>
 <td style="text-align:right;">
-0.8781
+0.8748
 </td>
 <td style="text-align:right;">
-0.8326
+0.8381
 </td>
 <td style="text-align:right;">
-0.7981
+0.7908
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-16-1.png)
+![]/research/img/simlulation/unnamed-chunk-16-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 16\] 두 그룹의 표본크기, 분산 같은 경우: Exponential
+\[Table 16\] Type II error, 등분산,표본크기가 같은 경우: Exponential
 distribution
 </caption>
 <thead>
@@ -4593,22 +4600,22 @@ n100
 exp(1/1)+0.5 exp(1/1) t-test
 </td>
 <td style="text-align:right;">
-0.8634
+0.8642
 </td>
 <td style="text-align:right;">
-0.7804
+0.7770
 </td>
 <td style="text-align:right;">
-0.5572
+0.5512
 </td>
 <td style="text-align:right;">
-0.2963
+0.2927
 </td>
 <td style="text-align:right;">
-0.1422
+0.1401
 </td>
 <td style="text-align:right;">
-0.0644
+0.0638
 </td>
 </tr>
 <tr>
@@ -4616,22 +4623,22 @@ exp(1/1)+0.5 exp(1/1) t-test
 exp(1/1)+0.5 exp(1/1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8781
+0.8743
 </td>
 <td style="text-align:right;">
-0.6931
+0.6954
 </td>
 <td style="text-align:right;">
-0.3148
+0.3058
 </td>
 <td style="text-align:right;">
-0.0612
+0.0665
 </td>
 <td style="text-align:right;">
-0.0102
+0.0117
 </td>
 <td style="text-align:right;">
-0.0015
+0.0021
 </td>
 </tr>
 <tr>
@@ -4639,22 +4646,22 @@ exp(1/1)+0.5 exp(1/1) Wilcoxon
 exp(1/2)+0.5 exp(1/2) t-test
 </td>
 <td style="text-align:right;">
-0.9364
+0.9409
 </td>
 <td style="text-align:right;">
-0.9133
+0.9096
 </td>
 <td style="text-align:right;">
 0.8456
 </td>
 <td style="text-align:right;">
-0.7465
+0.7446
 </td>
 <td style="text-align:right;">
-0.6615
+0.6516
 </td>
 <td style="text-align:right;">
-0.5702
+0.5624
 </td>
 </tr>
 <tr>
@@ -4662,22 +4669,22 @@ exp(1/2)+0.5 exp(1/2) t-test
 exp(1/2)+0.5 exp(1/2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9429
+0.9437
 </td>
 <td style="text-align:right;">
-0.8799
+0.8855
 </td>
 <td style="text-align:right;">
-0.7336
+0.7312
 </td>
 <td style="text-align:right;">
-0.5166
+0.5162
 </td>
 <td style="text-align:right;">
-0.3416
+0.3484
 </td>
 <td style="text-align:right;">
-0.2249
+0.2123
 </td>
 </tr>
 <tr>
@@ -4685,22 +4692,22 @@ exp(1/2)+0.5 exp(1/2) Wilcoxon
 exp(1/3)+0.5 exp(1/3) t-test
 </td>
 <td style="text-align:right;">
-0.9488
+0.9447
 </td>
 <td style="text-align:right;">
-0.9364
+0.9345
 </td>
 <td style="text-align:right;">
-0.9046
+0.9088
 </td>
 <td style="text-align:right;">
-0.8657
+0.8606
 </td>
 <td style="text-align:right;">
-0.8201
+0.8135
 </td>
 <td style="text-align:right;">
-0.7760
+0.7823
 </td>
 </tr>
 <tr>
@@ -4708,22 +4715,22 @@ exp(1/3)+0.5 exp(1/3) t-test
 exp(1/3)+0.5 exp(1/3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9538
+0.9548
 </td>
 <td style="text-align:right;">
-0.9231
+0.9178
 </td>
 <td style="text-align:right;">
-0.8467
+0.8461
 </td>
 <td style="text-align:right;">
-0.7379
+0.7418
 </td>
 <td style="text-align:right;">
-0.6362
+0.6284
 </td>
 <td style="text-align:right;">
-0.5299
+0.5342
 </td>
 </tr>
 <tr>
@@ -4731,22 +4738,22 @@ exp(1/3)+0.5 exp(1/3) Wilcoxon
 exp(1/4)+0.5 exp(1/4) t-test
 </td>
 <td style="text-align:right;">
-0.9525
+0.9544
 </td>
 <td style="text-align:right;">
-0.9472
+0.9465
 </td>
 <td style="text-align:right;">
-0.9258
+0.9310
 </td>
 <td style="text-align:right;">
-0.9039
+0.9046
 </td>
 <td style="text-align:right;">
-0.8797
+0.8758
 </td>
 <td style="text-align:right;">
-0.8510
+0.8500
 </td>
 </tr>
 <tr>
@@ -4754,22 +4761,22 @@ exp(1/4)+0.5 exp(1/4) t-test
 exp(1/4)+0.5 exp(1/4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9614
+0.9665
 </td>
 <td style="text-align:right;">
-0.9379
+0.9368
 </td>
 <td style="text-align:right;">
-0.8899
+0.8870
 </td>
 <td style="text-align:right;">
-0.8256
+0.8317
 </td>
 <td style="text-align:right;">
-0.7639
+0.7584
 </td>
 <td style="text-align:right;">
-0.7026
+0.7010
 </td>
 </tr>
 <tr>
@@ -4777,22 +4784,22 @@ exp(1/4)+0.5 exp(1/4) Wilcoxon
 exp(1/5)+0.5 exp(1/5) t-test
 </td>
 <td style="text-align:right;">
-0.9592
+0.9577
 </td>
 <td style="text-align:right;">
-0.9484
+0.9489
 </td>
 <td style="text-align:right;">
-0.9303
+0.9361
 </td>
 <td style="text-align:right;">
-0.9192
+0.9176
 </td>
 <td style="text-align:right;">
-0.9086
+0.9008
 </td>
 <td style="text-align:right;">
-0.8839
+0.8893
 </td>
 </tr>
 <tr>
@@ -4800,22 +4807,22 @@ exp(1/5)+0.5 exp(1/5) t-test
 exp(1/5)+0.5 exp(1/5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9651
+0.9641
 </td>
 <td style="text-align:right;">
-0.9473
+0.9407
 </td>
 <td style="text-align:right;">
-0.9119
+0.9108
 </td>
 <td style="text-align:right;">
-0.8778
+0.8701
 </td>
 <td style="text-align:right;">
-0.8303
+0.8320
 </td>
 <td style="text-align:right;">
-0.7906
+0.7911
 </td>
 </tr>
 <tr>
@@ -4823,22 +4830,22 @@ exp(1/5)+0.5 exp(1/5) Wilcoxon
 exp(1/6)+0.5 exp(1/6) t-test
 </td>
 <td style="text-align:right;">
-0.9597
+0.9589
 </td>
 <td style="text-align:right;">
-0.9561
+0.9518
 </td>
 <td style="text-align:right;">
-0.9419
+0.9417
 </td>
 <td style="text-align:right;">
-0.9296
+0.9289
 </td>
 <td style="text-align:right;">
-0.9193
+0.9177
 </td>
 <td style="text-align:right;">
-0.9080
+0.9092
 </td>
 </tr>
 <tr>
@@ -4846,34 +4853,34 @@ exp(1/6)+0.5 exp(1/6) t-test
 exp(1/6)+0.5 exp(1/6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9640
+0.9674
 </td>
 <td style="text-align:right;">
-0.9474
+0.9442
 </td>
 <td style="text-align:right;">
-0.9292
+0.9240
 </td>
 <td style="text-align:right;">
-0.8938
+0.8984
 </td>
 <td style="text-align:right;">
-0.8673
+0.8683
 </td>
 <td style="text-align:right;">
-0.8349
+0.8323
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-17-1.png)
+![]/research/img/simlulation/unnamed-chunk-17-1.png)
 
 ## N=10000,등분산,표본크기가 다른 경우
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 17\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Normal
+\[Table 17\] Type II error, 등분산,표본크기가 다른 경우: Normal
 distribution
 </caption>
 <thead>
@@ -4903,19 +4910,19 @@ n105, n35
 N(0,1)+0.5 N(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.8504
+0.8508
 </td>
 <td style="text-align:right;">
 0.7361
 </td>
 <td style="text-align:right;">
-0.6148
+0.6235
 </td>
 <td style="text-align:right;">
-0.4215
+0.4363
 </td>
 <td style="text-align:right;">
-0.2770
+0.2799
 </td>
 </tr>
 <tr>
@@ -4923,19 +4930,19 @@ N(0,1)+0.5 N(0,1) t-test
 N(0,1)+0.5 N(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8757
+0.8768
 </td>
 <td style="text-align:right;">
-0.7421
+0.7524
 </td>
 <td style="text-align:right;">
-0.6484
+0.6395
 </td>
 <td style="text-align:right;">
-0.4440
+0.4578
 </td>
 <td style="text-align:right;">
-0.3079
+0.3028
 </td>
 </tr>
 <tr>
@@ -4943,19 +4950,19 @@ N(0,1)+0.5 N(0,1) Wilcoxon
 N(0,2)+0.5 N(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.9024
+0.8970
 </td>
 <td style="text-align:right;">
-0.8375
+0.8400
 </td>
 <td style="text-align:right;">
-0.7884
+0.7811
 </td>
 <td style="text-align:right;">
-0.6718
+0.6691
 </td>
 <td style="text-align:right;">
-0.5645
+0.5641
 </td>
 </tr>
 <tr>
@@ -4963,19 +4970,19 @@ N(0,2)+0.5 N(0,2) t-test
 N(0,2)+0.5 N(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9144
+0.9177
 </td>
 <td style="text-align:right;">
-0.8532
+0.8478
 </td>
 <td style="text-align:right;">
-0.7975
+0.8001
 </td>
 <td style="text-align:right;">
-0.6804
+0.6884
 </td>
 <td style="text-align:right;">
-0.5827
+0.5782
 </td>
 </tr>
 <tr>
@@ -4983,19 +4990,19 @@ N(0,2)+0.5 N(0,2) Wilcoxon
 N(0,3)+0.5 N(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.9229
+0.9151
 </td>
 <td style="text-align:right;">
-0.8779
+0.8794
 </td>
 <td style="text-align:right;">
-0.8407
+0.8458
 </td>
 <td style="text-align:right;">
-0.7579
+0.7650
 </td>
 <td style="text-align:right;">
-0.6873
+0.6798
 </td>
 </tr>
 <tr>
@@ -5003,19 +5010,19 @@ N(0,3)+0.5 N(0,3) t-test
 N(0,3)+0.5 N(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9330
+0.9350
 </td>
 <td style="text-align:right;">
-0.8836
+0.8829
 </td>
 <td style="text-align:right;">
-0.8487
+0.8465
 </td>
 <td style="text-align:right;">
-0.7757
+0.7708
 </td>
 <td style="text-align:right;">
-0.6939
+0.7005
 </td>
 </tr>
 <tr>
@@ -5023,19 +5030,19 @@ N(0,3)+0.5 N(0,3) Wilcoxon
 N(0,4)+0.5 N(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.9292
+0.9282
 </td>
 <td style="text-align:right;">
-0.8964
+0.8975
 </td>
 <td style="text-align:right;">
-0.8682
+0.8688
 </td>
 <td style="text-align:right;">
-0.8136
+0.8131
 </td>
 <td style="text-align:right;">
-0.7583
+0.7520
 </td>
 </tr>
 <tr>
@@ -5043,19 +5050,19 @@ N(0,4)+0.5 N(0,4) t-test
 N(0,4)+0.5 N(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9377
+0.9388
 </td>
 <td style="text-align:right;">
-0.9040
+0.9045
 </td>
 <td style="text-align:right;">
-0.8750
+0.8796
 </td>
 <td style="text-align:right;">
-0.8122
+0.8197
 </td>
 <td style="text-align:right;">
-0.7565
+0.7654
 </td>
 </tr>
 <tr>
@@ -5063,19 +5070,19 @@ N(0,4)+0.5 N(0,4) Wilcoxon
 N(0,5)+0.5 N(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.9293
+0.9287
 </td>
 <td style="text-align:right;">
-0.9115
+0.9083
 </td>
 <td style="text-align:right;">
-0.8877
+0.8870
 </td>
 <td style="text-align:right;">
-0.8419
+0.8394
 </td>
 <td style="text-align:right;">
-0.7968
+0.8012
 </td>
 </tr>
 <tr>
@@ -5083,19 +5090,19 @@ N(0,5)+0.5 N(0,5) t-test
 N(0,5)+0.5 N(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9443
+0.9375
 </td>
 <td style="text-align:right;">
-0.9115
+0.9131
 </td>
 <td style="text-align:right;">
-0.8886
+0.8940
 </td>
 <td style="text-align:right;">
-0.8464
+0.8525
 </td>
 <td style="text-align:right;">
-0.8058
+0.8024
 </td>
 </tr>
 <tr>
@@ -5103,19 +5110,19 @@ N(0,5)+0.5 N(0,5) Wilcoxon
 N(0,6)+0.5 N(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.9314
+0.9368
 </td>
 <td style="text-align:right;">
-0.9165
+0.9123
 </td>
 <td style="text-align:right;">
-0.8941
+0.8990
 </td>
 <td style="text-align:right;">
-0.8593
+0.8585
 </td>
 <td style="text-align:right;">
-0.8155
+0.8202
 </td>
 </tr>
 <tr>
@@ -5123,29 +5130,29 @@ N(0,6)+0.5 N(0,6) t-test
 N(0,6)+0.5 N(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9473
+0.9406
 </td>
 <td style="text-align:right;">
-0.9169
+0.9136
 </td>
 <td style="text-align:right;">
-0.8989
+0.9034
 </td>
 <td style="text-align:right;">
-0.8658
+0.8669
 </td>
 <td style="text-align:right;">
-0.8243
+0.8293
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-18-1.png)
+![]/research/img/simlulation/unnamed-chunk-18-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 18\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Uniform
+\[Table 18\] Type II error, 등분산,표본크기가 다른 경우: Uniform
 distribution
 </caption>
 <thead>
@@ -5175,13 +5182,13 @@ n105, n35
 U(0,1)+0.5 U(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.1029
+0.1122
 </td>
 <td style="text-align:right;">
-0.0031
+0.0020
 </td>
 <td style="text-align:right;">
-0.0001
+0.0000
 </td>
 <td style="text-align:right;">
 0.0000
@@ -5195,13 +5202,13 @@ U(0,1)+0.5 U(0,1) t-test
 U(0,1)+0.5 U(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.1965
+0.2095
 </td>
 <td style="text-align:right;">
-0.0114
+0.0094
 </td>
 <td style="text-align:right;">
-0.0003
+0.0010
 </td>
 <td style="text-align:right;">
 0.0000
@@ -5215,19 +5222,19 @@ U(0,1)+0.5 U(0,1) Wilcoxon
 U(0,2)+0.5 U(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.6648
+0.6526
 </td>
 <td style="text-align:right;">
-0.3661
+0.3670
 </td>
 <td style="text-align:right;">
-0.1900
+0.1797
 </td>
 <td style="text-align:right;">
-0.0394
+0.0380
 </td>
 <td style="text-align:right;">
-0.0065
+0.0056
 </td>
 </tr>
 <tr>
@@ -5235,19 +5242,19 @@ U(0,2)+0.5 U(0,2) t-test
 U(0,2)+0.5 U(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.7178
+0.7314
 </td>
 <td style="text-align:right;">
-0.4426
+0.4381
 </td>
 <td style="text-align:right;">
-0.2495
+0.2480
 </td>
 <td style="text-align:right;">
-0.0705
+0.0718
 </td>
 <td style="text-align:right;">
-0.0164
+0.0180
 </td>
 </tr>
 <tr>
@@ -5255,19 +5262,19 @@ U(0,2)+0.5 U(0,2) Wilcoxon
 U(0,3)+0.5 U(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.8236
+0.8226
 </td>
 <td style="text-align:right;">
-0.6692
+0.6688
 </td>
 <td style="text-align:right;">
-0.5253
+0.5283
 </td>
 <td style="text-align:right;">
-0.3072
+0.3026
 </td>
 <td style="text-align:right;">
-0.1577
+0.1582
 </td>
 </tr>
 <tr>
@@ -5275,19 +5282,19 @@ U(0,3)+0.5 U(0,3) t-test
 U(0,3)+0.5 U(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8597
+0.8564
 </td>
 <td style="text-align:right;">
-0.7068
+0.7044
 </td>
 <td style="text-align:right;">
-0.5734
+0.5690
 </td>
 <td style="text-align:right;">
-0.3501
+0.3531
 </td>
 <td style="text-align:right;">
-0.2025
+0.2135
 </td>
 </tr>
 <tr>
@@ -5295,19 +5302,19 @@ U(0,3)+0.5 U(0,3) Wilcoxon
 U(0,4)+0.5 U(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.8821
+0.8849
 </td>
 <td style="text-align:right;">
-0.7976
+0.7916
 </td>
 <td style="text-align:right;">
-0.7097
+0.7074
 </td>
 <td style="text-align:right;">
-0.5436
+0.5475
 </td>
 <td style="text-align:right;">
-0.4167
+0.4125
 </td>
 </tr>
 <tr>
@@ -5315,19 +5322,19 @@ U(0,4)+0.5 U(0,4) t-test
 U(0,4)+0.5 U(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8936
+0.9007
 </td>
 <td style="text-align:right;">
-0.8139
+0.8057
 </td>
 <td style="text-align:right;">
-0.7353
+0.7343
 </td>
 <td style="text-align:right;">
-0.5743
+0.5848
 </td>
 <td style="text-align:right;">
-0.4553
+0.4520
 </td>
 </tr>
 <tr>
@@ -5335,19 +5342,19 @@ U(0,4)+0.5 U(0,4) Wilcoxon
 U(0,5)+0.5 U(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.9061
+0.9064
 </td>
 <td style="text-align:right;">
-0.8548
+0.8480
 </td>
 <td style="text-align:right;">
-0.8016
+0.7971
 </td>
 <td style="text-align:right;">
-0.6951
+0.6925
 </td>
 <td style="text-align:right;">
-0.5837
+0.5740
 </td>
 </tr>
 <tr>
@@ -5355,19 +5362,19 @@ U(0,5)+0.5 U(0,5) t-test
 U(0,5)+0.5 U(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9217
+0.9214
 </td>
 <td style="text-align:right;">
-0.8609
+0.8586
 </td>
 <td style="text-align:right;">
-0.8134
+0.8140
 </td>
 <td style="text-align:right;">
-0.7112
+0.7080
 </td>
 <td style="text-align:right;">
-0.6076
+0.6104
 </td>
 </tr>
 <tr>
@@ -5375,19 +5382,19 @@ U(0,5)+0.5 U(0,5) Wilcoxon
 U(0,6)+0.5 U(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.9185
+0.9197
 </td>
 <td style="text-align:right;">
-0.8827
+0.8826
 </td>
 <td style="text-align:right;">
-0.8465
+0.8410
 </td>
 <td style="text-align:right;">
-0.7603
+0.7639
 </td>
 <td style="text-align:right;">
-0.6981
+0.6926
 </td>
 </tr>
 <tr>
@@ -5395,29 +5402,29 @@ U(0,6)+0.5 U(0,6) t-test
 U(0,6)+0.5 U(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9322
+0.9374
 </td>
 <td style="text-align:right;">
-0.8892
+0.8904
 </td>
 <td style="text-align:right;">
-0.8489
+0.8504
 </td>
 <td style="text-align:right;">
-0.7847
+0.7793
 </td>
 <td style="text-align:right;">
-0.6994
+0.7126
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-19-1.png)
+![]/research/img/simlulation/unnamed-chunk-19-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 19\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Chi-squared
+\[Table 19\] Type II error, 등분산,표본크기가 다른 경우: Chi-squared
 distribution
 </caption>
 <thead>
@@ -5447,19 +5454,19 @@ n105, n35
 chisq(1)+0.5 chisq(1) t-test
 </td>
 <td style="text-align:right;">
-0.8874
+0.8867
 </td>
 <td style="text-align:right;">
-0.8044
+0.8043
 </td>
 <td style="text-align:right;">
-0.7442
+0.7338
 </td>
 <td style="text-align:right;">
-0.6211
+0.6223
 </td>
 <td style="text-align:right;">
-0.5245
+0.5186
 </td>
 </tr>
 <tr>
@@ -5467,19 +5474,19 @@ chisq(1)+0.5 chisq(1) t-test
 chisq(1)+0.5 chisq(1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.7101
+0.7085
 </td>
 <td style="text-align:right;">
-0.5175
+0.5072
 </td>
 <td style="text-align:right;">
-0.3662
+0.3777
 </td>
 <td style="text-align:right;">
-0.1710
+0.1780
 </td>
 <td style="text-align:right;">
-0.0774
+0.0760
 </td>
 </tr>
 <tr>
@@ -5487,19 +5494,19 @@ chisq(1)+0.5 chisq(1) Wilcoxon
 chisq(2)+0.5 chisq(2) t-test
 </td>
 <td style="text-align:right;">
-0.9318
+0.9359
 </td>
 <td style="text-align:right;">
-0.8968
+0.8958
 </td>
 <td style="text-align:right;">
-0.8641
+0.8626
 </td>
 <td style="text-align:right;">
-0.8070
+0.7995
 </td>
 <td style="text-align:right;">
-0.7356
+0.7381
 </td>
 </tr>
 <tr>
@@ -5507,19 +5514,19 @@ chisq(2)+0.5 chisq(2) t-test
 chisq(2)+0.5 chisq(2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8813
+0.8880
 </td>
 <td style="text-align:right;">
-0.8011
+0.8064
 </td>
 <td style="text-align:right;">
-0.7395
+0.7295
 </td>
 <td style="text-align:right;">
-0.6114
+0.6166
 </td>
 <td style="text-align:right;">
-0.4982
+0.4921
 </td>
 </tr>
 <tr>
@@ -5527,19 +5534,19 @@ chisq(2)+0.5 chisq(2) Wilcoxon
 chisq(3)+0.5 chisq(3) t-test
 </td>
 <td style="text-align:right;">
-0.9411
+0.9384
 </td>
 <td style="text-align:right;">
-0.9137
+0.9193
 </td>
 <td style="text-align:right;">
-0.8909
+0.8975
 </td>
 <td style="text-align:right;">
-0.8555
+0.8576
 </td>
 <td style="text-align:right;">
-0.8147
+0.8175
 </td>
 </tr>
 <tr>
@@ -5547,19 +5554,19 @@ chisq(3)+0.5 chisq(3) t-test
 chisq(3)+0.5 chisq(3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9223
+0.9209
 </td>
 <td style="text-align:right;">
-0.8732
+0.8830
 </td>
 <td style="text-align:right;">
-0.8469
+0.8452
 </td>
 <td style="text-align:right;">
-0.7729
+0.7724
 </td>
 <td style="text-align:right;">
-0.7136
+0.7100
 </td>
 </tr>
 <tr>
@@ -5567,19 +5574,19 @@ chisq(3)+0.5 chisq(3) Wilcoxon
 chisq(4)+0.5 chisq(4) t-test
 </td>
 <td style="text-align:right;">
-0.9461
+0.9467
 </td>
 <td style="text-align:right;">
-0.9294
+0.9291
 </td>
 <td style="text-align:right;">
-0.9139
+0.9101
 </td>
 <td style="text-align:right;">
-0.8831
+0.8820
 </td>
 <td style="text-align:right;">
-0.8535
+0.8493
 </td>
 </tr>
 <tr>
@@ -5587,19 +5594,19 @@ chisq(4)+0.5 chisq(4) t-test
 chisq(4)+0.5 chisq(4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9314
+0.9340
 </td>
 <td style="text-align:right;">
-0.9004
+0.9032
 </td>
 <td style="text-align:right;">
-0.8805
+0.8839
 </td>
 <td style="text-align:right;">
-0.8382
+0.8403
 </td>
 <td style="text-align:right;">
-0.7958
+0.7907
 </td>
 </tr>
 <tr>
@@ -5607,19 +5614,19 @@ chisq(4)+0.5 chisq(4) Wilcoxon
 chisq(5)+0.5 chisq(5) t-test
 </td>
 <td style="text-align:right;">
-0.9500
+0.9453
 </td>
 <td style="text-align:right;">
-0.9322
+0.9339
 </td>
 <td style="text-align:right;">
-0.9173
+0.9200
 </td>
 <td style="text-align:right;">
-0.8983
+0.8980
 </td>
 <td style="text-align:right;">
-0.8739
+0.8744
 </td>
 </tr>
 <tr>
@@ -5627,19 +5634,19 @@ chisq(5)+0.5 chisq(5) t-test
 chisq(5)+0.5 chisq(5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9429
+0.9407
 </td>
 <td style="text-align:right;">
-0.9164
+0.9138
 </td>
 <td style="text-align:right;">
-0.9028
+0.8979
 </td>
 <td style="text-align:right;">
-0.8672
+0.8711
 </td>
 <td style="text-align:right;">
-0.8362
+0.8419
 </td>
 </tr>
 <tr>
@@ -5647,19 +5654,19 @@ chisq(5)+0.5 chisq(5) Wilcoxon
 chisq(6)+0.5 chisq(6) t-test
 </td>
 <td style="text-align:right;">
-0.9488
+0.9438
 </td>
 <td style="text-align:right;">
-0.9319
+0.9325
 </td>
 <td style="text-align:right;">
-0.9233
+0.9226
 </td>
 <td style="text-align:right;">
-0.9071
+0.9008
 </td>
 <td style="text-align:right;">
-0.8913
+0.8895
 </td>
 </tr>
 <tr>
@@ -5667,29 +5674,29 @@ chisq(6)+0.5 chisq(6) t-test
 chisq(6)+0.5 chisq(6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9454
+0.9461
 </td>
 <td style="text-align:right;">
-0.9232
+0.9250
 </td>
 <td style="text-align:right;">
-0.9188
+0.9089
 </td>
 <td style="text-align:right;">
-0.8873
+0.8915
 </td>
 <td style="text-align:right;">
-0.8629
+0.8662
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-20-1.png)
+![]/research/img/simlulation/unnamed-chunk-20-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 20\] 두 그룹의 표본크기는 다르고, 분산 같은 경우: Exponential
+\[Table 20\] Type II error, 등분산,표본크기가 다른 경우: Exponential
 distribution
 </caption>
 <thead>
@@ -5719,19 +5726,19 @@ n105, n35
 exp(1/1)+0.5 exp(1/1) t-test
 </td>
 <td style="text-align:right;">
-0.8237
+0.8286
 </td>
 <td style="text-align:right;">
-0.6934
+0.6931
 </td>
 <td style="text-align:right;">
-0.5784
+0.5763
 </td>
 <td style="text-align:right;">
-0.4026
+0.3977
 </td>
 <td style="text-align:right;">
-0.2638
+0.2686
 </td>
 </tr>
 <tr>
@@ -5739,19 +5746,19 @@ exp(1/1)+0.5 exp(1/1) t-test
 exp(1/1)+0.5 exp(1/1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.7364
+0.7374
 </td>
 <td style="text-align:right;">
-0.5187
+0.5206
 </td>
 <td style="text-align:right;">
-0.3729
+0.3608
 </td>
 <td style="text-align:right;">
-0.1778
+0.1758
 </td>
 <td style="text-align:right;">
-0.0788
+0.0774
 </td>
 </tr>
 <tr>
@@ -5759,19 +5766,19 @@ exp(1/1)+0.5 exp(1/1) Wilcoxon
 exp(1/2)+0.5 exp(1/2) t-test
 </td>
 <td style="text-align:right;">
-0.9382
+0.9362
 </td>
 <td style="text-align:right;">
-0.8908
+0.8916
 </td>
 <td style="text-align:right;">
-0.8620
+0.8636
 </td>
 <td style="text-align:right;">
-0.7939
+0.8055
 </td>
 <td style="text-align:right;">
-0.7452
+0.7425
 </td>
 </tr>
 <tr>
@@ -5779,19 +5786,19 @@ exp(1/2)+0.5 exp(1/2) t-test
 exp(1/2)+0.5 exp(1/2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8858
+0.8838
 </td>
 <td style="text-align:right;">
-0.7953
+0.7945
 </td>
 <td style="text-align:right;">
-0.7275
+0.7440
 </td>
 <td style="text-align:right;">
-0.6077
+0.6050
 </td>
 <td style="text-align:right;">
-0.4988
+0.4936
 </td>
 </tr>
 <tr>
@@ -5799,19 +5806,19 @@ exp(1/2)+0.5 exp(1/2) Wilcoxon
 exp(1/3)+0.5 exp(1/3) t-test
 </td>
 <td style="text-align:right;">
-0.9485
+0.9497
 </td>
 <td style="text-align:right;">
-0.9327
+0.9320
 </td>
 <td style="text-align:right;">
-0.9147
+0.9152
 </td>
 <td style="text-align:right;">
-0.8920
+0.8870
 </td>
 <td style="text-align:right;">
-0.8607
+0.8624
 </td>
 </tr>
 <tr>
@@ -5819,19 +5826,19 @@ exp(1/3)+0.5 exp(1/3) t-test
 exp(1/3)+0.5 exp(1/3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9207
+0.9189
 </td>
 <td style="text-align:right;">
-0.8688
+0.8678
 </td>
 <td style="text-align:right;">
-0.8454
+0.8470
 </td>
 <td style="text-align:right;">
-0.7751
+0.7744
 </td>
 <td style="text-align:right;">
-0.7099
+0.7108
 </td>
 </tr>
 <tr>
@@ -5839,19 +5846,19 @@ exp(1/3)+0.5 exp(1/3) Wilcoxon
 exp(1/4)+0.5 exp(1/4) t-test
 </td>
 <td style="text-align:right;">
-0.9575
+0.9547
 </td>
 <td style="text-align:right;">
-0.9432
+0.9427
 </td>
 <td style="text-align:right;">
-0.9316
+0.9331
 </td>
 <td style="text-align:right;">
-0.9146
+0.9190
 </td>
 <td style="text-align:right;">
-0.9015
+0.8999
 </td>
 </tr>
 <tr>
@@ -5859,19 +5866,19 @@ exp(1/4)+0.5 exp(1/4) t-test
 exp(1/4)+0.5 exp(1/4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9333
+0.9344
 </td>
 <td style="text-align:right;">
-0.9006
+0.8980
 </td>
 <td style="text-align:right;">
-0.8842
+0.8801
 </td>
 <td style="text-align:right;">
-0.8446
+0.8450
 </td>
 <td style="text-align:right;">
-0.8092
+0.8093
 </td>
 </tr>
 <tr>
@@ -5879,19 +5886,19 @@ exp(1/4)+0.5 exp(1/4) Wilcoxon
 exp(1/5)+0.5 exp(1/5) t-test
 </td>
 <td style="text-align:right;">
-0.9578
+0.9548
 </td>
 <td style="text-align:right;">
-0.9489
+0.9508
 </td>
 <td style="text-align:right;">
-0.9390
+0.9440
 </td>
 <td style="text-align:right;">
-0.9324
+0.9302
 </td>
 <td style="text-align:right;">
-0.9231
+0.9156
 </td>
 </tr>
 <tr>
@@ -5899,19 +5906,19 @@ exp(1/5)+0.5 exp(1/5) t-test
 exp(1/5)+0.5 exp(1/5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9377
+0.9369
 </td>
 <td style="text-align:right;">
-0.9164
+0.9197
 </td>
 <td style="text-align:right;">
-0.9005
+0.9050
 </td>
 <td style="text-align:right;">
-0.8776
+0.8777
 </td>
 <td style="text-align:right;">
-0.8563
+0.8498
 </td>
 </tr>
 <tr>
@@ -5919,19 +5926,19 @@ exp(1/5)+0.5 exp(1/5) Wilcoxon
 exp(1/6)+0.5 exp(1/6) t-test
 </td>
 <td style="text-align:right;">
-0.9579
+0.9611
 </td>
 <td style="text-align:right;">
-0.9478
+0.9495
 </td>
 <td style="text-align:right;">
-0.9461
+0.9471
 </td>
 <td style="text-align:right;">
-0.9425
+0.9400
 </td>
 <td style="text-align:right;">
-0.9293
+0.9302
 </td>
 </tr>
 <tr>
@@ -5939,31 +5946,31 @@ exp(1/6)+0.5 exp(1/6) t-test
 exp(1/6)+0.5 exp(1/6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9478
+0.9431
 </td>
 <td style="text-align:right;">
-0.9241
+0.9251
 </td>
 <td style="text-align:right;">
-0.9182
+0.9183
 </td>
 <td style="text-align:right;">
-0.9024
+0.9030
 </td>
 <td style="text-align:right;">
-0.8830
+0.8831
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-21-1.png)
+![]/research/img/simlulation/unnamed-chunk-21-1.png)
 
-## N=10000, 표본크기는 같고 분산이 다른 경우
+## N=10000, 분산이 다르고, 표본크기는 같은 경우
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 21\] 두 그룹의 표본크기 같고, 분산 다른 경우: Normal
+\[Table 21\] Type II error, 표본크기는 같고 분산이 다른 경우: Normal
 distribution
 </caption>
 <thead>
@@ -5996,22 +6003,22 @@ n100
 N(0,1.5)+0.5 N(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.9031
+0.9006
 </td>
 <td style="text-align:right;">
-0.8430
+0.8423
 </td>
 <td style="text-align:right;">
-0.6623
+0.6577
 </td>
 <td style="text-align:right;">
-0.4024
+0.3989
 </td>
 <td style="text-align:right;">
-0.2262
+0.2282
 </td>
 <td style="text-align:right;">
-0.1148
+0.1231
 </td>
 </tr>
 <tr>
@@ -6019,22 +6026,22 @@ N(0,1.5)+0.5 N(0,1) t-test
 N(0,1.5)+0.5 N(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9358
+0.9306
 </td>
 <td style="text-align:right;">
-0.8669
+0.8605
 </td>
 <td style="text-align:right;">
-0.6725
+0.6763
 </td>
 <td style="text-align:right;">
-0.4245
+0.4205
 </td>
 <td style="text-align:right;">
-0.2418
+0.2453
 </td>
 <td style="text-align:right;">
-0.1392
+0.1402
 </td>
 </tr>
 <tr>
@@ -6042,22 +6049,22 @@ N(0,1.5)+0.5 N(0,1) Wilcoxon
 N(0,2)+0.5 N(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.9227
+0.9169
 </td>
 <td style="text-align:right;">
-0.8816
+0.8804
 </td>
 <td style="text-align:right;">
-0.7617
+0.7786
 </td>
 <td style="text-align:right;">
-0.5767
+0.5890
 </td>
 <td style="text-align:right;">
-0.4136
+0.4248
 </td>
 <td style="text-align:right;">
-0.2988
+0.3022
 </td>
 </tr>
 <tr>
@@ -6065,22 +6072,22 @@ N(0,2)+0.5 N(0,2) t-test
 N(0,2)+0.5 N(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9466
+0.9459
 </td>
 <td style="text-align:right;">
-0.8940
+0.8984
 </td>
 <td style="text-align:right;">
-0.7765
+0.7763
 </td>
 <td style="text-align:right;">
-0.6028
+0.5923
 </td>
 <td style="text-align:right;">
-0.4368
+0.4439
 </td>
 <td style="text-align:right;">
-0.3174
+0.3170
 </td>
 </tr>
 <tr>
@@ -6088,22 +6095,22 @@ N(0,2)+0.5 N(0,2) Wilcoxon
 N(0,2.5)+0.5 N(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.9271
+0.9297
 </td>
 <td style="text-align:right;">
-0.9034
+0.9021
 </td>
 <td style="text-align:right;">
-0.8219
+0.8217
 </td>
 <td style="text-align:right;">
-0.6841
+0.6812
 </td>
 <td style="text-align:right;">
-0.5403
+0.5467
 </td>
 <td style="text-align:right;">
-0.4385
+0.4337
 </td>
 </tr>
 <tr>
@@ -6111,22 +6118,22 @@ N(0,2.5)+0.5 N(0,3) t-test
 N(0,2.5)+0.5 N(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9522
+0.9539
 </td>
 <td style="text-align:right;">
-0.9133
+0.9174
 </td>
 <td style="text-align:right;">
-0.8251
+0.8262
 </td>
 <td style="text-align:right;">
-0.6975
+0.6959
 </td>
 <td style="text-align:right;">
-0.5625
+0.5685
 </td>
 <td style="text-align:right;">
-0.4484
+0.4605
 </td>
 </tr>
 <tr>
@@ -6134,22 +6141,22 @@ N(0,2.5)+0.5 N(0,3) Wilcoxon
 N(0,3)+0.5 N(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.9302
+0.9375
 </td>
 <td style="text-align:right;">
-0.9136
+0.9092
 </td>
 <td style="text-align:right;">
-0.8463
+0.8448
 </td>
 <td style="text-align:right;">
-0.7354
+0.7347
 </td>
 <td style="text-align:right;">
-0.6317
+0.6387
 </td>
 <td style="text-align:right;">
-0.5379
+0.5322
 </td>
 </tr>
 <tr>
@@ -6157,22 +6164,22 @@ N(0,3)+0.5 N(0,4) t-test
 N(0,3)+0.5 N(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9591
+0.9583
 </td>
 <td style="text-align:right;">
-0.9239
+0.9234
 </td>
 <td style="text-align:right;">
-0.8492
+0.8540
 </td>
 <td style="text-align:right;">
-0.7485
+0.7437
 </td>
 <td style="text-align:right;">
-0.6516
+0.6372
 </td>
 <td style="text-align:right;">
-0.5495
+0.5507
 </td>
 </tr>
 <tr>
@@ -6180,22 +6187,22 @@ N(0,3)+0.5 N(0,4) Wilcoxon
 N(0,3.5)+0.5 N(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.9375
+0.9341
 </td>
 <td style="text-align:right;">
-0.9191
+0.9244
 </td>
 <td style="text-align:right;">
-0.8617
+0.8644
 </td>
 <td style="text-align:right;">
-0.7748
+0.7795
 </td>
 <td style="text-align:right;">
-0.6860
+0.6832
 </td>
 <td style="text-align:right;">
-0.6015
+0.5923
 </td>
 </tr>
 <tr>
@@ -6203,22 +6210,22 @@ N(0,3.5)+0.5 N(0,5) t-test
 N(0,3.5)+0.5 N(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9595
+0.9571
 </td>
 <td style="text-align:right;">
-0.9286
+0.9283
 </td>
 <td style="text-align:right;">
-0.8738
+0.8693
 </td>
 <td style="text-align:right;">
-0.7809
+0.7807
 </td>
 <td style="text-align:right;">
-0.6970
+0.7052
 </td>
 <td style="text-align:right;">
-0.6173
+0.6068
 </td>
 </tr>
 <tr>
@@ -6226,22 +6233,22 @@ N(0,3.5)+0.5 N(0,5) Wilcoxon
 N(0,4)+0.5 N(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.9376
+0.9366
 </td>
 <td style="text-align:right;">
-0.9207
+0.9203
 </td>
 <td style="text-align:right;">
-0.8781
+0.8804
 </td>
 <td style="text-align:right;">
-0.8048
+0.7956
 </td>
 <td style="text-align:right;">
-0.7300
+0.7258
 </td>
 <td style="text-align:right;">
-0.6515
+0.6452
 </td>
 </tr>
 <tr>
@@ -6249,32 +6256,32 @@ N(0,4)+0.5 N(0,6) t-test
 N(0,4)+0.5 N(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9593
+0.9579
 </td>
 <td style="text-align:right;">
-0.9331
+0.9354
 </td>
 <td style="text-align:right;">
-0.8879
+0.8838
 </td>
 <td style="text-align:right;">
-0.8122
+0.8076
 </td>
 <td style="text-align:right;">
-0.7375
+0.7348
 </td>
 <td style="text-align:right;">
-0.6653
+0.6598
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-22-1.png)
+![]/research/img/simlulation/unnamed-chunk-22-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 22\] 두 그룹의 표본크기 같고, 분산 다른 경우: Uniform
+\[Table 22\] Type II error, 표본크기는 같고 분산이 다른 경우: Uniform
 distribution
 </caption>
 <thead>
@@ -6307,19 +6314,19 @@ n100
 U(0,2.46)-0.23 U(0,1) t-test
 </td>
 <td style="text-align:right;">
-0.7666
+0.7758
 </td>
 <td style="text-align:right;">
-0.5289
+0.5262
 </td>
 <td style="text-align:right;">
-0.1121
+0.1076
 </td>
 <td style="text-align:right;">
-0.0036
+0.0040
 </td>
 <td style="text-align:right;">
-0.0002
+0.0000
 </td>
 <td style="text-align:right;">
 0.0000
@@ -6330,22 +6337,22 @@ U(0,2.46)-0.23 U(0,1) t-test
 U(0,2.46)-0.23 U(0,1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8532
+0.8516
 </td>
 <td style="text-align:right;">
-0.6665
+0.6667
 </td>
 <td style="text-align:right;">
-0.2856
+0.3032
 </td>
 <td style="text-align:right;">
-0.0602
+0.0580
 </td>
 <td style="text-align:right;">
-0.0117
+0.0100
 </td>
 <td style="text-align:right;">
-0.0012
+0.0015
 </td>
 </tr>
 <tr>
@@ -6353,22 +6360,22 @@ U(0,2.46)-0.23 U(0,1) Wilcoxon
 U(0,2.84)+0.08 U(0,2) t-test
 </td>
 <td style="text-align:right;">
-0.8409
+0.8456
 </td>
 <td style="text-align:right;">
-0.7000
+0.6930
 </td>
 <td style="text-align:right;">
-0.3146
+0.3240
 </td>
 <td style="text-align:right;">
-0.0577
+0.0588
 </td>
 <td style="text-align:right;">
-0.0109
+0.0086
 </td>
 <td style="text-align:right;">
-0.0011
+0.0008
 </td>
 </tr>
 <tr>
@@ -6376,22 +6383,22 @@ U(0,2.84)+0.08 U(0,2) t-test
 U(0,2.84)+0.08 U(0,2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.8996
+0.9042
 </td>
 <td style="text-align:right;">
-0.7538
+0.7583
 </td>
 <td style="text-align:right;">
-0.4097
+0.4181
 </td>
 <td style="text-align:right;">
-0.1227
+0.1270
 </td>
 <td style="text-align:right;">
-0.0360
+0.0315
 </td>
 <td style="text-align:right;">
-0.0079
+0.0075
 </td>
 </tr>
 <tr>
@@ -6399,22 +6406,22 @@ U(0,2.84)+0.08 U(0,2) Wilcoxon
 U(0,3.16)+0.42 U(0,3) t-test
 </td>
 <td style="text-align:right;">
-0.8858
+0.8842
 </td>
 <td style="text-align:right;">
-0.7867
+0.7901
 </td>
 <td style="text-align:right;">
-0.5144
+0.5092
 </td>
 <td style="text-align:right;">
-0.2081
+0.2053
 </td>
 <td style="text-align:right;">
-0.0687
+0.0696
 </td>
 <td style="text-align:right;">
-0.0230
+0.0222
 </td>
 </tr>
 <tr>
@@ -6422,22 +6429,22 @@ U(0,3.16)+0.42 U(0,3) t-test
 U(0,3.16)+0.42 U(0,3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9295
+0.9158
 </td>
 <td style="text-align:right;">
-0.8106
+0.8218
 </td>
 <td style="text-align:right;">
-0.5481
+0.5444
 </td>
 <td style="text-align:right;">
-0.2581
+0.2534
 </td>
 <td style="text-align:right;">
-0.1020
+0.1080
 </td>
 <td style="text-align:right;">
-0.0354
+0.0398
 </td>
 </tr>
 <tr>
@@ -6445,22 +6452,22 @@ U(0,3.16)+0.42 U(0,3) Wilcoxon
 U(0,3.5)+0.75 U(0,4) t-test
 </td>
 <td style="text-align:right;">
-0.9048
+0.9099
 </td>
 <td style="text-align:right;">
-0.8398
+0.8477
 </td>
 <td style="text-align:right;">
-0.6532
+0.6414
 </td>
 <td style="text-align:right;">
-0.3756
+0.3771
 </td>
 <td style="text-align:right;">
-0.1975
+0.2031
 </td>
 <td style="text-align:right;">
-0.1029
+0.1026
 </td>
 </tr>
 <tr>
@@ -6468,22 +6475,22 @@ U(0,3.5)+0.75 U(0,4) t-test
 U(0,3.5)+0.75 U(0,4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9413
+0.9383
 </td>
 <td style="text-align:right;">
-0.8649
+0.8652
 </td>
 <td style="text-align:right;">
-0.6755
+0.6801
 </td>
 <td style="text-align:right;">
-0.4168
+0.4230
 </td>
 <td style="text-align:right;">
-0.2557
+0.2455
 </td>
 <td style="text-align:right;">
-0.1347
+0.1414
 </td>
 </tr>
 <tr>
@@ -6491,22 +6498,22 @@ U(0,3.5)+0.75 U(0,4) Wilcoxon
 U(0,3.76)+1.12 U(0,5) t-test
 </td>
 <td style="text-align:right;">
-0.9150
+0.9145
 </td>
 <td style="text-align:right;">
-0.8703
+0.8743
 </td>
 <td style="text-align:right;">
-0.7218
+0.7321
 </td>
 <td style="text-align:right;">
-0.5137
+0.5191
 </td>
 <td style="text-align:right;">
-0.3350
+0.3401
 </td>
 <td style="text-align:right;">
-0.2124
+0.2143
 </td>
 </tr>
 <tr>
@@ -6514,22 +6521,22 @@ U(0,3.76)+1.12 U(0,5) t-test
 U(0,3.76)+1.12 U(0,5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9472
+0.9447
 </td>
 <td style="text-align:right;">
-0.8954
+0.9020
 </td>
 <td style="text-align:right;">
-0.7683
+0.7658
 </td>
 <td style="text-align:right;">
-0.5919
+0.5935
 </td>
 <td style="text-align:right;">
-0.4381
+0.4313
 </td>
 <td style="text-align:right;">
-0.3129
+0.3026
 </td>
 </tr>
 <tr>
@@ -6537,22 +6544,22 @@ U(0,3.76)+1.12 U(0,5) Wilcoxon
 U(0,4.0)+1.5 U(0,6) t-test
 </td>
 <td style="text-align:right;">
-0.9159
+0.9189
 </td>
 <td style="text-align:right;">
-0.8950
+0.8931
 </td>
 <td style="text-align:right;">
-0.7849
+0.7835
 </td>
 <td style="text-align:right;">
-0.6207
+0.6128
 </td>
 <td style="text-align:right;">
-0.4541
+0.4633
 </td>
 <td style="text-align:right;">
-0.3316
+0.3264
 </td>
 </tr>
 <tr>
@@ -6560,33 +6567,33 @@ U(0,4.0)+1.5 U(0,6) t-test
 U(0,4.0)+1.5 U(0,6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9488
+0.9483
 </td>
 <td style="text-align:right;">
-0.9162
+0.9110
 </td>
 <td style="text-align:right;">
-0.8209
+0.8200
 </td>
 <td style="text-align:right;">
-0.6987
+0.7049
 </td>
 <td style="text-align:right;">
-0.5743
+0.5740
 </td>
 <td style="text-align:right;">
-0.4663
+0.4602
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-23-1.png)
+![]/research/img/simlulation/unnamed-chunk-23-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 23\] 두 그룹의 표본크기 같고, 분산 다른 경우: Chi-squared
-distribution
+\[Table 23\] Type II error, 표본크기는 같고 분산이 다른 경우:
+Chi-squared distribution
 </caption>
 <thead>
 <tr>
@@ -6618,22 +6625,22 @@ n100
 chisq(1.5)-0 chisq(1) t-test
 </td>
 <td style="text-align:right;">
-0.9418
+0.9403
 </td>
 <td style="text-align:right;">
-0.9019
+0.8981
 </td>
 <td style="text-align:right;">
-0.7932
+0.7898
 </td>
 <td style="text-align:right;">
-0.6323
+0.6339
 </td>
 <td style="text-align:right;">
-0.5044
+0.4917
 </td>
 <td style="text-align:right;">
-0.3849
+0.3848
 </td>
 </tr>
 <tr>
@@ -6641,22 +6648,22 @@ chisq(1.5)-0 chisq(1) t-test
 chisq(1.5)-0 chisq(1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9365
+0.9358
 </td>
 <td style="text-align:right;">
-0.8670
+0.8701
 </td>
 <td style="text-align:right;">
-0.6905
+0.6940
 </td>
 <td style="text-align:right;">
-0.4446
+0.4458
 </td>
 <td style="text-align:right;">
-0.2651
+0.2590
 </td>
 <td style="text-align:right;">
-0.1533
+0.1463
 </td>
 </tr>
 <tr>
@@ -6664,22 +6671,22 @@ chisq(1.5)-0 chisq(1) Wilcoxon
 chisq(2)-0.5 chisq(2) t-test
 </td>
 <td style="text-align:right;">
-0.9384
+0.9343
 </td>
 <td style="text-align:right;">
-0.9143
+0.9064
 </td>
 <td style="text-align:right;">
-0.8461
+0.8468
 </td>
 <td style="text-align:right;">
-0.7479
+0.7507
 </td>
 <td style="text-align:right;">
 0.6608
 </td>
 <td style="text-align:right;">
-0.5676
+0.5693
 </td>
 </tr>
 <tr>
@@ -6687,22 +6694,22 @@ chisq(2)-0.5 chisq(2) t-test
 chisq(2)-0.5 chisq(2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9456
+0.9415
 </td>
 <td style="text-align:right;">
-0.8863
+0.8811
 </td>
 <td style="text-align:right;">
-0.7353
+0.7332
 </td>
 <td style="text-align:right;">
-0.5148
+0.5158
 </td>
 <td style="text-align:right;">
-0.3453
+0.3376
 </td>
 <td style="text-align:right;">
-0.2234
+0.2273
 </td>
 </tr>
 <tr>
@@ -6710,22 +6717,22 @@ chisq(2)-0.5 chisq(2) Wilcoxon
 chisq(2.5)+1 chisq(3) t-test
 </td>
 <td style="text-align:right;">
-0.9381
+0.9405
 </td>
 <td style="text-align:right;">
-0.9167
+0.9219
 </td>
 <td style="text-align:right;">
-0.8753
+0.8689
 </td>
 <td style="text-align:right;">
-0.8062
+0.8106
 </td>
 <td style="text-align:right;">
-0.7305
+0.7396
 </td>
 <td style="text-align:right;">
-0.6627
+0.6641
 </td>
 </tr>
 <tr>
@@ -6733,22 +6740,22 @@ chisq(2.5)+1 chisq(3) t-test
 chisq(2.5)+1 chisq(3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9537
+0.9507
 </td>
 <td style="text-align:right;">
-0.9056
+0.9043
 </td>
 <td style="text-align:right;">
-0.7916
+0.8024
 </td>
 <td style="text-align:right;">
-0.6307
+0.6279
 </td>
 <td style="text-align:right;">
-0.4861
+0.4908
 </td>
 <td style="text-align:right;">
-0.3660
+0.3644
 </td>
 </tr>
 <tr>
@@ -6756,22 +6763,22 @@ chisq(2.5)+1 chisq(3) Wilcoxon
 chisq(3)+1.5 chisq(4) t-test
 </td>
 <td style="text-align:right;">
-0.9431
+0.9435
 </td>
 <td style="text-align:right;">
-0.9235
+0.9326
 </td>
 <td style="text-align:right;">
-0.8882
+0.8930
 </td>
 <td style="text-align:right;">
-0.8362
+0.8401
 </td>
 <td style="text-align:right;">
-0.7851
+0.7816
 </td>
 <td style="text-align:right;">
-0.7257
+0.7298
 </td>
 </tr>
 <tr>
@@ -6779,22 +6786,22 @@ chisq(3)+1.5 chisq(4) t-test
 chisq(3)+1.5 chisq(4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9558
+0.9545
 </td>
 <td style="text-align:right;">
-0.9135
+0.9114
 </td>
 <td style="text-align:right;">
-0.8253
+0.8323
 </td>
 <td style="text-align:right;">
-0.6987
+0.6976
 </td>
 <td style="text-align:right;">
-0.5901
+0.5786
 </td>
 <td style="text-align:right;">
-0.4733
+0.4838
 </td>
 </tr>
 <tr>
@@ -6802,22 +6809,22 @@ chisq(3)+1.5 chisq(4) Wilcoxon
 chisq(3.5)+2 chisq(5) t-test
 </td>
 <td style="text-align:right;">
-0.9421
+0.9393
 </td>
 <td style="text-align:right;">
-0.9278
+0.9285
 </td>
 <td style="text-align:right;">
-0.9024
+0.9007
 </td>
 <td style="text-align:right;">
-0.8530
+0.8572
 </td>
 <td style="text-align:right;">
-0.8070
+0.8162
 </td>
 <td style="text-align:right;">
-0.7636
+0.7677
 </td>
 </tr>
 <tr>
@@ -6825,22 +6832,22 @@ chisq(3.5)+2 chisq(5) t-test
 chisq(3.5)+2 chisq(5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9550
+0.9605
 </td>
 <td style="text-align:right;">
-0.9277
+0.9215
 </td>
 <td style="text-align:right;">
-0.8534
+0.8507
 </td>
 <td style="text-align:right;">
-0.7428
+0.7498
 </td>
 <td style="text-align:right;">
-0.6443
+0.6492
 </td>
 <td style="text-align:right;">
-0.5559
+0.5506
 </td>
 </tr>
 <tr>
@@ -6848,22 +6855,22 @@ chisq(3.5)+2 chisq(5) Wilcoxon
 chisq(4)+2.5 chisq(6) t-test
 </td>
 <td style="text-align:right;">
-0.9415
+0.9420
 </td>
 <td style="text-align:right;">
-0.9342
+0.9319
 </td>
 <td style="text-align:right;">
-0.9078
+0.9108
 </td>
 <td style="text-align:right;">
-0.8723
+0.8688
 </td>
 <td style="text-align:right;">
-0.8336
+0.8355
 </td>
 <td style="text-align:right;">
-0.8022
+0.8000
 </td>
 </tr>
 <tr>
@@ -6871,33 +6878,33 @@ chisq(4)+2.5 chisq(6) t-test
 chisq(4)+2.5 chisq(6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9591
+0.9574
 </td>
 <td style="text-align:right;">
-0.9295
+0.9260
 </td>
 <td style="text-align:right;">
-0.8701
+0.8688
 </td>
 <td style="text-align:right;">
-0.7841
+0.7792
 </td>
 <td style="text-align:right;">
-0.6930
+0.7024
 </td>
 <td style="text-align:right;">
-0.6106
+0.6164
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-24-1.png)
+![]/research/img/simlulation/unnamed-chunk-24-1.png)
 
 <table class=" lightable-classic-2" style="font-size: 15px; font-family: Cambria; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-\[Table 24\] 두 그룹의 표본크기 같고, 분산 다른 경우: Exponential
-distribution
+\[Table 24\] Type II error, 표본크기는 같고 분산이 다른 경우:
+Exponential distribution
 </caption>
 <thead>
 <tr>
@@ -6929,22 +6936,22 @@ n100
 exp(1/1.5)-0 exp(1/1) t-test
 </td>
 <td style="text-align:right;">
-0.9372
+0.9382
 </td>
 <td style="text-align:right;">
-0.8910
+0.8862
 </td>
 <td style="text-align:right;">
-0.7377
+0.7413
 </td>
 <td style="text-align:right;">
-0.4926
+0.4908
 </td>
 <td style="text-align:right;">
-0.3197
+0.3148
 </td>
 <td style="text-align:right;">
-0.1930
+0.1991
 </td>
 </tr>
 <tr>
@@ -6952,22 +6959,22 @@ exp(1/1.5)-0 exp(1/1) t-test
 exp(1/1.5)-0 exp(1/1) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9484
+0.9461
 </td>
 <td style="text-align:right;">
-0.8986
+0.8961
 </td>
 <td style="text-align:right;">
-0.7673
+0.7749
 </td>
 <td style="text-align:right;">
-0.5968
+0.5913
 </td>
 <td style="text-align:right;">
-0.4369
+0.4327
 </td>
 <td style="text-align:right;">
-0.3041
+0.3118
 </td>
 </tr>
 <tr>
@@ -6975,22 +6982,22 @@ exp(1/1.5)-0 exp(1/1) Wilcoxon
 exp(1/2)+0.5 exp(1/2) t-test
 </td>
 <td style="text-align:right;">
-0.9408
+0.9339
 </td>
 <td style="text-align:right;">
-0.9139
+0.9088
 </td>
 <td style="text-align:right;">
-0.8468
+0.8505
 </td>
 <td style="text-align:right;">
-0.7545
+0.7568
 </td>
 <td style="text-align:right;">
-0.6558
+0.6554
 </td>
 <td style="text-align:right;">
-0.5623
+0.5772
 </td>
 </tr>
 <tr>
@@ -6998,22 +7005,22 @@ exp(1/2)+0.5 exp(1/2) t-test
 exp(1/2)+0.5 exp(1/2) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9424
+0.9438
 </td>
 <td style="text-align:right;">
-0.8861
+0.8818
 </td>
 <td style="text-align:right;">
-0.7211
+0.7209
 </td>
 <td style="text-align:right;">
-0.5113
+0.5087
 </td>
 <td style="text-align:right;">
-0.3419
+0.3453
 </td>
 <td style="text-align:right;">
-0.2190
+0.2245
 </td>
 </tr>
 <tr>
@@ -7021,22 +7028,22 @@ exp(1/2)+0.5 exp(1/2) Wilcoxon
 exp(1/2.5)+1 exp(1/3) t-test
 </td>
 <td style="text-align:right;">
-0.9359
+0.9310
 </td>
 <td style="text-align:right;">
-0.9157
+0.9163
 </td>
 <td style="text-align:right;">
-0.8922
+0.8828
 </td>
 <td style="text-align:right;">
-0.8404
+0.8350
 </td>
 <td style="text-align:right;">
-0.7863
+0.7930
 </td>
 <td style="text-align:right;">
-0.7378
+0.7405
 </td>
 </tr>
 <tr>
@@ -7044,22 +7051,22 @@ exp(1/2.5)+1 exp(1/3) t-test
 exp(1/2.5)+1 exp(1/3) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9438
+0.9409
 </td>
 <td style="text-align:right;">
-0.8753
+0.8806
 </td>
 <td style="text-align:right;">
-0.7227
+0.7384
 </td>
 <td style="text-align:right;">
-0.5286
+0.5198
 </td>
 <td style="text-align:right;">
-0.3601
+0.3570
 </td>
 <td style="text-align:right;">
-0.2303
+0.2376
 </td>
 </tr>
 <tr>
@@ -7067,22 +7074,22 @@ exp(1/2.5)+1 exp(1/3) Wilcoxon
 exp(1/3)+1.5 exp(1/4) t-test
 </td>
 <td style="text-align:right;">
-0.9297
+0.9278
 </td>
 <td style="text-align:right;">
-0.9175
+0.9184
 </td>
 <td style="text-align:right;">
-0.9020
+0.9011
 </td>
 <td style="text-align:right;">
-0.8696
+0.8709
 </td>
 <td style="text-align:right;">
-0.8448
+0.8429
 </td>
 <td style="text-align:right;">
-0.8080
+0.8146
 </td>
 </tr>
 <tr>
@@ -7090,22 +7097,22 @@ exp(1/3)+1.5 exp(1/4) t-test
 exp(1/3)+1.5 exp(1/4) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9398
+0.9378
 </td>
 <td style="text-align:right;">
-0.8805
+0.8802
 </td>
 <td style="text-align:right;">
-0.7372
+0.7364
 </td>
 <td style="text-align:right;">
-0.5446
+0.5396
 </td>
 <td style="text-align:right;">
-0.3681
+0.3711
 </td>
 <td style="text-align:right;">
-0.2501
+0.2493
 </td>
 </tr>
 <tr>
@@ -7113,22 +7120,22 @@ exp(1/3)+1.5 exp(1/4) Wilcoxon
 exp(1/3.5)+2 exp(1/5) t-test
 </td>
 <td style="text-align:right;">
-0.9309
+0.9320
 </td>
 <td style="text-align:right;">
-0.9168
+0.9232
 </td>
 <td style="text-align:right;">
-0.9083
+0.9102
 </td>
 <td style="text-align:right;">
-0.8903
+0.8946
 </td>
 <td style="text-align:right;">
-0.8715
+0.8826
 </td>
 <td style="text-align:right;">
-0.8573
+0.8571
 </td>
 </tr>
 <tr>
@@ -7136,22 +7143,22 @@ exp(1/3.5)+2 exp(1/5) t-test
 exp(1/3.5)+2 exp(1/5) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9436
+0.9353
 </td>
 <td style="text-align:right;">
-0.8813
+0.8781
 </td>
 <td style="text-align:right;">
-0.7455
+0.7465
 </td>
 <td style="text-align:right;">
-0.5472
+0.5492
 </td>
 <td style="text-align:right;">
-0.3819
+0.3952
 </td>
 <td style="text-align:right;">
-0.2555
+0.2633
 </td>
 </tr>
 <tr>
@@ -7159,22 +7166,22 @@ exp(1/3.5)+2 exp(1/5) Wilcoxon
 exp(1/4)+2.5 exp(1/6) t-test
 </td>
 <td style="text-align:right;">
-0.9277
+0.9310
 </td>
 <td style="text-align:right;">
-0.9230
+0.9247
 </td>
 <td style="text-align:right;">
-0.9156
+0.9172
 </td>
 <td style="text-align:right;">
-0.9024
+0.9106
 </td>
 <td style="text-align:right;">
-0.8948
+0.8850
 </td>
 <td style="text-align:right;">
-0.8758
+0.8769
 </td>
 </tr>
 <tr>
@@ -7182,25 +7189,25 @@ exp(1/4)+2.5 exp(1/6) t-test
 exp(1/4)+2.5 exp(1/6) Wilcoxon
 </td>
 <td style="text-align:right;">
-0.9391
+0.9375
 </td>
 <td style="text-align:right;">
-0.8855
+0.8867
 </td>
 <td style="text-align:right;">
-0.7481
+0.7500
 </td>
 <td style="text-align:right;">
-0.5600
+0.5567
 </td>
 <td style="text-align:right;">
-0.3963
+0.4059
 </td>
 <td style="text-align:right;">
-0.2779
+0.2726
 </td>
 </tr>
 </tbody>
 </table>
 
-![](/research/img/simlulation/unnamed-chunk-25-1.png)
+![]/research/img/simlulation/unnamed-chunk-25-1.png)
