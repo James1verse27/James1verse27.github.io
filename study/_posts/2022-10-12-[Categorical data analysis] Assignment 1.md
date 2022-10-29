@@ -18,8 +18,8 @@ toc: true
 
 ``` r
 library('kableExtra')
-library("dplyr")
-library("car")
+library('dplyr')
+library('car')
 ```
 
 </details>
