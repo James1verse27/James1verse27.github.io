@@ -110,7 +110,7 @@ print(a0)
 
 ## Q-1 6)
 
->**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 vs H_1 : \theta = \neq 0$$.**
+>**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 vs H_1 : \theta \neq 0$$.**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-6.jpg)
 
@@ -3364,10 +3364,10 @@ size:new
 plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses))
 ```
 
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-1.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-2.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-3.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-4.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-1.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-2.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-3.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-4.png)
 
 > 위의 결과를 보아 효과들은 전체적으로 비슷하지만 감마분포를 가정했을 때
 > 교호작용이 더 큰 SE 값을 가지고 있는다.
@@ -5144,10 +5144,10 @@ Backward elimination in Second-order interaction
 plot(auto_m)
 ```
 
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-1.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-2.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-3.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-4.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-1.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-2.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-3.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-4.png)
 
 # Q-6
 
