@@ -32,7 +32,7 @@ library('car')
 
 ## Q-1 1)
 
->**1) Is the Weibull distribution the exponential disprsion family?**
+>**1) Is the Weibull distribution the exponential dispersion family?**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-1.jpg)
 
@@ -72,8 +72,8 @@ sqrt(sum(y^2)/length(y))
 
 ## Q-1 5)
 
->**5) Suppose that $$\theta^(𝓀)$$ the $$𝓀^{th}$$ iterated value based on the NewtonRapson formmula.**
-**Obtain the fifth iterated value $$\theta^(5)$$ given $$\lambda=2$$.**
+>**5) Suppose that $$\theta^{𝓀}$$ the $$𝓀^{th}$$ iterated value based on the NewtonRapson formmula.**
+**Obtain the fifth iterated value $$\theta^{5}$$ given $$\lambda=2$$.**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-5.jpg)
 
@@ -104,7 +104,7 @@ print(a0)
 
 ## Q-1 6)
 
->**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 vs H_1 : \theta = \notequal 0$$.**
+>**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 vs H_1 : \theta = \neq 0$$.**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-6.jpg)
 
