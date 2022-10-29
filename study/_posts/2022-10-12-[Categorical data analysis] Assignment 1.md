@@ -57,9 +57,13 @@ sqrt(sum(y^2)/length(y))
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-3.jpg)
 
-## Q-1 4,5)
+## Q-1 4)
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1-4-5.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1-4.jpg)
+
+## Q-1 5)
+
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1-5.jpg)
 
 ``` r
 a0 <- mean(y)
@@ -5130,22 +5134,22 @@ plot(auto_m)
 
 ## Q-6 4.9
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-9.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-9.jpg)
 
 ## Q-6 4.13
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-13.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-13.jpg)
 
 ## Q-6 4.16
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-16.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-16.jpg)
 
 ## Q-6 4.22
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-22.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-22.jpg)
 
 ## Q-6 4.25
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-25.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-25.jpg)
 
 # 감사합니다.
