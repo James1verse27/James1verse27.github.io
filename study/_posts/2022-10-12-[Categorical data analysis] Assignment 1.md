@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[Categorical data analysis] Assignment1"
+title:  "[Categorical data analysis] Assignment-1"
 category: Study
 tag: [R, blog, jekyll, Data, Categorical data analysis]
 toc: true
@@ -26,16 +26,16 @@ library("car")
 
 # Q-1
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-1a.jpg)
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-1b.jpg)
+![](/study/img/Q-1a.jpg)
+![](/study/img/Q-1b.jpg)
 
 ## Q-1 1)
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-1-1.jpg)
+![](/study/img/Q-1-1.jpg)
 
 ## Q-1 2)
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-1-2.jpg)
+![](/study/img/Q-1-2.jpg)
 
 ``` r
 y <- c(1051, 1337, 1389, 1921, 1942, 
@@ -55,11 +55,11 @@ sqrt(sum(y^2)/length(y))
 
 ## Q-1 3)
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-1-3.jpg)
+![](/study/img/Q-1-3.jpg)
 
 ## Q-1 4,5)
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-1-4-5.jpg)
+![](/study/img/Q-1-4-5.jpg)
 
 ``` r
 a0 <- mean(y)
@@ -89,12 +89,12 @@ print(a0)
 
 ## Q-1 6)
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-1-6.jpg)
+![](/study/img/Q-1-6.jpg)
 
 # Q-2
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-2a.jpg)
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-2b.jpg)
+![](/study/img/Q-2a.jpg)
+![](/study/img/Q-2b.jpg)
 
 ``` r
 y <- c(2,3,6,7,8,9,10,12,15)
@@ -268,7 +268,7 @@ x
 </tbody>
 </table>
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-2-1.jpg)
+![](/study/img/Q-2-1.jpg)
 
 ``` r
 a11 <- sum(1/(2+1*x))
@@ -378,7 +378,7 @@ x
 </tbody>
 </table>
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-2-2.jpg)
+![](/study/img/Q-2-2.jpg)
 
 ``` r
 solve(J)
@@ -390,7 +390,7 @@ solve(J)
 
 ## Q-2 3)
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-2-3.jpg)
+![](/study/img/Q-2-3.jpg)
 
 ``` r
 confint(poi_reg)[2,1:2]%>% 
@@ -428,15 +428,15 @@ confint(poi_reg)[2,1:2]%>%
 
 # Q-3
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-3.jpg)
+![](/study/img/Q-3.jpg)
 
 ## Q-3 1,2)
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-3-1-2.jpg)
+![](/study/img/Q-3-1-2.jpg)
 
 # Q-4
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-4.jpg)
+![](/study/img/Q-4.jpg)
 
 ## Crabs dataset
 
@@ -2565,7 +2565,10 @@ Adjusted R square
 plot(fit8)
 ```
 
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-1.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-2.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-3.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-4.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-1.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-2.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-3.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-4.png)
 
 > fit8에서 beds변수를 제거하면 모형이 단순화 되어 다음과 같은 결과 및
 > 모델을 보여준다.
@@ -3338,7 +3341,10 @@ size:new
 plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses))
 ```
 
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-1.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-2.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-3.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-4.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-1.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-2.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-3.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-37-4.png)
 
 > 위의 결과를 보아 효과들은 전체적으로 비슷하지만 감마분포를 가정했을 때
 > 교호작용이 더 큰 SE 값을 가지고 있는다.
@@ -3398,10 +3404,10 @@ size+beds (Gamma)
 
 # Q-5
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-5.jpg)
+![](/study/img/Q-5.jpg)
 
 ``` r
-auto <- read.csv("E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Auto.csv")
+auto <- read.csv("/study/img/Auto.csv")
 head(auto)%>% 
   kable(caption = "Auto dataset",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
@@ -5115,28 +5121,31 @@ Backward elimination in Second-order interaction
 plot(auto_m)
 ```
 
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-1.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-2.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-3.png)![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-4.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-1.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-2.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-3.png)
+![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-49-4.png)
 
 # Q-6
 
 ## Q-6 4.9
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-6-9.jpg)
+![](/study/img/Q-6-9.jpg)
 
 ## Q-6 4.13
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-6-13.jpg)
+![](/study/img/Q-6-13.jpg)
 
 ## Q-6 4.16
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-6-16.jpg)
+![](/study/img/Q-6-16.jpg)
 
 ## Q-6 4.22
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-6-22.jpg)
+![](/study/img/Q-6-22.jpg)
 
 ## Q-6 4.25
 
-![](E:/대학원/2학기/범주형자료의분석/과제/Assignment1/Q-6-25.jpg)
+![](/study/img/Q-6-25.jpg)
 
 # 감사합니다.
