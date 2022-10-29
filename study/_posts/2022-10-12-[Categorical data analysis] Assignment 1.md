@@ -38,7 +38,7 @@ library('car')
 
 ## Q-1 2)
 
->**1) Please find the score function and estimate $$\theta$$ when $$\lambda=2$$.**
+>**2) Please find the score function and estimate $$\theta$$ when $$\lambda=2$$.**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-2.jpg)
 
@@ -60,13 +60,20 @@ sqrt(sum(y^2)/length(y))
 
 ## Q-1 3)
 
+>**3) Please derive the fisher information formula for $$\theta$$.**
+
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-3.jpg)
 
 ## Q-1 4)
 
+>**4) Use the Newton-Raphson formula to find $$\theta$$.**
+
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-4.jpg)
 
 ## Q-1 5)
+
+>**5) Suppose that $$\theta^(𝓀)$$ the $$𝓀^{th}$$ iterated value based on the NewtonRapson formmula.**
+**Obtain the fifth iterated value $$\theta^(5)$$ given $$\lambda=2$$.**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-5.jpg)
 
@@ -96,6 +103,8 @@ print(a0)
 > 초기값을 $$E(Y_i)$$로 설정하여 돌려본 결과 3번만의 MLE로 잘 추정하는 결과가 나왔다.
 
 ## Q-1 6)
+
+>**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 vs H_1 : \theta = \notequal 0$$.**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-6.jpg)
 
