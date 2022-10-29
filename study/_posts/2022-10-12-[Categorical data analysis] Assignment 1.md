@@ -38,7 +38,8 @@ library('car')
 
 ## Q-1 2)
 
->**1) Please find the score function and estimate $\theta$ when $\lambda=2$.**
+>**1) Please find the score function and estimate $$\theta$$ when $$\lambda=2$$.**
+
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-2.jpg)
 
 ``` r
@@ -92,7 +93,7 @@ print(a0)
     ## [1] 5
     ## [1] 9892.177
 
-> 초기값을 $E(Y_i)$로 설정하여 돌려본 결과 3번만의 MLE로 잘 추정하는 결과가 나왔다.
+> 초기값을 $$E(Y_i)$$로 설정하여 돌려본 결과 3번만의 MLE로 잘 추정하는 결과가 나왔다.
 
 ## Q-1 6)
 
@@ -295,9 +296,9 @@ solve(a)%*%b
     ## [1,] 7.452381
     ## [2,] 4.928571
 
-> 초기값으로 $\beta_1$과 $\beta_2$에 어떠한 값을 넣더라도 $\beta_1 \approx 7$, $\beta_2 \approx 5$되므로
+> 초기값으로 $$\beta_1$$과 $$\beta_2$$에 어떠한 값을 넣더라도 $$\beta_1 \approx 7$$, $$\beta_2 \approx 5$$되므로
 
-> 초기값으로$\beta_1^{(1)} \approx 7$, $\beta_2^{(1)} \approx 5$
+> 초기값으로$$\beta_1^{(1)} \approx 7$$, $$\beta_2^{(1)} \approx 5$$
 
 ``` r
 b1 <- 7
@@ -331,7 +332,7 @@ print(b1b2)
     ## [1,] 7.451633
     ## [2,] 4.935300
 
-> $\hat\beta_1= 7.45163$, $\hat \beta_2 = 4.93530$
+> $$\hat\beta_1= 7.45163$$, $$\hat \beta_2 = 4.93530$$
 
 ## Q-2 2)
 
