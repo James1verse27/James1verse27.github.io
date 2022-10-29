@@ -26,16 +26,16 @@ library("car")
 
 # Q-1
 
-![](/study/img/Q-1a.jpg)
-![](/study/img/Q-1b.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1a.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1b.jpg)
 
 ## Q-1 1)
 
-![](/study/img/Q-1-1.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1-1.jpg)
 
 ## Q-1 2)
 
-![](/study/img/Q-1-2.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1-2.jpg)
 
 ``` r
 y <- c(1051, 1337, 1389, 1921, 1942, 
@@ -55,11 +55,11 @@ sqrt(sum(y^2)/length(y))
 
 ## Q-1 3)
 
-![](/study/img/Q-1-3.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1-3.jpg)
 
 ## Q-1 4,5)
 
-![](/study/img/Q-1-4-5.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1-4-5.jpg)
 
 ``` r
 a0 <- mean(y)
@@ -89,12 +89,12 @@ print(a0)
 
 ## Q-1 6)
 
-![](/study/img/Q-1-6.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-1-6.jpg)
 
 # Q-2
 
-![](/study/img/Q-2a.jpg)
-![](/study/img/Q-2b.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2a.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2b.jpg)
 
 ``` r
 y <- c(2,3,6,7,8,9,10,12,15)
@@ -268,7 +268,7 @@ x
 </tbody>
 </table>
 
-![](/study/img/Q-2-1.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2-1.jpg)
 
 ``` r
 a11 <- sum(1/(2+1*x))
@@ -378,7 +378,7 @@ x
 </tbody>
 </table>
 
-![](/study/img/Q-2-2.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2-2.jpg)
 
 ``` r
 solve(J)
@@ -390,7 +390,7 @@ solve(J)
 
 ## Q-2 3)
 
-![](/study/img/Q-2-3.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2-3.jpg)
 
 ``` r
 confint(poi_reg)[2,1:2]%>% 
@@ -428,15 +428,15 @@ confint(poi_reg)[2,1:2]%>%
 
 # Q-3
 
-![](/study/img/Q-3.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-3.jpg)
 
 ## Q-3 1,2)
 
-![](/study/img/Q-3-1-2.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-3-1-2.jpg)
 
 # Q-4
 
-![](/study/img/Q-4.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-4.jpg)
 
 ## Crabs dataset
 
@@ -3404,10 +3404,10 @@ size+beds (Gamma)
 
 # Q-5
 
-![](/study/img/Q-5.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-5.jpg)
 
 ``` r
-auto <- read.csv("/study/img/Auto.csv")
+auto <- read.csv("/study/img/[Categorical data analysis] Assignment 1/Auto.csv")
 head(auto)%>% 
   kable(caption = "Auto dataset",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
@@ -5130,22 +5130,22 @@ plot(auto_m)
 
 ## Q-6 4.9
 
-![](/study/img/Q-6-9.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-9.jpg)
 
 ## Q-6 4.13
 
-![](/study/img/Q-6-13.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-13.jpg)
 
 ## Q-6 4.16
 
-![](/study/img/Q-6-16.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-16.jpg)
 
 ## Q-6 4.22
 
-![](/study/img/Q-6-22.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-22.jpg)
 
 ## Q-6 4.25
 
-![](/study/img/Q-6-25.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-6-25.jpg)
 
 # 감사합니다.
