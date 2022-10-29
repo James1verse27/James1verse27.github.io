@@ -16,6 +16,8 @@ toc: true
 설치된 패키지 접기/펼치기 버튼
 </summary>
 
+<div markdown="1">
+
 ``` r
 #install.packages("kableExtra")
 #install.packages("dplyr")
@@ -24,6 +26,8 @@ library('kableExtra')
 library('dplyr')
 library('car')
 ```
+
+</div>
 
 </details>
 
@@ -824,7 +828,9 @@ vif
     ## [1] 4.68474
 
 > non significant해진 이유는 Correlation이 높았으며
+
 > $$ VIF= \frac{1}{1-(0.887)^2}=4.68474 $$
+
 > VIF=4.68474의 결과가 출력된다.
 
 ## Houses selling price dataset
