@@ -2614,20 +2614,20 @@ Adjusted R square
 
 > 우선 fit8모형을 provisional model로 설정하여 해석하여 보겠다.
 
-> 100 square foot 증가함에 따라서 집의 예상 판매 가격은 </br>
-older two-bedroom home의 경우 100[0.00684 + 0 + 2(0.03002), 약 $6,688 증가한다.</br>
-older three-bedroom home의 경우 100[0.00684 + 0 +3(0.03002)] 또는 $9,690 증가한다.</br>
-older four-bedroom home의 경우 100[0.00684 + 0 + 4(0.03002)] 또는 $12,692 증가한다.</br>
+> 100 square foot 증가함에 따라서 집의 예상 판매 가격은 <br/>
+older two-bedroom home의 경우 100[0.00684 + 0 + 2(0.03002), 약 $6,688 증가한다.<br/>
+older three-bedroom home의 경우 100[0.00684 + 0 +3(0.03002)] 또는 $9,690 증가한다.<br/>
+older four-bedroom home의 경우 100[0.00684 + 0 + 4(0.03002)] 또는 $12,692 증가한다.<br/>
 new home의 경우, 이 세 가지 값에 각각 +$5441달러가 된다.
 
-> bedrooms 수에 따라 조정된 new 집의 예상 판매 가격에 대한 효과는 </br>
-−56.686+ 1000(0.0544),  약 −$2277, for a 1000-square-foot home,</br>
-−56.686+ 2000(0.0544), 약 $52,132, for a 2000- square-foot home,</br>
+> bedrooms 수에 따라 조정된 new 집의 예상 판매 가격에 대한 효과는 <br/>
+−56.686+ 1000(0.0544),  약 −$2277, for a 1000-square-foot home,<br/>
+−56.686+ 2000(0.0544), 약 $52,132, for a 2000- square-foot home,<br/>
 −56.686+ 3000(0.0544), 약 $106,541 for a 3000-square- foot home.
 
-> new 집에 따라 조정된 추가 bedrooms의 예상 판매 가격에 대한 효과는</br>
-−53.637+ 1000(0.0300),or−$23,616, for a 1000-square- foot home</br>
-−53.637+ 2000(0.0300), or $6405, for a 2000-square-foot home</br>
+> new 집에 따라 조정된 추가 bedrooms의 예상 판매 가격에 대한 효과는<br/>
+−53.637+ 1000(0.0300),or−$23,616, for a 1000-square- foot home<br/>
+−53.637+ 2000(0.0300), or $6405, for a 2000-square-foot home<br/>
 −53.637+ 3000(0.0300), or$36,426, for a3000-square-foot home
 
 > 이를 시각적으로 표현하기 위해 QQ plot과 fitted value와 표준화 잔차의
