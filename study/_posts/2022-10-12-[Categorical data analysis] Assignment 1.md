@@ -34,6 +34,7 @@ library('car')
 # Q-1
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1a.jpg)
+
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1b.jpg)
 
 ## Q-1 1)
@@ -116,9 +117,9 @@ print(a0)
 
 # Q-2
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2a.jpg){: width="500" height="600"}
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2a.jpg){: width="600" height="700"}
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2b.jpg){: width="500" height="600"}
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2b.jpg){: width="600" height="700"}
 
 ``` r
 y <- c(2,3,6,7,8,9,10,12,15)
