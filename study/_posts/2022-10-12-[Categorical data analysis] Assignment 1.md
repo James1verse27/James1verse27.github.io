@@ -839,6 +839,8 @@ vif
 
 ## Houses selling price dataset
 
+### 데이터셋 설명
+
 ``` r
 Houses <- read.table("https://users.stat.ufl.edu/~aa/glm/data/Houses.dat", header = T)
 head(Houses)%>%
@@ -1149,7 +1151,7 @@ pairs(cbind(Houses$price,Houses$size,Houses$taxes)) # scatterplot matrix for pai
 
 ![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-17-1.png)
 
--   **Backward Elimination with House Selling Price Data**
+### - **Backward Elimination with House Selling Price Data**
 
 > 모델을 선택하기 위해 backward elimination 을 사용하여 변수선택을
 > 하도록 한다.
@@ -2642,8 +2644,7 @@ plot(fit8)
 ![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-3.png)
 ![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-4.png)
 
-> fit8에서 beds변수를 제거하면 모형이 단순화 되어 다음과 같은 결과 및
-> 모델을 보여준다.
+> fit8에서 beds변수를 제거한 모형을 fit9라고 하겠다. 
 
 ``` r
 fit9 <- lm(formula = price ~ size + new + size:new, data=Houses)
@@ -2770,15 +2771,20 @@ Adjusted R square
 </tbody>
 </table>
 
-> 위의 과정을 step() 함수를 사용하여 쉽게 결과를 구할 수 있는데
-> AIC(Akaike information criterion) 및 BIC(Baysian information
-> criterion) 값을 구하여 모델이 얼마나 잘 적합이 되었는지 판단할 수
-> 있다.
 
-> AIC는 조금 오버피팅된 결과를 선호하는 반면 BIC는 최대한 단순화된
-> 모델을 선호하는 경향이 있다.
+> adjusted R²=0.736으로 조금 작아진다.
 
-> 이를 확인해보면 다음과 같다.
+> fit9는 모형이 단순화 되므로 해석하기에 편리해진다.
+
+> fit9 모형을 만들어 본 이유는 BIC를 계산해본 결과 beds 변수를 제거한 모형을 최적의 모형으로 주었기 때문에 비교해 보기 위하여 fit9 모형을 만들어 보았다.
+
+> $$ \hat{\mu} \ = \ −22.228 \ + \ 0.1044(size) \ −78.5275(new) \ + \ 0.0619(size∗new) $$
+
+> 위의 과정을 step() 함수를 사용하여 Backward Elimination을 계산할 수 있다.
+
+> 여기서 중요한 것은 <span style="color: red"> step() 함수에서 출력되는 AIC 값은 TRUE 값이 아니다. (상수값이 제대로 곱해져 있는 값이 아니다.)</span>
+
+> <span style='background-color:#ffdce0'> R에서 AIC 함수를 사용하면 정확한 값을 준다. </span>
 
 ``` r
 step(lm(price ~ (size + new + beds + baths)^2, data=Houses))
@@ -2839,8 +2845,11 @@ step(lm(price ~ (size + new + beds + baths)^2, data=Houses))
     ##   size:beds    new:baths  
     ##   3.085e-02   -1.115e+02
 
-> 결과를 보면 fit6 에서 AIC 값이 가장 작으며 BIC는 fit 8에서 가장 작은
-> 값을 나타내고 있음을 확인할 수 있다.
+> 결과를 보면 fit6 에서 AIC 값이 가장 작은 값을 가지는 것을 확인할 수 있으며,
+
+> BIC는 fit 8에서 가장 작은 값을 준다.
+
+> <span style="color: red">위에서 주어진 AIC=784.78은 TRUE값이 아니다.</span>
 
 ``` r
 aic <- AIC(lm(price ~ size+new+beds+baths+size:new+size:beds+new:baths, data=Houses))
@@ -2875,7 +2884,17 @@ BIC
 </tbody>
 </table>
 
--   **Gamma GLMs for House Selling Pride Data**
+> AIC(Akaike information criterion) 및 BIC(Baysian information criterion) 값을 구하여 모델이 얼마나 잘 적합이 되었는지 판단할 수 있다.
+
+> AIC 여러개 비교해서 가장 작은 값을 주는 모형 선택, AIC는 복잡한 모형을 주는 경향이 있고 (AIC tends to produce ovefit models.)
+
+> BIC는 덜 복잡한 모형을 주는 경향이 있다. (BIC tends to produce underfit models.)
+
+> 집 값은 엄밀하게 말하면 대부분 positive 값을 가진다. 정규분포 가정한 일반선형모형은 적절하지 않을 수 있다.
+
+> 따라서 Gamma GLM을 적합시켜 보도록 하겠다.
+
+### - **Gamma GLMs for House Selling Pride Data**
 
 > 이번에는 감마분포를 가정한 상태에서 glm 모형을 적합시켜보도록 한다.
 
