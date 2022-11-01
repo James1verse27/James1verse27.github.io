@@ -116,8 +116,8 @@ print(a0)
 
 # Q-2
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2a.jpg)
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2b.jpg)
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2a.jpg){: width="300" height="300"}
+![](/study/img/[Categorical data analysis] Assignment 1/Q-2b.jpg){: width="300" height="300"}
 
 ``` r
 y <- c(2,3,6,7,8,9,10,12,15)
@@ -1135,7 +1135,7 @@ baths
 </tbody>
 </table>
 
-> pric와 taxes, size 간에 강한 양의 상관관계가 있음으로 보여진다.
+> price와 taxes, size 간에 강한 양의 상관관계가 있음으로 보여진다.
 
 > Scatterplot matrix로 확인하여 보자.
 
@@ -1620,7 +1620,7 @@ baths:beds
 > 이를 제거하고 모델을 피팅시켜보면 결과는 다음과 같다.
 
 ``` r
-fit4 <- lm(price ~ size + new +beds+ baths + size*new+size*baths+size*beds+new*baths+new*beds, data=Houses)
+fit4 <- lm(price ~ size + new + beds + baths + size*new + size*baths + size*beds + new*baths + new*beds, data=Houses)
 sum_fit4 <- summary(fit4)
 sum_fit4_m <- data.frame(sum_fit4$coefficients)%>% 
   rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
@@ -1852,7 +1852,7 @@ Adjusted R square
 > 유의하지 않아 이를 제거하고 다시 결과를 보기로 한다.
 
 ``` r
-fit5 <- lm(price ~ size + new +beds+ baths + size*new+size*beds+new*baths+new*beds, data=Houses)
+fit5 <- lm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds, data=Houses)
 sum_fit5 <- summary(fit5)
 sum_fit5_m <- data.frame(sum_fit5$coefficients)%>% rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% kable(caption = "Summary of fit5",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
