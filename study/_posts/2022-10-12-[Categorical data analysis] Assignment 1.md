@@ -2782,7 +2782,8 @@ Adjusted R square
 
 > 위의 과정을 step() 함수를 사용하여 Backward Elimination을 계산할 수 있다.
 
-> 여기서 중요한 것은 <span style="color: red"> step() 함수에서 출력되는 AIC 값은 TRUE 값이 아니다. (상수값이 제대로 곱해져 있는 값이 아니다.)</span>
+> 여기서 중요한 것은 <span style="color: red"> step() 함수에서 출력되는 AIC 값은 TRUE 값이 아니다. <br/>
+(상수값이 제대로 곱해져 있는 값이 아니다.)</span>
 
 > <span style='background-color:#ffdce0'> R에서 AIC 함수를 사용하면 정확한 값을 준다. </span>
 
@@ -2868,7 +2869,7 @@ data.frame(aic,bic)%>% rename("AIC"="aic","BIC"="bic")%>%
 AIC
 </th>
 <th style="text-align:right;">
-BIC
+BIC<br/>
 </th>
 </tr>
 </thead>
@@ -2886,11 +2887,11 @@ BIC
 
 > AIC(Akaike information criterion) 및 BIC(Baysian information criterion) 값을 구하여 모델이 얼마나 잘 적합이 되었는지 판단할 수 있다.
 
-> AIC 여러개 비교해서 가장 작은 값을 주는 모형 선택, AIC는 복잡한 모형을 주는 경향이 있고 (AIC tends to produce ovefit models.)
+> AIC 여러개 비교해서 가장 작은 값을 주는 모형 선택, <br/> AIC는 복잡한 모형을 주는 경향이 있고 (AIC tends to produce ovefit models.)
 
 > BIC는 덜 복잡한 모형을 주는 경향이 있다. (BIC tends to produce underfit models.)
 
-> 집 값은 엄밀하게 말하면 대부분 positive 값을 가진다. 정규분포 가정한 일반선형모형은 적절하지 않을 수 있다.
+> 집 값은 엄밀하게 말하면 대부분 positive 값을 가진다. <br/> 정규분포 가정한 일반선형모형은 적절하지 않을 수 있다.
 
 > 따라서 Gamma GLM을 적합시켜 보도록 하겠다.
 
@@ -3034,11 +3035,9 @@ size:beds
 </tbody>
 </table>
 
-> 위의 결과는 이전에 fit8을 피팅시킨 것과 동일한 조건을 주었으나
-> 교호작용이 유의하지 않은 결과를 보여준다.
+> 이전에 fit8을 피팅시킨 것과 동일한 조건을 주었으나 이전에는 interaction terms이 유의하였지만 Gamma GLM에서는 유의하지 않은 결과를 보여준다.
 
-> 2차 교호작용이 추가된 모델과 원모델을 비교하여 차이가 있는지
-> 검정해보면 결과는 다음과 같다.
+> 2차 교호작용이 추가된 모델과 원모델을 비교하여 차이가 있는지 검정해보면 결과는 다음과 같다.
 
 ``` r
 fit.g1 <- glm(price ~ size+new+baths+beds, family=Gamma(link=identity),data=Houses)
@@ -3118,8 +3117,7 @@ NA
 </tbody>
 </table>
 
-> 검정 결과 p-value=0.539로 유의수준 0.05보다 크므로로 유의하지 않다.
-> 그러므로 교호작용은 필요없다고 할 수 있다.
+> 검정 결과 p-value=0.539로 유의수준 0.05보다 크므로로 유의하지 않다.<br/> 그러므로 교호작용은 필요없다고 할 수 있다.
 
 > 다음은 size 변수 하나만 있을 때의 AIC 값과 size와 beds를 추가한 모델
 > 그리고 size와 new의 교호작용만 포함한 모델의 AIC를 확인해본 결과
@@ -3150,7 +3148,7 @@ size
 size + beds
 </th>
 <th style="text-align:right;">
-size+size\*new
+size+size:new
 </th>
 </tr>
 </thead>
@@ -3442,7 +3440,7 @@ plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses
 
 > 이 감마 모델에서 dispersion parameter
 > $$ \hatϕ=0.11021 $$
-> 이며 그렇게에 추정된 shape parameter
+> 이며 그렇게 추정된 shape parameter
 > $$ k=\frac{1}{\hat{ϕ}}=9.07 $$
 > 그리고 추정된 standard deviation은 다음과 같이 구해진다.
 
@@ -4219,7 +4217,7 @@ GVIF
 Df
 </th>
 <th style="text-align:right;">
-GVIF^(1/(2\*Df))
+GVIF^(1/(2*Df))
 </th>
 </tr>
 </thead>
