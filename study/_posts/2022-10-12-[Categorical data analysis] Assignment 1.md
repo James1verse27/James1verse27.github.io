@@ -1014,8 +1014,8 @@ size
 </table>
 
 ``` r
-c <- cor(cbind(Houses$price,Houses$size,Houses$taxes,Houses$beds,Houses$baths)) # correlation matrix
-c %>%
+cor <- cor(cbind(Houses$price,Houses$size,Houses$taxes,Houses$beds,Houses$baths)) # correlation matrix
+cor %>%
   kbl(caption = "Correlation matrix of House selling price dataset") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
@@ -1024,6 +1024,33 @@ c %>%
 <caption>
 Correlation matrix of House selling price dataset
 </caption>
+<thead>
+<tr>
+<td style="text-align:right;">
+price
+</th>
+<tr>
+<td style="text-align:right;">
+size
+</th>
+<tr>
+<td style="text-align:right;">
+taxes
+</th>
+<tr>
+<td style="text-align:right;">
+beds
+</th>
+<tr>
+<td style="text-align:right;">
+price
+</th>
+<tr>
+<td style="text-align:right;">
+baths
+</th>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td style="text-align:right;">
@@ -1121,7 +1148,7 @@ Correlation matrix of House selling price dataset
 pairs(cbind(Houses$price,Houses$size,Houses$taxes)) # scatterplot matrix for pairs of var’s
 ```
 
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-17-1.png)
 
 -   **Backward Elimination with House Selling Price Data**
 
@@ -2588,10 +2615,10 @@ Adjusted R square
 plot(fit8)
 ```
 
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-1.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-2.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-3.png)
-![](Categorical-data-analysis-Homework-1_files/figure-markdown_github/unnamed-chunk-27-4.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-1.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-2.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-3.png)
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-4.png)
 
 > fit8에서 beds변수를 제거하면 모형이 단순화 되어 다음과 같은 결과 및
 > 모델을 보여준다.
