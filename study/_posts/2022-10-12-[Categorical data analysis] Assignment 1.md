@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[Categorical data analysis] Assignment-1"
+title:  "[Categorical data analysis] Assignment(1)"
 category: Study
 tag: [R, blog, jekyll, Data, Categorical data analysis]
 toc: true
@@ -624,7 +624,7 @@ spine
 > model을 적합시켰다.
 
 ``` r
-summ <- summary(glm(y ~ width,data=Crabs, family=poisson(link=log))) 
+summ <- summary(glm(y ~ width, data=Crabs, family=poisson(link=log))) 
 summ_m <- data.frame(summ$coefficients)%>% 
   rename("coefficient"="Estimate","Std.Error"="Std..Error","z value"="z.value","p value"="Pr...z..") %>% 
   kable(caption = "Summary of glm",booktabs = TRUE, valign = 't')%>%
@@ -669,7 +669,7 @@ p value
 -6.094622
 </td>
 <td style="text-align:right;">
-0
+1.1e-09
 </td>
 </tr>
 <tr>
@@ -686,7 +686,7 @@ width
 8.216491
 </td>
 <td style="text-align:right;">
-0
+< 2e-16
 </td>
 </tr>
 </tbody>
@@ -819,7 +819,9 @@ Correlation coefficient
 > weight 사이의 Correlation이 높음으로인해 위와 같은 문제가 발생한
 > 것으로 보인다.
 
-> 이 모형에 대해서는 two-parameter distribution이 적절해 보인다.
+> 빈도자료에 대해서 poisson regression은 굉장히 strict한 모형이다.
+
+>조금 더 확장된 모형으로 negative binomial distribution를 가정한 모형인 two-parameter distribution를 적용하는 것이 적절해 보인다.
 
 ``` r
 cor <- cor(Crabs$weight, Crabs$width)
@@ -843,6 +845,9 @@ head(Houses)%>%
   kbl(caption = "Houses dataset") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
+
+> Houses dataset으로 집의 가격을 예측하는 모델을 만들어 보겠다.
+
 
 <table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -1039,9 +1044,6 @@ taxes
 </th>
 <th style="text-align:right;">
 beds
-</th>
-<th style="text-align:right;">
-price
 </th>
 <th style="text-align:right;">
 baths
@@ -1321,9 +1323,9 @@ NA
 > 결과 p-value=0.104로 유의수준 0.05보다 크므로 두 모형에 차이가
 > 존재하지 않음을 알 수 있다.
 
-> 그러므로 3차 교호작용은 필요하지 않다고 판단할 수 있다.
+> 그러므로 3차 교호작용은 고려하지 않겠다.
 
-> 다음은 원모델과 2차 교호작용을 추가한 모형, 3차 교호작용을 추가한
+> 다음은 main effect 모델과 2차 교호작용을 추가한 모형, 3차 교호작용을 추가한
 > 모형의 걸정계수와 수정된 결정계수를 보인 결과이다.
 
 ``` r
@@ -1389,6 +1391,8 @@ fit3
 </tr>
 </tbody>
 </table>
+
+> 결정계수값을 확인하여 보면 당연하게도 변수가 더 많이 들어간 모형이 더 큰 값을 갖게 된다.
 
 > 모델들의 파라미터의 수를 비교하기에 수정된 결정계수에 집중하도록
 > 해보겠다.
@@ -2257,9 +2261,9 @@ Adjusted R square
 </tbody>
 </table>
 
-> 모델 피팅 결과 수정된 결정계수는 0.769로 조금 높아졌으나 new:baths
-> 교호작용이 약간 유의하지 않으므로 이를 제거하고 다시 결과를 보면
-> 다음과 같다.
+> 모델 피팅 결과 수정된 결정계수는 0.769로 조금 높아졌으며, interaction terms는 모두 유의하게 나왔다.
+
+> new:baths를 제거한 모델을 fit7로 두고 결과를 확인하여 보면
 
 ``` r
 fit7 <- lm(price ~ size + new + baths + beds + size*new+size*beds, data=Houses)
@@ -2437,10 +2441,13 @@ Adjusted R square
 </tbody>
 </table>
 
-> 모델 피팅 결과 교호작용들의 유의확률은 유의수준 0.05보다 작아졌으나
-> 수정된 결정계수가 0.756으로 줄어들었다.
+> 수정된 결정계수가 0.756으로 조금 줄어들었다. 
 
-> 여기에서는 baths 변수를 제거할 수 있으므로 지워보도록 한다.
+> 따라서 효과가 그렇게 크진 않은 것을 볼 수 있다.
+
+> interaction terms는 유의하지만 main effect size, new, baths가 유의하지 않으므로 우선 baths 변수를 제거하여보겠다.
+
+> <span style="color: #2D3748; background-color:#fff5b1;"> main effect가 빠졌는데 interaction term이 존재할 수는 없다. </span>
 
 ``` r
 fit8 <- update(fit7, .~. - baths, data=Houses)
@@ -2602,8 +2609,27 @@ Adjusted R square
 </tbody>
 </table>
 
-> 모델 피팅 결과, 교호작용들 모두 유의한 결과를 보이며 수정된 결정계수도
-> 떨어지지 않음을 확인할 수 있다.
+> fit8 결과, interaction terms는 모두 유의한 결과를 보이지만 main effect인 size와 new는 유의하지 않게 나왔다.
+
+> interaction terms를 모두 제거하고 size와 new 변수만으로 모델을 만들어 수정된 결정계수값을 확인하여 보면 0.7168767의 값으로 줄어든다.
+
+> 우선 fit8모형을 provisional model로 설정하여 해석하여 보겠다.
+
+> 100 square foot 증가함에 따라서 집의 예상 판매 가격은
+older two-bedroom home의 경우 100[0.00684 + 0 + 2(0.03002), 약 $6,688 증가한다.
+older three-bedroom home의 경우 100[0.00684 + 0 +3(0.03002)] 또는 $9,690 증가한다.
+older four-bedroom home의 경우 100[0.00684 + 0 + 4(0.03002)] 또는 $12,692 증가한다. 
+new home의 경우, 이 세 가지 값에 각각 +$5441달러가 된다.
+
+> bedrooms 수에 따라 조정된 new 집의 예상 판매 가격에 대한 효과는
+−56.686+ 1000(0.0544),  약 −$2277, for a 1000-square-foot home
+−56.686+ 2000(0.0544), 약 $52,132, for a 2000- square-foot home
+−56.686+ 3000(0.0544), 약 $106,541 for a 3000-square- foot home.
+
+> new 집에 따라 조정된 추가 bedrooms의 예상 판매 가격에 대한 효과는
+−53.637+ 1000(0.0300),or−$23,616, for a 1000-square- foot home
+−53.637+ 2000(0.0300), or $6405, for a 2000-square-foot home
+−53.637+ 3000(0.0300), or$36,426, for a3000-square-foot home
 
 > 이를 시각적으로 표현하기 위해 QQ plot과 fitted value와 표준화 잔차의
 > 그림 및 잔차플롯을 보이면 다음과 같다.
