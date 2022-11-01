@@ -1026,27 +1026,27 @@ Correlation matrix of House selling price dataset
 </caption>
 <thead>
 <tr>
-<td style="text-align:right;">
+<th style="text-align:right;">
 price
 </th>
 <tr>
-<td style="text-align:right;">
+<th style="text-align:right;">
 size
 </th>
 <tr>
-<td style="text-align:right;">
+<th style="text-align:right;">
 taxes
 </th>
 <tr>
-<td style="text-align:right;">
+<th style="text-align:right;">
 beds
 </th>
 <tr>
-<td style="text-align:right;">
+<th style="text-align:right;">
 price
 </th>
 <tr>
-<td style="text-align:right;">
+<th style="text-align:right;">
 baths
 </th>
 </tr>
