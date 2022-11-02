@@ -1030,7 +1030,7 @@ size
 
 - new : 새 집 여부 (1= yes,0= no)
 
-- price : 판매 가격 (in thousands of dollars) (response variable)
+- price (response variable) : 판매 가격 (in thousands of dollars)
 
 - size : 집의 크기 (in square feet)
 
@@ -2794,14 +2794,14 @@ Adjusted R square
 
 > 다음은 이전에 확인하여 본 fit1~fit9 중 BIC가 fit8에서 가장 작은지 코드를 작성해서 확인하여 보았다.
 
->fit1 <- lm(price ~ size + new + baths + beds, data=Houses) <br/>
-fit2 <- lm(price ~ (size + new + baths + beds)^2, data= Houses)<br/>
-fit3 <- lm(price ~ (size + new + baths + beds)^3, data=Houses)<br/>
-fit4 <- lm(price ~ size + new + beds + baths + size*new + size*baths + size*beds + new*baths + new*beds, data=Houses)<br/>
-fit5 <- lm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds, data=Houses)<br/>
-fit6 <- lm(price ~ size + new + baths + beds + size*new + size*beds + new*baths, data=Houses)<br/>
-fit7 <- lm(price ~ size + new + baths + beds + size*new + size*beds, data=Houses)<br/>
-fit8 <- update(fit7, .~. - baths, data=Houses)<br/>
+>fit1 <- lm(price ~ size + new + baths + beds) <br/>
+fit2 <- lm(price ~ (size + new + baths + beds)^2)<br/>
+fit3 <- lm(price ~ (size + new + baths + beds)^3)<br/>
+fit4 <- lm(price ~ size + new + beds + baths + size:new + size:baths + size:beds + new:baths + new:beds)<br/>
+fit5 <- lm(price ~ size + new + beds + baths + size:new + size:beds + new:baths + new:beds)<br/>
+fit6 <- lm(price ~ size + new + baths + beds + size:new + size:beds + new:baths)<br/>
+fit7 <- lm(price ~ size + new + baths + beds + size:new + size:beds)<br/>
+fit8 <- lm(price ~ size + new + beds + size:new + size:beds)<br/>
 fit9 <- lm(price ~ size + new + size:new, data=Houses)<br/>
 
 ``` r
@@ -2959,7 +2959,7 @@ step(lm(price ~ (size + new + beds + baths)^2, data=Houses))
 
 ``` r
 aic <- AIC(lm(price ~ size+new+beds+baths+size:new+size:beds+new:baths, data=Houses))
-bic <- BIC(lm(price ~ size+new+size:new, data=Houses)) # this is model with lowest BIC     
+bic <- BIC(lm(price ~ size + new + beds + size:new + size:beds, data=Houses)) # this is model with lowest BIC     
 data.frame(aic,bic)%>% rename("AIC"="aic","BIC"="bic")%>% 
   kable(caption = "",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
@@ -2984,7 +2984,7 @@ BIC<br/>
 1070.565
 </td>
 <td style="text-align:right;">
-1092.973
+1091.351
 </td>
 </tr>
 </tbody>
@@ -3593,8 +3593,304 @@ size+new+size:new (Gamma)
 </tbody>
 </table>
 
-> AIC를 구한 결과 Gamma glm을 적합시켰을 때 모델의 AIC 값이 1047.9로
-> 앞서 구한 값들보다 작다는 것을 알 수 있다.
+> AIC를 구한 결과 Gamma glm을 적합시켰을 때 모델의 AIC 값이 1047.9로써 앞서 구한 값들보다 작다는 것을 알 수 있다.
+
+> link function을 log link를 사용한 결과도 한 번 확인하여 보자.
+
+``` r
+fit1 <- glm(price ~ size + new + baths + beds,family=Gamma(link=log), data=Houses)
+fit2 <- glm(price ~ (size + new + baths + beds)^2,family=Gamma(link=log), data= Houses)
+fit3 <- glm(price ~ (size + new + baths + beds)^3,family=Gamma(link=log), data=Houses)
+fit4 <- glm(price ~ size + new + beds + baths + size*new + size*baths + size*beds + new*baths + new*beds,family=Gamma(link=log), data=Houses)
+fit5 <- glm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds,family=Gamma(link=log), data=Houses)
+fit6 <- glm(price ~ size + new + baths + beds + size*new+size*beds+new*baths,family=Gamma(link=log), data=Houses)
+fit7 <- glm(price ~ size + new + baths + beds + size*new+size*beds,family=Gamma(link=log), data=Houses)
+fit8 <- update(fit7, .~. - baths,family=Gamma(link=log), data=Houses)
+fit9 <- glm(formula = price ~ size + new + size:new,family=Gamma(link=log), data=Houses)
+
+step(glm(price ~ (size + new + baths + beds)^2,family=Gamma(link=log), data= Houses), data=Houses)
+```
+
+    ## Start:  AIC=1059.01
+    ## price ~ (size + new + baths + beds)^2
+    ## 
+    ##              Df Deviance    AIC
+    ## - new:beds    1   10.268 1057.0
+    ## - new:baths   1   10.270 1057.1
+    ## - size:beds   1   10.289 1057.2
+    ## - size:new    1   10.291 1057.3
+    ## - baths:beds  1   10.354 1057.8
+    ## <none>            10.264 1059.0
+    ## - size:baths  1   10.691 1060.8
+    ## 
+    ## Step:  AIC=1057.06
+    ## price ~ size + new + baths + beds + size:new + size:baths + size:beds + 
+    ##     new:baths + baths:beds
+    ## 
+    ##              Df Deviance    AIC
+    ## - new:baths   1   10.280 1055.2
+    ## - size:beds   1   10.290 1055.2
+    ## - size:new    1   10.291 1055.3
+    ## - baths:beds  1   10.358 1055.9
+    ## <none>            10.268 1057.1
+    ## - size:baths  1   10.693 1058.9
+    ## 
+    ## Step:  AIC=1055.18
+    ## price ~ size + new + baths + beds + size:new + size:baths + size:beds + 
+    ##     baths:beds
+    ## 
+    ##              Df Deviance    AIC
+    ## - size:new    1   10.291 1053.3
+    ## - size:beds   1   10.308 1053.4
+    ## - baths:beds  1   10.376 1054.0
+    ## <none>            10.280 1055.2
+    ## - size:baths  1   10.808 1058.0
+    ## 
+    ## Step:  AIC=1053.29
+    ## price ~ size + new + baths + beds + size:baths + size:beds + 
+    ##     baths:beds
+    ## 
+    ##              Df Deviance    AIC
+    ## - size:beds   1   10.321 1051.6
+    ## - baths:beds  1   10.379 1052.1
+    ## <none>            10.291 1053.3
+    ## - new         1   10.634 1054.5
+    ## - size:baths  1   10.808 1056.0
+    ## 
+    ## Step:  AIC=1051.58
+    ## price ~ size + new + baths + beds + size:baths + baths:beds
+    ## 
+    ##              Df Deviance    AIC
+    ## <none>            10.321 1051.6
+    ## - baths:beds  1   10.550 1051.7
+    ## - new         1   10.644 1052.6
+    ## - size:baths  1   10.811 1054.2
+
+    ## 
+    ## Call:  glm(formula = price ~ size + new + baths + beds + size:baths + 
+    ##     baths:beds, family = Gamma(link = log), data = Houses)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         size          new        baths         beds   size:baths  
+    ##   4.0413287    0.0010923    0.2023428    0.0088916   -0.3545010   -0.0002175  
+    ##  baths:beds  
+    ##   0.1465839  
+    ## 
+    ## Degrees of Freedom: 99 Total (i.e. Null);  93 Residual
+    ## Null Deviance:       31.94 
+    ## Residual Deviance: 10.32     AIC: 1052
+
+> step() 함수 결과 <br/>
+glm(price ~ size + new + baths + beds + size:baths + baths:beds, family = Gamma(link = log), data = Houses) 모형이 선택 되었다.
+
+``` r
+aic <- AIC(glm(formula = price ~ size + new + baths + beds + size:baths + 
+        baths:beds, family = Gamma(link = log), data = Houses))
+bic <- BIC(glm(formula = price ~ size + new + baths + beds + size:baths + 
+          baths:beds, family = Gamma(link = log), data = Houses))
+data.frame(aic,bic)%>% rename("AIC"="aic","BIC"="bic")%>% 
+  kable(caption = "",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1051.582
+</td>
+<td style="text-align:right;">
+1072.424
+</td>
+</tr>
+</tbody>
+</table>
+
+> 이전의 identity link function을 사용했을 때보다 값이 큰 것을 볼 수 있다.
+
+> fit1~fit9에서 AIC와 BIC의 최소값을 확인하여 보자.
+
+``` r
+#aic 구하기
+aic <- c()
+for (i in 1:9){
+  aic <-c(aic,AIC(eval(parse(text=paste0("fit",c(1:9))[i]))))
+}
+data.frame(aic)%>% rename("AIC"="aic")%>% 
+  kable(caption = "",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1052.470
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1059.012
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1065.244
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1057.909
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1059.163
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1057.180
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1056.288
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1055.296
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1051.556
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+which.min(aic)
+```
+
+    ## [1] 9
+
+``` r
+min(aic)
+```
+
+    ## [1] 1051.556
+
+> AIC의 값은 fit9에서 가장 작은 값이 나왔으며,
+
+``` r
+#bic구하기
+bic <- c()
+for (i in 1:9){
+  bic <-c(bic,BIC(eval(parse(text=paste0("fit",c(1:9))[i]))))
+}
+data.frame(bic)%>% rename("BIC"="bic")%>% 
+  kable(caption = "",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+BIC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1068.101
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1090.274
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1106.926
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1086.565
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1085.215
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1080.627
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1077.130
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1073.532
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1064.582
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+which.min(bic)
+```
+
+    ## [1] 9
+
+``` r
+min(bic)
+```
+
+    ## [1] 1064.582
+
+> BIC도 fit9에서 가장 작은 값이 나왔다.
+
+> 하지만 log link 보다 identity link가 AIC, BIC 둘 다 작은 값을 주는 것을 확인할 수 있다.
 
 # Q-5
 
