@@ -1022,6 +1022,18 @@ size
 </tbody>
 </table>
 
+- taxes : 연간 세금 고지서 (in dollars)
+
+- beds : 침실 수 (2,3,4,5)
+
+- baths : 욕실 수 (1,2,3,4)
+
+- new : 새 집 여부 (1= yes,0= no)
+
+- price : 판매 가격 (in thousands of dollars) (response variable)
+
+- size : 집의 크기 (in square feet)
+
 ``` r
 cor <- cor(cbind(Houses$price,Houses$size,Houses$taxes,Houses$beds,Houses$baths)) # correlation matrix
 cor %>%
@@ -2617,9 +2629,9 @@ Adjusted R square
 > 우선 fit8모형을 provisional model로 설정하여 해석하여 보겠다.
 
 > 100 square foot 증가함에 따라서 집의 예상 판매 가격은 <br/>
-older two-bedroom home의 경우 100[0.00684 + 0 + 2(0.03002), 약 $6,688 증가한다.<br/>
-older three-bedroom home의 경우 100[0.00684 + 0 +3(0.03002)] 또는 $9,690 증가한다.<br/>
-older four-bedroom home의 경우 100[0.00684 + 0 + 4(0.03002)] 또는 $12,692 증가한다.<br/>
+older two-bedroom home의 경우 100[0.00684 + 0 + 2(0.03002)], 약 $6,688 증가한다.<br/>
+older three-bedroom home의 경우 100[0.00684 + 0 +3(0.03002)], 약  $9,690 증가한다.<br/>
+older four-bedroom home의 경우 100[0.00684 + 0 + 4(0.03002)], 약  $12,692 증가한다.<br/>
 new home의 경우, 이 세 가지 값에 각각 +$5441달러가 된다.
 
 > bedrooms 수에 따라 조정된 new 집의 예상 판매 가격에 대한 효과는 <br/>
@@ -2628,9 +2640,9 @@ new home의 경우, 이 세 가지 값에 각각 +$5441달러가 된다.
 −56.686+ 3000(0.0544), 약 $106,541 for a 3000-square- foot home.
 
 > new 집에 따라 조정된 추가 bedrooms의 예상 판매 가격에 대한 효과는<br/>
-−53.637+ 1000(0.0300),or−$23,616, for a 1000-square- foot home<br/>
-−53.637+ 2000(0.0300), or $6405, for a 2000-square-foot home<br/>
-−53.637+ 3000(0.0300), or$36,426, for a3000-square-foot home
+−53.637+ 1000(0.0300),or−$23,616, for a 1000-square- foot home,<br/>
+−53.637+ 2000(0.0300), or $6405, for a 2000-square-foot home,<br/>
+−53.637+ 3000(0.0300), or$36,426, for a3000-square-foot home.
 
 > 이를 시각적으로 표현하기 위해 QQ plot과 fitted value와 표준화 잔차의
 > 그림 및 잔차플롯을 보이면 다음과 같다.
@@ -2776,9 +2788,102 @@ Adjusted R square
 
 > fit9는 모형이 단순화 되므로 해석하기에 편리해진다.
 
+> $$ \hat{\mu} \ = \ −22.228 \ + \ 0.1044(size) \ −78.5275(new) \ + \ 0.0619(size∗new) $$
+
 > fit9 모형을 만들어 본 이유는 BIC를 계산해본 결과 beds 변수를 제거한 모형을 최적의 모형으로 주었기 때문에 비교해 보기 위하여 fit9 모형을 만들어 보았다.
 
-> $$ \hat{\mu} \ = \ −22.228 \ + \ 0.1044(size) \ −78.5275(new) \ + \ 0.0619(size∗new) $$
+> 다음은 이전에 확인하여 본 fit1~fit9 중 BIC가 fit8에서 가장 작은지 코드를 작성해서 확인하여 보았다.
+
+>fit1 <- lm(price ~ size + new + baths + beds, data=Houses) <br/>
+fit2 <- lm(price ~ (size + new + baths + beds)^2, data= Houses)<br/>
+fit3 <- lm(price ~ (size + new + baths + beds)^3, data=Houses)<br/>
+fit4 <- lm(price ~ size + new + beds + baths + size*new + size*baths + size*beds + new*baths + new*beds, data=Houses)<br/>
+fit5 <- lm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds, data=Houses)<br/>
+fit6 <- lm(price ~ size + new + baths + beds + size*new + size*beds + new*baths, data=Houses)<br/>
+fit7 <- lm(price ~ size + new + baths + beds + size*new + size*beds, data=Houses)<br/>
+fit8 <- update(fit7, .~. - baths, data=Houses)<br/>
+fit9 <- lm(price ~ size + new + size:new, data=Houses)<br/>
+
+``` r
+bic <- c()
+for (i in 1:9){
+  bic <-c(bic,BIC(eval(parse(text=paste0("fit",c(1:9))[i]))))
+}
+data.frame(bic)%>% rename("BIC"="bic")%>% 
+  kable(caption = "",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+BIC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1105.022
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1107.719
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1117.213
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1103.117
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1098.553
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1094.012
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1095.786
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1091.351
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1092.973
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+which.min(bic)
+```
+
+    ## [1] 8
+
+``` r
+min(bic)
+```
+
+    ## [1] 1091.351
 
 > 위의 과정을 step() 함수를 사용하여 Backward Elimination을 계산할 수 있다.
 
@@ -3449,9 +3554,9 @@ $$ \hat \sigma  = \sqrt{\hatϕ}\hat\mu = 0.33197 \hat \mu  $$
 ``` r
 aic1 <- AIC(lm(price ~ size + new + size:new, data=Houses))
 aic2 <- AIC(lm(price ~ size +new +beds +baths +size:new +size:beds +new:baths, data=Houses))
-aic3 <- AIC(glm(price ~ size+beds,family=Gamma(link=identity), data=Houses))  
+aic3 <- AIC(glm(price ~ size + new + size:new,family=Gamma(link=identity), data=Houses))  
 
-data.frame(aic1,aic2,aic3)%>% rename("size+new+size:new"="aic1","size +new +beds +baths +size:new +size:beds +new:baths"="aic2","size+beds (Gamma)"="aic3")%>% 
+data.frame(aic1,aic2,aic3)%>% rename("size+new+size:new"="aic1","size +new +beds +baths +size:new +size:beds +new:baths"="aic2","size+new+size:new (Gamma)"="aic3")%>% 
   kable(caption = "AIC",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
@@ -3469,7 +3574,7 @@ size+new+size:new
 size +new +beds +baths +size:new +size:beds +new:baths
 </th>
 <th style="text-align:right;">
-size+beds (Gamma)
+size+new+size:new (Gamma)
 </th>
 </tr>
 </thead>
@@ -3482,7 +3587,7 @@ size+beds (Gamma)
 1070.565
 </td>
 <td style="text-align:right;">
-1048.275
+1047.935
 </td>
 </tr>
 </tbody>
