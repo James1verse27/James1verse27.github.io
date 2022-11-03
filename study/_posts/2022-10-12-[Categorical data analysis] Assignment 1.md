@@ -3018,7 +3018,9 @@ BIC<br/>
 ### - **Gamma GLMs for House Selling Pride Data**
 
 $$ f(y:k,\mu)=\frac{y^{k-1}}{\Gamma(k)(\frac{\mu}{k})^k}e^{-\frac{y}{\mu/k}},   \ y \geq0, \ k>0
-\\ for \ which \ E(y)= \mu, \ var(y) = \mu^2/k $$
+
+\\ for \ which \ E(y)= \mu, \ var(y) = \mu^2/k
+$$
 
 > 기존에 알던 감마분포와는 형태가 다르게 scale parameter가 $$E(y)= \mu$$되도록 reparametrization해주었다.
 
