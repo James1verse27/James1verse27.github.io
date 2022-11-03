@@ -2,7 +2,7 @@
 layout: post
 title:  "[Categorical data analysis] Assignment(1)"
 category: Study
-tag: [R, blog, jekyll, Data, Categorical data analysis]
+tag: [R, blog, jekyll, Data, Categorical data analysis, GLM]
 toc: true
 ---
 * this unordered seed list will be replaced by the toc
@@ -111,7 +111,7 @@ print(a0)
 
 ## Q-1 6)
 
->**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 vs H_1 : \theta \neq 0$$.**
+>**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 \ vs \ H_1 : \theta \neq 0$$.**
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-1-6.jpg)
 
@@ -2466,7 +2466,7 @@ Adjusted R square
 
 > interaction terms는 유의하지만 main effect size, new, baths가 유의하지 않으므로 우선 baths 변수를 제거하여보겠다.
 
-> <span style="color: #2D3748; background-color:#fff5b1;"> main effect가 빠졌는데 interaction term이 존재할 수는 없다. </span>
+> <span style="color: #2D3748; background-color:#fff5b1;"> main effect가 제거되었는데 interaction term이 존재할 수는 없다. </span>
 
 ``` r
 fit8 <- update(fit7, .~. - baths, data=Houses)
@@ -2815,7 +2815,7 @@ fit5 <- lm(price ~ size + new + beds + baths + size:new + size:beds + new:baths 
 fit6 <- lm(price ~ size + new + baths + beds + size:new + size:beds + new:baths)<br/>
 fit7 <- lm(price ~ size + new + baths + beds + size:new + size:beds)<br/>
 fit8 <- lm(price ~ size + new + beds + size:new + size:beds)<br/>
-fit9 <- lm(price ~ size + new + size:new, data=Houses)<br/>
+fit9 <- lm(price ~ size + new + size:new)<br/>
 
 ``` r
 bic <- c()
@@ -3017,7 +3017,23 @@ BIC<br/>
 
 ### - **Gamma GLMs for House Selling Pride Data**
 
-> 이번에는 감마분포를 가정한 상태에서 glm 모형을 적합시켜보도록 한다.
+$$ f(y:k,\mu)=\frac{y^{k-1}}{\Gamma(k)(\frac{\mu}{k})^k}e^{-\frac{y}{\mu/k}},   \ y \geq0, \ k>0 \\ for \ which \ E(y)= \mu, \ var(y) = \mu^2/k $$
+
+> 기존에 알던 감마분포와는 형태가 다르게 scale parameter가 $$E(y)= \mu$$되도록 reparametrization해주었다.
+
+> Gamma GLMs usually assume k to be constant but unknown
+
+> 관심있는 모수는 k가 아닌 $$\mu$$에 있기 때문에 k가 알려져 있지는 않지만 nuisance parameter로 보고 k는 constant라고 하겠다.
+
+> 지수족의 형태는 다음과 같다.
+
+$$f(y_i:\theta_i,\phi)=exp(\frac{y_i\theta_i-b(\theta_i)}{a(\phi)}+c(y_i,\phi))$$
+
+> 위에 정의한 감마분포가 다음의 식으로 지수족을 따르는 것을 볼 수 있다.
+
+$$f(y:k,\mu)=exp \bigg\{ \frac{-\frac{y}{\mu}-\big(-log(-\theta)\big)}{1/k}+c(y_i,\phi) \bigg\},  \ \theta=-\frac{1}{\mu}, \ b(\theta)=-log(-\theta), \ a(\phi)=\frac{1}{k}$$
+
+> 감마분포를 가정한 상태에서 glm 모형을 적합시켜보도록 한다.
 
 ``` r
 fit.gamma <- glm(price ~ size + new + beds + size:new + size:beds, family = Gamma(link = identity), data=Houses)
@@ -3494,7 +3510,19 @@ plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses
 ![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-4.png)
 
 > 위의 결과를 보아 효과들은 전체적으로 비슷하지만 감마분포를 가정했을 때
-> 교호작용이 더 큰 SE 값을 가지고 있는다.
+> interaction term에서 더 큰 SE 값을 가지고 있는다.
+
+> $$\phi$$가 추정되어야 k를 추정할 수 있으며 또한 분산을 추정할수 있기 때문에 $$\phi$$를 추정해보도록 한다.
+
+> sas프로그램 같은 경우 dispersion parameter $$\phi$$를 MLE 방법으로 추정하는데 MLE를 사용하면 문제가 있을 수 있다.
+
+> variance function이 정확하지 않으면 MLE값이 inconsistent하기 때문이다.
+
+> (the ML estimator is inconsistent if the variance function is correct but the distribution is not truly the assumed one (McCullagh and Nelder 1989, p. 295))
+
+> R 프로그램 같은 경우 $$phi$$를 Pearson staistic을 이용해서 추정한다.
+
+$$\hat{\phi}=\frac{X^2}{(n-p)}=\frac{1}{n-p} \sum^n_{i=1}\frac{(y_i-\hat{\mu_i})^2}{\hat{\mu_i}^2}$$
 
 ``` r
 fit_gam1 <- summary(glm(price ~ size+new+size:new, family=Gamma(link=identity), data=Houses))
@@ -3506,10 +3534,19 @@ fit_gam1$dispersion
 > 이 감마 모델에서 dispersion parameter
 > $$ \hatϕ=0.11021 $$
 > 이며 그렇게 추정된 shape parameter
-> $$ k=\frac{1}{\hat{ϕ}}=9.07 $$
-> 그리고 추정된 standard deviation은 다음과 같이 구해진다.
+> $$ k=\frac{1}{\hat{ϕ}}=9.07 $$이다.
+
+> 지수족에서 분산구하는 식은 다음과 같다.
+
+$$var(y_i)=b^{''}(\theta_i)a(\phi)$$
+
+> 위 식으로 추정된 standard deviation은 다음과 같이 구해진다.
 
 $$ \hat \sigma  = \sqrt{\hatϕ}\hat\mu = 0.33197 \hat \mu  $$
+
+> 식을 통해 $$\mu$$가 커짐에 따라 $$\sigma$$도 커지는 관계를 볼 수 있다.
+
+> 따라서 $$E(y_i)$$에만 초점을 두는 것이 아닌 $$var(y_i)$$가 어떻게 변화되는지도 관심을 가져야 한다. 
 
 ``` r
 aic1 <- AIC(lm(price ~ size + new + size:new, data=Houses))
@@ -3558,17 +3595,17 @@ size+new+size:new (Gamma)
 > link function을 log link를 사용한 결과도 한 번 확인하여 보자.
 
 ``` r
-fit1 <- glm(price ~ size + new + baths + beds,family=Gamma(link=log), data=Houses)
-fit2 <- glm(price ~ (size + new + baths + beds)^2,family=Gamma(link=log), data= Houses)
-fit3 <- glm(price ~ (size + new + baths + beds)^3,family=Gamma(link=log), data=Houses)
-fit4 <- glm(price ~ size + new + beds + baths + size*new + size*baths + size*beds + new*baths + new*beds,family=Gamma(link=log), data=Houses)
-fit5 <- glm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds,family=Gamma(link=log), data=Houses)
-fit6 <- glm(price ~ size + new + baths + beds + size*new + size*beds + new*baths,family=Gamma(link=log), data=Houses)
-fit7 <- glm(price ~ size + new + baths + beds + size*new + size*beds,family=Gamma(link=log), data=Houses)
-fit8 <- update(fit7, .~. - baths,family=Gamma(link=log), data=Houses)
-fit9 <- glm(formula = price ~ size + new + size:new,family=Gamma(link=log), data=Houses)
+fit1 <- glm(price ~ size + new + baths + beds, family=Gamma(link=log), data=Houses)
+fit2 <- glm(price ~ (size + new + baths + beds)^2, family=Gamma(link=log), data= Houses)
+fit3 <- glm(price ~ (size + new + baths + beds)^3, family=Gamma(link=log), data=Houses)
+fit4 <- glm(price ~ size + new + beds + baths + size*new + size*baths + size*beds + new*baths + new*beds, family=Gamma(link=log), data=Houses)
+fit5 <- glm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds, family=Gamma(link=log), data=Houses)
+fit6 <- glm(price ~ size + new + beds + baths + size*new + size*beds + new*baths, family=Gamma(link=log), data=Houses)
+fit7 <- glm(price ~ size + new + beds + baths + size*new + size*beds, family=Gamma(link=log), data=Houses)
+fit8 <- update(fit7, .~. - baths, family=Gamma(link=log), data=Houses)
+fit9 <- glm(formula = price ~ size + new + size:new, family=Gamma(link=log), data=Houses)
 
-step(glm(price ~ (size + new + baths + beds)^2,family=Gamma(link=log), data= Houses), data=Houses)
+step(glm(price ~ (size + new + baths + beds)^2, family=Gamma(link=log), data= Houses), data=Houses)
 ```
 
     ## Start:  AIC=1059.01
@@ -3855,7 +3892,7 @@ min(bic)
 
 > 최종 모델식을 다음과 같이 구했다.
 
-$$ price = -7.4521938 + 0.0944569 * size + -77.9033275 * new + 0.0649207	* (size:new) $$
+$$ E(price) = -7.4521938 + 0.0944569 * size -77.9033275 * new + 0.0649207	* (size:new) $$
 
 # Q-5
 
