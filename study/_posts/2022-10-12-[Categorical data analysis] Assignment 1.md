@@ -3018,7 +3018,7 @@ BIC<br/>
 ### - **Gamma GLMs for House Selling Pride Data**
 
 $$ 
-f(y:k,\mu)=\frac{y^{k-1}}{\Gamma(k)(\frac{\mu}{k})^k}e^{-\frac{y}{\mu/k}},   \ y \geq0, \ k>0
+f(y:k,\mu)=\frac{y^{k-1}}{\Gamma(k)(\frac{\mu}{k})^k}e^{-\frac{y}{\mu/k}},   \ y \geq0, \ k>0 \\
 \newline for \ which \ E(y)= \mu, \ var(y) = \mu^2/k
 $$
 
