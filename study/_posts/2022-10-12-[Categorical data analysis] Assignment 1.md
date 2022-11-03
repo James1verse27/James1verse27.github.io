@@ -1873,10 +1873,16 @@ Adjusted R square
 ``` r
 fit5 <- lm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds, data=Houses)
 sum_fit5 <- summary(fit5)
-sum_fit5_m <- data.frame(sum_fit5$coefficients)%>% rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% kable(caption = "Summary of fit5",booktabs = TRUE, valign = 't')%>%
+sum_fit5_m <- data.frame(sum_fit5$coefficients)%>% 
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..")%>% 
+  kable(caption = "Summary of fit5",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-sum_fit5_m;sum_fit5$adj.r.squared%>% data.frame() %>% rename("Adjusted R square"=".")%>% 
-  kable(caption = "Adjusted R square",booktabs = TRUE, valign = 't')%>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+sum_fit5_m
+sum_fit5$adj.r.squared%>% 
+  data.frame()%>%
+  rename("Adjusted R square"=".")%>% 
+  kable(caption = "Adjusted R square",booktabs = TRUE, valign = 't')%>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
 <table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
@@ -2465,11 +2471,14 @@ Adjusted R square
 ``` r
 fit8 <- update(fit7, .~. - baths, data=Houses)
 sum_fit8 <- summary(fit8)
-sum_fit8_m <- data.frame(sum_fit8$coefficients)%>% rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
+sum_fit8_m <- data.frame(sum_fit8$coefficients)%>%
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..")%>% 
   kable(caption = "Summary of fit8",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-sum_fit8_m;sum_fit8$adj.r.squared%>% 
-  data.frame() %>% 
+sum_fit8_m
+
+sum_fit8$adj.r.squared%>% 
+  data.frame()%>% 
   rename("Adjusted R square"=".")%>% 
   kable(caption = "Adjusted R square",booktabs = TRUE, valign = 't')%>% 
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
@@ -2661,9 +2670,13 @@ plot(fit8)
 ``` r
 fit9 <- lm(formula = price ~ size + new + size:new, data=Houses)
 sum_fit9 <- summary(fit9)
-sum_fit9_m <- data.frame(sum_fit9$coefficients)%>% rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% kable(caption = "Summary of fit9",booktabs = TRUE, valign = 't')%>%
+sum_fit9_m <- data.frame(sum_fit9$coefficients)%>%
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..")%>%
+  kable(caption = "Summary of fit9",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-sum_fit9_m;sum_fit9$adj.r.squared%>% 
+sum_fit9_m
+
+sum_fit9$adj.r.squared%>% 
   data.frame() %>% 
   rename("Adjusted R square"=".")%>% 
   kable(caption = "Adjusted R square",booktabs = TRUE, valign = 't')%>%  
@@ -2809,7 +2822,8 @@ bic <- c()
 for (i in 1:9){
   bic <-c(bic,BIC(eval(parse(text=paste0("fit",c(1:9))[i]))))
 }
-data.frame(bic)%>% rename("BIC"="bic")%>% 
+data.frame(bic)%>%
+  rename("BIC"="bic")%>% 
   kable(caption = "",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
@@ -2960,7 +2974,8 @@ step(lm(price ~ (size + new + beds + baths)^2, data=Houses))
 ``` r
 aic <- AIC(lm(price ~ size+new+beds+baths+size:new+size:beds+new:baths, data=Houses))
 bic <- BIC(lm(price ~ size + new + beds + size:new + size:beds, data=Houses)) # this is model with lowest BIC     
-data.frame(aic,bic)%>% rename("AIC"="aic","BIC"="bic")%>% 
+data.frame(aic,bic)%>%
+  rename("AIC"="aic","BIC"="bic")%>% 
   kable(caption = "",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
@@ -3007,7 +3022,9 @@ BIC<br/>
 ``` r
 fit.gamma <- glm(price ~ size + new + beds + size:new + size:beds, family = Gamma(link = identity), data=Houses)
 sum_g <- summary(fit.gamma)
-sum_g_m<- data.frame(sum_g$coef)%>% rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
+sum_g_m<- data.frame(sum_g$coef)%>%
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
+  kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 sum_g_m
 ```
@@ -3174,7 +3191,7 @@ Deviance
 F
 </th>
 <th style="text-align:right;">
-Pr(\>F)
+Pr(>F)
 </th>
 </tr>
 </thead>
@@ -3224,102 +3241,23 @@ NA
 
 > 검정 결과 p-value=0.539로 유의수준 0.05보다 크므로로 유의하지 않다.<br/> 그러므로 교호작용은 필요없다고 할 수 있다.
 
-> 다음은 size 변수 하나만 있을 때의 AIC 값과 size와 beds를 추가한 모델
-> 그리고 size와 new의 교호작용만 포함한 모델의 AIC를 확인해본 결과
-> size와 new의 교호작용만 넣었을 때의 AIC 값이 조금 더 작음을 확인할 수
-> 있다.
-
-``` r
-aic1 <- AIC(glm(price ~ size,family=Gamma(link=identity), data=Houses))
-aic2 <- AIC(glm(price ~ size+beds,family=Gamma(link=identity), data=Houses))
-aic3 <- AIC(glm(price ~ size+size*new,family=Gamma(link=identity), data=Houses))
-    
-data.frame(aic1,aic2,aic3)%>% 
-  rename("size"="aic1","size + beds"="aic2","size+size*new"="aic3")%>% 
-  kable(caption = "AIC",booktabs = TRUE, valign = 't')%>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-AIC
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-size
-</th>
-<th style="text-align:right;">
-size + beds
-</th>
-<th style="text-align:right;">
-size+size:new
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1050.655
-</td>
-<td style="text-align:right;">
-1048.275
-</td>
-<td style="text-align:right;">
-1047.935
-</td>
-</tr>
-</tbody>
-</table>
-
 > size와 new의 교호작용만 넣었을 때의 모델을 Gamma glm 모형으로 적합했을
 > 때와 일반 glm모형으로 적합한 경우의 결과를 비교해보면 다음과 같다.
 
 ``` r
-fit_gam1 <- summary(glm(price ~ size+new+size:new, family=Gamma(link=identity), data=Houses))
-fit_gam1$dispersion
-```
-
-    ## [1] 0.1102068
-
-``` r
+fit_gam1 <- summary(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses))
 fit_gam1_m <- data.frame(fit_gam1$coefficients)%>% 
   rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
   kable(caption = "Summary of Gamma glm",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 
-fit_gam2 <- summary(lm(price ~ size + new + size:new,dat=Houses))
-fit_gam2
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = price ~ size + new + size:new, data = Houses)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -175.75  -28.98   -6.26   14.69  192.52 
-    ## 
-    ## Coefficients:
-    ##               Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) -22.227808  15.521110  -1.432  0.15536    
-    ## size          0.104438   0.009424  11.082  < 2e-16 ***
-    ## new         -78.527502  51.007642  -1.540  0.12697    
-    ## size:new      0.061916   0.021686   2.855  0.00527 ** 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 52 on 96 degrees of freedom
-    ## Multiple R-squared:  0.7443, Adjusted R-squared:  0.7363 
-    ## F-statistic: 93.15 on 3 and 96 DF,  p-value: < 2.2e-16
-
-``` r
-fit_gam2_m <- data.frame(fit_gam2$coefficients)%>% rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% kable(caption = "Summary of normal linear glm",booktabs = TRUE, valign = 't')%>%
+fit_lm1 <- summary(lm(price ~ size + new + size:new,dat=Houses))
+fit_lm1_m <- data.frame(fit_lm2$coefficients)%>% 
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
+  kable(caption = "Summary of normal linear glm",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 
-fit_gam1_m;fit_gam1$dispersion%>% data.frame() %>% rename("Dispersion"=".")%>% 
-  kable(caption = "Adjusted R square",booktabs = TRUE, valign = 't')%>%  
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"));fit_gam2_m
+fit_gam1_m; fit_lm1_m
 ```
 
 <table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
@@ -3411,25 +3349,6 @@ size:new
 </td>
 <td style="text-align:right;">
 0.0801153
-</td>
-</tr>
-</tbody>
-</table>
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Adjusted R square
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Dispersion
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0.1102068
 </td>
 </tr>
 </tbody>
@@ -3528,8 +3447,42 @@ size:new
 </tbody>
 </table>
 
-> 감마분포를 가정한 모델 적합 결과를 시각적으로 보기위한 그림들은 다음과
-> 같다.
+``` r
+fit_gam1_AIC <- AIC(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses))
+fit_lm1_AIC <- AIC(lm(price ~ size + new + size:new,dat=Houses))
+
+data.frame(fit_gam1_AIC,fit_lm1_AIC)%>%
+  rename("AIC of Gamma glm"="fit_gam1_AIC","AIC of Normal linear glm"="fit_lm1_AIC")%>% 
+  kable(caption = "",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+AIC of Gamma glm
+</th>
+<th style="text-align:right;">
+AIC of Normal linear glm
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1047.935
+</td>
+<td style="text-align:right;">
+1079.947
+</td>
+</tr>
+</tbody>
+</table>
+
+> 감마분포를 가정한 모델 적합 결과를 시각적으로 보기위한 그림들은 다음과 같다.
 
 ``` r
 plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses))
@@ -3542,6 +3495,13 @@ plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses
 
 > 위의 결과를 보아 효과들은 전체적으로 비슷하지만 감마분포를 가정했을 때
 > 교호작용이 더 큰 SE 값을 가지고 있는다.
+
+``` r
+fit_gam1 <- summary(glm(price ~ size+new+size:new, family=Gamma(link=identity), data=Houses))
+fit_gam1$dispersion
+```
+
+    ## [1] 0.1102068
 
 > 이 감마 모델에서 dispersion parameter
 > $$ \hatϕ=0.11021 $$
@@ -3603,8 +3563,8 @@ fit2 <- glm(price ~ (size + new + baths + beds)^2,family=Gamma(link=log), data= 
 fit3 <- glm(price ~ (size + new + baths + beds)^3,family=Gamma(link=log), data=Houses)
 fit4 <- glm(price ~ size + new + beds + baths + size*new + size*baths + size*beds + new*baths + new*beds,family=Gamma(link=log), data=Houses)
 fit5 <- glm(price ~ size + new + beds + baths + size*new + size*beds + new*baths + new*beds,family=Gamma(link=log), data=Houses)
-fit6 <- glm(price ~ size + new + baths + beds + size*new+size*beds+new*baths,family=Gamma(link=log), data=Houses)
-fit7 <- glm(price ~ size + new + baths + beds + size*new+size*beds,family=Gamma(link=log), data=Houses)
+fit6 <- glm(price ~ size + new + baths + beds + size*new + size*beds + new*baths,family=Gamma(link=log), data=Houses)
+fit7 <- glm(price ~ size + new + baths + beds + size*new + size*beds,family=Gamma(link=log), data=Houses)
 fit8 <- update(fit7, .~. - baths,family=Gamma(link=log), data=Houses)
 fit9 <- glm(formula = price ~ size + new + size:new,family=Gamma(link=log), data=Houses)
 
@@ -3681,7 +3641,7 @@ step(glm(price ~ (size + new + baths + beds)^2,family=Gamma(link=log), data= Hou
     ## Residual Deviance: 10.32     AIC: 1052
 
 > step() 함수 결과 <br/>
-glm(price ~ size + new + baths + beds + size:baths + baths:beds, family = Gamma(link = log), data = Houses) 모형이 선택 되었다.
+glm(price ~ size + new + baths + beds + size:baths + baths:beds, family = Gamma(link = log) <br/> 모형이 선택 되었다.
 
 ``` r
 aic <- AIC(glm(formula = price ~ size + new + baths + beds + size:baths + 
@@ -3728,7 +3688,8 @@ aic <- c()
 for (i in 1:9){
   aic <-c(aic,AIC(eval(parse(text=paste0("fit",c(1:9))[i]))))
 }
-data.frame(aic)%>% rename("AIC"="aic")%>% 
+data.frame(aic)%>% 
+  rename("AIC"="aic")%>% 
   kable(caption = "",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
@@ -3891,6 +3852,10 @@ min(bic)
 > BIC도 fit9에서 가장 작은 값이 나왔다.
 
 > 하지만 log link 보다 identity link가 AIC, BIC 둘 다 작은 값을 주는 것을 확인할 수 있다.
+
+> 최종 모델식을 다음과 같이 구했다.
+
+$$ price = -7.4521938 + 0.0944569 * size + -77.9033275 * new + 0.0649207	* (size:new) $$
 
 # Q-5
 
