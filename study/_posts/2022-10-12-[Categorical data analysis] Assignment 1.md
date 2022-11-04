@@ -4172,7 +4172,7 @@ table(is.na(auto1$horsepower))
     ##   392
 
 ``` r
-mytable(auto1)
+mytable(auto1) #library('moonBook')
 ```
 
     ## 
