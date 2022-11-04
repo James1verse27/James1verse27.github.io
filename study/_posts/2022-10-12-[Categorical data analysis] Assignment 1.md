@@ -22,9 +22,11 @@ toc: true
 #install.packages("kableExtra")
 #install.packages("dplyr")
 #install.packages("car")
+#install.packages("moonBook")
 library('kableExtra')
 library('dplyr')
 library('car')
+library('moonBook')
 ```
 
 </div>
@@ -1204,7 +1206,7 @@ Sum of Sq
 F
 </th>
 <th style="text-align:right;">
-Pr(\>F)
+Pr(>F)
 </th>
 </tr>
 </thead>
@@ -1285,7 +1287,7 @@ Sum of Sq
 F
 </th>
 <th style="text-align:right;">
-Pr(\>F)
+Pr(>F)
 </th>
 </tr>
 </thead>
@@ -2803,8 +2805,6 @@ Adjusted R square
 
 > $$ \hat{\mu} \ = \ −22.228 \ + \ 0.1044(size) \ −78.5275(new) \ + \ 0.0619(size∗new) $$
 
-> fit9 모형을 만들어 본 이유는 BIC를 계산해본 결과 beds 변수를 제거한 모형을 최적의 모형으로 주었기 때문에 비교해 보기 위하여 fit9 모형을 만들어 보았다.
-
 > 다음은 이전에 확인하여 본 fit1~fit9 중 BIC가 fit8에서 가장 작은지 코드를 작성해서 확인하여 보았다.
 
 >fit1 <- lm(price ~ size + new + baths + beds) <br/>
@@ -3178,8 +3178,8 @@ size:beds
 > 2차 교호작용이 추가된 모델과 원모델을 비교하여 차이가 있는지 검정해보면 결과는 다음과 같다.
 
 ``` r
-fit.g1 <- glm(price ~ size+new+baths+beds, family=Gamma(link=identity),data=Houses)
-fit.g2 <- glm(price~(size+new+baths+beds)^2,family=Gamma(link=identity),data=Houses)     
+fit.g1 <- glm(price ~ size + new + baths + beds, family=Gamma(link=identity),data=Houses)
+fit.g2 <- glm(price~(size + new + baths + beds)^2,family=Gamma(link=identity),data=Houses)     
 anova(fit.g1, fit.g2, test="F") %>% 
   kable(caption = "Result of F test",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
@@ -3255,7 +3255,7 @@ NA
 </tbody>
 </table>
 
-> 검정 결과 p-value=0.539로 유의수준 0.05보다 크므로로 유의하지 않다.<br/> 그러므로 교호작용은 필요없다고 할 수 있다.
+> 검정 결과 p-value=0.539로 유의수준 0.05보다 크므로 유의하지 않다.<br/> 그러므로 교호작용은 필요없다고 할 수 있다.
 
 > size와 new의 교호작용만 넣었을 때의 모델을 Gamma glm 모형으로 적합했을
 > 때와 일반 glm모형으로 적합한 경우의 결과를 비교해보면 다음과 같다.
@@ -3520,7 +3520,7 @@ plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses
 
 > (the ML estimator is inconsistent if the variance function is correct but the distribution is not truly the assumed one (McCullagh and Nelder 1989, p. 295))
 
-> R 프로그램 같은 경우 $$phi$$를 Pearson staistic을 이용해서 추정한다.
+> R 프로그램 같은 경우 $$\phi$$를 Pearson staistic을 이용해서 추정한다.
 
 $$\hat{\phi}=\frac{X^2}{(n-p)}=\frac{1}{n-p} \sum^n_{i=1}\frac{(y_i-\hat{\mu_i})^2}{\hat{\mu_i}^2}$$
 
@@ -3898,8 +3898,10 @@ $$ E(price) = -7.4521938 + 0.0944569 * size -77.9033275 * new + 0.0649207	* (siz
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-5.jpg)
 
+### 데이터셋 설명
+
 ``` r
-auto <- read.csv("/study/img/[Categorical data analysis] Assignment 1/Auto.csv")
+auto <- read.csv("C:/Biostat/Categorical data analysis/Assignment 1/Auto.csv")
 head(auto)%>% 
   kable(caption = "Auto dataset",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
@@ -4118,6 +4120,16 @@ ford galaxie 500
 </tbody>
 </table>
 
+- mpg : 연비
+- cylinders : 실린더수 
+- displacement : 배기량
+- horsepower: 출력
+- weight : 차중
+- acceleration : 가속능력
+- year : 출시년도
+- origin : 제조국 1(USA), 2(EU), 3(JPN)
+- name : 모델명
+
 > 우선 데이터 type을 알아보자
 
 ``` r
@@ -4140,7 +4152,7 @@ str(auto)
 
 ``` r
 auto$horsepower <- as.integer(auto$horsepower) 
-auto$origin <- as.factor(auto$origin)
+auto$year <- auto$year-70
 table(is.na(auto$horsepower))
 ```
 
@@ -4159,11 +4171,40 @@ table(is.na(auto1$horsepower))
     ## FALSE 
     ##   392
 
+``` r
+mytable(auto1)
+```
+
+    ## 
+    ##                Descriptive Statistics               
+    ## ————————————————————————————————————————————————————— 
+    ##                 Mean ± SD or %      N  Missing (%)
+    ## ————————————————————————————————————————————————————— 
+    ##    mpg                  23.4 ± 7.8  392  0  ( 0.0%)
+    ##   cylinders                         392  0  ( 0.0%)
+    ##     - 3                  4  (1.0%)                 
+    ##     - 4               199  (50.8%)                 
+    ##     - 5                  3  (0.8%)                 
+    ##     - 6                83  (21.2%)                 
+    ##     - 8               103  (26.3%)                 
+    ##    displacement      194.4 ± 104.6  392  0  ( 0.0%)
+    ##    horsepower         104.5 ± 38.5  392  0  ( 0.0%)
+    ##    weight           2977.6 ± 849.4  392  0  ( 0.0%)
+    ##    acceleration         15.5 ± 2.8  392  0  ( 0.0%)
+    ##    year                  6.0 ± 3.7  392  0  ( 0.0%)
+    ##   origin                            392  0  ( 0.0%)
+    ##     - 1               245  (62.5%)                 
+    ##     - 2                68  (17.3%)                 
+    ##     - 3                79  (20.2%)                 
+    ##   name          unique values  301  392  0  ( 0.0%)
+    ## —————————————————————————————————————————————————————
+
+
 > 연속형 독립변수들 간에 연관성을 확인하여 본다.
 
 ``` r
-auto1 <- select(auto1, mpg,cylinders, displacement, horsepower, weight, acceleration, year)
-cor(auto1) %>% data.frame() %>% 
+auto2 <- select(auto1, mpg,cylinders, displacement, horsepower, weight, acceleration, year)
+cor(auto2) %>% data.frame() %>% 
   kable(caption = "Correlation",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
@@ -4404,16 +4445,14 @@ acceleration, year 두 변수는 나머지 변수들과의 연관성이 작음�
 > 적합시키도록 한다.
 
 ``` r
-autoModel1 <- glm(mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin,family=Gamma(link=identity), data = auto)
+autoModel1 <- glm(mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin,family=Gamma(link=identity), data = auto1)
 
 sum_autoModel1 <- summary(autoModel1)
 
-sum_autoModel1_m <- data.frame(sum_autoModel1$coefficients)%>% 
+data.frame(sum_autoModel1$coefficients)%>% 
   rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
   kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-
-sum_autoModel1_m 
 ```
 
 <table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
@@ -4444,16 +4483,16 @@ p value
 (Intercept)
 </td>
 <td style="text-align:right;">
--6.9914661
+35.6804699
 </td>
 <td style="text-align:right;">
-4.1618561
+1.8479596
 </td>
 <td style="text-align:right;">
--1.6798914
+19.3080360
 </td>
 <td style="text-align:right;">
-0.0937939
+0.0000000
 </td>
 </tr>
 <tr>
@@ -4461,16 +4500,16 @@ p value
 cylinders
 </td>
 <td style="text-align:right;">
--1.0175197
+-1.0578149
 </td>
 <td style="text-align:right;">
-0.2401963
+0.2394908
 </td>
 <td style="text-align:right;">
--4.2361999
+-4.4169342
 </td>
 <td style="text-align:right;">
-0.0000285
+0.0000130
 </td>
 </tr>
 <tr>
@@ -4478,16 +4517,16 @@ cylinders
 displacement
 </td>
 <td style="text-align:right;">
-0.0150055
+0.0142433
 </td>
 <td style="text-align:right;">
-0.0053463
+0.0052893
 </td>
 <td style="text-align:right;">
-2.8066974
+2.6928477
 </td>
 <td style="text-align:right;">
-0.0052610
+0.0073948
 </td>
 </tr>
 <tr>
@@ -4495,16 +4534,16 @@ displacement
 horsepower
 </td>
 <td style="text-align:right;">
--0.0146103
+-0.0145053
 </td>
 <td style="text-align:right;">
-0.0086023
+0.0086449
 </td>
 <td style="text-align:right;">
--1.6984215
+-1.6779008
 </td>
 <td style="text-align:right;">
-0.0902404
+0.0941801
 </td>
 </tr>
 <tr>
@@ -4512,13 +4551,13 @@ horsepower
 weight
 </td>
 <td style="text-align:right;">
--0.0044375
+-0.0043690
 </td>
 <td style="text-align:right;">
-0.0004858
+0.0004821
 </td>
 <td style="text-align:right;">
--9.1351003
+-9.0619670
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -4529,16 +4568,16 @@ weight
 acceleration
 </td>
 <td style="text-align:right;">
--0.0716548
+-0.0706537
 </td>
 <td style="text-align:right;">
-0.0824142
+0.0825588
 </td>
 <td style="text-align:right;">
--0.8694469
+-0.8557981
 </td>
 <td style="text-align:right;">
-0.3851473
+0.3926431
 </td>
 </tr>
 <tr>
@@ -4546,167 +4585,16 @@ acceleration
 year
 </td>
 <td style="text-align:right;">
-0.6289814
+0.6199023
 </td>
 <td style="text-align:right;">
-0.0479122
+0.0475805
 </td>
 <td style="text-align:right;">
-13.1277956
+13.0284980
 </td>
 <td style="text-align:right;">
 0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-origin2
-</td>
-<td style="text-align:right;">
-2.2952714
-</td>
-<td style="text-align:right;">
-0.5851585
-</td>
-<td style="text-align:right;">
-3.9224780
-</td>
-<td style="text-align:right;">
-0.0001039
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-origin3
-</td>
-<td style="text-align:right;">
-3.1732353
-</td>
-<td style="text-align:right;">
-0.6059254
-</td>
-<td style="text-align:right;">
-5.2370064
-</td>
-<td style="text-align:right;">
-0.0000003
-</td>
-</tr>
-</tbody>
-</table>
-
-> 모든 변수를 넣었을 때 피팅 결과 acceleration 변수가 유의미하지 않은
-> 결과를 보였다.
-
-> VIF 값을 확인해보면 다음과 같다.
-
-``` r
-vif(autoModel1)%>% kable(caption = "VIF",booktabs = TRUE, valign = 't')%>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-VIF
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-GVIF
-</th>
-<th style="text-align:right;">
-Df
-</th>
-<th style="text-align:right;">
-GVIF^(1/(2*Df))
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-cylinders
-</td>
-<td style="text-align:right;">
-8.967128
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.994516
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement
-</td>
-<td style="text-align:right;">
-18.432526
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4.293312
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-horsepower
-</td>
-<td style="text-align:right;">
-7.865645
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2.804576
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-weight
-</td>
-<td style="text-align:right;">
-10.319548
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3.212405
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-acceleration
-</td>
-<td style="text-align:right;">
-2.877239
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1.696243
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-year
-</td>
-<td style="text-align:right;">
-1.436441
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1.198516
 </td>
 </tr>
 <tr>
@@ -4714,909 +4602,23 @@ year
 origin
 </td>
 <td style="text-align:right;">
-2.103372
+1.6433755
 </td>
 <td style="text-align:right;">
-2
+0.3037828
 </td>
 <td style="text-align:right;">
-1.204284
-</td>
-</tr>
-</tbody>
-</table>
-
-> displacement 와 weight의 VIF 값이 10보다 큰 것을 알 수 있다.
-
-> 이번에는 2차 교호작용을 추가한 모델과 비교하여 차이가 나는지
-> 확인해보도록 한다.
-
-``` r
-autoModel2 <- glm(mpg ~ ( cylinders + displacement + horsepower + weight + acceleration + year + origin)^2,family=Gamma(link=identity), data = auto)
-
-anova(autoModel1, autoModel2, test="F") %>% 
-  kable(caption = "Result of F test",booktabs = TRUE, valign = 't')%>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of F test
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Resid. Df
-</th>
-<th style="text-align:right;">
-Resid. Dev
-</th>
-<th style="text-align:right;">
-Df
-</th>
-<th style="text-align:right;">
-Deviance
-</th>
-<th style="text-align:right;">
-F
-</th>
-<th style="text-align:right;">
-Pr(\>F)
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-383
-</td>
-<td style="text-align:right;">
-7.098976
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-356
-</td>
-<td style="text-align:right;">
-3.917505
-</td>
-<td style="text-align:right;">
-27
-</td>
-<td style="text-align:right;">
-3.181471
-</td>
-<td style="text-align:right;">
-10.70351
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-</tbody>
-</table>
-
-> 검정 결과 p-value 가 유의수준 0.05보다 작으므로 유의한 결과를 보여
-> 교호작용이 유의하다고 판단할 수 있다.
-
-> 2차 교호작용을 추가한 모형에서 Backward elimination을 통하여 최종
-> 모델을 구해보도록 한다.
-
-``` r
-auto_m <- step(autoModel2)
-```
-
-    ## Start:  AIC=1810.7
-    ## mpg ~ (cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin)^2
-    ## 
-    ##                             Df Deviance    AIC
-    ## - horsepower:origin          2   3.9320 1808.0
-    ## - cylinders:origin           2   3.9350 1808.3
-    ## - cylinders:displacement     1   3.9176 1808.7
-    ## - cylinders:horsepower       1   3.9184 1808.8
-    ## - horsepower:weight          1   3.9193 1808.9
-    ## - weight:acceleration        1   3.9208 1809.0
-    ## - horsepower:year            1   3.9233 1809.2
-    ## - horsepower:acceleration    1   3.9241 1809.3
-    ## - displacement:weight        1   3.9247 1809.3
-    ## - displacement:horsepower    1   3.9257 1809.4
-    ## - displacement:acceleration  1   3.9290 1809.7
-    ## - cylinders:weight           1   3.9295 1809.8
-    ## - weight:year                1   3.9320 1810.0
-    ## <none>                           3.9175 1810.7
-    ## - cylinders:year             1   3.9438 1811.1
-    ## - displacement:origin        2   3.9689 1811.4
-    ## - cylinders:acceleration     1   3.9705 1813.5
-    ## - weight:origin              2   3.9940 1813.7
-    ## - displacement:year          1   3.9779 1814.2
-    ## - year:origin                2   4.0172 1815.8
-    ## - acceleration:year          1   4.0390 1819.7
-    ## - acceleration:origin        2   4.0685 1820.4
-    ## 
-    ## Step:  AIC=1808.15
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:displacement + cylinders:horsepower + 
-    ##     cylinders:weight + cylinders:acceleration + cylinders:year + 
-    ##     cylinders:origin + displacement:horsepower + displacement:weight + 
-    ##     displacement:acceleration + displacement:year + displacement:origin + 
-    ##     horsepower:weight + horsepower:acceleration + horsepower:year + 
-    ##     weight:acceleration + weight:year + weight:origin + acceleration:year + 
-    ##     acceleration:origin + year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - cylinders:displacement     1   3.9320 1806.2
-    ## - cylinders:horsepower       1   3.9330 1806.2
-    ## - horsepower:weight          1   3.9342 1806.3
-    ## - weight:acceleration        1   3.9357 1806.5
-    ## - horsepower:year            1   3.9381 1806.7
-    ## - displacement:horsepower    1   3.9386 1806.8
-    ## - cylinders:origin           2   3.9608 1806.8
-    ## - horsepower:acceleration    1   3.9409 1807.0
-    ## - displacement:weight        1   3.9409 1807.0
-    ## - displacement:acceleration  1   3.9438 1807.2
-    ## - cylinders:weight           1   3.9439 1807.2
-    ## - weight:year                1   3.9449 1807.3
-    ## <none>                           3.9320 1808.2
-    ## - displacement:origin        2   3.9770 1808.2
-    ## - cylinders:year             1   3.9591 1808.6
-    ## - weight:origin              2   4.0045 1810.7
-    ## - cylinders:acceleration     1   3.9864 1811.1
-    ## - displacement:year          1   3.9898 1811.4
-    ## - year:origin                2   4.0212 1812.2
-    ## - acceleration:year          1   4.0490 1816.8
-    ## - acceleration:origin        2   4.1915 1827.7
-    ## 
-    ## Step:  AIC=1806.16
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:horsepower + cylinders:weight + 
-    ##     cylinders:acceleration + cylinders:year + cylinders:origin + 
-    ##     displacement:horsepower + displacement:weight + displacement:acceleration + 
-    ##     displacement:year + displacement:origin + horsepower:weight + 
-    ##     horsepower:acceleration + horsepower:year + weight:acceleration + 
-    ##     weight:year + weight:origin + acceleration:year + acceleration:origin + 
-    ##     year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - cylinders:horsepower       1   3.9335 1804.3
-    ## - horsepower:weight          1   3.9350 1804.4
-    ## - weight:acceleration        1   3.9357 1804.5
-    ## - horsepower:year            1   3.9383 1804.7
-    ## - displacement:horsepower    1   3.9386 1804.8
-    ## - cylinders:origin           2   3.9610 1804.8
-    ## - horsepower:acceleration    1   3.9420 1805.1
-    ## - displacement:weight        1   3.9424 1805.1
-    ## - displacement:acceleration  1   3.9443 1805.3
-    ## - weight:year                1   3.9449 1805.3
-    ## - cylinders:weight           1   3.9462 1805.5
-    ## <none>                           3.9320 1806.2
-    ## - cylinders:year             1   3.9594 1806.7
-    ## - displacement:origin        2   3.9889 1807.3
-    ## - cylinders:acceleration     1   3.9865 1809.1
-    ## - displacement:year          1   3.9900 1809.4
-    ## - year:origin                2   4.0249 1810.6
-    ## - weight:origin              2   4.0345 1811.5
-    ## - acceleration:year          1   4.0559 1815.4
-    ## - acceleration:origin        2   4.2236 1828.7
-    ## 
-    ## Step:  AIC=1804.3
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:weight + cylinders:acceleration + 
-    ##     cylinders:year + cylinders:origin + displacement:horsepower + 
-    ##     displacement:weight + displacement:acceleration + displacement:year + 
-    ##     displacement:origin + horsepower:weight + horsepower:acceleration + 
-    ##     horsepower:year + weight:acceleration + weight:year + weight:origin + 
-    ##     acceleration:year + acceleration:origin + year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - weight:acceleration        1   3.9362 1802.5
-    ## - horsepower:year            1   3.9390 1802.8
-    ## - displacement:horsepower    1   3.9391 1802.8
-    ## - cylinders:origin           2   3.9616 1802.9
-    ## - horsepower:weight          1   3.9407 1803.0
-    ## - horsepower:acceleration    1   3.9431 1803.2
-    ## - weight:year                1   3.9457 1803.4
-    ## - displacement:acceleration  1   3.9513 1803.9
-    ## - cylinders:weight           1   3.9539 1804.2
-    ## <none>                           3.9335 1804.3
-    ## - cylinders:year             1   3.9595 1804.7
-    ## - displacement:weight        1   3.9627 1805.0
-    ## - displacement:origin        2   3.9932 1805.8
-    ## - displacement:year          1   3.9902 1807.5
-    ## - year:origin                2   4.0258 1808.7
-    ## - weight:origin              2   4.0395 1810.0
-    ## - cylinders:acceleration     1   4.0558 1813.5
-    ## - acceleration:year          1   4.0596 1813.8
-    ## - acceleration:origin        2   4.2236 1826.8
-    ## 
-    ## Step:  AIC=1802.57
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:weight + cylinders:acceleration + 
-    ##     cylinders:year + cylinders:origin + displacement:horsepower + 
-    ##     displacement:weight + displacement:acceleration + displacement:year + 
-    ##     displacement:origin + horsepower:weight + horsepower:acceleration + 
-    ##     horsepower:year + weight:year + weight:origin + acceleration:year + 
-    ##     acceleration:origin + year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - horsepower:year            1   3.9429 1801.2
-    ## - horsepower:acceleration    1   3.9432 1801.2
-    ## - cylinders:origin           2   3.9654 1801.2
-    ## - displacement:horsepower    1   3.9474 1801.6
-    ## - weight:year                1   3.9478 1801.6
-    ## - horsepower:weight          1   3.9491 1801.8
-    ## - displacement:acceleration  1   3.9517 1802.0
-    ## - cylinders:weight           1   3.9555 1802.3
-    ## <none>                           3.9362 1802.6
-    ## - displacement:weight        1   3.9636 1803.1
-    ## - cylinders:year             1   3.9637 1803.1
-    ## - displacement:origin        2   3.9968 1804.1
-    ## - displacement:year          1   3.9937 1805.8
-    ## - year:origin                2   4.0292 1807.1
-    ## - weight:origin              2   4.0498 1809.0
-    ## - acceleration:year          1   4.0619 1812.0
-    ## - cylinders:acceleration     1   4.0702 1812.8
-    ## - acceleration:origin        2   4.2290 1825.3
-    ## 
-    ## Step:  AIC=1801.24
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:weight + cylinders:acceleration + 
-    ##     cylinders:year + cylinders:origin + displacement:horsepower + 
-    ##     displacement:weight + displacement:acceleration + displacement:year + 
-    ##     displacement:origin + horsepower:weight + horsepower:acceleration + 
-    ##     weight:year + weight:origin + acceleration:year + acceleration:origin + 
-    ##     year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - horsepower:acceleration    1   3.9491 1799.8
-    ## - cylinders:origin           2   3.9736 1800.0
-    ## - horsepower:weight          1   3.9542 1800.3
-    ## - displacement:acceleration  1   3.9564 1800.5
-    ## - displacement:horsepower    1   3.9637 1801.1
-    ## - displacement:weight        1   3.9639 1801.2
-    ## <none>                           3.9429 1801.2
-    ## - cylinders:year             1   3.9698 1801.7
-    ## - cylinders:weight           1   3.9698 1801.7
-    ## - weight:year                1   3.9707 1801.8
-    ## - displacement:origin        2   4.0035 1802.8
-    ## - displacement:year          1   3.9965 1804.1
-    ## - year:origin                2   4.0295 1805.2
-    ## - weight:origin              2   4.0562 1807.6
-    ## - cylinders:acceleration     1   4.0804 1811.8
-    ## - acceleration:year          1   4.1928 1822.0
-    ## - acceleration:origin        2   4.2388 1824.2
-    ## 
-    ## Step:  AIC=1799.86
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:weight + cylinders:acceleration + 
-    ##     cylinders:year + cylinders:origin + displacement:horsepower + 
-    ##     displacement:weight + displacement:acceleration + displacement:year + 
-    ##     displacement:origin + horsepower:weight + weight:year + weight:origin + 
-    ##     acceleration:year + acceleration:origin + year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - cylinders:origin           2   3.9810 1798.8
-    ## - horsepower:weight          1   3.9608 1798.9
-    ## - displacement:acceleration  1   3.9693 1799.7
-    ## - displacement:weight        1   3.9695 1799.7
-    ## <none>                           3.9491 1799.9
-    ## - cylinders:weight           1   3.9716 1799.9
-    ## - cylinders:year             1   3.9731 1800.0
-    ## - weight:year                1   3.9794 1800.6
-    ## - displacement:horsepower    1   3.9842 1801.1
-    ## - displacement:origin        2   4.0069 1801.1
-    ## - displacement:year          1   4.0060 1803.0
-    ## - year:origin                2   4.0422 1804.4
-    ## - weight:origin              2   4.0603 1806.0
-    ## - cylinders:acceleration     1   4.0805 1809.9
-    ## - acceleration:origin        2   4.2441 1822.8
-    ## - acceleration:year          1   4.2785 1827.9
-    ## 
-    ## Step:  AIC=1799.01
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:weight + cylinders:acceleration + 
-    ##     cylinders:year + displacement:horsepower + displacement:weight + 
-    ##     displacement:acceleration + displacement:year + displacement:origin + 
-    ##     horsepower:weight + weight:year + weight:origin + acceleration:year + 
-    ##     acceleration:origin + year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - cylinders:weight           1   3.9943 1798.2
-    ## - horsepower:weight          1   3.9950 1798.3
-    ## - displacement:acceleration  1   3.9951 1798.3
-    ## - cylinders:year             1   4.0008 1798.8
-    ## <none>                           3.9810 1799.0
-    ## - weight:year                1   4.0107 1799.7
-    ## - displacement:weight        1   4.0156 1800.2
-    ## - displacement:horsepower    1   4.0188 1800.4
-    ## - displacement:year          1   4.0333 1801.8
-    ## - year:origin                2   4.0698 1803.1
-    ## - cylinders:acceleration     1   4.0952 1807.4
-    ## - weight:origin              2   4.1303 1808.6
-    ## - displacement:origin        2   4.2189 1816.6
-    ## - acceleration:origin        2   4.2796 1822.1
-    ## - acceleration:year          1   4.3143 1827.3
-    ## 
-    ## Step:  AIC=1798.33
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:acceleration + cylinders:year + 
-    ##     displacement:horsepower + displacement:weight + displacement:acceleration + 
-    ##     displacement:year + displacement:origin + horsepower:weight + 
-    ##     weight:year + weight:origin + acceleration:year + acceleration:origin + 
-    ##     year:origin
-    ## 
-    ##                             Df Deviance    AIC
-    ## - displacement:acceleration  1   4.0073 1797.5
-    ## - horsepower:weight          1   4.0131 1798.0
-    ## <none>                           3.9943 1798.3
-    ## - weight:year                1   4.0243 1799.0
-    ## - cylinders:year             1   4.0261 1799.2
-    ## - displacement:horsepower    1   4.0349 1800.0
-    ## - displacement:year          1   4.0577 1802.1
-    ## - year:origin                2   4.0861 1802.7
-    ## - cylinders:acceleration     1   4.1097 1806.8
-    ## - weight:origin              2   4.1494 1808.4
-    ## - displacement:weight        1   4.1504 1810.5
-    ## - displacement:origin        2   4.2244 1815.2
-    ## - acceleration:origin        2   4.3050 1822.5
-    ## - acceleration:year          1   4.3220 1826.1
-    ## 
-    ## Step:  AIC=1797.6
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:acceleration + cylinders:year + 
-    ##     displacement:horsepower + displacement:weight + displacement:year + 
-    ##     displacement:origin + horsepower:weight + weight:year + weight:origin + 
-    ##     acceleration:year + acceleration:origin + year:origin
-    ## 
-    ##                           Df Deviance    AIC
-    ## - horsepower:weight        1   4.0253 1797.2
-    ## <none>                         4.0073 1797.6
-    ## - cylinders:year           1   4.0294 1797.6
-    ## - weight:year              1   4.0314 1797.8
-    ## - displacement:year        1   4.0583 1800.2
-    ## - year:origin              2   4.0917 1801.3
-    ## - displacement:horsepower  1   4.0727 1801.5
-    ## - weight:origin            2   4.1536 1806.9
-    ## - displacement:weight      1   4.1669 1810.1
-    ## - displacement:origin      2   4.2324 1814.0
-    ## - cylinders:acceleration   1   4.2266 1815.5
-    ## - acceleration:origin      2   4.3381 1823.6
-    ## - acceleration:year        1   4.3544 1827.1
-    ## 
-    ## Step:  AIC=1797.36
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:acceleration + cylinders:year + 
-    ##     displacement:horsepower + displacement:weight + displacement:year + 
-    ##     displacement:origin + weight:year + weight:origin + acceleration:year + 
-    ##     acceleration:origin + year:origin
-    ## 
-    ##                           Df Deviance    AIC
-    ## - weight:year              1   4.0353 1796.3
-    ## - cylinders:year           1   4.0414 1796.8
-    ## <none>                         4.0253 1797.4
-    ## - displacement:year        1   4.0589 1798.4
-    ## - displacement:horsepower  1   4.0730 1799.7
-    ## - year:origin              2   4.0958 1799.8
-    ## - weight:origin            2   4.1596 1805.5
-    ## - displacement:weight      1   4.1802 1809.4
-    ## - displacement:origin      2   4.2376 1812.6
-    ## - cylinders:acceleration   1   4.2346 1814.3
-    ## - acceleration:origin      2   4.3391 1821.8
-    ## - acceleration:year        1   4.3716 1826.8
-    ## 
-    ## Step:  AIC=1796.33
-    ## mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
-    ##     year + origin + cylinders:acceleration + cylinders:year + 
-    ##     displacement:horsepower + displacement:weight + displacement:year + 
-    ##     displacement:origin + weight:origin + acceleration:year + 
-    ##     acceleration:origin + year:origin
-    ## 
-    ##                           Df Deviance    AIC
-    ## <none>                         4.0353 1796.3
-    ## - cylinders:year           1   4.0575 1796.3
-    ## - displacement:year        1   4.0589 1796.5
-    ## - displacement:horsepower  1   4.0745 1797.9
-    ## - year:origin              2   4.1092 1799.0
-    ## - weight:origin            2   4.1818 1805.6
-    ## - displacement:origin      2   4.2616 1812.8
-    ## - displacement:weight      1   4.2753 1816.0
-    ## - cylinders:acceleration   1   4.2867 1817.1
-    ## - acceleration:origin      2   4.3619 1821.9
-    ## - acceleration:year        1   4.3722 1824.8
-
-``` r
-sum_auto_m <- summary(auto_m)
-sum_sum_auto_m_m <- data.frame(sum_auto_m$coefficients)%>% 
-  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
-  kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-
-sum_sum_auto_m_m
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Summary
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-coefficient
-</th>
-<th style="text-align:right;">
-Std.Error
-</th>
-<th style="text-align:right;">
-t value
-</th>
-<th style="text-align:right;">
-p value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:right;">
-127.5414190
-</td>
-<td style="text-align:right;">
-30.7353571
-</td>
-<td style="text-align:right;">
-4.1496645
-</td>
-<td style="text-align:right;">
-0.0000414
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-cylinders
-</td>
-<td style="text-align:right;">
-3.6056149
-</td>
-<td style="text-align:right;">
-4.9221763
-</td>
-<td style="text-align:right;">
-0.7325245
-</td>
-<td style="text-align:right;">
-0.4643135
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement
-</td>
-<td style="text-align:right;">
--0.2084426
-</td>
-<td style="text-align:right;">
-0.0923214
-</td>
-<td style="text-align:right;">
--2.2577920
-</td>
-<td style="text-align:right;">
-0.0245424
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-horsepower
-</td>
-<td style="text-align:right;">
--0.0679887
-</td>
-<td style="text-align:right;">
-0.0271560
-</td>
-<td style="text-align:right;">
--2.5036325
-</td>
-<td style="text-align:right;">
-0.0127237
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-weight
-</td>
-<td style="text-align:right;">
--0.0070582
-</td>
-<td style="text-align:right;">
-0.0012826
-</td>
-<td style="text-align:right;">
--5.5032692
+5.4097051
 </td>
 <td style="text-align:right;">
 0.0000001
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-acceleration
-</td>
-<td style="text-align:right;">
--8.3592683
-</td>
-<td style="text-align:right;">
-1.3704185
-</td>
-<td style="text-align:right;">
--6.0997924
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-year
-</td>
-<td style="text-align:right;">
--0.6523133
-</td>
-<td style="text-align:right;">
-0.3856329
-</td>
-<td style="text-align:right;">
--1.6915394
-</td>
-<td style="text-align:right;">
-0.0915781
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-origin2
-</td>
-<td style="text-align:right;">
--26.2447273
-</td>
-<td style="text-align:right;">
-10.4661804
-</td>
-<td style="text-align:right;">
--2.5075745
-</td>
-<td style="text-align:right;">
-0.0125850
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-origin3
-</td>
-<td style="text-align:right;">
--32.4222678
-</td>
-<td style="text-align:right;">
-11.8896799
-</td>
-<td style="text-align:right;">
--2.7269252
-</td>
-<td style="text-align:right;">
-0.0066979
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-cylinders:acceleration
-</td>
-<td style="text-align:right;">
-0.2092977
-</td>
-<td style="text-align:right;">
-0.0449013
-</td>
-<td style="text-align:right;">
-4.6612861
-</td>
-<td style="text-align:right;">
-0.0000044
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-cylinders:year
-</td>
-<td style="text-align:right;">
--0.0893627
-</td>
-<td style="text-align:right;">
-0.0647590
-</td>
-<td style="text-align:right;">
--1.3799285
-</td>
-<td style="text-align:right;">
-0.1684442
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement:horsepower
-</td>
-<td style="text-align:right;">
-0.0001456
-</td>
-<td style="text-align:right;">
-0.0000772
-</td>
-<td style="text-align:right;">
-1.8864651
-</td>
-<td style="text-align:right;">
-0.0600173
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement:weight
-</td>
-<td style="text-align:right;">
-0.0000148
-</td>
-<td style="text-align:right;">
-0.0000032
-</td>
-<td style="text-align:right;">
-4.5746124
-</td>
-<td style="text-align:right;">
-0.0000065
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement:year
-</td>
-<td style="text-align:right;">
-0.0016842
-</td>
-<td style="text-align:right;">
-0.0011908
-</td>
-<td style="text-align:right;">
-1.4142686
-</td>
-<td style="text-align:right;">
-0.1581262
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement:origin2
-</td>
-<td style="text-align:right;">
--0.0179804
-</td>
-<td style="text-align:right;">
-0.0329576
-</td>
-<td style="text-align:right;">
--0.5455615
-</td>
-<td style="text-align:right;">
-0.5856971
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement:origin3
-</td>
-<td style="text-align:right;">
-0.1195858
-</td>
-<td style="text-align:right;">
-0.0242058
-</td>
-<td style="text-align:right;">
-4.9403820
-</td>
-<td style="text-align:right;">
-0.0000012
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-weight:origin2
-</td>
-<td style="text-align:right;">
--0.0006477
-</td>
-<td style="text-align:right;">
-0.0016715
-</td>
-<td style="text-align:right;">
--0.3875063
-</td>
-<td style="text-align:right;">
-0.6986049
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-weight:origin3
-</td>
-<td style="text-align:right;">
--0.0077980
-</td>
-<td style="text-align:right;">
-0.0021247
-</td>
-<td style="text-align:right;">
--3.6702021
-</td>
-<td style="text-align:right;">
-0.0002781
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-acceleration:year
-</td>
-<td style="text-align:right;">
-0.0892989
-</td>
-<td style="text-align:right;">
-0.0166760
-</td>
-<td style="text-align:right;">
-5.3549410
-</td>
-<td style="text-align:right;">
-0.0000002
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-acceleration:origin2
-</td>
-<td style="text-align:right;">
-0.9998517
-</td>
-<td style="text-align:right;">
-0.1871294
-</td>
-<td style="text-align:right;">
-5.3431045
-</td>
-<td style="text-align:right;">
-0.0000002
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-acceleration:origin3
-</td>
-<td style="text-align:right;">
-0.7805219
-</td>
-<td style="text-align:right;">
-0.2594099
-</td>
-<td style="text-align:right;">
-3.0088363
-</td>
-<td style="text-align:right;">
-0.0028026
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-year:origin2
-</td>
-<td style="text-align:right;">
-0.1812961
-</td>
-<td style="text-align:right;">
-0.1366943
-</td>
-<td style="text-align:right;">
-1.3262881
-</td>
-<td style="text-align:right;">
-0.1855646
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-year:origin3
-</td>
-<td style="text-align:right;">
-0.3339386
-</td>
-<td style="text-align:right;">
-0.1310927
-</td>
-<td style="text-align:right;">
-2.5473471
-</td>
-<td style="text-align:right;">
-0.0112596
-</td>
-</tr>
 </tbody>
 </table>
 
-> 앞서 Full model과 2차교호작용을 추가한 모델, Backwawrd elimination을
-> 한 모델의 AIC 값을 비교하면 다음과 같다.
-
-``` r
-aic1 <- AIC(autoModel1)
-aic2 <- AIC(autoModel2)
-aic3 <- AIC(auto_m)
-data.frame(aic1,aic2,aic3)%>% 
-  rename("Full model"="aic1","Second-order interaction"="aic2","Backward elimination in Second-order interaction"="aic3")%>%
-  kable(caption = "AIC",booktabs = TRUE, valign = 't')%>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-AIC
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Full model
-</th>
-<th style="text-align:right;">
-Second-order interaction
-</th>
-<th style="text-align:right;">
-Backward elimination in Second-order interaction
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1990.274
-</td>
-<td style="text-align:right;">
-1810.702
-</td>
-<td style="text-align:right;">
-1796.331
-</td>
-</tr>
-</tbody>
-</table>
-
-``` r
-plot(auto_m)
-```
-
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-1.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-2.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-3.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-49-4.png)
+> 모든 변수를 넣었을 때 피팅 결과 acceleration 변수가 유의미하지 않은
+> 결과를 보였다.
 
 # Q-6
 
