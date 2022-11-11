@@ -3013,6 +3013,15 @@ BIC<br/>
 
 > 집 값은 엄밀하게 말하면 대부분 positive 값을 가진다. <br/> 정규분포 가정한 일반선형모형은 적절하지 않을 수 있다.
 
+``` r
+ggplot(data = Houses, aes(x = price))+
+  geom_histogram(aes(y=..density..),binwidth=10,color="#ffffb3", fill="#8dd3c7")+
+  geom_density(alpha=0.3, color="#ffffb3", fill="#CED46A")
+```
+
+![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-3-1.png)
+
+
 > 따라서 Gamma GLM을 적합시켜 보도록 하겠다.
 
 ### - **Gamma GLMs for House Selling Pride Data**
