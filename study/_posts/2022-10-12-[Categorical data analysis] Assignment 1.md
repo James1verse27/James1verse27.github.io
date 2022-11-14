@@ -23,10 +23,12 @@ toc: true
 #install.packages("dplyr")
 #install.packages("car")
 #install.packages("moonBook")
+#install.packages("ggplot2")
 library('kableExtra')
 library('dplyr')
 library('car')
 library('moonBook')
+library('ggplot2')
 ```
 
 </div>
