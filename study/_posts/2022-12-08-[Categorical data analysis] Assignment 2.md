@@ -16,10 +16,13 @@ toc: true
 설치된 패키지 접기/펼치기 버튼
 </summary>
 
+<div markdown="1">
+
 ``` r
 library('kableExtra')
 library("dplyr")
 ```
+</div>
 
 </details>
 
