@@ -1231,7 +1231,6 @@ legend("bottomright",bty='n', lty=c(1,3,5), c('auc=0.9753488'))
 ```
 
 ![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-10-1.png)
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" />
 
 > logistic model이 auc값이 가장 크게 나왔다.
 
@@ -1353,9 +1352,9 @@ ggplot() + xlab("Bin Midpoint") +
 ```
 
 <p align="center">
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/1.png" align="center" width="32%">
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/2.png" align="center" width="32%">
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/3.png" align="center" width="32%">
+![](/study/img/[Categorical data analysis] Assignment 2/1.png)
+![](/study/img/[Categorical data analysis] Assignment 2/2.png)
+![](/study/img/[Categorical data analysis] Assignment 2/3.png)
 <figcaption align="center">
 </figcaption>
 </p>
@@ -1381,7 +1380,7 @@ calibration_plot(auto1, obs = "mpg_G", pred = "pred1")
 
     ## $calibration_plot
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-13-1.png)
 
 ``` r
 calibration_plot(auto1, obs = "mpg_G", pred = "pred2")
@@ -1389,7 +1388,7 @@ calibration_plot(auto1, obs = "mpg_G", pred = "pred2")
 
     ## $calibration_plot
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-13-2.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-13-2.png)
 
 ``` r
 calibration_plot(auto1, obs = "mpg_G", pred = "pred3")
@@ -1397,7 +1396,7 @@ calibration_plot(auto1, obs = "mpg_G", pred = "pred3")
 
     ## $calibration_plot
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-13-3.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-13-3.png)
 
 ``` r
 #install.packages("gbm")
@@ -2052,7 +2051,7 @@ axis(side=2,at=seq(0,1,by=0.2))
 title(main= list("fit7에서 menopage 그래프", cex= 1.5, col = "coral",font = 3))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-19-1.png)
 
 > menopage가 증가함에 Y=2 그룹일 확룰이 높아지는 것을 볼 수 있고 Y=1 그룹일 확률은 점점 낮아진다.
 
@@ -2100,7 +2099,7 @@ axis(side=2,at=seq(0,1,by=0.2))
 title(main= list("fit7에서 alt 그래프", cex= 1.5, col = "coral",font = 3))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-20-1.png)
 
 > alt 수치가 증가할수록 Y=1 그룹일 확률이 점점 줄어듬을 볼 수 있고, Y=2 그룹일 확률은 점점 증가한다.
 
@@ -2148,7 +2147,7 @@ axis(side=2,at=seq(0,1,by=0.2))
 title(main= list("fit7에서 hb 그래프", cex= 1.5, col = "coral",font = 3))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-21-1.png)
 
 > hb 수치가 증가할수록 Y=1 그룹일 확률은 감소하고, Y=2 그룹일 확률은 증가한다.
 
@@ -2174,7 +2173,7 @@ boxplot(esteo1$alt)
 legend("topright",bty='n', c('ALT 수치'))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-22-1.png)
 
 > 혈중 크레아티닌 농도의 정상범위는 0.50~1.4 mg/dL
 
@@ -3015,7 +3014,7 @@ axis(side=2,at=seq(0,1,by=0.2))
 title(main= list("fit1_1 / 직업 무 / 운동 무에서 bmi", cex= 1, col = "coral",font = 3))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-28-1.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-28-1.png)
 
 > 전반적으로 bmi 수치가 높을 수록 Y=3 그룹일 확률이 높으며, bmi 수치가 낮을수록 Y=1 그룹일 확률이 높다.
 
@@ -3207,7 +3206,7 @@ axis(side=2,at=seq(0,1,by=0.2))
 title(main= list("fit1_1/ 직업 무 / 운동 무에서 menopage", cex= 1, col = "coral",font = 3))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-29-1.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-29-1.png)
 
 > 전반적으로 폐경 후 나이가 증가함에 따라서 Y=3 그룹일 확률이 높으며, 폐경 후 나이가 어릴 수록 Y=1 그룹일 확률이 높다.
 
@@ -3401,7 +3400,7 @@ axis(side=2,at=seq(0,1,by=0.2))
 title(main= list("fit1_1 / 직업 무 / 운동 무에서 cr", cex= 1, col = "coral",font = 3))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-30-1.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-30-1.png)
 
 > cr 수치가 높을수록 대체적으로 Y=3 그룹에 속할 확률이 높으며, 어느 순간 Y=2 그룹에 속할 확률이 더 높아진다.
 
@@ -3589,7 +3588,7 @@ axis(side=2,at=seq(0,1,by=0.2))
 title(main= list("fit1_1 / 직업 무 / 운동 유에서 hb 그래프", cex= 1, col = "coral",font = 3))
 ```
 
-<img src="C:\git_blog\study\img\[Categorical data analysis] Assignment 2/unnamed-chunk-31-1.png" width="100%" style="display: block; margin: auto;" />
+![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-31-1.png)
 
 > hb 수치가 성인 여성의 경우 12~16g/dl이 정상 범위이다.
 
