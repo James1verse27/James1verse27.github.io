@@ -35,7 +35,6 @@ permalink: /about/
 
 
 ## Certifications
-- SAS Base (2022 취득예정)
 - SQLD (Sep 2022)
 - ADsP (Sep 2022)
 - 사회조사분석사 2급 (Sep 2020)

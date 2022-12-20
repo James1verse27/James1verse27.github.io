@@ -1257,7 +1257,7 @@ NA
 </table>
 
 > main effect만 존재하는 모형과 2차 교호작용을 추가한 모형을 비교해본
-> 결과 p value가 0.05보다 작아 두 모형에 차이가 존재함을 알 수 있다.
+> 결과 p-value가 0.05보다 작아 두 모형에 차이가 존재함을 알 수 있다.
 
 > 3차 교호작용이 필요한지 알아보기 위해 2차 교호작용이 포함된 모형과 3차
 > 교호작용이 포함된 모델을 비교해보도록 한다.
@@ -3525,7 +3525,7 @@ plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses
 
 > $$\phi$$가 추정되어야 k를 추정할 수 있으며 또한 분산을 추정할수 있기 때문에 $$\phi$$를 추정해보도록 한다.
 
-> sas프로그램 같은 경우 dispersion parameter $$\phi$$를 MLE 방법으로 추정하는데 MLE를 사용하면 문제가 있을 수 있다.
+> sas프로그램 같은 경우 dispersion parameter $$\phi$$를 MLE 방법으로 추정하는데, MLE를 사용하면 문제가 있을 수 있다.
 
 > variance function이 정확하지 않으면 MLE값이 inconsistent하기 때문이다.
 
@@ -3549,7 +3549,7 @@ fit_gam1$dispersion
 
 > 지수족에서 분산구하는 식은 다음과 같다.
 
-$$var(y_i)=b^{''}(\theta_i)a(\phi)$$
+$$Var(y_i)=b^{''}(\theta_i)a(\phi)$$
 
 > 위 식으로 추정된 standard deviation은 다음과 같이 구해진다.
 
@@ -3557,7 +3557,7 @@ $$ \hat \sigma  = \sqrt{\hatϕ}\hat\mu = 0.33197 \hat \mu  $$
 
 > 식을 통해 $$\mu$$가 커짐에 따라 $$\sigma$$도 커지는 관계를 볼 수 있다.
 
-> 따라서 $$E(y_i)$$에만 초점을 두는 것이 아닌 $$var(y_i)$$가 어떻게 변화되는지도 관심을 가져야 한다. 
+> 따라서 $$E(y_i)$$에만 초점을 두는 것이 아닌 $$Var(y_i)$$가 어떻게 변화되는지도 관심을 가져야 한다. 
 
 ``` r
 aic1 <- AIC(lm(price ~ size + new + size:new, data=Houses))
@@ -3912,7 +3912,7 @@ $$ E(price) = -7.4521938 + 0.0944569 * size -77.9033275 * new + 0.0649207	* (siz
 ### 데이터셋 설명
 
 ``` r
-auto <- read.csv("C:/Biostat/Categorical data analysis/Assignment 1/Auto.csv")
+auto <- read.csv("C:/Biostat/Categorical data analysis/Assignment 2/Auto.csv")
 head(auto)%>% 
   kable(caption = "Auto dataset",booktabs = TRUE, valign = 't')%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
@@ -4131,18 +4131,6 @@ ford galaxie 500
 </tbody>
 </table>
 
-- mpg : 연비
-- cylinders : 실린더수 
-- displacement : 배기량
-- horsepower: 출력
-- weight : 차중
-- acceleration : 가속능력
-- year : 출시년도
-- origin : 제조국 1(USA), 2(EU), 3(JPN)
-- name : 모델명
-
-> 우선 데이터 type을 알아보자
-
 ``` r
 str(auto)
 ```
@@ -4158,20 +4146,42 @@ str(auto)
     ##  $ origin      : int  1 1 1 1 1 1 1 1 1 1 ...
     ##  $ name        : chr  "chevrolet chevelle malibu" "buick skylark 320" "plymouth satellite" "amc rebel sst" ...
 
-> horsepower 변수가 character형으로 되어있어 integer로 변환하고, NA 값이
-> 있는지 확인하도록 한다.
+-   mpg  
+    miles per gallon
+
+-   cylinders  
+    Number of cylinders between 4 and 8
+
+-   displacement  
+    Engine displacement (cu. inches)
+
+-   horsepower  
+    Engine horsepower
+
+-   weight  
+    Vehicle weight (lbs.)
+
+-   acceleration  
+    Time to accelerate from 0 to 60 mph (sec.)
+
+-   year  
+    Model year (modulo 100)
+
+-   origin  
+    Origin of car (1. American, 2. European, 3. Japanese)
+
+-   name  
+    Vehicle name
 
 ``` r
 auto$horsepower <- as.integer(auto$horsepower) 
-auto$year <- auto$year-70
+auto$origin <- as.factor(auto$origin)
 table(is.na(auto$horsepower))
 ```
 
     ## 
     ## FALSE  TRUE 
     ##   392     5
-
-> horsepower 변수에 결측값이 있는것을 확인할 수 있다. 결측값을 제거한다.
 
 ``` r
 auto1 <- na.omit(auto)
@@ -4183,279 +4193,31 @@ table(is.na(auto1$horsepower))
     ##   392
 
 ``` r
-mytable(auto1) #library('moonBook')
+summary(auto1$mpg)[3]
 ```
 
-    ## 
-    ##                Descriptive Statistics               
-    ## ————————————————————————————————————————————————————— 
-    ##                 Mean ± SD or %      N  Missing (%)
-    ## ————————————————————————————————————————————————————— 
-    ##    mpg                  23.4 ± 7.8  392  0  ( 0.0%)
-    ##   cylinders                         392  0  ( 0.0%)
-    ##     - 3                  4  (1.0%)                 
-    ##     - 4               199  (50.8%)                 
-    ##     - 5                  3  (0.8%)                 
-    ##     - 6                83  (21.2%)                 
-    ##     - 8               103  (26.3%)                 
-    ##    displacement      194.4 ± 104.6  392  0  ( 0.0%)
-    ##    horsepower         104.5 ± 38.5  392  0  ( 0.0%)
-    ##    weight           2977.6 ± 849.4  392  0  ( 0.0%)
-    ##    acceleration         15.5 ± 2.8  392  0  ( 0.0%)
-    ##    year                  6.0 ± 3.7  392  0  ( 0.0%)
-    ##   origin                            392  0  ( 0.0%)
-    ##     - 1               245  (62.5%)                 
-    ##     - 2                68  (17.3%)                 
-    ##     - 3                79  (20.2%)                 
-    ##   name          unique values  301  392  0  ( 0.0%)
-    ## —————————————————————————————————————————————————————
-
-
-> 연속형 독립변수들 간에 연관성을 확인하여 본다.
+    ## Median 
+    ##  22.75
 
 ``` r
-auto2 <- select(auto1, mpg,cylinders, displacement, horsepower, weight, acceleration, year)
-cor(auto2) %>% data.frame() %>% 
-  kable(caption = "Correlation",booktabs = TRUE, valign = 't')%>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+auto1$mpg_G[auto1$mpg>22.75]='1'
+auto1$mpg_G[auto1$mpg<=22.75]='0'
+
+#70년도 기준으로
+auto1$year_70 <- auto1$year-70
+
+auto1$mpg_G <- as.integer(auto1$mpg_G)
+
+attach(auto1)
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Correlation
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-mpg
-</th>
-<th style="text-align:right;">
-cylinders
-</th>
-<th style="text-align:right;">
-displacement
-</th>
-<th style="text-align:right;">
-horsepower
-</th>
-<th style="text-align:right;">
-weight
-</th>
-<th style="text-align:right;">
-acceleration
-</th>
-<th style="text-align:right;">
-year
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-mpg
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
--0.7776175
-</td>
-<td style="text-align:right;">
--0.8051269
-</td>
-<td style="text-align:right;">
--0.7784268
-</td>
-<td style="text-align:right;">
--0.8322442
-</td>
-<td style="text-align:right;">
-0.4233285
-</td>
-<td style="text-align:right;">
-0.5805410
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-cylinders
-</td>
-<td style="text-align:right;">
--0.7776175
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.9508233
-</td>
-<td style="text-align:right;">
-0.8429834
-</td>
-<td style="text-align:right;">
-0.8975273
-</td>
-<td style="text-align:right;">
--0.5046834
-</td>
-<td style="text-align:right;">
--0.3456474
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-displacement
-</td>
-<td style="text-align:right;">
--0.8051269
-</td>
-<td style="text-align:right;">
-0.9508233
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.8972570
-</td>
-<td style="text-align:right;">
-0.9329944
-</td>
-<td style="text-align:right;">
--0.5438005
-</td>
-<td style="text-align:right;">
--0.3698552
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-horsepower
-</td>
-<td style="text-align:right;">
--0.7784268
-</td>
-<td style="text-align:right;">
-0.8429834
-</td>
-<td style="text-align:right;">
-0.8972570
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.8645377
-</td>
-<td style="text-align:right;">
--0.6891955
-</td>
-<td style="text-align:right;">
--0.4163615
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-weight
-</td>
-<td style="text-align:right;">
--0.8322442
-</td>
-<td style="text-align:right;">
-0.8975273
-</td>
-<td style="text-align:right;">
-0.9329944
-</td>
-<td style="text-align:right;">
-0.8645377
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
--0.4168392
-</td>
-<td style="text-align:right;">
--0.3091199
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-acceleration
-</td>
-<td style="text-align:right;">
-0.4233285
-</td>
-<td style="text-align:right;">
--0.5046834
-</td>
-<td style="text-align:right;">
--0.5438005
-</td>
-<td style="text-align:right;">
--0.6891955
-</td>
-<td style="text-align:right;">
--0.4168392
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.2903161
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-year
-</td>
-<td style="text-align:right;">
-0.5805410
-</td>
-<td style="text-align:right;">
--0.3456474
-</td>
-<td style="text-align:right;">
--0.3698552
-</td>
-<td style="text-align:right;">
--0.4163615
-</td>
-<td style="text-align:right;">
--0.3091199
-</td>
-<td style="text-align:right;">
-0.2903161
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-</tbody>
-</table>
+> 데이터에서 5개의 결측치를 확인하여 제거하였고 mpg variable을 median을
+> 기준으로 두 그룹으로 나누어 binary indicator variable로 지정하였다.
+> (i.e \> median (Y=1) vs \<= median (Y=0)).
 
-> 상관계수를 구해본 결과
+> year변수는 해석의 용이성을 위하여 70년도를 기준으로 잡아서 변환하였다.
 
-mpg는 cylinders, displacement, horsepower, weight 와 강한 음의 상관성을,
-
-cylinders는 displacement, horsepower, weight와 강한 양의 상관성을,
-
-displacement는 horsepower, weight과 강한 양의 상관성을,
-
-horsepower는 weight과 강한 양의 상관성을 가지고 있음을 볼 수 있다.
-
-acceleration, year 두 변수는 나머지 변수들과의 연관성이 작음을 볼 수
-있다.
-
--   **Gamma glm**
-
-> Gamma glm을 적합하기 위해 일단 먼저 모든 독립변수를 넣고 모델을
-> 적합시키도록 한다.
-
-``` r
+```r
 autoModel1 <- glm(mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin,family=Gamma(link=identity), data = auto1)
 
 sum_autoModel1 <- summary(autoModel1)
@@ -4494,16 +4256,16 @@ p value
 (Intercept)
 </td>
 <td style="text-align:right;">
-35.6804699
+-6.9914661
 </td>
 <td style="text-align:right;">
-1.8479596
+4.1618561
 </td>
 <td style="text-align:right;">
-19.3080360
+-1.6798914
 </td>
 <td style="text-align:right;">
-0.0000000
+0.0937939
 </td>
 </tr>
 <tr>
@@ -4511,16 +4273,16 @@ p value
 cylinders
 </td>
 <td style="text-align:right;">
--1.0578149
+-1.0175197
 </td>
 <td style="text-align:right;">
-0.2394908
+0.2401963
 </td>
 <td style="text-align:right;">
--4.4169342
+-4.2361999
 </td>
 <td style="text-align:right;">
-0.0000130
+0.0000285
 </td>
 </tr>
 <tr>
@@ -4528,16 +4290,16 @@ cylinders
 displacement
 </td>
 <td style="text-align:right;">
-0.0142433
+0.0150055
 </td>
 <td style="text-align:right;">
-0.0052893
+0.0053463
 </td>
 <td style="text-align:right;">
-2.6928477
+2.8066974
 </td>
 <td style="text-align:right;">
-0.0073948
+0.0052610
 </td>
 </tr>
 <tr>
@@ -4545,16 +4307,16 @@ displacement
 horsepower
 </td>
 <td style="text-align:right;">
--0.0145053
+-0.0146103
 </td>
 <td style="text-align:right;">
-0.0086449
+0.0086023
 </td>
 <td style="text-align:right;">
--1.6779008
+-1.6984215
 </td>
 <td style="text-align:right;">
-0.0941801
+0.0902404
 </td>
 </tr>
 <tr>
@@ -4562,13 +4324,13 @@ horsepower
 weight
 </td>
 <td style="text-align:right;">
--0.0043690
+-0.0044375
 </td>
 <td style="text-align:right;">
-0.0004821
+0.0004858
 </td>
 <td style="text-align:right;">
--9.0619670
+-9.1351003
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -4579,16 +4341,16 @@ weight
 acceleration
 </td>
 <td style="text-align:right;">
--0.0706537
+-0.0716548
 </td>
 <td style="text-align:right;">
-0.0825588
+0.0824142
 </td>
 <td style="text-align:right;">
--0.8557981
+-0.8694469
 </td>
 <td style="text-align:right;">
-0.3926431
+0.3851473
 </td>
 </tr>
 <tr>
@@ -4596,13 +4358,13 @@ acceleration
 year
 </td>
 <td style="text-align:right;">
-0.6199023
+0.6289814
 </td>
 <td style="text-align:right;">
-0.0475805
+0.0479122
 </td>
 <td style="text-align:right;">
-13.0284980
+13.1277956
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -4610,26 +4372,814 @@ year
 </tr>
 <tr>
 <td style="text-align:left;">
-origin
+origin2
 </td>
 <td style="text-align:right;">
-1.6433755
+2.2952714
 </td>
 <td style="text-align:right;">
-0.3037828
+0.5851585
 </td>
 <td style="text-align:right;">
-5.4097051
+3.9224780
 </td>
 <td style="text-align:right;">
-0.0000001
+0.0001039
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin3
+</td>
+<td style="text-align:right;">
+3.1732353
+</td>
+<td style="text-align:right;">
+0.6059254
+</td>
+<td style="text-align:right;">
+5.2370064
+</td>
+<td style="text-align:right;">
+0.0000003
 </td>
 </tr>
 </tbody>
 </table>
 
-> 모든 변수를 넣었을 때 피팅 결과 acceleration 변수가 유의미하지 않은
-> 결과를 보였다.
+> acceleration 유의수준 0.05하에 유의하지 않으므로 제거하여본다.
+
+``` r
+#acceleration 제거 (가속 시간)
+autoModel2 <- glm(mpg ~ cylinders + displacement + horsepower + weight + year + origin,family=Gamma(link=identity), data = auto1)
+
+sum_autoModel2 <- summary(autoModel2)
+
+data.frame(sum_autoModel2$coefficients)%>% 
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
+  kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+Summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+coefficient
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+p value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-8.0847731
+</td>
+<td style="text-align:right;">
+3.9014388
+</td>
+<td style="text-align:right;">
+-2.072254
+</td>
+<td style="text-align:right;">
+0.0389086
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cylinders
+</td>
+<td style="text-align:right;">
+-1.0207784
+</td>
+<td style="text-align:right;">
+0.2398625
+</td>
+<td style="text-align:right;">
+-4.255681
+</td>
+<td style="text-align:right;">
+0.0000262
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+displacement
+</td>
+<td style="text-align:right;">
+0.0168870
+</td>
+<td style="text-align:right;">
+0.0049990
+</td>
+<td style="text-align:right;">
+3.378061
+</td>
+<td style="text-align:right;">
+0.0008047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+horsepower
+</td>
+<td style="text-align:right;">
+-0.0115657
+</td>
+<td style="text-align:right;">
+0.0077885
+</td>
+<td style="text-align:right;">
+-1.484981
+</td>
+<td style="text-align:right;">
+0.1383693
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+weight
+</td>
+<td style="text-align:right;">
+-0.0046524
+</td>
+<td style="text-align:right;">
+0.0004166
+</td>
+<td style="text-align:right;">
+-11.167644
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+year
+</td>
+<td style="text-align:right;">
+0.6282056
+</td>
+<td style="text-align:right;">
+0.0478828
+</td>
+<td style="text-align:right;">
+13.119652
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin2
+</td>
+<td style="text-align:right;">
+2.3117006
+</td>
+<td style="text-align:right;">
+0.5821908
+</td>
+<td style="text-align:right;">
+3.970692
+</td>
+<td style="text-align:right;">
+0.0000856
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin3
+</td>
+<td style="text-align:right;">
+3.2136699
+</td>
+<td style="text-align:right;">
+0.6007731
+</td>
+<td style="text-align:right;">
+5.349225
+</td>
+<td style="text-align:right;">
+0.0000002
+</td>
+</tr>
+</tbody>
+</table>
+
+> horsepower 유의수준 0.05하에 유의하지 않으므로 제거하여본다.
+
+``` r
+#horsepower 제거 (마력)
+autoModel3 <- glm(mpg ~ cylinders + displacement + weight + year + origin,family=Gamma(link=identity), data = auto1)
+
+sum_autoModel3 <- summary(autoModel3)
+
+data.frame(sum_autoModel3$coefficients)%>% 
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
+  kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+Summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+coefficient
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+p value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-9.8144398
+</td>
+<td style="text-align:right;">
+3.7507780
+</td>
+<td style="text-align:right;">
+-2.616641
+</td>
+<td style="text-align:right;">
+0.0092296
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cylinders
+</td>
+<td style="text-align:right;">
+-0.9942088
+</td>
+<td style="text-align:right;">
+0.2405499
+</td>
+<td style="text-align:right;">
+-4.133066
+</td>
+<td style="text-align:right;">
+0.0000440
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+displacement
+</td>
+<td style="text-align:right;">
+0.0131556
+</td>
+<td style="text-align:right;">
+0.0044192
+</td>
+<td style="text-align:right;">
+2.976905
+</td>
+<td style="text-align:right;">
+0.0030957
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+weight
+</td>
+<td style="text-align:right;">
+-0.0047717
+</td>
+<td style="text-align:right;">
+0.0004092
+</td>
+<td style="text-align:right;">
+-11.661219
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+year
+</td>
+<td style="text-align:right;">
+0.6482069
+</td>
+<td style="text-align:right;">
+0.0461945
+</td>
+<td style="text-align:right;">
+14.032138
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin2
+</td>
+<td style="text-align:right;">
+2.2034301
+</td>
+<td style="text-align:right;">
+0.5747313
+</td>
+<td style="text-align:right;">
+3.833844
+</td>
+<td style="text-align:right;">
+0.0001473
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin3
+</td>
+<td style="text-align:right;">
+3.0175976
+</td>
+<td style="text-align:right;">
+0.5813852
+</td>
+<td style="text-align:right;">
+5.190358
+</td>
+<td style="text-align:right;">
+0.0000003
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+anova(autoModel2,autoModel1, test="LR")
+```
+
+    ## Analysis of Deviance Table
+    ## 
+    ## Model 1: mpg ~ cylinders + displacement + horsepower + weight + year + 
+    ##     origin
+    ## Model 2: mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
+    ##     year + origin
+    ##   Resid. Df Resid. Dev Df Deviance Pr(>Chi)
+    ## 1       384     7.1136                     
+    ## 2       383     7.0990  1 0.014657   0.3739
+
+``` r
+anova(autoModel3,autoModel2, test="LR")
+```
+
+    ## Analysis of Deviance Table
+    ## 
+    ## Model 1: mpg ~ cylinders + displacement + weight + year + origin
+    ## Model 2: mpg ~ cylinders + displacement + horsepower + weight + year + 
+    ##     origin
+    ##   Resid. Df Resid. Dev Df Deviance Pr(>Chi)
+    ## 1       385     7.1534                     
+    ## 2       384     7.1136  1 0.039739   0.1428
+
+> link=identity일 때 autoModel3 선택
+
+> link=log 사용하여 모델 적합하여 보자
+
+``` r
+autoModel4 <- glm(mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin,family=Gamma(link=log), data = auto1)
+
+sum_autoModel4 <- summary(autoModel4)
+
+data.frame(sum_autoModel4$coefficients)%>% 
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
+  kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+Summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+coefficient
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+p value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+1.6841944
+</td>
+<td style="text-align:right;">
+0.1657891
+</td>
+<td style="text-align:right;">
+10.1586574
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cylinders
+</td>
+<td style="text-align:right;">
+-0.0271672
+</td>
+<td style="text-align:right;">
+0.0113871
+</td>
+<td style="text-align:right;">
+-2.3857900
+</td>
+<td style="text-align:right;">
+0.0175277
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+displacement
+</td>
+<td style="text-align:right;">
+0.0008382
+</td>
+<td style="text-align:right;">
+0.0002713
+</td>
+<td style="text-align:right;">
+3.0897215
+</td>
+<td style="text-align:right;">
+0.0021497
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+horsepower
+</td>
+<td style="text-align:right;">
+-0.0014860
+</td>
+<td style="text-align:right;">
+0.0004859
+</td>
+<td style="text-align:right;">
+-3.0578526
+</td>
+<td style="text-align:right;">
+0.0023859
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+weight
+</td>
+<td style="text-align:right;">
+-0.0002701
+</td>
+<td style="text-align:right;">
+0.0000232
+</td>
+<td style="text-align:right;">
+-11.6294020
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+acceleration
+</td>
+<td style="text-align:right;">
+-0.0008582
+</td>
+<td style="text-align:right;">
+0.0034817
+</td>
+<td style="text-align:right;">
+-0.2464855
+</td>
+<td style="text-align:right;">
+0.8054385
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+year
+</td>
+<td style="text-align:right;">
+0.0308849
+</td>
+<td style="text-align:right;">
+0.0018357
+</td>
+<td style="text-align:right;">
+16.8250009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin2
+</td>
+<td style="text-align:right;">
+0.0907858
+</td>
+<td style="text-align:right;">
+0.0200784
+</td>
+<td style="text-align:right;">
+4.5215650
+</td>
+<td style="text-align:right;">
+0.0000082
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin3
+</td>
+<td style="text-align:right;">
+0.0841496
+</td>
+<td style="text-align:right;">
+0.0195935
+</td>
+<td style="text-align:right;">
+4.2947664
+</td>
+<td style="text-align:right;">
+0.0000222
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+#acceleration 제거 (가속 시간)
+autoModel5 <- glm(mpg ~ cylinders + displacement + horsepower + weight + year + origin,family=Gamma(link=log), data = auto1)
+
+sum_autoModel5 <- summary(autoModel5)
+
+data.frame(sum_autoModel5$coefficients)%>% 
+  rename("coefficient"="Estimate","Std.Error"="Std..Error","t value"="t.value","p value"="Pr...t..") %>% 
+  kable(caption = "Summary",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+Summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+coefficient
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+p value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+1.6671534
+</td>
+<td style="text-align:right;">
+0.1494095
+</td>
+<td style="text-align:right;">
+11.158283
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cylinders
+</td>
+<td style="text-align:right;">
+-0.0270358
+</td>
+<td style="text-align:right;">
+0.0113562
+</td>
+<td style="text-align:right;">
+-2.380705
+</td>
+<td style="text-align:right;">
+0.0177665
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+displacement
+</td>
+<td style="text-align:right;">
+0.0008444
+</td>
+<td style="text-align:right;">
+0.0002696
+</td>
+<td style="text-align:right;">
+3.131999
+</td>
+<td style="text-align:right;">
+0.0018693
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+horsepower
+</td>
+<td style="text-align:right;">
+-0.0014107
+</td>
+<td style="text-align:right;">
+0.0003816
+</td>
+<td style="text-align:right;">
+-3.696577
+</td>
+<td style="text-align:right;">
+0.0002503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+weight
+</td>
+<td style="text-align:right;">
+-0.0002728
+</td>
+<td style="text-align:right;">
+0.0000204
+</td>
+<td style="text-align:right;">
+-13.367065
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+year
+</td>
+<td style="text-align:right;">
+0.0309126
+</td>
+<td style="text-align:right;">
+0.0018278
+</td>
+<td style="text-align:right;">
+16.912448
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin2
+</td>
+<td style="text-align:right;">
+0.0905918
+</td>
+<td style="text-align:right;">
+0.0200486
+</td>
+<td style="text-align:right;">
+4.518618
+</td>
+<td style="text-align:right;">
+0.0000083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+origin3
+</td>
+<td style="text-align:right;">
+0.0840086
+</td>
+<td style="text-align:right;">
+0.0195645
+</td>
+<td style="text-align:right;">
+4.293921
+</td>
+<td style="text-align:right;">
+0.0000223
+</td>
+</tr>
+</tbody>
+</table>
+
+``` r
+anova(autoModel5,autoModel4, test="LR")
+```
+
+    ## Analysis of Deviance Table
+    ## 
+    ## Model 1: mpg ~ cylinders + displacement + horsepower + weight + year + 
+    ##     origin
+    ## Model 2: mpg ~ cylinders + displacement + horsepower + weight + acceleration + 
+    ##     year + origin
+    ##   Resid. Df Resid. Dev Df   Deviance Pr(>Chi)
+    ## 1       384     5.3123                       
+    ## 2       383     5.3114  1 0.00084304   0.8044
+
+> link=log일 때 autoModel5 선택
+
+``` r
+AIC(autoModel3)
+```
+
+    ## [1] 1989.276
+
+``` r
+AIC(autoModel5)
+```
+
+    ## [1] 1874.323
+
+``` r
+BIC(autoModel3)
+```
+
+    ## [1] 2021.046
+
+``` r
+BIC(autoModel5)
+```
+
+    ## [1] 1910.064
+
+> autoModel5가 autoModel3보다 AIC, BIC 모두 작게 나왔으므로 link=log 사용한 autoModel5선택한다.
+
+> $$ E(log(mpg)) \ = \ 1.667 \ - \ 0.027(cylinders) \ + \ 0.001(displacement) \ - \ 0.001(horsepower) \ - \ 0.0002(weight) \ + \ 0.031(year) \ + \ 0.091(origin2) \ + \ 0.084(origin3)  $$
 
 # Q-6
 
