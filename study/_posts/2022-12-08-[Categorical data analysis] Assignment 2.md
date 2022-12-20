@@ -843,7 +843,7 @@ anova(fit.probit4,fit.probit3, test="LR")
 
 $$
 \begin{align}
-&{{\Phi}^{-1}(P(Y=1))}=7.8614752-0.0208243*horsepower-0.0026004*weight+0.2452354*year_{70} \\
+&{\Phi}^{-1}(P(Y=1))=7.8614752-0.0208243*horsepower-0.0026004*weight+0.2452354*year_{70} \\
 \end{align}
 $$
 
