@@ -1368,6 +1368,8 @@ ggplot() + xlab("Bin Midpoint") +
 calibration curves 그려주는 함수
 </summary>
 
+<div markdown="1">
+
 ``` r
 #install.packages("predtools")
 library(predtools)
@@ -1417,6 +1419,8 @@ calibrate.plot(auto1$mpg_G,auto1$pred3)
 ```
 
 ![](/study/img/[Categorical data analysis] Assignment 2/unnamed-chunk-14-3.png)
+
+</div>
 
 </details>
 
