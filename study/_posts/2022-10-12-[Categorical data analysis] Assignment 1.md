@@ -22,12 +22,10 @@ toc: true
 #install.packages("kableExtra")
 #install.packages("dplyr")
 #install.packages("car")
-#install.packages("moonBook")
 #install.packages("ggplot2")
 library('kableExtra')
 library('dplyr')
 library('car')
-library('moonBook')
 library('ggplot2')
 ```
 
@@ -5169,7 +5167,7 @@ BIC(autoModel5)
 
 > autoModel5가 autoModel3보다 AIC, BIC 모두 작게 나왔으므로 link=log 사용한 autoModel5선택한다.
 
-> $$ E(log(mpg)) \ = \ 1.667 \ - \ 0.027(cylinders) \ + \ 0.001(displacement) \ - \ 0.001(horsepower) \ - \ 0.0002(weight) \ + \ 0.031(year) \ + \ 0.091(origin2) \ + \ 0.084(origin3)  $$
+> $$ log(E(mpg)) \ = \ 1.667 \ - \ 0.027(cylinders) \ + \ 0.001(displacement) \ - \ 0.001(horsepower) \ - \ 0.0002(weight) \ + \ 0.031(year) \ + \ 0.091(origin2) \ + \ 0.084(origin3)  $$
 
 # Q-6
 
