@@ -4193,16 +4193,6 @@ table(is.na(auto1$horsepower))
     ##   392
 
 ``` r
-summary(auto1$mpg)[3]
-```
-
-    ## Median 
-    ##  22.75
-
-``` r
-auto1$mpg_G[auto1$mpg>22.75]='1'
-auto1$mpg_G[auto1$mpg<=22.75]='0'
-
 #70년도 기준으로
 auto1$year_70 <- auto1$year-70
 
@@ -4211,11 +4201,11 @@ auto1$mpg_G <- as.integer(auto1$mpg_G)
 attach(auto1)
 ```
 
-> 데이터에서 5개의 결측치를 확인하여 제거하였고 mpg variable을 median을
-> 기준으로 두 그룹으로 나누어 binary indicator variable로 지정하였다.
-> (i.e \> median (Y=1) vs \<= median (Y=0)).
+> 데이터에서 5개의 결측치를 확인하여 제거하였다.
 
 > year변수는 해석의 용이성을 위하여 70년도를 기준으로 잡아서 변환하였다.
+
+> 감마분포를 identity link function을 사용하여 모델을 적합하여 보았다.
 
 ```r
 autoModel1 <- glm(mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin,family=Gamma(link=identity), data = auto1)
@@ -4771,7 +4761,7 @@ anova(autoModel3,autoModel2, test="LR")
 
 > link=identity일 때 autoModel3 선택
 
-> link=log 사용하여 모델 적합하여 보자
+> 이번엔 link=log 사용하여 모델 적합하여 보자
 
 ``` r
 autoModel4 <- glm(mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin,family=Gamma(link=log), data = auto1)
