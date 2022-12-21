@@ -21,6 +21,13 @@ toc: true
 ``` r
 library('kableExtra')
 library("dplyr")
+library("ROCR")
+library("glmtoolbox")
+library("ggplot2")
+library("predtools")
+library("gbm")
+library("foreign")
+library("VGAM")
 ```
 </div>
 
@@ -1351,13 +1358,17 @@ ggplot() + xlab("Bin Midpoint") +
                                     x ="binning ", y = "Percent")
 ```
 
-<p align="center">
+<table>
+  <tr>
+    <td><img src="/study/img/[Categorical data analysis] Assignment 2/1.png" /></td><td><img  src="/study/img/[Categorical data analysis] Assignment 2/2.png" /></td><td><img src="/study/img/[Categorical data analysis] Assignment 2/3.png" /></td>
+  <tr>
+</table>
+
 ![](/study/img/[Categorical data analysis] Assignment 2/1.png)
+
 ![](/study/img/[Categorical data analysis] Assignment 2/2.png)
+
 ![](/study/img/[Categorical data analysis] Assignment 2/3.png)
-<figcaption align="center">
-</figcaption>
-</p>
 
 > fit.logit3 moodel이 다른 두 모형보다 Calibration Plot 점선에 가깝게 잘 예측된 것으로 보아 최종적으로 fit.logit3 모형을 선택하는 것이 좋아 보인다.
 
