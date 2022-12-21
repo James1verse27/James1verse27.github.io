@@ -1358,12 +1358,6 @@ ggplot() + xlab("Bin Midpoint") +
                                     x ="binning ", y = "Percent")
 ```
 
-<table>
-  <tr>
-    <td><img src="/study/img/[Categorical data analysis] Assignment 2/1.png" /></td><td><img  src="/study/img/[Categorical data analysis] Assignment 2/2.png" /></td><td><img src="/study/img/[Categorical data analysis] Assignment 2/3.png" /></td>
-  <tr>
-</table>
-
 ![](/study/img/[Categorical data analysis] Assignment 2/1.png)
 
 ![](/study/img/[Categorical data analysis] Assignment 2/2.png)
