@@ -1,40 +1,12 @@
 ---
-layout: post
-title:  "[의학통계방법론] Ch8. Two-Sample Hypotheses"
-category: Study
-tag: [R, SAS, blog, jekyll, Jupyter, Data, Python]
-toc: true
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
 ---
-* this unordered seed list will be replaced by the toc
-{:toc}
 
-- 뒤로가기를 누르시면 목차로 되돌아옵니다. 😉
-
-# Two-Sample Hypotheses
-
-# R 프로그램 결과
-
-<details>
-<summary>
-R 접기/펼치기 버튼
-</summary>
-<div markdown="1">
-
-**패키지**
-<details>
-<summary>
-설치된 패키지 접기/펼치기 버튼
-</summary>
-
-<div markdown="1">
-
-``` r
+```{r message=F, warning=F}
 getwd()
-```
-
-    ## [1] "C:/Biostat"
-
-``` r
 library(readxl)
 library(dplyr)
 library(asht)
@@ -46,8 +18,7 @@ library(vegan)
 ```
 
 **엑셀파일불러오기**
-
-``` r
+```{r message=F, warning=F}
 #모든 시트를 하나의 리스트로 불러오는 함수
 read_excel_allsheets <- function(file, tibble = FALSE) {
   sheets <- readxl::excel_sheets(file)
@@ -62,7 +33,7 @@ read_excel_allsheets <- function(file, tibble = FALSE) {
 
 **8장 연습문제 불러오기**
 
-``` r
+```{r message=F, warning=F}
 #data_chap08에 연습문제 8장 모든 문제 저장
 data_chap08 <- read_excel_allsheets("data_chap08.xls")
 
@@ -81,134 +52,12 @@ for (x in 1:length(data_chap08)){
 
 ![](C:/git_blog/study/img/ch8/8-1.png)
 
-``` r
+```{r message=F, warning=F}
 #데이터셋
 ex8_1%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-exam8_1.drug
-</th>
-<th style="text-align:right;">
-exam8_1.time
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-B
-</td>
-<td style="text-align:right;">
-8.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B
-</td>
-<td style="text-align:right;">
-8.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B
-</td>
-<td style="text-align:right;">
-7.9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B
-</td>
-<td style="text-align:right;">
-8.7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B
-</td>
-<td style="text-align:right;">
-9.1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-B
-</td>
-<td style="text-align:right;">
-9.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:right;">
-9.9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:right;">
-9.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:right;">
-11.1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:right;">
-9.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:right;">
-8.7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:right;">
-10.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-C
-</td>
-<td style="text-align:right;">
-9.5
-</td>
-</tr>
-</tbody>
-</table>
 
 - 약물 B를 투여했을 때 모든 성체 수컷 토끼의 혈액 응고 시간 평균이 약물 G를 투여했을 때 모든 성체 수컷 토끼의 혈액 응고 시간 평균이 다른지 검정하고자 한다.
 
@@ -224,7 +73,7 @@ $$
 - 정규성 검정은 P-P plot과 Q-Q plot으로도 정규성을 확인 할 수 있지만 그래프로 확인하는 정규성 검정은 기준이 모호하기 때문에 한계가 있다.<br/>
 - 따라서 정규성에 대한 기타 평가 방법들을 사용할 것인데 표본의 크기가 작으므로 Shapiro-Wilk test를 사용할 것이다.<br/> (표본크기가 매우 작으므로 웬만해선 정규성이 있는 것처럼 나올 것이다.)
 
-``` r
+```{r message=F, warning=F}
 ##정규성,등분산성 검정
 test <- function(x,y) {
   norm1 = shapiro.test(x)$p.value
@@ -237,17 +86,8 @@ test <- function(x,y) {
 group_B <- ex8_1 %>% filter(exam8_1.drug=='B') 
 group_G <- ex8_1 %>% filter(exam8_1.drug=='C')
 test(group_B$exam8_1.time,group_G$exam8_1.time)
+
 ```
-
-    ## $`그룹B 샤피로윌크 p-value`
-    ## [1] 0.9973428
-    ## 
-    ## $`그룹G 샤피로윌크 p-value`
-    ## [1] 0.9132339
-    ## 
-    ## $`그룹B,그룹G 등분산성검정 p-value`
-    ## [1] 0.4721646
-
 - 정규성 검정은 shapiro.test를 통하여 구할 수 있다.<br/>
 - p-value가 정해둔 유의수준 0.05보다 크다면 유의수준 5%하에 “분포가 정규성을 따른다”는 귀무가설을 기각할 수 없다.<br/>
 - 즉, p-value가 각각 0.997, 0.913 이므로 유의수준 0.05보다 크므로 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.<br/><br/>
@@ -256,25 +96,13 @@ test(group_B$exam8_1.time,group_G$exam8_1.time)
 
 > 다음은 R 내장 함수로 구한 t-value이다.
 
-``` r
+```{r message=F, warning=F}
 t.test(group_B$exam8_1.time,group_G$exam8_1.time,var.equal = T)
 ```
 
-    ## 
-    ##  Two Sample t-test
-    ## 
-    ## data:  group_B$exam8_1.time and group_G$exam8_1.time
-    ## t = -2.4765, df = 11, p-value = 0.03076
-    ## alternative hypothesis: true difference in means is not equal to 0
-    ## 95 percent confidence interval:
-    ##  -1.8752609 -0.1104534
-    ## sample estimates:
-    ## mean of x mean of y 
-    ##  8.750000  9.742857
-
 > 직접 함수를 작성해서 구하여 보자.
 
-``` r
+```{r message=F, warning=F}
 two_tailed_t_test <- function(x,y){
   n1 <- length(na.omit(x))
   n2 <- length(na.omit(y))
@@ -295,9 +123,6 @@ two_tailed_t_test <- function(x,y){
 two_tailed_t_test(group_B$exam8_1.time,group_G$exam8_1.time)
 ```
 
-    ##   n1 n2 v1 v2 xbar1 xbar2   ss1    ss2    sp2 s_xbar1_xbar2      t pvalue
-    ## 1  6  7  5  6  8.75  9.74 1.695 4.0171 0.5193           0.4 -2.476  0.031
-
 - 성체 수컷 토끼에게 서로 다른 약물을 투여하였을 때, 두 약물의 혈액 응고 시간에 대한 평균의 차이를 독립 이표본 t-검점을 통해 확인해 보자.<br/>
 - 추출된 표본으로 계산한 통계량 $$ \bar{X}_B=8.75 \min \,\ \bar{X}_G=9.74 \min$$<br/>
 - 두 표본의 등분산성을 가정하였으므로 합동분산 $$S^2_p=0.5193$$<br/>
@@ -309,175 +134,12 @@ two_tailed_t_test(group_B$exam8_1.time,group_G$exam8_1.time)
 ![](C:/git_blog/study/img/ch8/8-2.png)
 ![](C:/git_blog/study/img/ch8/8-2-1.png)
 
-``` r
+```{r message=F, warning=F}
 #데이터셋
 ex8_2%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-exam8_2.fertilizer
-</th>
-<th style="text-align:right;">
-exam8_2.height
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-48.2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-54.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-58.3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-47.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-51.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-52.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-55.2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-49.1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-49.9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-present
-</td>
-<td style="text-align:right;">
-52.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-52.3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-57.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-55.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-53.2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-61.3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-58.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-59.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-newer
-</td>
-<td style="text-align:right;">
-54.8
-</td>
-</tr>
-</tbody>
-</table>
-
 - 식물의 길이가 새로운 비료를 줬을 때 기존 비료를 줬을 때보다 평균이 큰지 검정하고자 한다.
 
 $$
@@ -489,7 +151,7 @@ $$
 
 - 기존 비료를 10개 식물에게 새로운 비료를 8개 식물에게 줬으며 기존 비료 그룹과 새로운 비료 그룹 두개의 표본은 독립적이게 추출하였다.
 
-``` r
+```{r message=F, warning=F}
 ##정규성,등분산성 검정
 test <- function(x,y) {
   norm1 = shapiro.test(x)$p.value
@@ -503,15 +165,6 @@ group_new <- ex8_2 %>% filter(exam8_2.fertilizer=='newer')
 test(group_pre$exam8_2.height,group_new$exam8_2.height)
 ```
 
-    ## $`Present Shapiro-Wilk p-value`
-    ## [1] 0.6832982
-    ## 
-    ## $`Newer Shapiro-Wilk p-value`
-    ## [1] 0.9021483
-    ## 
-    ## $`Present,Newer 등분산성검정 p-value`
-    ## [1] 0.8743753
-
 - shapiro.test를 통하여 기존 비료를 준 그룹에 대한 정규성검정 p-value=0.6832이고, <br/>새로운 비료를 준 그룹에 대한 p-value는 0.9021로 둘다 유의수준 5%하에 귀무가설을 기각할 수 없다.<br/>
 - 즉, 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.<br/><br/>
 - 등분산성 검정은 var.test을 통하여 p-value=0.8744로 정해둔 유의수준 0.05보다 크므로 유의수준 5%하에 “두 집단의 분산은 등분산이다”라는 귀무가설을 기각할 수 없다.<br/>
@@ -519,25 +172,13 @@ test(group_pre$exam8_2.height,group_new$exam8_2.height)
 
 > 다음은 R 내장 함수로 구한 t-value이다.
 
-``` r
+```{r message=F, warning=F}
 t.test(group_pre$exam8_2.height,group_new$exam8_2.height,var.equal = T, alternative = "less")
 ```
 
-    ## 
-    ##  Two Sample t-test
-    ## 
-    ## data:  group_pre$exam8_2.height and group_new$exam8_2.height
-    ## t = -2.9884, df = 16, p-value = 0.004343
-    ## alternative hypothesis: true difference in means is less than 0
-    ## 95 percent confidence interval:
-    ##       -Inf -1.929255
-    ## sample estimates:
-    ## mean of x mean of y 
-    ##     51.91     56.55
-
 > 직접 함수를 작성해서 구하여 보자.
 
-``` r
+```{r message=F, warning=F}
 one_tailed_t_test <- function(x,y){
   n1 <- length(na.omit(x))
   n2 <- length(na.omit(y))
@@ -557,9 +198,6 @@ one_tailed_t_test <- function(x,y){
 one_tailed_t_test(group_pre$exam8_2.height,group_new$exam8_2.height)
 ```
 
-    ##   n1 n2 v1 v2 xbar1 xbar2     ss1  ss2 s_xbar1_xbar2      t pvalue
-    ## 1 10  8  9  7 51.91 56.55 102.229 69.2          1.55 -2.988 0.0043
-
 - 기존의 비료보다 새로운 비료를 사용하였을 때 식물의 평균 길이가 더 길다는 것을 검정하고자 하므로 단측검정을 시행한다.<br/>
 - 기종 비료를 사용하였을 때 식물 길이의 표본 평균은 51.91cm이고, 새로운 비료를 사용한 식물의 길이의 표본 평균은 56.55cm이다.<br/>
 합동분산 $$S^2_p=10.71cm^2$$<br/>
@@ -570,151 +208,12 @@ one_tailed_t_test(group_pre$exam8_2.height,group_new$exam8_2.height)
 
 ![](C:/git_blog/study/img/ch8/8-2a.png)
 
-``` r
+```{r message=F, warning=F}
 #데이터셋
 ex8_2a%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-exam8_2a.temp
-</th>
-<th style="text-align:right;">
-exam8_2a.days
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-40
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-38
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-32
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-37
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-39
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-41
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-35
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-36
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-45
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-32
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-52
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-59
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-41
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-48
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-55
-</td>
-</tr>
-</tbody>
-</table>
-
 - 서로 다른 실험실 온도에서 바퀴벌레 알이 부화하는 평균 시간이 다른지 검정하고자 한다.<br/>
 - 실험실 온도에 따른 바퀴벌레 알의 부화 일수 평균에 대한 가설
 
@@ -726,7 +225,7 @@ H_1 &: \mu_{30} \not=\ \mu_{10}
 $$
 - 30도에서 7개의 알을, 10도에서 8개의 알이 부화하는 시간을 관찰하여 기록하였고 두개의 표본은 독립적이게 추출하였다.
 
-``` r
+```{r message=F, warning=F}
 ##정규성,등분산성 검정
 test <- function(x,y) {
   norm1 = shapiro.test(x)$p.value
@@ -741,38 +240,17 @@ group_10 <- ex8_2a %>% filter(exam8_2a.temp==10)
 test(group_30$exam8_2a.days,group_10$exam8_2a.days)
 ```
 
-    ## $`30도 실험실 p-value`
-    ## [1] 0.7312982
-    ## 
-    ## $`10도 실험실 p-value`
-    ## [1] 0.9415191
-    ## 
-    ## $`30,10 등분산성검정 p-value`
-    ## [1] 0.01564653
-
 - shapiro.test를 통하여 30도 실험실 그룹에 대한 정규성검정 p-value=0.7312이고,<br/> 10도 실험실 그룹에 대한 p-value는 0.9415로 둘다 유의수준 5%하에 귀무가설을 기각할 수 없다.<br/>
 - 즉, 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.<br/><br/>
 - 등분산성 검정은 var.test을 통하여 p-value=0.0156으로 정해둔 유의수준 0.05보다 작으므로 유의수준 5%하에 "두 집단의 분산은 등분산이다"라는 귀무가설을 기각할 수 있다.<br/>
 - 따라서 유의수준 5%하에 "두 집단의 모분산은 등분산이 아니다"라고 할 수 있다.<br/><br/>
 - 두 모집단이 정규분포를 따르지만 분산이 다른 경우는 Behrens-Fisher 검정을 이용한다.
 
-``` r
+```{r message=F, warning=F}
 library(asht) #Behrens-Fisher검정을 하기 위한 패키지
 #sample size for t-tests with different variances and non-equal n per arm, Behrens-Fisher test, nonparametric ABC intervals, Wilcoxon-Mann-Whitney test 등등 구할 수 있다.
 bfTest(group_30$exam8_2a.days,group_10$exam8_2a.days,altenative=c("two.sided"),mu=0,conf.level=0.95)
 ```
-
-    ## 
-    ##  Behrens-Fisher test
-    ## 
-    ## data:  x=group_30$exam8_2a.daysand y=group_10$exam8_2a.days
-    ## t = -2.4437, R = 0.34076, p-value = 0.04436
-    ## alternative hypothesis: true difference in means is not equal to 0
-    ## 95 percent confidence interval:
-    ##  -16.8684039  -0.2744532
-    ## sample estimates:
-    ## mean of x mean of y 
-    ##  37.42857  46.00000
 
 - 30도 실험실의 바퀴벌레 알의 부화 일수 평균은 37.4days이고 10도 실험실의 바퀴벌레 알의 부화 일수 평균은 46days이다.
 
@@ -797,7 +275,7 @@ $$n=\frac {2*s^2_p*t^2_{(\alpha,n_1+n_2-2)}}{d^2} \ _{(단측)} $$
 
 > 직접 함수를 작성해서 구하여 보자.
 
-``` r
+```{r message=F, warning=F}
 d.sample <- function(x,y, d,alpha,en,side) {
   if(sum(is.na(x)) >= 1) {
   x=na.omit(x) 
@@ -834,63 +312,27 @@ d.sample <- function(x,y, d,alpha,en,side) {
 }
 ```
 
-``` r
+```{r message=F, warning=F}
 d.sample(group_B$exam8_1.time,group_G$exam8_1.time, 0.5, 0.05, 50,'two')
 ```
 
-    ## $spsquare
-    ## [1] 0.5193
-    ## 
-    ## $임계값
-    ## [1] 1.984
-    ## 
-    ## $n
-    ## [1] 16.4
-    ## 
-    ## $sample_size
-    ## [1] 17
-
 > 정밀도 d=0.5이고 $s^2_p$=0.5193 표본크기를 50으로 추정하였을 때 $t_{0.05(2),98}$=1.984이고 표본크기는 16.4가 나온다.
 
-<br/> 
+<br/>
 <br/>
 
-``` r
+```{r message=F, warning=F}
 d.sample(group_B$exam8_1.time,group_G$exam8_1.time, 0.5, 0.05, 17,'two')
 ```
 
-    ## $spsquare
-    ## [1] 0.5193
-    ## 
-    ## $임계값
-    ## [1] 2.037
-    ## 
-    ## $n
-    ## [1] 17.2
-    ## 
-    ## $sample_size
-    ## [1] 18
-
 > 정밀도 d=0.5이고 $s^2_p$=0.5193 표본크기를 17로 추정하였을 때 $t_{0.05(2),32}$=2.037이고 표본크기는 17.2가 나온다.
 
-<br/> 
+<br/>
 <br/>
 
-``` r
+```{r message=F, warning=F}
 d.sample(group_B$exam8_1.time,group_G$exam8_1.time, 0.5, 0.05, 18,'two')
 ```
-
-    ## $spsquare
-    ## [1] 0.5193
-    ## 
-    ## $임계값
-    ## [1] 2.032
-    ## 
-    ## $n
-    ## [1] 17.2
-    ## 
-    ## $sample_size
-    ## [1] 18
 
 > 정밀도 d=0.5이고 $s^2_p$=0.5193 표본크기를 18로 추정하였을 때 $t_{0.05(2),98}$=2.032이고 표본크기는 17.2가 나온다.
 
@@ -911,18 +353,16 @@ $$ n_2 = \frac{nn_1}{2n_1-n}$$
 
 - 예를 들어 $n$(그룹별 표본크기)=18, $n_1$=14인 경우
 
-``` r
+```{r message=F, warning=F}
 n=18
 n1=14
 n2=n*n1 / (2*n1-n)
 n2
 ```
-
-    ## [1] 25.2
-
 > $$n_2$$=25.2 , 약 26이다.
 
 **최소 요구되는 총 표본크기는 14+26=40**
+
 
 ## EXAMPLE 8.4
 
@@ -942,83 +382,67 @@ $$
 
 - 표본 크기가 100일 때,자유도=100+100-2=198이고 이에 대응되는 임계값 
 
-``` r
+```{r message=F, warning=F}
 t_alpha <- round(qt(0.025, 198,lower.tail = F),3) 
 t_beta <- round(qt(0.10,198,lower.tail = F), 3)
 ```
 
-``` r
+```{r message=F, warning=F}
 t_alpha
 ```
-
-    ## [1] 1.972
-
 > $$t_{0.05(2),198}=1.972$$
 
-``` r
+```{r message=F, warning=F}
 t_beta
 ```
-
-    ## [1] 1.286
-
 > $$t_{0.10(1),198}=1.286$$
 
-``` r
+
+```{r message=F, warning=F}
 bound <- round(2*0.52 / 0.5^2 *(t_alpha+t_beta)^2, 1)
 bound
 ```
 
-    ## [1] 44.2
-
 > $$ n \ge 44.2 $$
 
-<br/> 
+<br/>
 <br/>
 
--   표본 크기가 45일 때,자유도=45+45-2=88이고 이에 대응되는 임계값
+- 표본 크기가 45일 때,자유도=45+45-2=88이고 이에 대응되는 임계값
 
-``` r
+```{r message=F, warning=F}
 t_alpha <- round(qt(0.025, 88,lower.tail = F),3)
 t_beta <- round(qt(0.10,88,lower.tail = F), 3)
 ```
 
-``` r
+```{r message=F, warning=F}
 t_alpha
 ```
 
-    ## [1] 1.987
-
 > $$t_{0.05(2),88}=1.987$$
 
-``` r
+```{r message=F, warning=F}
 t_beta
 ```
-
-    ## [1] 1.291
-
 > $$t_{0.10(1),88}=1.291$$
 
-``` r
+
+```{r message=F, warning=F}
 bound <- round(2*0.52 / 0.5^2 *(t_alpha+t_beta)^2, 1)
 bound
 ```
-
-    ## [1] 44.7
 
 > $$n \ge 44.7$$
 
 - 따라서 두 표본의 크기는 각각 최소한 45 이상이여야 한다.<br/>
 - 그룹1의 표본크기$$n_1$$=30으로 고정시키고 그룹 2의 표본크기$$n_2$$를 구하는 경우
 
-``` r
+```{r message=F, warning=F}
 n=44.7
 n1=30
 n2=n*n1 / (2*n1-n)
 n2
 ```
-
-    ## [1] 87.64706
-
 > n(그룹별 표본 크기)은 위에서 구한 44.7로 두고 $$n_1$$=30으로 고정되어 있을 때 $$n_2$$는 88이다.
 
 ## EXAMPLE 8.5
@@ -1035,20 +459,19 @@ $$
 \delta \ge \sqrt{\frac{2s_p^2}{n}}t_{(\alpha,n_1+n_2-2)}+t_{(\beta,n_1+n_2-2)} \ _{(단측)}
 $$
 
-``` r
+```{r message=F, warning=F}
 delta <- sqrt(2*0.5193 / 20)*(qt(0.025,38,lower.tail = F) + qt(0.1,38,lower.tail = F))
 round(delta, 2)
 ```
 
-    ## [1] 0.76
-
-- $$n$$(표본 크기)=20, $$\alpha$$=0.05, $$\beta$$=1-0.9=0.1로 주어졌을 때 검출 가능한 최소 차이는 0.76min이다.
+$$n$$(표본 크기)=20, $$\alpha$$=0.05, $$\beta$$=1-0.9=0.1로 주어졌을 때 검출 가능한 최소 차이는 0.76min이다.
 
 ## EXAMPLE 8.6
 
 ![](C:/git_blog/study/img/ch8/8-6.png)
 
-- Example 8.1에 대하여 $$n_1=n_2=15$$, and $$\alpha(2)=0.05$$하에 두 약물을 사용하여 사람의 평균 혈액 응고 시간 간에 1분의 차이를 검출할 확률<br/>
+- Example 8.1에 대하여 $$n_1=n_2=15$$, and $$\alpha(2)=0.05$$하에 두 약물을 사용하여 사람의 평균 혈액 응고 시간 간에 1분의 차이를 검출할 확률
+
 - 검정력 공식
 
 $$
@@ -1059,7 +482,7 @@ $$
 \ t_{(\beta,n_1+n_2-2)} \leq \frac{\delta}{\sqrt{\frac{2s^2_p}{n}}} \ -t_{(\alpha,n_1+n_2-2)}  \ _{(단측)}
 $$
 
-``` r
+```{r message=F, warning=F}
 delta <- 1
 n <- 15
 sp <- 0.5193
@@ -1067,8 +490,6 @@ t_alpha<- 2.048
 t_beta <- delta/(sqrt((2*sp)/15))-t_alpha
 round(t_beta,3)
 ```
-
-    ## [1] 1.752
 
 $$
 \ t_{(\beta(1),28)} \leq 1.752
@@ -1090,6 +511,7 @@ $$
 
 - 표를 참고하여 보면 $$\phi=2.69 \ and \ \nu(=\nu_2)=28$$은 약 0.96의 검정력과 관련이 있게 나온다.
 
+
 ## EXAMPLE 8-7
 
 ![](C:/git_blog/study/img/ch8/8-7.png)
@@ -1101,7 +523,7 @@ $$
 \ H_0:\sigma^2_1 = \sigma^2_2 \ vs \ H_1: \sigma^2_1 \not= \sigma^2_2
 $$
 
-``` r
+```{r message=F, warning=F}
 ##정규성,등분산성 검정
 test <- function(x,y) {
   norm1 = shapiro.test(x)$p.value
@@ -1115,16 +537,10 @@ group_2 <- ex8_7 %>%  filter(exam8_7.trap==2)
 test(group_1$exam8_7.number,group_2$exam8_7.number)
 ```
 
-    ## $`type1 샤피로윌크 p-value`
-    ## [1] 0.8921986
-    ## 
-    ## $`type2 샤피로윌크 p-value`
-    ## [1] 0.9156178
-
 - 분산비를 검정하기 전에 각 모집단의 표본이 정규성을 따르는지 shapiro-wilk test로 검정하였다.<br/>
 - shapiro-wilk p-value가 각각 0.892, 0.916 이므로 유의수준 0.05보다 크므로 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.
 
-``` r
+```{r message=F, warning=F}
 n1 <- length(group_1$exam8_7.number) 
 n2 <- length(group_2$exam8_7.number)
 var1 <- round(var(group_1$exam8_7.number), 2)
@@ -1133,182 +549,21 @@ F_stat <- round(var1 / var2, 2)
 list(n1=n1, n2=n2, var1=var1, var2=var2,"F"=F_stat)
 ```
 
-    ## $n1
-    ## [1] 11
-    ## 
-    ## $n2
-    ## [1] 10
-    ## 
-    ## $var1
-    ## [1] 21.87
-    ## 
-    ## $var2
-    ## [1] 12.9
-    ## 
-    ## $F
-    ## [1] 1.7
-
 > 각 표본의 크기와 분산이 구해졌고 분산비 F=1.70으로 나왔다.
 
-- $$F_{0.05(2),10,9}$$=3.96 이다. F-값=1.7이 임계값(3.96)보다 작으므로 기각역에 포함되지 않고 따라서 귀무가설을 기각할 만한 충분한 근거가 없다. <br/> 또한 p-value를 확인 하여도 유의수준 5%보다 크므로 유의수준 5%하에 유의하다고 볼 수 없다.<br/>
+- $$F_{0.05(2),10,9}$$=3.96 이다. F-값=1.7이 임계값(3.96)보다 작으므로 기각역에 포함되지 않고 따라서 귀무가설을 기각할 만한 충분한 근거가 없다. <br/> 또한 p-value를 확인 하여도 유의수준 5%보다 크므로 유의수준 5%하에 유의하다고 볼 수 없다.
 - 즉, trap의 종류에 따라 잡힌 나방의 수의 모분산이 같지 않다고 할 수 없다.
 
 ## EXAMPLE 8-8
 
 ![](C:/git_blog/study/img/ch8/8-8.png)
 
-``` r
+```{r message=F, warning=F}
 #데이터셋
 ex8_8%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-exam8_8.site
-</th>
-<th style="text-align:right;">
-exam8_8.time
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-69.3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-75.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-81.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-74.7
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-72.3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-78.7
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-76.4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-69.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-64.6
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-74.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-84.8
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-76.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-93.9
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-81.2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-73.4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-88.0
-</td>
-</tr>
-</tbody>
-</table>
 
 - Greenhouse,Outside에서 소나무 종자 발아 시간을 각각 측정하였다. <br/>
 - 두 상황에서 추출한 두 데이터로 Outside에서의 소나무 종자 발아 시간의 모분산이 Greenhouse에서 보다 모분산이 더 큰지 검정하고자 한다.
@@ -1317,7 +572,7 @@ $$
 \ H_0:\sigma^2_1 \geq \sigma^2_2 \ vs \ H_1: \sigma^2_1 < \sigma^2_2
 $$
 
-``` r
+```{r message=F, warning=F}
 ##정규성,등분산성 검정
 test <- function(x,y) {
   norm1 = shapiro.test(x)$p.value
@@ -1331,16 +586,10 @@ group_O <- ex8_8 %>% filter(exam8_8.site==2)
 test(group_G$exam8_8.time,group_O$exam8_8.time)
 ```
 
-    ## $`Greenhouse 샤피로윌크 p-value`
-    ## [1] 0.993425
-    ## 
-    ## $`Outside 샤피로윌크 p-value`
-    ## [1] 0.9566238
-
 - 분산비를 검정하기 전에 각 모집단의 표본이 정규성을 따르는지 shapiro-wilk test로 검정하였다.<br/>
 - shapiro-wilk p-value가 각각 0.993, 0.956 이므로 유의수준 0.05보다 크므로 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.
 
-``` r
+```{r message=F, warning=F}
 n1 <- length(group_G$exam8_8.time) 
 n2 <- length(group_O$exam8_8.time)
 var1 <- round(var(group_G$exam8_8.time), 2)
@@ -1348,22 +597,6 @@ var2 <- round(var(group_O$exam8_8.time), 2)
 F_stat <- round(var2 / var1, 2)
 list(n1=n1, n2=n2, var1=var1, var2=var2,"F"=F_stat)
 ```
-
-    ## $n1
-    ## [1] 7
-    ## 
-    ## $n2
-    ## [1] 9
-    ## 
-    ## $var1
-    ## [1] 15.09
-    ## 
-    ## $var2
-    ## [1] 87.62
-    ## 
-    ## $F
-    ## [1] 5.81
-
 - 각각의 분산은 $$s^2_1=15.10$$, $$s^2_2=87.62$$이고, $$F=\frac{s^2_1}{s^2_2} \ or \ F=\frac{s^2_2}{s^2_1}$$ 둘 중 큰 값을 사용한다.<br/> 따라서 $$F=\frac{s^2_2}{s^2_1}= \frac{87.62}{15.10}=5.80$$이다.
 
 - F-값이 임계값 $$F_{0.05(1),8,6}=4.15$$ 보다 크므로 기각역에 포함되고 귀무가설을 기각할 수 있다.<br/>
@@ -1374,17 +607,10 @@ list(n1=n1, n2=n2, var1=var1, var2=var2,"F"=F_stat)
 ![](C:/git_blog/study/img/ch8/8-9.png)
 ![](C:/git_blog/study/img/ch8/8-9-1.png)
 
-``` r
+```{r message=F, warning=F}
 library(lawstat) #levene test를 위한 패키지
 levene.test(ex8_7$exam8_7.number,ex8_7$exam8_7.trap,location='mean')
 ```
-
-    ## 
-    ##  Classical Levene's test based on the absolute deviations from the mean
-    ##  ( none not applied because the location is not set to median )
-    ## 
-    ## data:  ex8_7$exam8_7.number
-    ## Test Statistic = 0.49267, p-value = 0.4913
 
 - Levene test를 통하여 분산의 동일성 검정을 할 수 있다. <br/>
 - Levene test는 모집단이 정규분포를 따르지 않는 경우에 모분산의 동질성을 검정하기 위하여 사용한다.<br/>
@@ -1398,118 +624,12 @@ levene.test(ex8_7$exam8_7.number,ex8_7$exam8_7.trap,location='mean')
 ![](C:/git_blog/study/img/ch8/8-10-1.png)
 ![](C:/git_blog/study/img/ch8/8-10-2.png)
 
-``` r
+```{r message=F, warning=F}
 #데이터셋
 ex8_10%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-exam8_10.weight
-</th>
-<th style="text-align:right;">
-exam8_10.height
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-72.5
-</td>
-<td style="text-align:right;">
-183.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-71.700000000000003
-</td>
-<td style="text-align:right;">
-172.3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-60.799999999999997
-</td>
-<td style="text-align:right;">
-180.1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-63.200000000000003
-</td>
-<td style="text-align:right;">
-190.2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-71.400000000000006
-</td>
-<td style="text-align:right;">
-191.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-73.099999999999994
-</td>
-<td style="text-align:right;">
-169.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-77.900000000000006
-</td>
-<td style="text-align:right;">
-166.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-75.700000000000003
-</td>
-<td style="text-align:right;">
-177.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-72
-</td>
-<td style="text-align:right;">
-184.7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-69
-</td>
-<td style="text-align:right;">
-187.5
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-.
-</td>
-<td style="text-align:right;">
-179.8
-</td>
-</tr>
-</tbody>
-</table>
 
 - 같은 모집단에서 추출된 남성의 키와 몸무게의 변동이 다른지를 검정하고자 한다.<br/>
 - 키의 측정 단위는 cm이고, 몸무게의 측정단위는 kg이다.<br/>
@@ -1523,7 +643,7 @@ H_1 &:\frac{\sigma_1}{\mu_1} \neq \frac{\sigma_2}{\mu_2}
 \end{aligned}
 $$
 
-``` r
+```{r message=F, warning=F}
 ##정규성,등분산성 검정
 test <- function(x,y) {
   norm1 = shapiro.test(x)$p.value
@@ -1535,16 +655,10 @@ test <- function(x,y) {
 test(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))
 ```
 
-    ## $`weight 샤피로윌크 p-value`
-    ## [1] 0.2660832
-    ## 
-    ## $`height 샤피로윌크 p-value`
-    ## [1] 0.7483809
-
 - p-value가 각각 $$p\ value=0.2661,\ 0.7484$$ 으로 유의수준 0.05보다 크기에 귀무가설 $$H_0$$ 를 기각할만한 충분한 근거가 없다. 데이터셋이 정규성을 따르지 않는다는 충분한 근거가 없기에 분산 비의 검정을 수행할 수 있다.<br/>
 - 분산비 검정을 하기 위하여 통계량 구하는 함수를 작성하여 보자.
 
-``` r
+```{r message=F, warning=F}
 library(kableExtra)
 f8_10 <- function(x,y){
   x <- na.omit(x)
@@ -1596,147 +710,6 @@ f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height)) %>%
    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Variance ratio test
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Weight
-</th>
-<th style="text-align:left;">
-Height
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-n
-</td>
-<td style="text-align:left;">
-10
-</td>
-<td style="text-align:left;">
-11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-v
-</td>
-<td style="text-align:left;">
-9
-</td>
-<td style="text-align:left;">
-10
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-xbar
-</td>
-<td style="text-align:left;">
-70.73
-</td>
-<td style="text-align:left;">
-180.24
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-s_2
-</td>
-<td style="text-align:left;">
-27.3512
-</td>
-<td style="text-align:left;">
-67.8945
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-s
-</td>
-<td style="text-align:left;">
-246.161
-</td>
-<td style="text-align:left;">
-678.9455
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-CV
-</td>
-<td style="text-align:left;">
-0.0739
-</td>
-<td style="text-align:left;">
-0.0457
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SSlog
-</td>
-<td style="text-align:left;">
-0.00986951
-</td>
-<td style="text-align:left;">
-0.00400214
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-s_2log
-</td>
-<td style="text-align:left;">
-0.00109661
-</td>
-<td style="text-align:left;">
-0.00040021
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-F
-</td>
-<td style="text-align:left;">
-2.74
-</td>
-<td style="text-align:left;">
-2.74
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pvalue
-</td>
-<td style="text-align:left;">
-0.14
-</td>
-<td style="text-align:left;">
-0.14
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Reject_H0
-</td>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-No
-</td>
-</tr>
-</tbody>
-</table>
-
 - 몸무게의 CV=0.0739, 키의 CV=0.0457<br/>
 - Lewontin은 data를 logarithmic transformation하여 변동계수 검정을 수행하는 방법을 증명하였다.<br/>
 각 표본의 data들에 log10 변환을 하여 산출한 분산은 몸무게=0.0010967, 키=0.00040019이고,<br/>
@@ -1745,7 +718,7 @@ No
 
 > 즉, 같은 모집단으로부터 추출된 남성의 키와 몸무게의 변동은 다르다고 할 증거가 충분하지 못하다.
 
-``` r
+```{r message=F, warning=F}
 cv1 <- as.numeric(f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))$Weight[6])
 cv2 <- as.numeric(f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))$Height[6])
 v1 <- as.numeric(f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))$Weight[2])
@@ -1767,50 +740,6 @@ ztest%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Z test
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-vp
-</th>
-<th style="text-align:right;">
-vp2
-</th>
-<th style="text-align:right;">
-Z
-</th>
-<th style="text-align:right;">
-pvalue
-</th>
-<th style="text-align:left;">
-Reject_H0
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0.0591
-</td>
-<td style="text-align:right;">
-0.003493
-</td>
-<td style="text-align:right;">
-1.46
-</td>
-<td style="text-align:right;">
-0.16
-</td>
-<td style="text-align:left;">
-No
-</td>
-</tr>
-</tbody>
-</table>
-
 - Miller는 공통 변동계수를 산출하여 Z분포를 활용해 변동계수 차에 대한 가설 검정을 수행하였다.<br/>
 공통 변동계수는 $$V_p=\frac{\nu_1V1+\nu_2V2}{\nu_1+\nu_2}=\frac{9(0.0739)+10(0.0457)}{9+10}=0.0591$$이다.<br/>
 공통 변동계수를 활용한 Z-value=1.46이고, 유의수준 5%하에서 임계값 z=1.96이다.<br/>
@@ -1822,131 +751,17 @@ z-value가 임계값 보다 작으므로, 기각역에 포함되지 않아 귀�
 
 ![](C:/git_blog/study/img/ch8/8-11.png)
 
-``` r
+```{r message=F, warning=F}
 #데이터셋
 ex8_11%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-exam8_11.sex
-</th>
-<th style="text-align:right;">
-exam8_11.height
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-193
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-188
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-185
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-183
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-180
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-175
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-170
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-178
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-173
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-168
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-165
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-163
-</td>
-</tr>
-</tbody>
-</table>
-
 - 본 데이터는 성인 남성과 여성의 키를 기록한 데이터이다.<br/>
+
 - 데이터를 그룹별로 나누어 보자.
 
-``` r
+```{r message=F, warning=F}
 hm <- ex8_11 %>% filter(exam8_11.sex=='1') 
 hf <- ex8_11 %>% filter(exam8_11.sex=='2')
 
@@ -1957,85 +772,11 @@ names(ex8_11_cbind) <- c("Heights of males","Heights of females")
 
 > males와 females 데이터 수가 차이나기 때문에 cbind가 되지 않으므로 qpcR패키지를 사용하여 결합시켜준다.
 
-``` r
+```{r message=F, warning=F}
 ex8_11_cbind%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Heights of males
-</th>
-<th style="text-align:right;">
-Heights of females
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-193
-</td>
-<td style="text-align:right;">
-178
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-188
-</td>
-<td style="text-align:right;">
-173
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-185
-</td>
-<td style="text-align:right;">
-168
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-183
-</td>
-<td style="text-align:right;">
-165
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-180
-</td>
-<td style="text-align:right;">
-163
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-175
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-170
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-</tbody>
-</table>
 
 - 남학생과 여학생 키의 차이에 대한 검정을 하고자 한다.<br/>
 - 일반적인 t-검정을 수행하기엔 표본의 수가 적어 비모수 검정 방법인 Mann-Whitney검정을 실시한다.
@@ -2050,7 +791,7 @@ $$
 - Mann-Whitney 검정을 하기 위해서는 각 변수의 랭크(순위)를 매겨야하기 때문에 이를 구하도록 한다.<br/>
 (이 예제의 경우 내림차순으로 순위를 구했다. 양측일 경우 문제 없지만 단측일 경우 통계량 값이 바뀐다.)
 
-``` r
+```{r message=F, warning=F}
 rank8_11 <- function(data){
   x <- data[,1]
   y <- data[,2]
@@ -2069,129 +810,6 @@ dat8_11%>%
   kbl(caption = "Result of Rank") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Rank
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Heights of males
-</th>
-<th style="text-align:right;">
-Heights of females
-</th>
-<th style="text-align:right;">
-rank_m
-</th>
-<th style="text-align:right;">
-rank_f
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-193
-</td>
-<td style="text-align:right;">
-178
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-188
-</td>
-<td style="text-align:right;">
-173
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-8
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-185
-</td>
-<td style="text-align:right;">
-168
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-10
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-183
-</td>
-<td style="text-align:right;">
-165
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-11
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-180
-</td>
-<td style="text-align:right;">
-163
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-12
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-175
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-170
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-</tbody>
-</table>
-
 - Mann-Whitney 검정통계량을 구하는 공식은 다음과 같다.
 
 $$
@@ -2213,7 +831,7 @@ $$
 
 - 양측 0.05 n=5,7의 임계값은 30인 것을 볼 수 있다.
 
-``` r
+```{r message=F, warning=F}
 M_W_test <- function(x,y,a,b){
   x <- na.omit(x)
   y <- na.omit(y)
@@ -2230,61 +848,11 @@ M_W_test <- function(x,y,a,b){
 }
 ```
 
-``` r
+```{r message=F, warning=F}
 M_W_test(dat8_11$`Heights of males`,dat8_11$`Heights of females`,dat8_11$rank_m,dat8_11$rank_f) %>%
   kbl(caption = "Result of Mann-Whitney test") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Mann-Whitney test
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-n1
-</th>
-<th style="text-align:right;">
-n2
-</th>
-<th style="text-align:right;">
-R1
-</th>
-<th style="text-align:right;">
-R2
-</th>
-<th style="text-align:right;">
-U
-</th>
-<th style="text-align:right;">
-U_prime
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-31
-</td>
-<td style="text-align:right;">
-47
-</td>
-<td style="text-align:right;">
-32
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-</tbody>
-</table>
 
 $$
 U=7*5+\frac{7(7+1)}{2}-31=32
@@ -2301,17 +869,9 @@ $$
 
 - 다음은 R에 내장된 wilcox.text() 를 사용한 결과를 확인하여 보자.
 
-``` r
+```{r message=F, warning=F}
 wilcox.test(dat8_11$`Heights of males`, dat8_11$`Heights of females`)
 ```
-
-    ## 
-    ##  Wilcoxon rank sum exact test
-    ## 
-    ## data:  dat8_11$`Heights of males` and dat8_11$`Heights of females`
-    ## W = 32, p-value = 0.01768
-    ## alternative hypothesis: true location shift is not equal to 0
-
 - wilcoxon rank sum exact test의 p-value=0.018로 유의수준 5%하에서 귀무가설을 기각할 수 있다. <br/>
 그러므로 남학생과 여학생의 키는 다르다고 할 수 있다.
 
@@ -2319,7 +879,7 @@ wilcox.test(dat8_11$`Heights of males`, dat8_11$`Heights of females`)
 
 ![](C:/git_blog/study/img/ch8/8-12.png)
 
-``` r
+```{r message=F, warning=F}
 #데이터셋
 wt <- c(44,48,36,32,51,45,54,56)
 wot <- c(32,40,44,44,34,30,26,NA)
@@ -2328,88 +888,6 @@ ex8_12%>%
   kbl(caption = "Dataset",escape=F) %>%
    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-wt
-</th>
-<th style="text-align:right;">
-wot
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-44
-</td>
-<td style="text-align:right;">
-32
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-48
-</td>
-<td style="text-align:right;">
-40
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-36
-</td>
-<td style="text-align:right;">
-44
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-32
-</td>
-<td style="text-align:right;">
-44
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:right;">
-34
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:right;">
-30
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-54
-</td>
-<td style="text-align:right;">
-26
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-56
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-</tbody>
-</table>
 
 - 고등학교에서 typing 훈련을 받은 대학생이 훈련을 받지 않은 사람보다 평균속도가 좋은지 검정하고자 한다.<br/>
 
@@ -2424,7 +902,7 @@ $$
 (이 예제의 경우 오름차순으로 순위를 구했다.)<br/>
 - 동률 순위 자료가 있는 경우 동률 순위의 평균 순위를 이용한다.
 
-``` r
+```{r message=F, warning=F}
 rank8_12 <- function(data){
   x <- data[,1]
   y <- data[,2]
@@ -2443,199 +921,13 @@ dat8_12%>%
    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Rank
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-wt
-</th>
-<th style="text-align:right;">
-wot
-</th>
-<th style="text-align:right;">
-rank_m
-</th>
-<th style="text-align:right;">
-rank_f
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-44
-</td>
-<td style="text-align:right;">
-32
-</td>
-<td style="text-align:right;">
-9.0
-</td>
-<td style="text-align:right;">
-3.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-48
-</td>
-<td style="text-align:right;">
-40
-</td>
-<td style="text-align:right;">
-12.0
-</td>
-<td style="text-align:right;">
-7.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-36
-</td>
-<td style="text-align:right;">
-44
-</td>
-<td style="text-align:right;">
-6.0
-</td>
-<td style="text-align:right;">
-9.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-32
-</td>
-<td style="text-align:right;">
-44
-</td>
-<td style="text-align:right;">
-3.5
-</td>
-<td style="text-align:right;">
-9.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:right;">
-34
-</td>
-<td style="text-align:right;">
-13.0
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:right;">
-11.0
-</td>
-<td style="text-align:right;">
-2.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-54
-</td>
-<td style="text-align:right;">
-26
-</td>
-<td style="text-align:right;">
-14.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-56
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-15.0
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-</tbody>
-</table>
-
 - 이제 Mann-Whitney 검정통계량을 구해 검정을 실시하도록 한다.
 
-``` r
+```{r message=F, warning=F}
 M_W_test(dat8_12$wt,dat8_12$wot,dat8_12$rank_m,dat8_12$rank_f) %>%
   kbl(caption = "Result of Mann-Whitney test") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Mann-Whitney test
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-n1
-</th>
-<th style="text-align:right;">
-n2
-</th>
-<th style="text-align:right;">
-R1
-</th>
-<th style="text-align:right;">
-R2
-</th>
-<th style="text-align:right;">
-U
-</th>
-<th style="text-align:right;">
-U_prime
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-83.5
-</td>
-<td style="text-align:right;">
-36.5
-</td>
-<td style="text-align:right;">
-8.5
-</td>
-<td style="text-align:right;">
-47.5
-</td>
-</tr>
-</tbody>
-</table>
 
 $$
 U=8*7+\frac{8(8+1)}{2}-83.5=8.5
@@ -2662,17 +954,9 @@ $$
 
 - 다음은 R에 내장된 wilcox.text() 를 사용한 결과를 확인하여 보자.
 
-``` r
+```{r message=F, warning=F}
 wilcox.test(dat8_12$wt,na.omit(dat8_12$wot),alternative = "greater")
 ```
-
-    ## 
-    ##  Wilcoxon rank sum test with continuity correction
-    ## 
-    ## data:  dat8_12$wt and na.omit(dat8_12$wot)
-    ## W = 47.5, p-value = 0.0136
-    ## alternative hypothesis: true location shift is greater than 0
-
 - wilcoxon rank sum exact test의 p-value=0.018로 유의수준 5%하에서 귀무가설을 기각할 수 있다. <br/>
 그러므로 남학생과 여학생의 키는 다르다고 할 수 있다.
 
@@ -2702,7 +986,7 @@ $$
 $$
 - $$n_1=22,\ n_2=46,\ N=68,\ U=282$$ 가 주어졌을 때 검정을 해보도록 한다. 
 
-``` r
+```{r message=F, warning=F}
 Normal_Approximation_M_W_test<-function(n1,n2,u){
   u_prime<-(n1*n2)-u
   mu<-(n1*n2)/2
@@ -2719,61 +1003,11 @@ Normal_Approximation_M_W_test<-function(n1,n2,u){
 }
 ```
 
-``` r
+```{r message=F, warning=F}
 Normal_Approximation_M_W_test(22,46,282) %>%
   kbl(caption = "Result of Mann-Whitney test (Normal approxiation)") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Mann-Whitney test (Normal approxiation)
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-u_prime
-</th>
-<th style="text-align:right;">
-mu
-</th>
-<th style="text-align:right;">
-sig
-</th>
-<th style="text-align:right;">
-z
-</th>
-<th style="text-align:right;">
-p_value
-</th>
-<th style="text-align:left;">
-Reject_H0
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-730
-</td>
-<td style="text-align:right;">
-506
-</td>
-<td style="text-align:right;">
-76.28
-</td>
-<td style="text-align:right;">
-2.94
-</td>
-<td style="text-align:right;">
-0.0017
-</td>
-<td style="text-align:left;">
-yes
-</td>
-</tr>
-</tbody>
-</table>
 
 - 이 예제는 오름차순으로 순위가 매겨져 있으며, 음식 보충제를 섭취한 동물의 체중이 음식 보충제를 섭취하지 않은 동물의 체중보다 큰지 검정하는 것이기 때문에 통계량을 $$U'$$을 사용한다.<br/>
 - 산출된 통계량을 이용하여 $$Z=\frac{U'-\mu_U}{\sigma_U}=2.94$$이고, 표준정규분포에서 유의수준 5% 단측검정 임계값은 1.6449이다.<br/>
@@ -2787,7 +1021,7 @@ yes
 - 연속형 데이터가 아닌 순서(순위)만 있는 데이터의 검정을 해보도록 한다. <br/>
 - 본 데이터는 수업 조교에 따른 학생들의 성적 등급을 기록한 데이터로 수업 조교에 따른 학생들의 등급이 같은지 다른지 검정해보도록 한다.
 
-``` r
+```{r message=F, warning=F}
 A <- c(3,3,3,6,10,10,13.5,13.5,16.5,16.5,19.5,NA,NA,NA)
 B <- c(3,3,7.5,7.5,10,12,16.5,16.5,19.5,22.5,22.5,22.5,22.5,25)
 ex8_14 <- data.frame(A,B)
@@ -2796,137 +1030,7 @@ ex8_14%>%
    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-A
-</th>
-<th style="text-align:right;">
-B
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
-3.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
-3.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
-7.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6.0
-</td>
-<td style="text-align:right;">
-7.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10.0
-</td>
-<td style="text-align:right;">
-10.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10.0
-</td>
-<td style="text-align:right;">
-12.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-13.5
-</td>
-<td style="text-align:right;">
-16.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-13.5
-</td>
-<td style="text-align:right;">
-16.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16.5
-</td>
-<td style="text-align:right;">
-19.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16.5
-</td>
-<td style="text-align:right;">
-22.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-19.5
-</td>
-<td style="text-align:right;">
-22.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-22.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-22.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-25.0
-</td>
-</tr>
-</tbody>
-</table>
-
-``` r
+```{r message=F, warning=F}
 rank_M_W_test <- function(x,y){
   x <- na.omit(x)
   y <- na.omit(y)
@@ -2941,61 +1045,11 @@ rank_M_W_test <- function(x,y){
 }
 ```
 
-``` r
+```{r message=F, warning=F}
 rank_M_W_test(ex8_14$A,ex8_14$B)%>%
   kbl(caption = "Result of Mann-Whitney test (Normal approxiation)") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Mann-Whitney test (Normal approxiation)
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-n1
-</th>
-<th style="text-align:right;">
-n2
-</th>
-<th style="text-align:right;">
-R1
-</th>
-<th style="text-align:right;">
-R2
-</th>
-<th style="text-align:right;">
-U
-</th>
-<th style="text-align:right;">
-U_prime
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-114.5
-</td>
-<td style="text-align:right;">
-210.5
-</td>
-<td style="text-align:right;">
-105.5
-</td>
-<td style="text-align:right;">
-48.5
-</td>
-</tr>
-</tbody>
-</table>
 
 - $$U$$ 통계량은 주어진 공식에 따라 $$U, U'$$을 모두 구하고 둘 중 큰 값을 $$U$$ 통계량으로 한다.**
 
@@ -3007,16 +1061,9 @@ U_prime
 
 - 다음은 R에 내장된 wilcox.text() 를 사용한 결과이다.
 
-``` r
+```{r message=F, warning=F}
 wilcox.test(na.omit(ex8_14$A),ex8_14$B,alternative = "two.sided")
 ```
-
-    ## 
-    ##  Wilcoxon rank sum test with continuity correction
-    ## 
-    ## data:  na.omit(ex8_14$A) and ex8_14$B
-    ## W = 48.5, p-value = 0.1219
-    ## alternative hypothesis: true location shift is not equal to 0
 
 - wil.cox test를 이용해 검정할 수도 있으며 패키지를 이용해 wilcox.test검정을 진행한 결과 p-value가 0.1219로 유의수준 0.05보다 크기 때문에 귀무가설을 기각할 수 없다.
 
@@ -3034,7 +1081,8 @@ H_A &: The\ median\ of\ the\ two\ sampled\ populations\ are\ not\ equal.
 
 $$
 
-``` r
+
+```{r message=F, warning=F}
 data <- c(na.omit(ex8_14$A),ex8_14$B)
 ex8_15 <- data.frame(data)
 ex8_15$number <- ifelse(ex8_15$data > median(ex8_15$data) ,
@@ -3047,48 +1095,6 @@ table(ex8_15$number,ex8_15$group)%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Mann-Whitney test
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Sample 1
-</th>
-<th style="text-align:right;">
-Sample 2
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Above Median
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Not above Median
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8
-</td>
-</tr>
-</tbody>
-</table>
-
 - 교차표를 보면 1번 그룹에선 중위수를 넘는 학생이 6명이고 넘지 않는 학생이 3명이며, 2번 그룹에서는 6명과 8명이다.<br/>
 - 중위수 검정을 하기 위해 pearson 카이제곱 검정을 실시한다. 카이제곱 검정을 하기 위한 검정통계량 공식은 다음과 같다.
 
@@ -3096,7 +1102,7 @@ $$
 \chi_c^2 = \frac{n\ (|f_{11}f_{22}\ -\ f_{12}f_{21}|\ -\ \frac{n}{2})^2}{(C_1)(C_2)(R_1)(R_2)} \ \sim \chi_1^2
 $$
 
-``` r
+```{r message=F, warning=F}
 chi_square_test<- function(table){
   tab <- table
   f11 <- tab[1,1]
@@ -3119,55 +1125,23 @@ chi_square_test(table(ex8_15$number,ex8_15$group))%>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of Chi-square test
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-chi
-</th>
-<th style="text-align:right;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0.473
-</td>
-<td style="text-align:right;">
-0.49
-</td>
-</tr>
-</tbody>
-</table>
-
 - 빈도표를 생성하여 산출한 통계량은 0.473이고, 자유도가 1인 카이제곱 통계량은 3.841임을 알 수 있다.<br/>
 - 통계량이 기각역에 포함되지 않으므로 귀무가설을 기각할 수 없다.<br/>
 - 즉, 같은  모집단으로부터  추출된  두  표본의  중위수는  다르다고 할 수 없다.<br/>
 - 그러므로 수업 조교에 따른 학생들의 성적 등급의 중위수가 다르다고 할 수 없다.<br/><br/>
 - RVAideMemoire 패키지 내에 있는 mood.medtest() 함수를 사용한 결과를 확인하여 보자.
 
-``` r
+```{r message=F, warning=F}
 library(RVAideMemoire)
 mood.medtest(ex8_15$data~ex8_15$group,exact=F)
 ```
-
-    ## 
-    ##  Mood's median test
-    ## 
-    ## data:  ex8_15$data by ex8_15$group
-    ## X-squared = 0.47329, df = 1, p-value = 0.4915
 
 ## EXAMPLE 8-16
 
 ![](C:/git_blog/study/img/ch8/8-16.png)
 ![](C:/git_blog/study/img/ch8/8-16-1.png)
 
-``` r
+```{r message=F, warning=F}
 Michigan <- c(47,35,7,5,3,2)
 Louisiana <- c(48,23,11,13,8,2)
 ex8_16 <- data.frame(Michigan,Louisiana)
@@ -3175,73 +1149,6 @@ ex8_16%>%
   kbl(caption = "Dataset",escape=F) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Dataset
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Michigan
-</th>
-<th style="text-align:right;">
-Louisiana
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-47
-</td>
-<td style="text-align:right;">
-48
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-35
-</td>
-<td style="text-align:right;">
-23
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-11
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-13
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-8
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-</tbody>
-</table>
-
 - 이 데이터는 미시간 블루제이스의 식단에서 식물성 식품의 빈도와 루이지애나 블루제이스의 식단에서 식물성 식품의 빈도 데이터이다.<br/>
 - 독립적인 두개의 표본에 대하여 다양성 지수 차이를 검정하기 위해서는 Shannon index H 를 구하고 허치슨이 제안한 검정통계량을 구하여 검정을 진행하여야 한다.
 
@@ -3265,7 +1172,7 @@ t &= \frac{H_1'-H_2'}{s_{H_1'-H_2'}} \sim t(\nu)\\
 \end{aligned}
 $$
 
-``` r
+```{r message=F, warning=F}
 H_test<- function(x,y){
   n1 <- sum(x)
   filog_1 <- sum(x*log10(x))
@@ -3291,139 +1198,28 @@ H_test<- function(x,y){
 }
 ```
 
-``` r
+```{r message=F, warning=F}
 H_test(ex8_16$Michigan,ex8_16$Louisiana)%>%
   kbl(caption = "Result of indices of diversity") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
 ```
 
-<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
-<caption>
-Result of indices of diversity
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-h1
-</th>
-<th style="text-align:right;">
-h2
-</th>
-<th style="text-align:right;">
-sh1
-</th>
-<th style="text-align:right;">
-sh2
-</th>
-<th style="text-align:right;">
-s_h1_h2
-</th>
-<th style="text-align:right;">
-t
-</th>
-<th style="text-align:right;">
-v
-</th>
-<th style="text-align:right;">
-p_value
-</th>
-<th style="text-align:left;">
-Reject_H0
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0.5403
-</td>
-<td style="text-align:right;">
-0.6328
-</td>
-<td style="text-align:right;">
-0.001376
-</td>
-<td style="text-align:right;">
-0.0009692
-</td>
-<td style="text-align:right;">
-0.0484
-</td>
-<td style="text-align:right;">
--1.909
-</td>
-<td style="text-align:right;">
-196
-</td>
-<td style="text-align:right;">
-0.058
-</td>
-<td style="text-align:left;">
-No
-</td>
-</tr>
-</tbody>
-</table>
-
 - 다양성 지수 $$H$$ 는 vegan 패키지에 있는 diversity() 함수를 사용해서도 계산이 가능하다.
 
-``` r
+```{r message=F, warning=F}
 library(vegan)
 h1_1<-diversity(ex8_16$Michigan, index="shannon", base=10)
 h2_2<-diversity(ex8_16$Louisiana, index="shannon", base=10)
 c(round(h1_1,4),round(h2_2,4))==c(H_test(ex8_16$Michigan,ex8_16$Louisiana)$h1,H_test(ex8_16$Michigan,ex8_16$Louisiana)$h2)
-```
-
-    ## [1] TRUE TRUE
-
-``` r
 cat(" diversity() 함수로 구한 다양성 지수 : H1 = ",round(h1_1,4),"  H2 = ",round(h2_2,4),"\n",
     "직접 코딩한 함수로 구한 다양성 지수 : H1 = ",H_test(ex8_16$Michigan,ex8_16$Louisiana)$h1,"  H2 = ",H_test(ex8_16$Michigan,ex8_16$Louisiana)$h2,"\n",
     "두 다양성 지수가 동일한가?  H1 : ",round(h1_1,4)==H_test(ex8_16$Michigan,ex8_16$Louisiana)$h1,"   H2 : ",round(h2_2,4)==H_test(ex8_16$Michigan,ex8_16$Louisiana)$h2)
 ```
-
-    ##  diversity() 함수로 구한 다양성 지수 : H1 =  0.5403   H2 =  0.6328 
-    ##  직접 코딩한 함수로 구한 다양성 지수 : H1 =  0.5403   H2 =  0.6328 
-    ##  두 다양성 지수가 동일한가?  H1 :  TRUE    H2 :  TRUE
 
 - 다양성 지수 검정 결과 검정통계량 $$t=-1.909$$ 이고 $$p-value=0.058$$로 유의수준 0.05보다 크므로 귀무가설 $$H_0$$ 를 기각할 충분한 근거를 가지고 있지 않다.<br/>
 - 두 Shannon index를 비교해도 미시간 주는 0.5403, 루이지애나는 0.6328로 루이지애나의 식물성 식품에 대한 종 부유도와 종 균등도가 크다고 할수 있겠지만 다양성 지수 검정 결과 미시간 주와 루이지애나 주의 다양성 지수가 같지 않다는 귀무가설을 기각할 충분한 근거가 없다.<br/>
 - 그러므로 미시간주와 루이지애나 주의 다양성 지수는 같지 않다는 충분한 근거가 없다.
 
 
-</div>
-</details>
 
 
-</div>
-</details>
-
-<br/>
-
-# SAS 프로그램 결과
-
-<details>
-<summary>
-SAS 접기/펼치기 버튼
-</summary>
-<div markdown="1">
-
-```python
-import saspy #SAS출력 코드
-```
-
-winlocal 입력
-
-## 8장
-
-
-</div>
-</details>
-
-<br/>
-
-<br/>
-
-<font color='#fb8072'>교재: Biostatistical Analysis (5th Edition) by Jerrold H. Zar</font><br/>
-
-<font color='#fb8072'> **이 글은 22학년도 1학기 의학통계방법론 과제 자료들을 정리한 글 입니다.** </font>
