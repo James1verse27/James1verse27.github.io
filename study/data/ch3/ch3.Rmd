@@ -1,0 +1,353 @@
+---
+title: "의학통계방법론 1조 과제"
+author: "김재혁, 정지현, 황예지"
+date: '2022-03-10'
+output:
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+**※주의사항※ **
+
+**sas 매크로or 주피터노트북 마크다운에 기입된 sas 코드를 입력하여 sas파일을 모두 "C:/Biostat" 파일 경로로 불러들여와야지 마크다운이 실행됩니다.**
+
+# R 프로그램 결과
+
+**패키지**
+<details>
+<summary> 설치된 패키지 접기/펼치기 버튼</summary>
+<div markdown="1">
+```{r packages}
+getwd()
+
+#install.packages("readxl")
+#install.packages('ggplot2')
+#install.packages("Hmisc")
+#install.packages("psych")
+library('readxl')
+library('ggplot2')
+```
+</div>
+</details>
+
+**엑셀파일불러오기**
+```{r}
+#모든 시트를 하나의 리스트로 불러오는 함수
+read_excel_allsheets <- function(file, tibble = FALSE) {
+  sheets <- readxl::excel_sheets(file)
+  x <- lapply(sheets, function(X) readxl::read_excel(file, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- sheets
+  x
+}
+```
+
+## 3장
+
+**3장 연습문제 불러오기**
+
+```{r ex3}
+
+data_chap03 <- read_excel_allsheets("data_chap03.xls")
+
+for (x in 1:length(data_chap03)){
+  assign(paste0('ex3_',1:length(data_chap03))[x],data_chap03[x])
+  }
+for (x in 1:length(data_chap03)){
+  assign(paste0('ex3_',1:length(data_chap03))[x],data.frame(data_chap03[x]))
+  }
+```
+
+<details>
+<summary> 3장 문제 접기/펼치기 버튼</summary>
+<div markdown="1">
+### EXAMPLE 3.1
+
+![](C:/Biostat/3-1.png)
+
+```{r ex3_1}
+#데이터셋
+ex3_1
+
+sum_x <- sum(ex3_1$Length) ; cat('Sum of X =', sum_x)
+n <- length(ex3_1$Length); cat('Sample Size =', n)
+x_bar <- mean(ex3_1$Length); cat('Mean of X =', x_bar)
+```
+
+$$
+\begin{aligned}
+\sum X_i &= 95.0 \ cm \\
+n &= 24 \\
+\bar{X} &= \frac{\sum X_i}{n} = \frac{95.0\ cm}{24} = 3.96\ cm 
+\end{aligned}
+$$
+
+- 나비의 날개 길이를 측정하기 위해 추출된 24마리의 나비들을 관측한 결과, 날개의 합은 95 cm 이며 평균은 3.96 cm 이다.
+
+
+### EXAMPLE 3.2
+
+![](C:/Biostat/3-2.png)
+
+```{r ex3_2}
+#데이터셋
+ex3_2
+```
+
+- **가중평균 계산**
+```{r warning=FALSE, message=FALSE}
+library(Hmisc) # wtd.mean 사용하기 위해
+xi <- ex3_2$exam3_2.X
+fi <- ex3_2$exam3_2.Freq
+wm <- wtd.mean(xi, weights=fi) #가중평균
+round(wm,2)
+```
+- 도수분포표에서 가중평균을 구할 때에는 각 표본에 가중을 두어 합을 구한 후 가중치의 합을 나눈다. 
+
+```{r}
+sum_fixi <- sum(fi*xi) # 가중합
+sum_fi <- sum(fi) #가중치 합
+w_mean<-sum_fixi/sum_fi #가중평균
+cat("가중합 = ",sum_fixi,"   ","가중치 합 = ",sum_fi,"   ","가중평균 = ",w_mean)
+```
+$$
+\begin{aligned}
+\overline X_w &= \frac {\sum_{i=1}^{n}f_i \cdot X_i} {\sum_{i=1}^{n}f_i} =  \frac{95.0 cm}{24} = 3.96
+\end{aligned}
+$$
+<br/>
+<br/>
+
+- **중위수 계산**<br/>중위수는 정렬된 자료에서 중앙에 위치한 수이다.<br/>도수분포표에서는 R에 내장되어 있는 함수인 wtd.quantile() 함수를 사용해서 중위수를 구할 수 있다.
+
+```{r}
+x.median <- wtd.quantile(xi, weights=fi, probs=c(0,.25,.5,.75,1), type=c("i/n"))
+wmed <- round(x.median,5)
+wvar <- wtd.var(xi, weights=fi) # 분산
+cat("wtd.quatile() 로 구한 중위수","\n","중위수 = ",wmed[3],"   분산 = ",wvar)
+```
+- 도수분포표에서 중위수를 구하기 위해서는 다음의 식을 이용하여 구한다.
+
+$$
+\begin{aligned}
+median = Lower\space \space limit \space of \space Interval + \frac{0.5n-Cummulative \space Frequency}{Num. of \space observations \space in \space interval} \cdot Interval \space size
+\end{aligned}
+$$
+해당 데이터를 표로 작성하면 다음과 같다.
+
+
+|$X_i(cm)$|$f_i$|$f_iX_i(cm)$|
+|:---:|:---:|:---:|
+|3.3|1|3.3|
+|3.4|0|0|
+|3.5|1|3.5|
+|3.6|2|7.2|
+|3.7|1|3.7
+|3.8|3|11.4|
+|3.9|3|11.7|
+|4.0|4|16.0|
+|4.1|3|12.3|
+|4.2|2|8.4|
+|4.3|2|8.6|
+|4.4|1|4.4|
+|4.5|1|4.5|
+|Sum|24|95|
+
+- **1) 예상 구간의 하한값 **<br/>24개의 관측치 중 11개의 관측치는 4.0cm 보다 작고 9개는 크다.<br/>그러므로 통상적인 중위수는 12번째 값이 포함된 4.0 이라 하기는 어렵다.<br/>하지만 중위수는 [3.95, 4.05] 이내에 있을 필요가 있다고 생각해야한다.<br/>따라서 예상구간의 하한값은 3.95 가 된다.  
+  
+- **2) 총 빈도**
+  
+```{r}
+sum(fi)
+```
+  
+- **3) 누적 빈도**<br/>누적빈도는 4.0이 오기 전 까지의 누적 빈도를 사용한다.
+
+```{r}
+which(fi==4.0) # 8번째 인덱스에 4.0 위치
+cf <- cumsum(fi)
+cf[7] #7번째 인덱스 까지의 누적빈도
+```
+
+- **4) 구간 크기**
+  
+```{r}
+diff(xi) #0.1
+```
+
+- 이렇게 구한 값들로 중위수를 구하면 다음과 같다.
+
+$$
+\begin{aligned}
+median =3.95\space cm + \frac{0.5\cdot24-11}{4} \cdot 0.1=3.95 \space cm+0.025 \space cm=3.975\space cm
+\end{aligned}
+$$
+  
+- 수식을 이용한 도수분포표에서의 중위수는 3.975로 나왔다.
+
+- **히스토그램**
+
+```{r}
+ggplot(ex3_1, aes(x=Length)) +  geom_histogram(binwidth = 0.1, fill='#8dd3c7',colour='#ffffb3')+
+  scale_x_continuous(breaks = seq(0,4.5,0.1))
+
+```
+    
+- 히스토그램을 보면 날개의 길이가 4인 경우의 빈도수가 4로 가장 많은것을 알 수 있다.
+- 나비 날개 길이의 frequency table 출력 결과를 살펴보면 표본평균 값이 3.96이고 중앙값이 3.975이므로 두 값이 서로 비슷한 것을 확인할 수 있다. 따라서 거의 치우치지 않은 분포의 형태를 띄고 있는 것을 알 수 있고 히스토그램을 통해서도 확인할 수 있다.
+  
+
+### EXAMPLE 3.3
+
+![](C:/Biostat/3-3.png)
+
+```{r ex3_3}
+#데이터셋
+ex3_3
+```
+
+```{r}
+ex3_3$exam3_3.LifeSpan
+ex3_3_a <- subset(ex3_3,exam3_3.Group=="A")
+ex3_3_b <- subset(ex3_3,exam3_3.Group=="B")
+a_n <- length(ex3_3_a$exam3_3.Group) 
+b_n <- length(ex3_3_b$exam3_3.Group)
+a_med <- median(ex3_3_a$exam3_3.LifeSpan) 
+b_med <- median(ex3_3_b$exam3_3.LifeSpan)
+a_mn <- round(mean(ex3_3_a$exam3_3.LifeSpan),2) ;
+b_mn <- mean(ex3_3_b$exam3_3.LifeSpan)
+
+cat(" Number of Species A = ",a_n,",  Median of Species A = ",a_med, ",  Mean of Species A = ",a_mn,"\n",
+    "Number of Species B = ",b_n,",  Median of Species B = ",b_med, ",  Mean of Species B = ",b_mn)
+```
+
+|  |Species $A$|Species $B$ |
+|:---|:---|:---|
+|$n$|9|10|
+|$median$|40|52|
+|$\overline X$|42.11|53.20| 
+
+- A종의 새 9마리와 B종의 새 10마리를 관측했을 때, A종의 경우 수명 중위수는 40개월, 평균 수명은 42.11개월이며 B종의 경우 수명 중위수는 52개월, 평균 수명은 53.20개월로 측정되었다.
+
+### EXAMPLE 3.4
+
+![](C:/Biostat/3-4.png)
+
+```{r ex3_4}
+#데이터셋
+ex3_4
+```
+
+- 기하평균은 인구증가율 등을 구할 때 사용되는 평균이며 데이터가 같지 않다면 기하평균은 산술평균보다 항상 작다는 특징이 있다.
+
+$$\bar{X_G} =
+\begin{cases}
+Method \ 1) ^n \sqrt{X_1 X_2 X_3 \cdots X_n} \\
+Method \ 2) antilog(\frac{logX_1 + logX_2 + \cdots + logX_n}{n}) \\
+\end{cases}
+$$
+
+- Manually
+```{r}
+x_bar <- mean(na.omit(ex3_4$exam3_4.ratio))
+geo_mean_x_method1 <- exp(mean(log(na.omit(ex3_4$exam3_4.ratio)))) 
+geo_mean_x_method2 <- prod(na.omit(ex3_4$exam3_4.ratio)) ^ (1/length(na.omit(ex3_4$exam3_4.ratio)))
+cat('Geometric Mean Manually =', '('  ,'method1 =', geo_mean_x_method1, ',' ,'method2 =' ,geo_mean_x_method2,')')
+```
+
+- Package
+```{r warning=FALSE, message=FALSE}
+library(psych)
+geo_mean_x_package <- geometric.mean(ex3_4$exam3_4.ratio) ; cat('Geometric Mean with psych package =', geo_mean_x_package)
+```
+- 기하 평균은 데이터 곱의 n 제곱근(Method 1)으로 나타낼 수 있으며,<br/>데이터 로그 변환의 산술 평균을 다시 역로그변환(지수 변환) (Method 2)으로 나타낼 수 있다.<br/>변화율의 산술 평균은 1.165이며, 이 때 기하 평균은 두 가지 방법 및 패키지를 이용하였을 때 1.1608로 동일하게 산출된다.
+
+```{r}
+first_p <- ex3_4$exam3_4.population[1] # 초기 population
+final_p_a  <- round(first_p*mean(ex3_4$exam3_4.ratio[2:5])^4)
+final_p_g <- round(first_p*round(geometric.mean(ex3_4$exam3_4.ratio[2:5]),4)^4)
+cat(" 산술평균으로 구한 Final Population = ",final_p_a,"\n","기하평균으로 구한 Final Population = ",final_p_g) 
+```
+- 앞서 구한 산술평균과 기하평균을 이용해 마지막 인구집단 사이즈를 구해보았다.
+
+### EXAMPLE 3.5
+
+![](C:/Biostat/3-5.png)
+
+```{r ex3_5}
+#데이터셋
+ex3_5
+```
+- 조화평균은 평균의 변화율을 구할 떄 주로 사용되며 데이터가 양수이고 비척도인 경우에 이용한다.
+$$
+\bar{X_H} = \frac{n}{\sum \frac{1}{X_i}}
+$$
+- Manually
+```{r}
+harmonic_mean_manual <- round(length(ex3_5$X) / sum(1/ex3_5$X),2) ; cat('Harmonic Mean Manually =', harmonic_mean_manual)
+```
+
+- Package
+```{r warning=FALSE, message=FALSE}
+library(psych)
+harmonic_mean_package <- round(harmonic.mean(ex3_5$X),2) ; cat('Harmonic Mean with psych package =', harmonic_mean_package)
+```
+- 수식을 이용한 방식과 패키지를 이용하여 조화 평균을 산출 했을 때 값이 26.67로 같은 값이 산출된다.
+
+```{r}
+xm <- mean(ex3_5$X)
+cat("산술평균=", xm, "km/h,   조화평균=",harmonic_mean_manual,"km/h")
+```
+- 이처럼 전체 거리를 절반은40km/h로 달리고 나머지는 20km/h로 달렸다면, 평균속력은 40과 20의 조화평균인 26.67 km/h가 된다.
+
+### EXAMPLE 3.6
+
+![](C:/Biostat/3-6.png)
+
+```{r ex3_6}
+#데이터셋
+ex3_6
+```
+```{r}
+A <- -840 ; M <- 0.001
+
+sum_sample1 <- sum(ex3_6$exam3_6.X1)
+coded_sum_sample1 <- sum(ex3_6$exam3_6.code1)
+mean_sample1 <- mean(ex3_6$exam3_6.X1)
+coded_mean_sample1 <- mean(ex3_6$exam3_6.code1)
+
+mean_sample1 <-  coded_mean_sample1-A
+mean_sample1
+```
+
+The mean of the coded values is equal to $\bar{X} - 840 g$.
+
+```{r}
+#데이터 오기 수정하기
+ex3_6$exam3_6.X2[3] <- ex3_6$exam3_6.X2[3]/10
+ex3_6$exam3_6.code2[3] <- ex3_6$exam3_6.code2[3]/10
+
+#결측값제외하고 계산
+sum_sample2 <- sum(na.omit(ex3_6$exam3_6.X2))
+coded_sum_sample2 <- sum(na.omit(ex3_6$exam3_6.code2*M))
+mean_sample2 <- mean(na.omit(ex3_6$exam3_6.X2))
+coded_mean_sample2 <- mean(na.omit(ex3_6$exam3_6.code2*M))
+
+mean_sample2 <-  coded_mean_sample2 / M
+mean_sample2
+```
+
+The mean of the coded values is equal to $\bar{X} * M$.
+
+|stat / Group| Sample 1 | Sample 2 |
+|------------|----------|----------|
+|Sum         |5922      |63000     |
+|coded Sum   |42        |63        |
+|Mean        |846       |10500     |
+|coded Mean  |6         |10.5      |
+
+</div>
+</details>

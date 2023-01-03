@@ -1,0 +1,1223 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+```{r message=F, warning=F}
+getwd()
+library(readxl)
+library(dplyr)
+library(asht)
+library(lawstat) 
+library(kableExtra)
+library(qpcR)   
+library(RVAideMemoire)
+library(vegan)
+```
+
+**엑셀파일불러오기**
+```{r message=F, warning=F}
+#모든 시트를 하나의 리스트로 불러오는 함수
+read_excel_allsheets <- function(file, tibble = FALSE) {
+  sheets <- readxl::excel_sheets(file)
+  x <- lapply(sheets, function(X) readxl::read_excel(file, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- sheets
+  x
+}
+```
+
+## 8장
+
+**8장 연습문제 불러오기**
+
+```{r message=F, warning=F}
+#data_chap08에 연습문제 8장 모든 문제 저장
+data_chap08 <- read_excel_allsheets("data_chap08.xls")
+
+#연습문제 각각 데이터 생성
+for (x in 1:length(data_chap08)){
+  assign(paste0('ex8_',c(1:2,'2a',7:8,10:11))[x],data_chap08[x])
+  }
+
+#연습문제 데이터 형식을 리스트에서 데이터프레임으로 변환
+for (x in 1:length(data_chap08)){
+  assign(paste0('ex8_',c(1:2,'2a',7:8,10:11))[x],data.frame(data_chap08[x]))
+  }
+```
+
+## EXAMPLE 8.1
+
+![](C:/git_blog/study/img/ch8/8-1.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex8_1%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 약물 B를 투여했을 때 모든 성체 수컷 토끼의 혈액 응고 시간 평균이 약물 G를 투여했을 때 모든 성체 수컷 토끼의 혈액 응고 시간 평균이 다른지 검정하고자 한다.
+
+$$
+\begin{aligned}
+H_0 &: \mu_1 = \mu_2 \\
+H_1 &: \mu_1 \not=\ \mu_2
+\end{aligned}
+$$
+
+- 성체 수컷 토끼6마리에게 약물 B를 투여하였으며, 다른 성체 수컷 토끼7마리에게 추출하여 두개의 표본은 독립적이게 추출하였다.<br/><br/>
+- 이표본 t-검정을 하기 전에 두개의 표본분포의 정규성을 각각 보여야하고 두 그룹 분포간 분산이 같은지 등분산성 가정을 확인해줘야 한다.<br/>
+- 정규성 검정은 P-P plot과 Q-Q plot으로도 정규성을 확인 할 수 있지만 그래프로 확인하는 정규성 검정은 기준이 모호하기 때문에 한계가 있다.<br/>
+- 따라서 정규성에 대한 기타 평가 방법들을 사용할 것인데 표본의 크기가 작으므로 Shapiro-Wilk test를 사용할 것이다.<br/> (표본크기가 매우 작으므로 웬만해선 정규성이 있는 것처럼 나올 것이다.)
+
+```{r message=F, warning=F}
+##정규성,등분산성 검정
+test <- function(x,y) {
+  norm1 = shapiro.test(x)$p.value
+  norm2 = shapiro.test(y)$p.value
+  equal.var = var.test(x,y)$p.value 
+  summary <- list('그룹B 샤피로윌크 p-value'=norm1, '그룹G 샤피로윌크 p-value'=norm2, '그룹B,그룹G 등분산성검정 p-value'=equal.var)
+  return(summary)
+}
+
+group_B <- ex8_1 %>% filter(exam8_1.drug=='B') 
+group_G <- ex8_1 %>% filter(exam8_1.drug=='C')
+test(group_B$exam8_1.time,group_G$exam8_1.time)
+
+```
+- 정규성 검정은 shapiro.test를 통하여 구할 수 있다.<br/>
+- p-value가 정해둔 유의수준 0.05보다 크다면 유의수준 5%하에 “분포가 정규성을 따른다”는 귀무가설을 기각할 수 없다.<br/>
+- 즉, p-value가 각각 0.997, 0.913 이므로 유의수준 0.05보다 크므로 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.<br/><br/>
+- 등분산성 검정은 var.test (F Test to Compare Two Variances Performs an F test to compare the variances of two samples from normal populations.) 로 확인할 수 있으며 p-value가 정해둔 유의수준 0.05보다 크다면 유의수준 5%하에 “두 집단의 분산은 등분산이다”라는 귀무가설을 기각할 수 없다.<br/>
+- 따라서 p-value가 0.472로 유의수준 0.05보다 크므로 유의수준 5%하에 “두 집단의 모분산은 등분산이 아니다”라고 할 충분한 근거가 없다.
+
+> 다음은 R 내장 함수로 구한 t-value이다.
+
+```{r message=F, warning=F}
+t.test(group_B$exam8_1.time,group_G$exam8_1.time,var.equal = T)
+```
+
+> 직접 함수를 작성해서 구하여 보자.
+
+```{r message=F, warning=F}
+two_tailed_t_test <- function(x,y){
+  n1 <- length(na.omit(x))
+  n2 <- length(na.omit(y))
+  v1 <- n1-1
+  v2 <- n2-1
+  xbar1 <- mean(x)
+  xbar2 <- mean(y)
+  ss1 <- var(x)*v1
+  ss2 <- var(y)*v2
+  sp2 <- (ss1+ss2)/(v1+v2)
+  s_xbar1_xbar2 <- sqrt((sp2/n1)+(sp2/n2))
+  t <- (xbar1-xbar2)/s_xbar1_xbar2
+  pvalue <- 2*pt(t,v1+v2)
+  out <- data.frame(n1,n2,v1,v2,xbar1,xbar2=round(xbar2,2),ss1,ss2=round(ss2,4),sp2=round(sp2,4),s_xbar1_xbar2=round(s_xbar1_xbar2,2),t=round(t,3),pvalue=round(pvalue,3))
+  return(out)
+}
+
+two_tailed_t_test(group_B$exam8_1.time,group_G$exam8_1.time)
+```
+
+- 성체 수컷 토끼에게 서로 다른 약물을 투여하였을 때, 두 약물의 혈액 응고 시간에 대한 평균의 차이를 독립 이표본 t-검점을 통해 확인해 보자.<br/>
+- 추출된 표본으로 계산한 통계량 $$ \bar{X}_B=8.75 \min \,\ \bar{X}_G=9.74 \min$$<br/>
+- 두 표본의 등분산성을 가정하였으므로 합동분산 $$S^2_p=0.5193$$<br/>
+- t-값은 -2.475이고 양측 임계값은 2.201으로 좌측 임계값인 -2.201보다 t-값이 작으므로 기각역에 포함되어 귀무가설을 기각할 수 있다.<br/>
+- 따라서 유의수준 5%하에 두 약물처리(B와G)에 따른 모든 성체 수컷토끼의 혈액 응고 시간은 다르다고 할 수 있다. 
+
+## EXAMPLE 8.2
+
+![](C:/git_blog/study/img/ch8/8-2.png)
+![](C:/git_blog/study/img/ch8/8-2-1.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex8_2%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+- 식물의 길이가 새로운 비료를 줬을 때 기존 비료를 줬을 때보다 평균이 큰지 검정하고자 한다.
+
+$$
+\begin{aligned}
+H_0 &: \mu_1 \geq \mu_2 \\
+H_1 &: \mu_1 < \ \mu_2
+\end{aligned}
+$$
+
+- 기존 비료를 10개 식물에게 새로운 비료를 8개 식물에게 줬으며 기존 비료 그룹과 새로운 비료 그룹 두개의 표본은 독립적이게 추출하였다.
+
+```{r message=F, warning=F}
+##정규성,등분산성 검정
+test <- function(x,y) {
+  norm1 = shapiro.test(x)$p.value
+  norm2 = shapiro.test(y)$p.value
+  equal.var = var.test(x,y)$p.value 
+  summary <- list('Present Shapiro-Wilk p-value'=norm1, 'Newer Shapiro-Wilk p-value'=norm2, 'Present,Newer 등분산성검정 p-value'=equal.var)
+  return(summary)
+}
+group_pre <- ex8_2 %>% filter(exam8_2.fertilizer=='present')
+group_new <- ex8_2 %>% filter(exam8_2.fertilizer=='newer')
+test(group_pre$exam8_2.height,group_new$exam8_2.height)
+```
+
+- shapiro.test를 통하여 기존 비료를 준 그룹에 대한 정규성검정 p-value=0.6832이고, <br/>새로운 비료를 준 그룹에 대한 p-value는 0.9021로 둘다 유의수준 5%하에 귀무가설을 기각할 수 없다.<br/>
+- 즉, 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.<br/><br/>
+- 등분산성 검정은 var.test을 통하여 p-value=0.8744로 정해둔 유의수준 0.05보다 크므로 유의수준 5%하에 “두 집단의 분산은 등분산이다”라는 귀무가설을 기각할 수 없다.<br/>
+- 따라서 유의수준 5%하에 “두 집단의 모분산은 등분산이 아니다”라고 할 충분한 근거가 없다.
+
+> 다음은 R 내장 함수로 구한 t-value이다.
+
+```{r message=F, warning=F}
+t.test(group_pre$exam8_2.height,group_new$exam8_2.height,var.equal = T, alternative = "less")
+```
+
+> 직접 함수를 작성해서 구하여 보자.
+
+```{r message=F, warning=F}
+one_tailed_t_test <- function(x,y){
+  n1 <- length(na.omit(x))
+  n2 <- length(na.omit(y))
+  v1 <- n1-1
+  v2 <- n2-1
+  xbar1 <- mean(x)
+  xbar2 <- mean(y)
+  ss1 <- var(x)*v1
+  ss2 <- var(y)*v2
+  sp2 <- (ss1+ss2)/(v1+v2)
+  s_xbar1_xbar2 <- sqrt((sp2/n1)+(sp2/n2))
+  t <- (xbar1-xbar2)/s_xbar1_xbar2
+  pvalue <- pt(t,v1+v2)
+  out <- data.frame(n1,n2,v1,v2,xbar1,xbar2=round(xbar2,2),ss1=round(ss1,3),ss2=round(ss2,4), s_xbar1_xbar2=round(s_xbar1_xbar2,2),t=round(t,3),pvalue=round(pvalue,4))
+  return(out)
+}
+one_tailed_t_test(group_pre$exam8_2.height,group_new$exam8_2.height)
+```
+
+- 기존의 비료보다 새로운 비료를 사용하였을 때 식물의 평균 길이가 더 길다는 것을 검정하고자 하므로 단측검정을 시행한다.<br/>
+- 기종 비료를 사용하였을 때 식물 길이의 표본 평균은 51.91cm이고, 새로운 비료를 사용한 식물의 길이의 표본 평균은 56.55cm이다.<br/>
+합동분산 $$S^2_p=10.71cm^2$$<br/>
+- t-값은 -2.9935이고 단측 임계값은 1.746으로 좌측 임계값인 -1.746보다 t-값이 작으므로 기각역에 포함되어 귀무가설을 기각할 수 있다.<br/>
+- 따라서 유의수준 5%하에 기존 비료보다 새로운 비료를 사용하였을 때 식물 길이의 모평균이 크다고 할 수 있다.
+
+## EXAMPLE 8.2a
+
+![](C:/git_blog/study/img/ch8/8-2a.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex8_2a%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+- 서로 다른 실험실 온도에서 바퀴벌레 알이 부화하는 평균 시간이 다른지 검정하고자 한다.<br/>
+- 실험실 온도에 따른 바퀴벌레 알의 부화 일수 평균에 대한 가설
+
+$$
+\begin{aligned}
+H_0 &: \mu_{30} = \mu_{10} \\
+H_1 &: \mu_{30} \not=\ \mu_{10}
+\end{aligned}
+$$
+- 30도에서 7개의 알을, 10도에서 8개의 알이 부화하는 시간을 관찰하여 기록하였고 두개의 표본은 독립적이게 추출하였다.
+
+```{r message=F, warning=F}
+##정규성,등분산성 검정
+test <- function(x,y) {
+  norm1 = shapiro.test(x)$p.value
+  norm2 = shapiro.test(y)$p.value
+  equal.var = var.test(x,y)$p.value 
+  summary <- list('30도 실험실 p-value'=norm1, '10도 실험실 p-value'=norm2, '30,10 등분산성검정 p-value'=equal.var)
+  return(summary)
+}
+group_30 <- ex8_2a %>% filter(exam8_2a.temp==30)
+group_10 <- ex8_2a %>% filter(exam8_2a.temp==10)
+
+test(group_30$exam8_2a.days,group_10$exam8_2a.days)
+```
+
+- shapiro.test를 통하여 30도 실험실 그룹에 대한 정규성검정 p-value=0.7312이고,<br/> 10도 실험실 그룹에 대한 p-value는 0.9415로 둘다 유의수준 5%하에 귀무가설을 기각할 수 없다.<br/>
+- 즉, 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.<br/><br/>
+- 등분산성 검정은 var.test을 통하여 p-value=0.0156으로 정해둔 유의수준 0.05보다 작으므로 유의수준 5%하에 "두 집단의 분산은 등분산이다"라는 귀무가설을 기각할 수 있다.<br/>
+- 따라서 유의수준 5%하에 "두 집단의 모분산은 등분산이 아니다"라고 할 수 있다.<br/><br/>
+- 두 모집단이 정규분포를 따르지만 분산이 다른 경우는 Behrens-Fisher 검정을 이용한다.
+
+```{r message=F, warning=F}
+library(asht) #Behrens-Fisher검정을 하기 위한 패키지
+#sample size for t-tests with different variances and non-equal n per arm, Behrens-Fisher test, nonparametric ABC intervals, Wilcoxon-Mann-Whitney test 등등 구할 수 있다.
+bfTest(group_30$exam8_2a.days,group_10$exam8_2a.days,altenative=c("two.sided"),mu=0,conf.level=0.95)
+```
+
+- 30도 실험실의 바퀴벌레 알의 부화 일수 평균은 37.4days이고 10도 실험실의 바퀴벌레 알의 부화 일수 평균은 46days이다.
+
+$$ \sqrt{S^2_\bar{X_{30}}+S^2_\bar{X_{10}}}=3.51 \ days$$
+
+- t-값은 -2.44이고 양측 임계값은 2.274이다. 좌측 임계값인 -2.274보다 t-값이 작으므로 귀무가설을 기각할 수 있다.<br/>
+- 따라서 온도가 30도인 실험실과 10도인 실험실에서 바퀴벌레 알의 부화 일수의 모평균에는 차이가 있다고 할 수 있다.<br/>
+(95% 신뢰구간을 확인해 보면 (-16.87,-0.27)로 0을 포함하고 있지 않으므로 두 집단간 모평균에는 차이가 있다고 볼 수 있다.)
+
+## EXAMPLE 8.3
+
+![](C:/git_blog/study/img/ch8/8-3.png)
+
+- 정밀도를 이용한 모평균차에 대한 표본크기계산
+
+- 정밀도 d가 주어졌을 때 $$1-\alpha%$$ 신뢰구간에 들어갈 수 있는 최소 표본 크기
+
+
+$$n=\frac {2*s^2_p*t^2_{(\alpha/2,n_1+n_2-2)}}{d^2}  \ _{(양측)}$$
+
+$$n=\frac {2*s^2_p*t^2_{(\alpha,n_1+n_2-2)}}{d^2} \ _{(단측)} $$
+
+> 직접 함수를 작성해서 구하여 보자.
+
+```{r message=F, warning=F}
+d.sample <- function(x,y, d,alpha,en,side) {
+  if(sum(is.na(x)) >= 1) {
+  x=na.omit(x) 
+  }
+  else if (sum(is.na(y)) >= 1){
+    y=na.omit(y)
+  } 
+  else     
+    {
+    x=x 
+    y=y
+  }
+  n1= length(x) 
+  n2= length(y) 
+  df1=n1-1
+  df2= n2-1
+  new_df= en-1
+  x.bar1= round(mean(x),2)
+  x.bar2= round(mean(y),2)
+  ss1=round(sum(x^2) - ((sum(x))^2/n1), 4)
+  ss2=round(sum(y^2) - ((sum(y))^2/n2),4) 
+  
+  sp= round((ss1 + ss2)/(df1+df2),4)
+  if (side == "two"){
+    ct = round(abs(qt(alpha/2,2*new_df)),3) 
+  }
+  else{
+    ct = round(abs(qt(alpha,2*new_df)),3) 
+  }
+  size1= ceiling(2*sp*(ct^2) / (d^2))
+  s=round((2*sp*(ct^2))/(0.5)^2,1)
+  result <- list(spsquare=sp, '임계값'=ct, n=s ,sample_size=size1) 
+  return(result)
+}
+```
+
+```{r message=F, warning=F}
+d.sample(group_B$exam8_1.time,group_G$exam8_1.time, 0.5, 0.05, 50,'two')
+```
+
+> 정밀도 d=0.5이고 $s^2_p$=0.5193 표본크기를 50으로 추정하였을 때 $t_{0.05(2),98}$=1.984이고 표본크기는 16.4가 나온다.
+
+<br/>
+<br/>
+
+```{r message=F, warning=F}
+d.sample(group_B$exam8_1.time,group_G$exam8_1.time, 0.5, 0.05, 17,'two')
+```
+
+> 정밀도 d=0.5이고 $s^2_p$=0.5193 표본크기를 17로 추정하였을 때 $t_{0.05(2),32}$=2.037이고 표본크기는 17.2가 나온다.
+
+<br/>
+<br/>
+
+```{r message=F, warning=F}
+d.sample(group_B$exam8_1.time,group_G$exam8_1.time, 0.5, 0.05, 18,'two')
+```
+
+> 정밀도 d=0.5이고 $s^2_p$=0.5193 표본크기를 18로 추정하였을 때 $t_{0.05(2),98}$=2.032이고 표본크기는 17.2가 나온다.
+
+- 표본크기를 18로 추정하였을 때가 주어진 정밀도에 가장 밀접하다. 여기서 n은 요구되는 그룹별 표본크기이다.<br/>따라서 그룹B, 그룹G 각각 18개의 표본크기를 가져야 한다.
+
+<br/>
+<br/>
+
+- 두 그룹에 대한 표본 할당비가 다른 경우 표본크기 계산법
+
+$$n=\frac{k}{\frac{1}{n_1}\ldots\frac{1}{n_k}} \    ,\ _{k는} \ _{그룹수}$$ 
+
+- 조화 평균을 이용해서 계산한다.
+
+- 그룹1의 표본크기$$n_1$$를 고정시키고 그룹 2의 표본크기$$n_2$$를 구하는 경우 (위 식과 동일)
+
+$$ n_2 = \frac{nn_1}{2n_1-n}$$
+
+- 예를 들어 $n$(그룹별 표본크기)=18, $n_1$=14인 경우
+
+```{r message=F, warning=F}
+n=18
+n1=14
+n2=n*n1 / (2*n1-n)
+n2
+```
+> $$n_2$$=25.2 , 약 26이다.
+
+**최소 요구되는 총 표본크기는 14+26=40**
+
+
+## EXAMPLE 8.4
+
+![](C:/git_blog/study/img/ch8/8-4.png)
+
+$$
+\begin{aligned}
+n &\ge \frac{2s_p^2}{\delta^2}(t_{(\frac{\alpha}{2},n_1+n_2-2)}+t_{(\beta,n_1+n_2-2)})^2   \ _{(양측)}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+n &\ge \frac{2s_p^2}{\delta^2}(t_{(\alpha,n_1+n_2-2)}+t_{(\beta,n_1+n_2-2)})^2   \ _{(단측)}
+\end{aligned}
+$$
+
+- 표본 크기가 100일 때,자유도=100+100-2=198이고 이에 대응되는 임계값 
+
+```{r message=F, warning=F}
+t_alpha <- round(qt(0.025, 198,lower.tail = F),3) 
+t_beta <- round(qt(0.10,198,lower.tail = F), 3)
+```
+
+```{r message=F, warning=F}
+t_alpha
+```
+> $$t_{0.05(2),198}=1.972$$
+
+```{r message=F, warning=F}
+t_beta
+```
+> $$t_{0.10(1),198}=1.286$$
+
+
+```{r message=F, warning=F}
+bound <- round(2*0.52 / 0.5^2 *(t_alpha+t_beta)^2, 1)
+bound
+```
+
+> $$ n \ge 44.2 $$
+
+<br/>
+<br/>
+
+- 표본 크기가 45일 때,자유도=45+45-2=88이고 이에 대응되는 임계값
+
+```{r message=F, warning=F}
+t_alpha <- round(qt(0.025, 88,lower.tail = F),3)
+t_beta <- round(qt(0.10,88,lower.tail = F), 3)
+```
+
+```{r message=F, warning=F}
+t_alpha
+```
+
+> $$t_{0.05(2),88}=1.987$$
+
+```{r message=F, warning=F}
+t_beta
+```
+> $$t_{0.10(1),88}=1.291$$
+
+
+```{r message=F, warning=F}
+bound <- round(2*0.52 / 0.5^2 *(t_alpha+t_beta)^2, 1)
+bound
+```
+
+> $$n \ge 44.7$$
+
+- 따라서 두 표본의 크기는 각각 최소한 45 이상이여야 한다.<br/>
+- 그룹1의 표본크기$$n_1$$=30으로 고정시키고 그룹 2의 표본크기$$n_2$$를 구하는 경우
+
+```{r message=F, warning=F}
+n=44.7
+n1=30
+n2=n*n1 / (2*n1-n)
+n2
+```
+> n(그룹별 표본 크기)은 위에서 구한 44.7로 두고 $$n_1$$=30으로 고정되어 있을 때 $$n_2$$는 88이다.
+
+## EXAMPLE 8.5
+
+![](C:/git_blog/study/img/ch8/8-5.png)
+
+- 최소 검출차 (minimum detectable difference:MDD)
+
+$$
+\delta \ge \sqrt{\frac{2s_p^2}{n}}t_{(\frac{\alpha}{2},n_1+n_2-2)}+t_{(\beta,n_1+n_2-2)}  \ _{(양측)}
+$$
+
+$$
+\delta \ge \sqrt{\frac{2s_p^2}{n}}t_{(\alpha,n_1+n_2-2)}+t_{(\beta,n_1+n_2-2)} \ _{(단측)}
+$$
+
+```{r message=F, warning=F}
+delta <- sqrt(2*0.5193 / 20)*(qt(0.025,38,lower.tail = F) + qt(0.1,38,lower.tail = F))
+round(delta, 2)
+```
+
+$$n$$(표본 크기)=20, $$\alpha$$=0.05, $$\beta$$=1-0.9=0.1로 주어졌을 때 검출 가능한 최소 차이는 0.76min이다.
+
+## EXAMPLE 8.6
+
+![](C:/git_blog/study/img/ch8/8-6.png)
+
+- Example 8.1에 대하여 $$n_1=n_2=15$$, and $$\alpha(2)=0.05$$하에 두 약물을 사용하여 사람의 평균 혈액 응고 시간 간에 1분의 차이를 검출할 확률<br/>
+- 검정력 공식
+
+$$
+\ t_{(\beta,n_1+n_2-2)} \leq \frac{\delta}{\sqrt{\frac{2s^2_p}{n}}} \ -t_{(\frac{\alpha}{2},n_1+n_2-2)}  \ _{(양측)}
+$$
+
+$$
+\ t_{(\beta,n_1+n_2-2)} \leq \frac{\delta}{\sqrt{\frac{2s^2_p}{n}}} \ -t_{(\alpha,n_1+n_2-2)}  \ _{(단측)}
+$$
+
+```{r message=F, warning=F}
+delta <- 1
+n <- 15
+sp <- 0.5193
+t_alpha<- 2.048
+t_beta <- delta/(sqrt((2*sp)/15))-t_alpha
+round(t_beta,3)
+```
+
+$$
+\ t_{(\beta(1),28)} \leq 1.752
+$$
+
+![](C:/git_blog/study/img/ch8/table1.jpg)
+
+- $$P(t\geq1.752)$$ (단측) 자유도=28인 확률은 (0.025,0.05)구간에 있다. 따라서 $$0.025<\beta<0.05$$
+
+$$Power=1-\beta, \ so \ 0.95<power<0.975$$
+
+- 표준정규분포 근사 값으로 구한 정규분포 확률은 $$\beta \ by \ P(Z\geq1.752)=0.04$$이다. 따라서 power=0.96이다.
+
+$$
+\phi=\sqrt{(\frac{n\delta^2}{4s^2_p})}=\sqrt{(\frac{15(1.0)^2}{4(0.5193)})}=2.69
+$$
+
+![](C:/git_blog/study/img/ch8/table2.jpg)
+
+- 표를 참고하여 보면 $$\phi=2.69 \ and \ \nu(=\nu_2)=28$$은 약 0.96의 검정력과 관련이 있게 나온다.
+
+
+## EXAMPLE 8.7
+
+![](C:/git_blog/study/img/ch8/8-7.png)
+
+- type1,type2인 trap에 따라 잡히는 나방의 수의 표본을 구했다.<br/>
+- trap 종류에 따라 잡힌 나방의 수에 대한 분산의 비가 다른가에 대한 검정으로 모집단의 분산 차이가 있는지 알아보고자 한다.
+
+$$
+\ H_0:\sigma^2_1 = \sigma^2_2 \ vs \ H_1: \sigma^2_1 \not= \sigma^2_2
+$$
+
+```{r message=F, warning=F}
+##정규성,등분산성 검정
+test <- function(x,y) {
+  norm1 = shapiro.test(x)$p.value
+  norm2 = shapiro.test(y)$p.value
+  summary <- list('type1 샤피로윌크 p-value'=norm1, 'type2 샤피로윌크 p-value'=norm2)
+  return(summary)
+}
+group_1 <- ex8_7 %>% filter(exam8_7.trap==1)
+group_2 <- ex8_7 %>%  filter(exam8_7.trap==2)
+
+test(group_1$exam8_7.number,group_2$exam8_7.number)
+```
+
+- 분산비를 검정하기 전에 각 모집단의 표본이 정규성을 따르는지 shapiro-wilk test로 검정하였다.<br/>
+- shapiro-wilk p-value가 각각 0.892, 0.916 이므로 유의수준 0.05보다 크므로 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.
+
+```{r message=F, warning=F}
+n1 <- length(group_1$exam8_7.number) 
+n2 <- length(group_2$exam8_7.number)
+var1 <- round(var(group_1$exam8_7.number), 2)
+var2 <- round(var(group_2$exam8_7.number), 2)
+F_stat <- round(var1 / var2, 2)
+list(n1=n1, n2=n2, var1=var1, var2=var2,"F"=F_stat)
+```
+
+> 각 표본의 크기와 분산이 구해졌고 분산비 F=1.70으로 나왔다.
+
+- $$F_{0.05(2),10,9}$$=3.96 이다. F-값=1.7이 임계값(3.96)보다 작으므로 기각역에 포함되지 않고 따라서 귀무가설을 기각할 만한 충분한 근거가 없다. <br/> 또한 p-value를 확인 하여도 유의수준 5%보다 크므로 유의수준 5%하에 유의하다고 볼 수 없다.<br/>
+- 즉, trap의 종류에 따라 잡힌 나방의 수의 모분산이 같지 않다고 할 수 없다.
+
+## EXAMPLE 8.8
+
+![](C:/git_blog/study/img/ch8/8-8.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex8_8%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- Greenhouse,Outside에서 소나무 종자 발아 시간을 각각 측정하였다. <br/>
+- 두 상황에서 추출한 두 데이터로 Outside에서의 소나무 종자 발아 시간의 모분산이 Greenhouse에서 보다 모분산이 더 큰지 검정하고자 한다.
+
+$$
+\ H_0:\sigma^2_1 \geq \sigma^2_2 \ vs \ H_1: \sigma^2_1 < \sigma^2_2
+$$
+
+```{r message=F, warning=F}
+##정규성,등분산성 검정
+test <- function(x,y) {
+  norm1 = shapiro.test(x)$p.value
+  norm2 = shapiro.test(y)$p.value
+  summary <- list('Greenhouse 샤피로윌크 p-value'=norm1, 'Outside 샤피로윌크 p-value'=norm2)
+  return(summary)
+}
+group_G <- ex8_8 %>% filter(exam8_8.site==1)
+group_O <- ex8_8 %>% filter(exam8_8.site==2)
+
+test(group_G$exam8_8.time,group_O$exam8_8.time)
+```
+
+- 분산비를 검정하기 전에 각 모집단의 표본이 정규성을 따르는지 shapiro-wilk test로 검정하였다.<br/>
+- shapiro-wilk p-value가 각각 0.993, 0.956 이므로 유의수준 0.05보다 크므로 유의수준 5%하에 두 집단 모두 정규성을 따르지 않는다고 할 충분한 증거가 없다.
+
+```{r message=F, warning=F}
+n1 <- length(group_G$exam8_8.time) 
+n2 <- length(group_O$exam8_8.time)
+var1 <- round(var(group_G$exam8_8.time), 2)
+var2 <- round(var(group_O$exam8_8.time), 2)
+F_stat <- round(var2 / var1, 2)
+list(n1=n1, n2=n2, var1=var1, var2=var2,"F"=F_stat)
+```
+- 각각의 분산은 $$s^2_1=15.10$$, $$s^2_2=87.62$$이고, $$F=\frac{s^2_1}{s^2_2} \ or \ F=\frac{s^2_2}{s^2_1}$$ 둘 중 큰 값을 사용한다.<br/> 따라서 $$F=\frac{s^2_2}{s^2_1}= \frac{87.62}{15.10}=5.80$$이다.
+
+- F-값이 임계값 $$F_{0.05(1),8,6}=4.15$$ 보다 크므로 기각역에 포함되고 귀무가설을 기각할 수 있다.<br/>
+- 따라서 Greenhouse에서 소나무 종자 발아 시간 모분산은 Outside에서 소나무 종자 발아 시간 모분산 보다 작다고 할 수 있다.
+
+## EXAMPLE 8.9
+
+![](C:/git_blog/study/img/ch8/8-9.png)
+![](C:/git_blog/study/img/ch8/8-9-1.png)
+
+```{r message=F, warning=F}
+library(lawstat) #levene test를 위한 패키지
+levene.test(ex8_7$exam8_7.number,ex8_7$exam8_7.trap,location='mean')
+```
+
+- Levene test를 통하여 분산의 동일성 검정을 할 수 있다. <br/>
+- Levene test는 모집단이 정규분포를 따르지 않는 경우에 모분산의 동질성을 검정하기 위하여 사용한다.<br/>
+- p-value = 0.4913으로 출력된 것을 볼 수 있다. 그러므로 유의수준 5%하에서 귀무가설을 기각할 충분한 근거가 없다.
+
+> 두 종류의 trap에 따라 잡히는 나방의 수의 모분산이 같지 않다는 증거가 충분하지 않다고 할 수 있다.
+
+## EXAMPLE 8.10
+
+![](C:/git_blog/study/img/ch8/8-10.png)
+![](C:/git_blog/study/img/ch8/8-10-1.png)
+![](C:/git_blog/study/img/ch8/8-10-2.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex8_10%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 같은 모집단에서 추출된 남성의 키와 몸무게의 변동이 다른지를 검정하고자 한다.<br/>
+- 키의 측정 단위는 cm이고, 몸무게의 측정단위는 kg이다.<br/>
+- 단위가 다른 두 데이터의 비교를 위해 변동계수 (coefficients of variantion)을 산출하여 비교하였다.<br/>
+- 따라서 가설은 다음과 같이 설정할 수 있다.
+
+$$
+\begin{aligned}
+H_0 &:\frac{\sigma_1}{\mu_1}=\frac{\sigma_2}{\mu_2}, \\
+H_1 &:\frac{\sigma_1}{\mu_1} \neq \frac{\sigma_2}{\mu_2}
+\end{aligned}
+$$
+
+```{r message=F, warning=F}
+##정규성,등분산성 검정
+test <- function(x,y) {
+  norm1 = shapiro.test(x)$p.value
+  norm2 = shapiro.test(y)$p.value
+  summary <- list('weight 샤피로윌크 p-value'=norm1, 'height 샤피로윌크 p-value'=norm2)
+  return(summary)
+}
+
+test(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))
+```
+
+- p-value가 각각 $$p\ value=0.2661,\ 0.7484$$ 으로 유의수준 0.05보다 크기에 귀무가설 $$H_0$$ 를 기각할만한 충분한 근거가 없다. 데이터셋이 정규성을 따르지 않는다는 충분한 근거가 없기에 분산 비의 검정을 수행할 수 있다.<br/>
+- 분산비 검정을 하기 위하여 통계량 구하는 함수를 작성하여 보자.
+
+```{r message=F, warning=F}
+library(kableExtra)
+f8_10 <- function(x,y){
+  x <- na.omit(x)
+  y <- na.omit(y)
+  n1 <- length(x)
+  n2 <- length(y)
+  v1 <- n1-1
+  v2 <- n2-1
+  xbar1 <- mean(x)
+  xbar2 <- mean(y)
+  s1 <-var(x)
+  s2 <- var(y)
+  ss1 <- var(x)*v1
+  ss2 <- var(y)*v2
+  sd1 <- sd(x)
+  sd2 <- sd(y)
+  cv1 <- sd1/xbar1
+  cv2 <- sd2/xbar2
+  sslog1 <- var(log10(x))*v1
+  sslog2 <- var(log10(y))*v2
+  slog1 <- var(log10(x))
+  slog2 <- var(log10(y))
+  if(slog1 > slog2){
+    f <- slog1/slog2
+  }
+  else{
+    f <- slog2/slog1
+  }
+  pvalue <- 2*(1-pf(f,max(v1,v2),min(v1,v2)))
+  if(pvalue < 0.05){
+    Reject_H0 <- "yes"
+    sp2 <- NA
+  }
+  else{
+    Reject_H0 <- "No"
+  }
+  out1 <- c(n=n1,v=v1,xbar=round(xbar1,2), s_2=round(s1,4),s=round(ss1,4),CV =round(cv1,4),SSlog=round(sslog1,8),s_2log=round(slog1,8),F=round(f,2),
+                    pvalue=round(pvalue,2),Reject_H0)
+  out2 <- c(n=n2,v=v2,xbar=round(xbar2,2), s_2=round(s2,4),s=round(ss2,4),CV =round(cv2,4),SSlog=round(sslog2,8),s_2log=round(slog2,8),F=round(f,2),
+                    pvalue=round(pvalue,2),Reject_H0)
+  out <-as.data.frame(cbind(out1,out2))
+  names(out) <- c("Weight","Height")
+  rownames(out)[11] <- "Reject_H0"
+  return(out)
+}
+
+f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height)) %>%
+  kbl(caption = "Result of Variance ratio test") %>%
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 몸무게의 CV=0.0739, 키의 CV=0.0457<br/>
+- Lewontin은 data를 logarithmic transformation하여 변동계수 검정을 수행하는 방법을 증명하였다.<br/>
+각 표본의 data들에 log10 변환을 하여 산출한 분산은 몸무게=0.0010967, 키=0.00040019이고,<br/>
+이를 활용한 F-value는 $$F=\frac{0.0010967}{0.00040019}=2.74$$이다.<br/>
+임계값보다 F-value가 작으므로 귀무가설을 기각할 수 없다.
+
+> 즉, 같은 모집단으로부터 추출된 남성의 키와 몸무게의 변동은 다르다고 할 증거가 충분하지 못하다.
+
+```{r message=F, warning=F}
+cv1 <- as.numeric(f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))$Weight[6])
+cv2 <- as.numeric(f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))$Height[6])
+v1 <- as.numeric(f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))$Weight[2])
+v2 <- as.numeric(f8_10(as.numeric(ex8_10$exam8_10.weight),as.numeric(ex8_10$exam8_10.height))$Height[2])
+vp <- (v1*cv1+v2*cv2)/(v1+v2)
+vp2 <- round(vp,4)^2
+Z <- (cv1-cv2)/sqrt(((vp2/v1)+(vp2/v2))*(0.5+vp2))
+pvalue <- 2*(1-pt(Z,v1+v2))
+
+if(pvalue < 0.05){
+  Reject_H0 <- "yes"
+}else{
+  Reject_H0 <- "No"
+}
+
+ztest <- data.frame(vp=round(vp,4),vp2=round(vp2,6),Z=round(Z,2),pvalue=round(pvalue,2),Reject_H0)
+ztest%>%
+  kbl(caption = "Result of Z test") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- Miller는 공통 변동계수를 산출하여 Z분포를 활용해 변동계수 차에 대한 가설 검정을 수행하였다.<br/>
+공통 변동계수는 $$V_p=\frac{\nu_1V1+\nu_2V2}{\nu_1+\nu_2}=\frac{9(0.0739)+10(0.0457)}{9+10}=0.0591$$이다.<br/>
+공통 변동계수를 활용한 Z-value=1.46이고, 유의수준 5%하에서 임계값 z=1.96이다.<br/>
+z-value가 임계값 보다 작으므로, 기각역에 포함되지 않아 귀무가설을 기각할 수 없다.
+
+> 즉, 같은 모집단으로부터 추출된 남성 키와 몸무게의 변동은 다르다고 하기 어렵다.
+
+## EXAMPLE 8.11
+
+![](C:/git_blog/study/img/ch8/8-11.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex8_11%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+- 본 데이터는 성인 남성과 여성의 키를 기록한 데이터이다.<br/>
+- 데이터를 그룹별로 나누어 보자.
+
+```{r message=F, warning=F}
+hm <- ex8_11 %>% filter(exam8_11.sex=='1') 
+hf <- ex8_11 %>% filter(exam8_11.sex=='2')
+
+library(qpcR) # 결측치 있는 데이터 cbind   
+ex8_11_cbind<- data.frame(qpcR:::cbind.na(hm[,2], hf[,2]))
+names(ex8_11_cbind) <- c("Heights of males","Heights of females")
+```
+
+> males와 females 데이터 수가 차이나기 때문에 cbind가 되지 않으므로 qpcR패키지를 사용하여 결합시켜준다.
+
+```{r message=F, warning=F}
+ex8_11_cbind%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 남학생과 여학생 키의 차이에 대한 검정을 하고자 한다.<br/>
+- 일반적인 t-검정을 수행하기엔 표본의 수가 적어 비모수 검정 방법인 Mann-Whitney검정을 실시한다.
+
+$$
+\begin{aligned}
+H_0 &: \ Male \ and \ female \ students\ are\ the\ same\ height.\\ 
+H_A &:\  Male\ and\ female\ students\ are\ not\ the\ same\ height. 
+\end{aligned}
+$$
+
+- Mann-Whitney 검정을 하기 위해서는 각 변수의 랭크(순위)를 매겨야하기 때문에 이를 구하도록 한다.<br/>
+(이 예제의 경우 내림차순으로 순위를 구했다. 양측일 경우 문제 없지만 단측일 경우 통계량 값이 바뀐다.)
+
+```{r message=F, warning=F}
+rank8_11 <- function(data){
+  x <- data[,1]
+  y <- data[,2]
+  h <- as.numeric(rbind(c(x,y)))
+  rank <- rank(-h, na.last = "keep")
+  gender <- c(rep("m",length(x)),rep("f",length(y)))
+  out <- data.frame(h,rank,gender)
+  data$rank_m <- subset(out$rank, gender=="m")
+  data$rank_f <- subset(out$rank, gender=="f")
+  return(data)
+}
+
+dat8_11 <- rank8_11(data=ex8_11_cbind)
+
+dat8_11%>%
+  kbl(caption = "Result of Rank") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+- Mann-Whitney 검정통계량을 구하는 공식은 다음과 같다.
+
+$$
+U=n_1n_2 + \frac{n_1(n_1+1)}{2}-R_1
+$$
+
+$$
+U'=n_2n_1 + \frac{n_2(n_2+1)}{2}-R_2
+$$
+- $$U'$$을 쉽게 구하는 방법이 있다.
+
+$$
+U'=n_1n_2-U
+$$
+
+- 본 검정에서 임계값을 테이블을 통해확인하여 보자.
+
+![](C:/git_blog/study/img/ch8/table3.jpg)
+
+- 양측 0.05 n=5,7의 임계값은 30인 것을 볼 수 있다.
+
+```{r message=F, warning=F}
+M_W_test <- function(x,y,a,b){
+  x <- na.omit(x)
+  y <- na.omit(y)
+  a <- na.omit(a)
+  b <- na.omit(b)
+  n1 <- length(x)
+  n2 <- length(y)
+  r1 <- sum(a) 
+  r2 <- sum(b) 
+  u <- n1*n2+(n1*(n1+1)/2)-r1
+  u_prime <- n1*n2-u
+  out <- data.frame(n1,n2,R1=r1,R2=r2,U=u,U_prime=u_prime)
+  return(out)
+}
+```
+
+```{r message=F, warning=F}
+M_W_test(dat8_11$`Heights of males`,dat8_11$`Heights of females`,dat8_11$rank_m,dat8_11$rank_f) %>%
+  kbl(caption = "Result of Mann-Whitney test") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+$$
+U=7*5+\frac{7(7+1)}{2}-31=32
+$$
+
+$$
+U'=7*5-32=3
+$$
+
+- 이 검정은 양측검정이기 때문에 $$U, \ U'$$ 중 하나가 임계값보다 크거나 같으면 귀무가설을 기각한다.<br/>
+- 임계값 U는 30으로 나왔고, 임계값보다 산출된 $$U$$ 통계량 32가 더 크므로 유의수준 5%하에 귀무가설을 기각할 수 있다.
+
+> 즉, 남학생과 여학생의 키는 유의수준 5%하에서 다르다고 할 수 있다.
+
+- 다음은 R에 내장된 wilcox.text() 를 사용한 결과를 확인하여 보자.
+
+```{r message=F, warning=F}
+wilcox.test(dat8_11$`Heights of males`, dat8_11$`Heights of females`)
+```
+- wilcoxon rank sum exact test의 p-value=0.018로 유의수준 5%하에서 귀무가설을 기각할 수 있다. <br/>
+그러므로 남학생과 여학생의 키는 다르다고 할 수 있다.
+
+## EXAMPLE 8.12
+
+![](C:/git_blog/study/img/ch8/8-12.png)
+
+```{r message=F, warning=F}
+#데이터셋
+wt <- c(44,48,36,32,51,45,54,56)
+wot <- c(32,40,44,44,34,30,26,NA)
+ex8_12 <- data.frame(wt,wot)
+ex8_12%>%
+  kbl(caption = "Dataset",escape=F) %>%
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 고등학교에서 typing 훈련을 받은 대학생이 훈련을 받지 않은 사람보다 평균속도가 좋은지 검정하고자 한다.<br/>
+
+$$
+\begin{aligned}
+H_0 &:  Typing\ speed\ is\ not\ greater\ in\ college\ students\ having\ had\ high\ school\ typing\ training. \\
+H_A &:  Typing\ speed\ is\ greater\ in\ college\ students\ having\ had\ high\ school\ typing\ training. 
+\end{aligned}
+$$
+
+- Mann-Whitney 검정을 하기 위해서는 각 변수의 랭크(순위)를 매겨야하기 때문에 이를 구하도록 한다.<br/>
+(이 예제의 경우 오름차순으로 순위를 구했다.)<br/>
+- 동률 순위 자료가 있는 경우 동률 순위의 평균 순위를 이용한다.
+
+```{r message=F, warning=F}
+rank8_12 <- function(data){
+  x <- data[,1]
+  y <- data[,2]
+  h <- as.numeric(rbind(c(x,y)))
+  rank <- rank(h, na.last = "keep")
+  gender <- c(rep("m",length(x)),rep("f",length(y)))
+  out <- data.frame(h,rank,gender)
+  data$rank_m <- subset(out$rank, gender=="m")
+  data$rank_f <- subset(out$rank, gender=="f")
+  return(data)
+}
+dat8_12 <- rank8_12(data=ex8_12)
+
+dat8_12%>%
+  kbl(caption = "Result of Rank") %>%
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 이제 Mann-Whitney 검정통계량을 구해 검정을 실시하도록 한다.
+
+```{r message=F, warning=F}
+M_W_test(dat8_12$wt,dat8_12$wot,dat8_12$rank_m,dat8_12$rank_f) %>%
+  kbl(caption = "Result of Mann-Whitney test") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+$$
+U=8*7+\frac{8(8+1)}{2}-83.5=8.5
+$$
+
+$$
+U'=8*7-8.5=47.5
+$$
+
+- 본 검정에서 임계값을 테이블을 통해확인하여 보자.
+
+![](C:/git_blog/study/img/ch8/table4.jpg)
+
+- 단측 0.05 n=7,8의 임계값은 43인 것을 볼 수 있다.
+
+- 이 검정은 단측검정이기 때문에 다음의 표를 확인하여야 한다. 
+
+![](C:/git_blog/study/img/ch8/table5.jpg)
+
+- 이 예제는 오름차순으로 순위가 매겨져 있으며, 훈련받은 학생의 평균속도가 더 좋은지 검정하는 것이기 때문에 통계량을 $$U'$$을 사용한다.<br/>
+- 임계값은 43으로 나왔고, 임계값보다 산출된 $$U'$$ 통계량 47.5가 더 크므로 유의수준 5%하에 귀무가설을 기각할 수 있다.
+
+> 즉, 고등학교에서 typing 훈련을 받은 학생은 훈련을 받지 않은 학생보다 typing 평균 속도가 빠르다고 할 수 있다.
+
+- 다음은 R에 내장된 wilcox.text() 를 사용한 결과를 확인하여 보자.
+
+```{r message=F, warning=F}
+wilcox.test(dat8_12$wt,na.omit(dat8_12$wot),alternative = "greater")
+```
+- wilcoxon rank sum exact test의 p-value=0.018로 유의수준 5%하에서 귀무가설을 기각할 수 있다. <br/>
+그러므로 남학생과 여학생의 키는 다르다고 할 수 있다.
+
+## EXAMPLE 8.13
+
+![](C:/git_blog/study/img/ch8/8-13.png)
+
+- 본 데이터는 보충제를 섭취 유무에 따른 동물들의 체중을 기록한 데이터로 단측 검정에서의 Mann-Whitney 검정을 실시할 때의 정규 근사를 보여주는 예시이다. <br/>
+- Mann-Whitney 검정에서 두 그룹의 표본이 20 이상이고 두 표본의 크기 합이 40이상일 경우 정규 근사가 가능하다. <br/>
+- 각 표본의 sample sizw는 20을 넘어 Mann-Whitney의 정규근사를 이용하여 검정을 수행하였다.<br/>
+
+$$
+\begin{aligned}
+H_0 &: Body\ weight\ of\ animals\ on\ the\ supplemented\ diet\ are\ not\ greater\ than\ those\ on\ the\ unsupplemented\ diet. \\
+H_A &: Body\ weight\ of\ animals\ on\ the\ supplemented\ diet\ are\ greater\ than\ those\ on\ the\ unsupplemented\ diet.
+\end{aligned}
+$$
+
+> Mann-Whitney의 정규근사를 위한 통계량 
+
+$$
+\mu_U=\frac{n_1n_2}{2} \ (=\frac{U+U'}{2}), \ \sigma_U=\sqrt{\frac{n_1n_1(N+1)}{12}}
+$$
+
+$$
+\rightarrow \space Z= \frac{U-\mu_U}{\sigma_U}\ \sim\ N(0,1) 
+$$
+- $$n_1=22,\ n_2=46,\ N=68,\ U=282$$ 가 주어졌을 때 검정을 해보도록 한다. 
+
+```{r message=F, warning=F}
+Normal_Approximation_M_W_test<-function(n1,n2,u){
+  u_prime<-(n1*n2)-u
+  mu<-(n1*n2)/2
+  sig<-sqrt(((n1*n2)*(n1+n2+1))/12)
+  z<-(u_prime -mu)/sig
+  pvalue <- 1-pnorm(z)
+  if(pvalue < 0.05){
+    Reject_H0 <- "yes"
+  }else{
+    Reject_H0 <- "No"
+  }
+  out <- data.frame(u_prime,mu,sig=round(sig,2),z=round(z,2),p_value=round(pvalue,4),Reject_H0)
+  return(out)
+}
+```
+
+```{r message=F, warning=F}
+Normal_Approximation_M_W_test(22,46,282) %>%
+  kbl(caption = "Result of Mann-Whitney test (Normal approxiation)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 이 예제는 오름차순으로 순위가 매겨져 있으며, 음식 보충제를 섭취한 동물의 체중이 음식 보충제를 섭취하지 않은 동물의 체중보다 큰지 검정하는 것이기 때문에 통계량을 $$U'$$을 사용한다.<br/>
+- 산출된 통계량을 이용하여 $$Z=\frac{U'-\mu_U}{\sigma_U}=2.94$$이고, 표준정규분포에서 유의수준 5% 단측검정 임계값은 1.6449이다.<br/>
+계산된 통계량 값이 임계값 보다 크고, 기각역에 포함되므로 귀무가설을 기각할 수 있다.<br/>
+- 따라서 음식 보충제를 섭취한 동물의 체중은 음식 보충제를 섭취하지 않은 동물의 체중보다 많이 나간다고 말할 수 있다.
+
+## EXAMPLE 8.14
+
+![](C:/git_blog/study/img/ch8/8-14.png)
+
+- 연속형 데이터가 아닌 순서(순위)만 있는 데이터의 검정을 해보도록 한다. <br/>
+- 본 데이터는 수업 조교에 따른 학생들의 성적 등급을 기록한 데이터로 수업 조교에 따른 학생들의 등급이 같은지 다른지 검정해보도록 한다.
+
+```{r message=F, warning=F}
+A <- c(3,3,3,6,10,10,13.5,13.5,16.5,16.5,19.5,NA,NA,NA)
+B <- c(3,3,7.5,7.5,10,12,16.5,16.5,19.5,22.5,22.5,22.5,22.5,25)
+ex8_14 <- data.frame(A,B)
+ex8_14%>%
+  kbl(caption = "Dataset",escape=F) %>%
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+rank_M_W_test <- function(x,y){
+  x <- na.omit(x)
+  y <- na.omit(y)
+  n1 <- length(x)
+  n2 <- length(y)
+  r1 <- sum(x) 
+  r2 <- sum(y) 
+  u <- n1*n2+(n1*(n1+1)/2)-min(r1,r2)
+  u_prime <- n1*n2-u
+  out <- data.frame(n1,n2,R1=r1,R2=r2,U=u,U_prime=u_prime)
+  return(out)
+}
+```
+
+```{r message=F, warning=F}
+rank_M_W_test(ex8_14$A,ex8_14$B)%>%
+  kbl(caption = "Result of Mann-Whitney test (Normal approxiation)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- $$U$$ 통계량은 주어진 공식에 따라 $$U, U'$$을 모두 구하고 둘 중 큰 값을 $$U$$ 통계량으로 한다.**
+
+- 계산 결과 $$U=105.5, \ U'=48.5$$로 $$U$$값이 더 크기 때문에 통계량은 105.5가 된다.
+
+![](C:/git_blog/study/img/ch8/table6.jpg)
+
+- 임계값은 U_0.05(11,14)=114이므로 통계량이 임계값보다 작아 귀무가설을 기각할 수 없고 따라서 어시스턴트에 따라 학생들의 학업 성취도가 다르다고 말할 수 없다.**
+
+- 다음은 R에 내장된 wilcox.text() 를 사용한 결과이다.
+
+```{r message=F, warning=F}
+wilcox.test(na.omit(ex8_14$A),ex8_14$B,alternative = "two.sided")
+```
+
+- wil.cox test를 이용해 검정할 수도 있으며 패키지를 이용해 wilcox.test검정을 진행한 결과 p-value가 0.1219로 유의수준 0.05보다 크기 때문에 귀무가설을 기각할 수 없다.
+
+## EXAMPLE 8.15
+
+![](C:/git_blog/study/img/ch8/8-15.png)
+
+- Example 8.14 데이터를 사용해서 중위수 검정을 실시해보도록 한다.
+
+$$
+\begin{aligned}
+H_0 &: The\ median\ performance\ is\ the\ same\ under\ the\ two\ teaching\ assistants.\\
+H_A &: The\ median\ of\ the\ two\ sampled\ populations\ are\ not\ equal.
+\end{aligned}
+
+$$
+
+
+```{r message=F, warning=F}
+data <- c(na.omit(ex8_14$A),ex8_14$B)
+ex8_15 <- data.frame(data)
+ex8_15$number <- ifelse(ex8_15$data > median(ex8_15$data) ,
+                         ex8_15$number <- "Not above Median",ifelse(ex8_15$data == median(ex8_15$data),NA,ex8_15$number <- "Above Median"))
+group<-c(rep("Sample 1",11), rep("Sample 2",14))
+ex8_15$group <- group
+ex8_15 <- na.omit(ex8_15)
+table(ex8_15$number,ex8_15$group)%>%
+  kbl(caption = "Result of Mann-Whitney test") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
+```
+
+- 교차표를 보면 1번 그룹에선 중위수를 넘는 학생이 6명이고 넘지 않는 학생이 3명이며, 2번 그룹에서는 6명과 8명이다.<br/>
+- 중위수 검정을 하기 위해 pearson 카이제곱 검정을 실시한다. 카이제곱 검정을 하기 위한 검정통계량 공식은 다음과 같다.
+
+$$
+\chi_c^2 = \frac{n\ (|f_{11}f_{22}\ -\ f_{12}f_{21}|\ -\ \frac{n}{2})^2}{(C_1)(C_2)(R_1)(R_2)} \ \sim \chi_1^2
+$$
+
+```{r message=F, warning=F}
+chi_square_test<- function(table){
+  tab <- table
+  f11 <- tab[1,1]
+  f22 <- tab[2,2]
+  f12 <- tab[1,2]
+  f21 <- tab[2,1]
+  C1 <- sum(tab[,1])
+  C2 <- sum(tab[,2])
+  R1 <- sum(tab[1,])
+  R2 <- sum(tab[2,])
+  n <- sum(R1,R2)
+  chis <- (n*(abs(f11*f22-f12*f21)-(n/2))^2)/(C1*C2*R1*R2)
+  pvalue <- min(pchisq(chis,1),1-pchisq(chis,1))
+  out <- data.frame(chi=round(chis,3),pvalue=round(pvalue,2))
+  return(out)
+}
+
+chi_square_test(table(ex8_15$number,ex8_15$group))%>%
+  kbl(caption = "Result of Chi-square test") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 빈도표를 생성하여 산출한 통계량은 0.473이고, 자유도가 1인 카이제곱 통계량은 3.841임을 알 수 있다.<br/>
+- 통계량이 기각역에 포함되지 않으므로 귀무가설을 기각할 수 없다.<br/>
+- 즉, 같은  모집단으로부터  추출된  두  표본의  중위수는  다르다고 할 수 없다.<br/>
+- 그러므로 수업 조교에 따른 학생들의 성적 등급의 중위수가 다르다고 할 수 없다.<br/><br/>
+- RVAideMemoire 패키지 내에 있는 mood.medtest() 함수를 사용한 결과를 확인하여 보자.
+
+```{r message=F, warning=F}
+library(RVAideMemoire)
+mood.medtest(ex8_15$data~ex8_15$group,exact=F)
+```
+
+## EXAMPLE 8.16
+
+![](C:/git_blog/study/img/ch8/8-16.png)
+![](C:/git_blog/study/img/ch8/8-16-1.png)
+
+```{r message=F, warning=F}
+Michigan <- c(47,35,7,5,3,2)
+Louisiana <- c(48,23,11,13,8,2)
+ex8_16 <- data.frame(Michigan,Louisiana)
+ex8_16%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+- 이 데이터는 미시간 블루제이스의 식단에서 식물성 식품의 빈도와 루이지애나 블루제이스의 식단에서 식물성 식품의 빈도 데이터이다.<br/>
+- 독립적인 두개의 표본에 대하여 다양성 지수 차이를 검정하기 위해서는 Shannon index H 를 구하고 허치슨이 제안한 검정통계량을 구하여 검정을 진행하여야 한다.
+
+$$
+\begin{aligned}
+H_0 &: H_1 = H_2\\
+H_A &: H_1 \ne H_2
+\end{aligned}
+$$
+
+- 통계량들을 구하는 공식은 다음과 같다.
+  
+  
+$$
+\begin{aligned}
+H' &= \frac{n\ \log n\ -\ \sum f_i \log f_i}{n}\\
+s_{H'}^2 &=\frac{\sum f_i \log^2 f_i\ -\ (\sum f_i \log^2 f_i)^2/n}{n^2}\\
+s_{H_1'-H_2'} &= \sqrt{s_{H_1'}^2+s_{H_2'}^2}\\
+t &= \frac{H_1'-H_2'}{s_{H_1'-H_2'}} \sim t(\nu)\\
+\nu&=\frac{(s_{H_1'}^2+s_{H_2'}^2)^2}{\frac{(s_{H_1'})^2}{n_1}+\frac{(s_{H_2'})^2}{n_2}}
+\end{aligned}
+$$
+
+```{r message=F, warning=F}
+H_test<- function(x,y){
+  n1 <- sum(x)
+  filog_1 <- sum(x*log10(x))
+  filog2_1 <- sum(x*log10(x)^2)
+  h1 <- (n1*log10(n1)-filog_1)/n1
+  sh1 <- (filog2_1-(filog_1^2/n1))/n1^2
+  n2 <- sum(y)
+  filog_2 <- sum(y*log10(y))
+  filog2_2 <- sum(y*log10(y)^2)
+  h2 <- (n2*log10(n2)-filog_2)/n2
+  sh2 <- (filog2_2-(filog_2^2/n2))/n2^2
+  s_h1_h2 <- sqrt(sh1+sh2)
+  t <- (h1-h2)/s_h1_h2
+  v <- (sh1+sh2)^2/( (sh1^2/n1) + (sh2^2/n2) )
+  pvalue <- 2*min(pt(t,v),1-pt(t,v))
+  if(pvalue < 0.05){
+    Reject_H0 <- "yes"
+  }else{
+    Reject_H0 <- "No"
+  }
+  out <- data.frame(h1=round(h1,4),h2=round(h2,4),sh1,sh2,s_h1_h2=round(s_h1_h2,4),t=round(t,3),v=round(v),p_value=round(pvalue,3),Reject_H0)
+  return(out)
+}
+```
+
+```{r message=F, warning=F}
+H_test(ex8_16$Michigan,ex8_16$Louisiana)%>%
+  kbl(caption = "Result of indices of diversity") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) 
+```
+
+- 다양성 지수 $$H$$ 는 vegan 패키지에 있는 diversity() 함수를 사용해서도 계산이 가능하다.
+
+```{r message=F, warning=F}
+library(vegan)
+h1_1<-diversity(ex8_16$Michigan, index="shannon", base=10)
+h2_2<-diversity(ex8_16$Louisiana, index="shannon", base=10)
+c(round(h1_1,4),round(h2_2,4))==c(H_test(ex8_16$Michigan,ex8_16$Louisiana)$h1,H_test(ex8_16$Michigan,ex8_16$Louisiana)$h2)
+cat(" diversity() 함수로 구한 다양성 지수 : H1 = ",round(h1_1,4),"  H2 = ",round(h2_2,4),"\n",
+    "직접 코딩한 함수로 구한 다양성 지수 : H1 = ",H_test(ex8_16$Michigan,ex8_16$Louisiana)$h1,"  H2 = ",H_test(ex8_16$Michigan,ex8_16$Louisiana)$h2,"\n",
+    "두 다양성 지수가 동일한가?  H1 : ",round(h1_1,4)==H_test(ex8_16$Michigan,ex8_16$Louisiana)$h1,"   H2 : ",round(h2_2,4)==H_test(ex8_16$Michigan,ex8_16$Louisiana)$h2)
+```
+
+- 다양성 지수 검정 결과 검정통계량 $$t=-1.909$$ 이고 $$p-value=0.058$$로 유의수준 0.05보다 크므로 귀무가설 $$H_0$$ 를 기각할 충분한 근거를 가지고 있지 않다.<br/>
+- 두 Shannon index를 비교해도 미시간 주는 0.5403, 루이지애나는 0.6328로 루이지애나의 식물성 식품에 대한 종 부유도와 종 균등도가 크다고 할수 있겠지만 다양성 지수 검정 결과 미시간 주와 루이지애나 주의 다양성 지수가 같지 않다는 귀무가설을 기각할 충분한 근거가 없다.<br/>
+- 그러므로 미시간주와 루이지애나 주의 다양성 지수는 같지 않다는 충분한 근거가 없다.
+
+
+
+

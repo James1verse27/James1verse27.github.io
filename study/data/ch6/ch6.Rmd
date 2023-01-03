@@ -1,0 +1,732 @@
+---
+title: "의학통계방법론 1조 과제"
+author: "김재혁"
+date: '2022-03-17'
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+# R 프로그램 결과
+
+**패키지**
+<details>
+<summary> 설치된 패키지 접기/펼치기 버튼</summary>
+<div markdown="1">
+```{r packages, message=F, warning=F}
+getwd()
+
+#install.packages("readxl")
+#install.packages('ggplot2')
+#install.packages("Hmisc")
+#install.packages("survey")
+#install.packages("vegan")
+#install.packages("dplyr")
+#install.packages("kableExtra")
+#install.packages("psych")
+library('Hmisc')
+library('readxl')
+library('ggplot2')
+library('vegan')
+library('dplyr')
+library('kableExtra')
+library('psych')
+```
+</div>
+</details>
+
+**엑셀파일불러오기**
+```{r}
+#모든 시트를 하나의 리스트로 불러오는 함수
+read_excel_allsheets <- function(file, tibble = FALSE) {
+  sheets <- readxl::excel_sheets(file)
+  x <- lapply(sheets, function(X) readxl::read_excel(file, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- sheets
+  x
+}
+```
+
+
+## 6장
+**6장 연습문제 불러오기**
+
+```{r ex4}
+#data_chap06에 연습문제 6장 모든 문제 저장
+data_chap06 <- read_excel_allsheets("data_chap06.xls")
+
+#연습문제 각각 데이터 생성
+for (x in 1:length(data_chap06)){
+  assign(paste0('ex6_',c(3,4,7))[x],data_chap06[x])
+  }
+
+#연습문제 데이터 형식을 리스트에서 데이터프레임으로 변환
+for (x in 1:length(data_chap06)){
+  assign(paste0('ex6_',c(3,4,7))[x],data.frame(data_chap06[x]))
+  }
+```
+<details>
+<summary> 6장 문제 접기/펼치기 버튼</summary>
+<div markdown="1">
+
+### EXAMPLE 6.1a
+
+![](C:/Biostat/6-1a.png)
+
+```{r message=F, warning=F}
+x <- seq(30,90, length=200)
+ar_x = seq(66,90,0.001)
+x_p = c(ar_x, rev(ar_x))
+ar_y=dnorm(ar_x, mean=60, sd=10)
+y_p = c(rep(0,length(ar_y)),rev(ar_y))
+ar_x2=seq(77.5,90,0.001)
+x_p2= c(ar_x2, rev(ar_x2))
+ar_y2=dnorm(ar_x2, mean=60, sd=10)
+y_p2=c(rep(0,length(ar_y2)), rev(ar_y2))
+plot(x, dnorm(x,mean=60, sd=10), type='l',xlab='Xi in millimeters', ylab="Y", yaxt="n",main="Example 6.1a : Calculating Proportions of a Normal Distribution of Bone Lengths")
+polygon(x_p,y_p, col='#8dd3c7', density=30)
+polygon(x_p2,y_p2, col='#ffffb3', density=50)
+arrows(66,dnorm(66,60,10),66,0, angle=0)
+text(57,0.006,labels='66',adj=0, cex=2, col='#007266')
+arrows(77.5,dnorm(77.5,60,10),77.5,0, angle=0)
+text(80,0.017,labels='77.5',adj=0, cex=2, col='#007266')
+arrows(60,0.005,66,0,length=0.25, angle=30,code=2)
+arrows(80,0.015,77.5,0.009,length=0.25, angle=30,code=2)
+```
+
+
+**$Q$.6.1a.1 ) What proportion of the population of bone lengths is larger than 66 $mm$?**
+
+```{r warning=F, message=F}
+#1
+prop <- round((1-pnorm(66,60,10))*100,2)
+cat("proportion of the population of bone lengths larer than 66 =",prop,"%")
+```
+
+$$
+\begin{aligned}
+Z=\frac{X_i-\mu}{\sigma}=\frac{66\ mm - 60\ mm}{10\ mm} = 0.60\\
+\\
+P(X_i > 66\ mm) = P(Z>0.60)=0.2743\ or\ 27.43\ \%
+\end{aligned}
+$$
+
+측정된 뼈 길이는 $$ \mu = 60mm$$이고, $$ \sigma=10mm$$인 정규분포를 따르고 있다.
+
+해당 분포에서 뼈길이가 66mm 이상인 사람이 추출될 확률을 구하기 위해 pnorm 함수를 이용하였다.
+
+그 결과, 뼈 길이가 66mm이상인 사람이 추출될 확률은 0.2473(24.73%)로 계산되었다.
+
+
+**$Q$.6.1a.2 ) What is the probability of picking, at random from this population, a bone larger than 66 $mm$?**    
+  
+```{r warning=F, message=F}
+#2
+prob <- round((1-pnorm(66,60,10)),4)
+cat("probability of picking a bone lengths larer than 66 =",prob)
+```
+$$
+\begin{aligned}
+Probability\ of\ picking\ a\ bone\ lengths\ larger\ than\ 66\ mm =\ 0.2743
+\end{aligned}
+$$
+
+
+**$Q$.6.1a.3 ) If there are 2000 bone lengths in population, how many of them are greater than 66 $mm$?**   
+    
+```{r warning=F, message=F}
+#3
+popu <- round(2000*(1-pnorm(66,60,10)))
+cat("population of bone length is greater than 66 mm in 2000 =",popu)
+```
+  
+$$
+\begin{aligned}
+Population\ of\ bone\ length\ greater\ than\ 66\ mm\ in\ 2000\ =\ (0.2743)*(2000)=549
+\end{aligned}
+$$
+
+인구집단이 2000명일 경우, 뼈길이가 66mm이상인 사람의 수를 구해보자
+
+**#1**에서 계산된 확률 0.2473을 인구수인 2000에 곱하였고,
+
+그 결과 2000명 중 549명의 뼈 길이가 66mm이상임을 알 수 있다.
+
+**$Q$.6.1a.4 ) What proportion of the population is smaller than 66 $mm$ ?**
+  
+```{r warning=F, message=F}
+#4
+prob <- round((pnorm(66,60,10)),4)
+cat("probability of picking a bone lengths smaller than 66 =",prob)
+```
+
+$$
+\begin{aligned}
+P(X_i < 66\ mm) = 1-P(X_i > 66\ mm) =1-0.2743=0.7257
+\end{aligned}
+$$
+
+뼈 길이가 66mm이하일 확률을 계산하였다.
+
+**#1**에서 구한 66mm이상일 확률과 반대되는 값으로 1에서 66mm이상일 확률을 뺐다.
+
+해당 값은 0.7257임을 확인할 수 있다.
+
+**$Q$.6.1a.5 ) What proportion of this population lies between 60 and 66 $mm$?**
+  
+```{r warning=F, message=F}
+#5
+p_60 <- 1-pnorm(60,60,10) # larger than 60 mm
+p_66 <- 1-pnorm(66,60,10) # larger than 66 mm
+p_60_66 <- round(p_60 - p_66,4)
+cat("proportion between 60 and 66 = ",p_60,"-",round(p_66,4)," = ",p_60_66," or",round(p_60_66*100,2),"%")
+```
+  
+$$
+\begin{aligned}
+P(60\ mm<X_i < 66\ mm) = 0.5-0.2743=0.2257
+\end{aligned}
+$$       
+
+뼈 길이가 60mm이상 66mm이하일  확률을  구하였다.
+
+(이는 정규분포로 변환한 $$0<Z<0.6$$ 구간과 값이 동일하다)
+
+60mm이하일 확률에서 66mm이상일 확률을 뺀 값으로 p-value는 0.2257임을 확인할 수 있다.
+
+**$Q$.6.1a.6 ) What portion of the area under the normal curve lies to the right of 77.5 $mm$? **    
+  
+```{r warning=F, message=F}
+#6
+prop <- round((1-pnorm(77.5,60,10))*100,2)
+cat("proportion of the population of bone lengths larer than 77.5 =",prop,"%")
+```
+
+$$
+\begin{aligned}
+Z=\frac{X_i-\mu}{\sigma}=\frac{77.5\ mm - 60\ mm}{10\ mm} = 1.75\\
+\\
+P(X_i > 77.5\ mm) = P(Z>1.75)=0.0401\ or\ 4.01\ \%
+\end{aligned}
+$$
+
+뼈 길이가 77.5mm 이상일 확률을 구하였다.
+
+해당 값을 구하기 위해 표준화를 실시하였고,
+
+표준정규분포의 확률을 구한 결과 뼈 길이가 77.5mm이상일 확률은 0.0401(4.01%)로 계산되었다.
+
+**$Q$.6.1a.7 ) If there are 2000 bone lengths in population, how many of them are greater than 77.5 $mm$?**   
+
+```{r warning=F, message=F}
+#7
+popu <- round(2000*(1-pnorm(77.5,60,10)))
+cat("population of bone length is greater than 77.5 mm in 2000 =",popu)
+```
+  
+$$
+\begin{aligned}
+Population\ of\ bone\ length\ greater\ than\ 77.5\ mm\ in\ 2000\ =\ (0.0401)*(2000)=80
+\end{aligned}
+$$
+
+인구 2000명에서 뼈 길이가 77.5mm이상인 사람의 수는 80명이다.
+
+**$Q$.6.1a.8 ) What is the probability of selecting at random from this population a bone measuring between 66 and 77.5 $mm$ in length? **    
+  
+```{r warning=F, message=F}
+#8
+p_66 <- 1-pnorm(66,60,10) # larger than 66 mm
+p_77_5 <- 1-pnorm(77.5,60,10) # larger than 77.5 mm
+p_66_77_5 <- round(p_66 - p_77_5,4)
+cat("proportion between 66 and 77.5 = ",round(p_66,4),"-",round(p_77_5,4)," = ",p_66_77_5," or",round(p_66_77_5*100,2),"%")
+```
+  
+$$
+\begin{aligned}
+P(66\ mm <X_i < 77.5\ mm) = 0.2743-0.0401=0.2342
+\end{aligned}
+$$
+
+뼈 길이가 60mm에서 77.5mm 사이일 확률을 나타낸 값으로 이는 60mm이하 확률에서 77.5mm이하일 확률을 뺀 값으로 나타낼 수 있다.
+
+그 결과 p-value는 0.2342이다.
+
+Example6.1a를 통해 분포의 평균으로부터 값이 멀어질수록 나타날 확률이 작아지는 것을 확인할 수 있다.
+
+
+### EXAMPLE b
+
+![](C:/Biostat/6-1b.png)
+```{r message=F, warning=F}
+#normal distribution plot 
+x <- seq(-25,150, length=300)
+#45구간
+ar_x = seq(-25,45,0.001)
+x_p = c(ar_x, rev(ar_x))
+ar_y=dnorm(ar_x, mean=65, sd=25)
+y_p = c(rep(0,length(ar_y)),rev(ar_y))
+##85구간
+ar_x2=seq(85,150,0.001)
+x_p2= c(ar_x2, rev(ar_x2))
+ar_y2=dnorm(ar_x2, mean=65, sd=25)
+y_p2=c(rep(0,length(ar_y2)), rev(ar_y2))
+#plot
+plot(x, dnorm(x,mean=65, sd=25), type='l',xlab='X,in mg/100ml', ylab="Y", yaxt="n",main="Example 6.1b : Calculating Proportions of a Normal Distribution of Sucrose Concentration")
+polygon(x_p,y_p, col='#8dd3c7', density=50)
+polygon(x_p2,y_p2, col='#8dd3c7', density=50)
+arrows(45,dnorm(45,65,25),45,0, angle=0)
+text(20,0.012,labels='45',adj=0, cex=2, col='#007266')
+arrows(85,dnorm(85,65,25),85,0, angle=0)
+text(105,0.012,labels='85',adj=0, cex=2, col='#007266')
+arrows(30,0.012,45,0.0115,length=0.25, angle=30,code=2)
+arrows(100,0.012,85,0.0115,length=0.25, angle=30,code=2)
+```
+
+**$Q$ 6.1b.1) What proportion of the population is greater than $85\ mg\ /\ 100\ ml$ ?**  
+    
+```{r message=F, warning=F}
+#1
+prop <- round(((1-pnorm(85,65,25))*100),2)
+cat("proportion of the population of Sucrose Concentration larger than 85mg/100ml =",prop,"%")
+```
+
+$$
+\begin{aligned}
+Z = \frac{X_i-\mu}{\sigma}= \frac{85\ mg/100ml - 65\ mg/100ml}{25\ mg/100ml}=0.8\\
+P(X_i > 85\ mg/100ml) = P(Z > 0.8)=0.2199\ or\ 21.19\ \%
+\end{aligned}
+$$
+
+측정된 당 농도(sucrose concentration)은  $$\mu = 65mg/100ml$$이고, $$\sigma=25mg/100ml$$인  정규분포를  따른다.
+
+당농도가 85mg/100ml 이상일 확률을 구한 값으로 0.2119(21.19%)로 계산되었다.
+
+**$Q$ 6.1b.2) What proportion of the population is less than $45\ mg\ /\ 100\ ml$ ?**  
+
+```{r message=F, warning=F}
+#2
+prop <- round(((pnorm(45,65,25))*100),2)
+cat("proportion of the population of Sucrose Concentration less than 45mg/100ml =",prop,"%")
+```
+
+$$
+\begin{aligned}
+Z = \frac{X_i-\mu}{\sigma}= \frac{45\ mg/100ml - 65\ mg/100ml}{25\ mg/100ml}=-\ 0.8\\
+P(X_i < 45\ mg/100ml) = P(Z < -\ 0.8)=0.2199\ or\ 21.19\ \%
+\end{aligned}
+$$  
+
+**#1**과 같은 값이 나오는 이유는 45mg/100ml와 85mg/100ml는 평균 65mg/100ml 기준으로 대칭을 이루기 때문이다.
+
+**$Q$ 6.1b.3) What proportion of the population lies between $45$ and $85\ mg\ /\ 100\ ml$ ?**    
+  
+```{r message=F, warning=F}
+#3
+p_45 <- round(pnorm(45,65,25),4) #less than 45
+p_85 <- round(1-pnorm(85,65,25),4)#larger than 85
+p_45_85 <- round((1-(p_45+p_85))*100,2) #between 45 and 85
+cat("proportion of the population of Sucrose Concentration between 45 and 85mg/100ml =",p_45_85,"%")
+```
+
+$$
+\begin{aligned}
+P(45\ mg/100ml < X_i < 85\ mg/100ml) &= P(-0.80 < Z < 0.80)\\
+&= 1-P(Z < -0.80\ or\ Z>0.80)\\
+&= 1-(0.2119+0.2119)\\
+&= 1-0.4138\\
+&= 0.5767\ or\ 57.62\ \%
+\end{aligned}
+$$
+당농도가 45mg/100ml와 85mg/100ml 사이의 값을 가질 확률의 값으로 0.5762가 계산되었다.
+
+### EXAMPLE 6.2
+
+![](C:/Biostat/6-2.png)
+
+**$Q$ 6.2.1) A population of one-year-old children's chest circumstances has $\mu=47.0\ cm$ and $\sigma = 12.0\ cm$, what is the probability of drawing from it a random sample of nine measurements that has a mean larger than 50.0$cm$ ?**
+
+```{r message=F, warning=F}
+#1
+mu <- 47 ; sigma <- 12 ; n <- 9
+sigma_xbar <- sigma/sqrt(n)
+z <- (50-mu)/sigma_xbar
+p <- 1-pnorm(z)
+cat("Probability of mean larger than 50.0cm = ",round(p,4))
+```
+
+$$
+\begin{aligned}
+\sigma_{\bar{X}} = \frac{12.0\ cm}{\sqrt 9} = 4.0\ cm \\
+Z = \frac{\bar{X}-\mu}{\sigma_{\bar{X}}} = \frac{50.0\ cm\ -\ 47.0\ cm}{4.0\ cm} = 0.75 \\
+P(\bar{X} > 50.0\ cm) &= 1 - P(\bar{X} < 50.0\ cm) \\
+&= P(Z>0.75) \\
+&= 0.2266
+\end{aligned}
+$$
+
+1세 아동의 모집단의 가슴둘레 분포는 $$\mu=47cm$$이고, $$\sigma=12cm$$인 정규분포를 따른다.
+
+9명의 아동을 추출했을 때의 표준오차는 $$\frac{\sigma}{\sqrt{n}}=\frac{12}{\sqrt{9}}=4cm$$
+
+$$\frac{(\overline{X}-\mu)}{\sigma_\overline{x}}=\frac{50-47}{4}=0.75$$
+
+$$P(\overline{X}>50)=P(Z>0.75)=0.2266$$
+
+따라서 1세 아동 집단에서 가슴둘레의 평균이 50cm보다 큰 9명이 추출될 확률은 0.2266이다.
+
+**$Q$ 6.2.2) What is the probability of drawing a sample of 25 measurements from the preceding population and finding that the mean of this sample is less than $40.0 cm$?**
+
+```{r message=F, warning=F}
+#2
+mu <- 47 ; sigma <- 12 ; n <- 25
+sigma_xbar <- sigma/sqrt(n)
+z <- (40-mu)/sigma_xbar
+p <- pnorm(z)
+cat("Probability of mean less than 47.0cm = ",round(p,4))
+```
+    
+$$
+\begin{aligned}
+\sigma_{\bar{X}} = \frac{12.0\ cm}{\sqrt 25} = 2.4\ cm \\
+Z = \frac{\bar{X}-\mu}{\sigma_{\bar{X}}} = \frac{40.0\ cm\ -\ 47.0\ cm}{4.0\ cm} = -2.92 \\
+P(\bar{X} < 40.0\ cm) &= 1 - P(\bar{X} < 40.0\ cm) \\
+&= P(Z>2.92) \\
+&= 0.0018
+\end{aligned}
+$$
+
+25명의 아동을 추출했을 때의 표준오차는 $$\frac{\sigma}{\sqrt{n}}=\frac{12}{\sqrt{25}}=2.4cm$$이다.
+
+$$\frac{(\overline{X}-\mu)}{\sigma_\overline{x}}=\frac{40-47}{2.4}=-2.92$$
+
+$$P(\overline{X}<40)=P(Z<-2.92)=0.0018$$
+
+따라서 1세 아동 집단에서 가슴둘레의 평균이 40cm보다 작은 25명이 추출될 확률은 0.0018이다.
+
+**$Q$ 6.2.3) If 500 random samples of size 25 are taken from the preceding population, how many of then would have means larger than 50.0 $cm$?**
+
+```{r message=F, warning=F}
+#3
+mu <- 47 ; sigma <- 12 ; n <- 25
+sigma_xbar <- sigma/sqrt(n)
+z <- (50-mu)/sigma_xbar
+p <- 1-pnorm(z)
+amount <- round(p,4)*500
+cat("Amount of mean larger than 50.0cm = ",round(amount))
+```
+25명의 아동을 추출했을 때의 $$P(\overline{X}>50)$$는 $$P(Z>1.25)=0.1056$$이다.
+
+표본의 수가 커질수록 추출될 확률의 값이 작아짐을 알 수 있다.
+
+또한 평균으로부터 값이 멀어질수록 z값이 커져 p-value는 작아진다.
+
+### EXAMPLE 6.3
+
+![](C:/Biostat/6-3.png)
+
+
+```{r message=F, warning=F}
+#데이터셋
+ex6_3%>%
+  kbl(caption = "EXAMPLE 6.3 dataset") %>%
+  kable_minimal() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+
+```{r message=F, warning=F}
+descriptives6.3  <- function(x) {
+  x <- na.omit(x)
+  n <- length(x)
+  sum_x <- sum(x)
+  sum_x2 <- sum(x^2)
+  mean <- mean(x)
+  ss <- sum_x2-(sum_x^2/12)
+  s2 <- ss/(n-1)
+  s <- sqrt(s2)
+  s_err <- s/sqrt(n)
+  out <- data.frame(n=n, Mean=round(mean,1) ,Sum_X=sum_x, Sum_x2 = sum_x2, Sum_of_Square=round(ss,4), variance=round(s2,4), std=round(s,2), std.err=round(s_err,1))
+  return(out)
+}
+
+descriptives6.3 (ex6_3$SBP)%>%
+  kbl(caption = "Descriptives ex6.3") %>%
+  kable_minimal() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+$$
+\begin{aligned}
+n&=12\\
+\overline X &= \frac{1651\ mm}{12} = 137.6\ mm \\
+SS &= 228,111\ m^2 - \frac{(1651\ mm)^2}{12}\\
+&= 960.9167\ mm^2\\
+s^2 &= \frac{960.9167\ mm^2}{11} = 87.3651\ mm^2\\
+s &= \sqrt{87.3561\ mm^2} = 9.35\ mm\\
+s_{\overline X} &= \frac{s}{\sqrt{n}}=\frac{9.35\ mm}{12}=2.7\ mm
+\end{aligned}
+$$
+
+12마리 침팬치의 수축기 혈압데이터이다. $$\overline{X}=137.6mm, \ s=9.35mm, \ s_\overline{X}=2.7mm$$
+
+붓스트랩을 통해 평균의 표준오차를 구하는 방법은 다음과 같다. 1000개의 붓스트랩 표본으로 계산을 해보면 다음과 같다. 
+
+```{r message=F, warning=F}
+boot.mean <- function(data,num){
+  resamples <- lapply(1:num, function(i) sample(data,replace=T))
+  r.mean <- sapply(resamples,mean)
+  std.err <- sqrt(var(r.mean))
+  list(std.err = std.err, resamples=resamples,mean=r.mean)
+}
+
+boot <- data.frame(std.err=boot.mean(ex6_3$SBP,1000)$std.err, mean=boot.mean(ex6_3$SBP,1000)$mean)
+ggplot(boot,(aes(x=mean)))+
+  geom_histogram(fill="#8dd3c7",color="#ffffb3",binwidth=0.8)+
+  xlab("Means of Bootstrap data6_3") + ylab("Frequency") +
+  ggtitle("Histogram of Bootstrap data6_3")+
+  theme_bw()+
+  theme(legend.position = "right")+
+  theme(legend.text = element_text(size=15))+
+  theme(legend.title = element_text(size=15))+
+  theme(axis.text.x  = element_text(size=10))+
+  theme(axis.text.y=element_text(size=10))+
+  theme(axis.title = element_text(size=20))+
+  theme(plot.title = element_text(size=16,hjust = 0.5))+
+  annotate("text", x=130, y=120, label=paste0("Mean = ",round(mean(boot$mean),1)), size=5,hjust=0)+
+  annotate("text", x=130, y=110, label=paste0("Std err = ",round(boot$std.err,1)), size=5,hjust=0)
+```
+
+|statistics|Original Data|Bootstrap Data|
+|:-----|:-----|:-----|
+|Mean|137.6 |137.7 |
+|Standard Error|2.7 |2.6 |
+
+  
+본 데이터에서 구한 평균의 표준오차와 붓스트랩 데이터에서 추출한 평균의 표준오차가 크게 차이가 나지 않음을 알 수 있으며 이는 표본의 수가 많을수록 표본평균의 평균과 표준오차는 모집단인 본 데이터의 평균과 표준오차와 근사한다.
+
+### EXAMPLE 6.4
+
+```{r message=F, warning=F}
+#데이터셋
+ex6_4%>%
+  kbl(caption = "EXAMPLE 6.4 dataset") %>%
+  kable_minimal() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+ex6_4 데이터는 17마리의 말을 조사한 데이터이며 2주간 항생제를 투여한 후 몸무게의 증감을 나타내고 있다.
+
+말들의 몸무게의 변화양의 모평균이 0인지 유의수준 5%에서 검정한다.
+
+```{r message=F, warning=F}
+descriptives6_4 <- function(x){
+  n <- length(x)
+  mean_x <- mean(x)
+  var_x <- 13.4621
+  se <- sqrt(var_x/n)
+  z_value <- (mean_x-0)/se
+  p_value <- 2*(1-pnorm(z_value))
+  out <- data.frame(n=n,mean=round(mean_x,2),Variance=var_x,SE=round(se,2),Z=round(z_value,2),P_value = round(p_value,4))
+  return(out)
+}
+
+descriptives6_4(ex6_4$X)%>%
+  kbl(caption = "Descriptives ex6.4") %>%
+  kable_minimal() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+표본평균 $$\overline X$$은 $$1.29kg$$ 이고 모분산은 모르지만 $$13.4621kg^2$$ 로 가정하자. 그러면 표준 오차는 다음과 같이 계산된다.
+  
+
+$$
+\begin{aligned}
+\sigma_\overline X = \sqrt{\frac{\sigma^2}{n}} = \sqrt{\frac{13.4621\ kg^2}{17}}=\sqrt{0.7919\ kg^2}=0.89\ kg
+\end{aligned}
+$$
+  
+표준화한 Z 값을 구하면 다음과 같다.
+  
+$$
+\begin{aligned}
+Z = \frac{\overline X - \mu}{\sigma_\overline X} = \frac{1.29\ kg - 0}{0.89\ kg}= 1.45
+\end{aligned}
+$$  
+  
+이를 통해 유의확률을 구해보면 다음과 같다.
+
+$$
+\begin{aligned}
+P(\overline X \geq 1.29\ kg)= P(Z\geq 1.45)=0.0735
+\end{aligned}
+$$  
+  
+그리고 Z분포는 0에 대하여 대칭이기 때문에 다음도 성립한다.
+  
+$$
+\begin{aligned}
+P(\overline X \leq -1.29\ kg)= P(Z\leq -1.45)=0.0735
+\end{aligned}
+$$   
+  
+최종적인 유의확률은 다음과 같다.
+  
+$$
+\begin{aligned}
+P(\overline X \geq 1.29\ kg\ or\ \overline X \leq -1.29\ kg) &= P(Z\geq 1.45\ or\ Z\leq -1.45)\\
+&=0.0735+0.0735=0.1470
+\end{aligned}
+$$ 
+구해진 $p\ value$ 는 0.1470 으로 유의확률 0.05 보다 크므로 귀무가설 $H_0$ 를 기각시키지 못한다. 그러므로 말들의 모평균의 몸무게 변화가 있다고 할 충분한 근거가 없다.
+
+```{r message=F, warning=F}
+zz <- descriptives6_4(ex6_4$X)$Z
+curve(dt(x,16),-3,3,xlab="z",ylab="Y",yaxt='n',main="Hypothesis in Example 6.4")
+polygon(c(zz,seq(zz,3,0.001),zz), 
+        c(dt(-3,16),dt(seq(zz,3,0.001),16),dt(-3,16)),col="#007266")
+polygon(c(-3,seq(-3,-zz,0.001),-zz), 
+        c(dt(-3,16),dt(seq(-3,-zz,0.001),16),dt(-3,16)),col="#007266")
+polygon(c(1.96,seq(1.96,3,0.001),1.96),
+        c(dt(-3,16),dt(seq(1.96,3,0.001),16),dt(-3,16)),col="#8dd3c7")
+polygon(c(-3,seq(-3,-1.96,0.001),-1.96), 
+        c(dt(-3,16),dt(seq(-3,-1.96,0.001),16),dt(-3,16)),col="#8dd3c7")
+text(x=-2,y=0.1,labels = "-1.96")
+text(x=2,y=0.1,labels = "1.96")
+text(x=-1.45,y=0.18,labels = "-1.45")
+text(x=1.45,y=0.18,labels = "1.45")
+```
+### EXAMPLE 6.5
+
+
+
+### EXAMPLE 6.6
+
+```{r message=F, warning=F}
+descriptives6.6 <- function(x) {
+  x.n <- 17
+  x.mn <- 1.29
+  x.se <- 0.89
+  LL <- x.mn-1.96*x.se
+  UL <- x.mn+1.96*x.se
+  x.total <- c(LL,UL)
+  return(x.total)
+}
+
+cat("The 95% confidence interval is [",round(descriptives6.6(x)[1],2),",",round(descriptives6.6(x)[2],2),"]")
+```
+
+```{r message=F, warning=F}
+ex6.4 <- as.numeric(ex6_4$X)
+mean0=mean(ex6.4)
+mean0
+x1 <- replicate(100,sample(ex6_4$X,17,replace=TRUE))
+error.bars(x1, alpha=0.05, xlab="sample", ylab="Mean", col=adjustcolor("#8dd3c7",alpha=0.3), pch=16) # library('psych')
+abline(h=mean0)
+```
+
+
+
+### EXAMPLE 6.7
+
+```{r message=F, warning=F}
+#데이터셋
+ex6_7%>%
+  kbl(caption = "EXAMPLE 6.7 dataset") %>%
+  kable_minimal() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+ex6_7$CumFreq <- cumsum(ex6_7$exam6_7.Freq) # 누적도수
+ex6_7$fixi <- ex6_7$exam6_7.Height*ex6_7$exam6_7.Freq # fixi
+ex6_7$fixi2<-ex6_7$exam6_7.Height^2*ex6_7$exam6_7.Freq #fixi^2
+ex6_7%>%
+  kbl(caption = "EXAMPLE 6.7 dataset") %>%
+  kable_minimal() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+ss <- sum(ex6_7$fixi2)-(sum(ex6_7$fixi)^2/sum(ex6_7$exam6_7.Freq))
+s2 <- round(ss/(sum(ex6_7$exam6_7.Freq)-1),4)
+cat("SS = ",ss,", s2 = ",s2)
+```
+
+```{r message=F, warning=F}
+hist(rnorm(500,70.17143,sqrt(13.4621)),prob=T,col="white",border='white',axes=F,xlab = "",ylab="",main="The Frequency polygon for the student height data")
+lines(density(rnorm(500,70.17143,sqrt(13.4621))), lty=2, lwd=2, col="#8F0185")
+par(new=T)
+plot(ex6_7$exam6_7.Height,ex6_7$exam6_7.Freq, ylim = c(0,10), xlim=c(62,78), col="#8dd3c7", type="l", lwd=3, xlab = "Height in inches(Xi)",ylab='Frequency', xaxt='n')
+axis(1,at=c(62,64,66,68,70,72,74,76,78))
+text(x=62, y=9, label="Mint", col="#8dd3c7", cex=0.8) ; text(x=62, y=8.5, label="purple", col="#8F0185", cex=0.8)
+text(x=65, y=9, label=": Observed Frequencies", cex=0.7)
+text(x=65, y=8.5, label=": Expected Frequencies", cex=0.7)
+```
+
+```{r message=F, warning=F}
+cc <- ex6_7$CumFreq # 누적도수 
+scc <- sum(ex6_7$exam6_7.Freq) ; ccc <-cc/scc ; ccc <- round(ccc,2)
+par(mar = c(5, 4, 4, 4)+0.1)
+plot.new()
+plot(x=ex6_7$exam6_7.Height, y=ccc,type='b', xlab="X in inches",ylab="Cumulative Frequency", yaxt="n", frame=F, ylim=c(0,1.1), cex.axis = 1, cex.lab=1, main="The Cummulative Frequency Polygon of the student height data", col="#8dd3c7")
+points(x=ex6_7$exam6_7.Height, ccc, pch=16, col="#007266")
+axis(side=4, at=round(ccc,2), las=2, lwd = 1, cex.axis=0.8)
+par(new = TRUE)
+plot(cc,xlab="", ylab="", main="", xaxt="n", yaxt='n', frame=F, ylim=c(0,70), col=adjustcolor("white",alpha=0), cex.axis = 1, cex.lab=1)
+axis(2, cex.axis=1)
+mtext("Cumulative Relative Frequency", side=4, line=3, cex = 1)
+```
+
+```{r message=F, warning=F}
+ccc1 <- ccc*100
+plot(x=ex6_7$exam6_7.Height,y=ccc1,xlab="X in inches",ylab="Cumulative Frequency in Percent",yaxt='n',frame=F,ylim=c(0,100),cex.axis = 1,cex.lab=1,main="The Cummulative Relative Frequency Distribution of the student height data", col="#8dd3c7")
+points(x=ex6_7$exam6_7.Height, ccc1, pch=16, col="#007266")
+axis(side=2,at=round(ccc1,2),las=2,lwd = 1,cex.axis=0.8)
+lines(x=seq(62,78,length=100),y=seq(0,100,length=100))
+
+qqnorm(ex6_7$exam6_7.Height,col="#007266", pch=16, lwd = 2) ; qqline(ex6_7$exam6_7.Height,col="#8dd3c7", lwd = 2)
+```
+
+```{r message=F, warning=F}
+for(i in 1:nrow(ex6_7)){
+  ex6_7$cc[i]<- (i-0.5)/length(ex6_7$exam6_7.Height)
+}
+
+ex6_7$cc <- round(ex6_7$cc*100,2)
+nuj <- pnorm(ex6_7$exam6_7.Height,70.17143,sqrt(13.4621))
+plot(x=nuj,y=ex6_7$cc,xlab="X in inches",ylab="Cumulative Frequency in Percent",xaxt='n',yaxt='n',frame=F,ylim=c(0,100),cex.axis = 1,cex.lab=1,main="P-P plot", col="#8dd3c7")
+points(x=nuj,ex6_7$cc,pch=16, col="#007266")
+axis(side=1,at=nuj,label=c("63","64","65","66","67","68","69","70","71","72","73","74","75","76"),lwd = 1,cex.axis=0.5)
+axis(side=2,at=ex6_7$cc,las=2,lwd = 1,cex.axis=0.8)
+lines(x=seq(0,1,length=100),y=seq(0,100,length=100), col="#8dd3c7", lwd = 2)
+```
+
+```{r}
+library('moments')
+skew <- skewness(ex6_7$exam6_7.Height) # 왜도
+kur <- kurtosis(ex6_7$exam6_7.Height) # 첨도
+cat("왜도 = ",skew,", 첨도 = ",kur)
+```
+
+```{r}
+library(nortest)
+ad.test(ex6_7$exam6_7.Height)
+cvm.test(ex6_7$exam6_7.Height)
+lillie.test(ex6_7$exam6_7.Height)
+sf.test(ex6_7$exam6_7.Height)
+shapiro.test(ex6_7$exam6_7.Height)
+
+library('tseries')
+jarque.bera.test(ex6_7$exam6_7.Height)
+```
+
+```{r}
+cat(" P value of Anderson-Darling test       : ",ad.test(ex6_7$exam6_7.Height)$p,"\n",
+    "P value of Cramer-von Mises test       : ",cvm.test(ex6_7$exam6_7.Height)$p,"\n",
+    "P value of Lilliefors test             : ",lillie.test(ex6_7$exam6_7.Height)$p,"\n",
+    "P value of Shapiro-Francia test        : ",sf.test(ex6_7$exam6_7.Height)$p,"\n",
+    "P value of Shapiro-Wilk Normality test : ",shapiro.test(ex6_7$exam6_7.Height)$p,"\n",
+    "p value of Jarque-Bera test            : ",jarque.bera.test(ex6_7$exam6_7.Height)$p.value)
+```
+
+</div>
+</details>
