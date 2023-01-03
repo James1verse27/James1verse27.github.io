@@ -1,0 +1,1047 @@
+---
+title: "의학통계방법론 1조 5주차 과제"
+author: "김재혁, 정지현"
+date: '2022-04-07'
+output: 
+  html_document:
+      theme: journal
+      toc: true
+      toc_depth: 2
+      toc_float: true
+      number_sections: true
+---
+
+```{r message=F, warning=F}
+getwd()
+library(readxl)
+library(dplyr)
+library(kableExtra)
+library(randtests)
+library(lmtest)
+library(car)
+library(lawstat)
+library(onewaytests)
+library(pwr2)
+library(pgirmess)
+library(DescTools)
+library(RVAideMemoire)
+```
+
+**엑셀파일불러오기**
+```{r message=F, warning=F}
+#모든 시트를 하나의 리스트로 불러오는 함수
+read_excel_allsheets <- function(file, tibble = FALSE) {
+  sheets <- readxl::excel_sheets(file)
+  x <- lapply(sheets, function(X) readxl::read_excel(file, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- sheets
+  x
+}
+```
+
+## 10장
+
+**10장 연습문제 불러오기**
+
+```{r}
+#data_chap10에 연습문제 10장 모든 문제 저장
+data_chap10 <- read_excel_allsheets("data_chap10.xls")
+
+#연습문제 각각 데이터 생성
+for (x in 1:length(data_chap10)){
+  assign(paste0('ex10_',c(1:3,10:13))[x],data_chap10[x])
+  }
+
+#연습문제 데이터 형식을 리스트에서 데이터프레임으로 변환
+for (x in 1:length(data_chap10)){
+  assign(paste0('ex10_',c(1:3,10:13))[x],data.frame(data_chap10[x]))
+  }
+```
+
+## EXAMPLE 10.1
+
+![](C:/git_blog/study/img/ch10/10-1.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex10_1%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+**데이터: 19마리 돼지를 4개 그룹으로 무작위로 나누어 서로 다른 다이어트 처리 후 중량(kg) 측정**
+
+- 이 문제의 데이터는 돼지의 체중(weight) 증가에 가장 효율적인 사료(feed)를 찾기 위한 실험에서 얻어진 측정값들이다.<br/> 
+- 19마리의 돼지가 각 처리별로 랜덤배정되었다.<br/> 
+- 사료의 종류에 따라 나뉘어진 네 집단 간 무게의 모평균에 차이가 있는지를 검정할 것이다.
+
+$$
+\begin{aligned}
+H_0&:\ \mu_1=\mu_2=\mu_3=\mu_4.\\
+H_A&:\ The\ mean\ weights\ of\ pigs\ on\ the\ four\ diets\ are\ not\ all\ equal.\\
+\end{aligned}
+$$
+
+- 단일 요인 분산 분석 ANOVA는 완전히 랜덤화 된 실험 설계 방법이다.<br/> 
+- "completely randomized design"이라고도 한다.<br/> 
+
+- 일반적으로 데이터에서 그룹의 통계적 비교는 각 그룹의 데이터 수가 동일한 경우(균형적인 상황)에 가장 적합하다.<br/> 
+- 균형적일 때 검정의 검정력이 높아진다.<br/> 
+
+- 하지만 10.1의 데이터의 경우 4개의 그룹 각각에 5마리의 실험동물이 있지만,<br/>  Feed 3에 속한 한 마리의 동물의 몸무게는 어떤 적절한 이유로 분석에 사용되지 않았다. <br/> 아니면 병이 났거나 임신한 것으로 밝혀졌을 수도 있다. 
+
+- 분산 분석에서는 실험 요인을 제외한 모든 면에서 가능한 유사해야 한다.<br/> 
+(즉, 동물은 동일한 품종, 성별, 연령이어야 하고, 같은 온도로 유지되어야 한다.)
+
+```{r message=F, warning=F}
+class(ex10_1$exam10_1.weight)
+```
+- weight의 class가 character이므로 사용시 numeric으로 변경하여 사용한다.<br/> 
+- 분석을 위한 통계량
+
+```{r message=F, warning=F}
+ex10_1 %>% 
+  group_by(exam10_1.diet) %>% 
+  summarize(mean=mean(as.numeric(exam10_1.weight),na.rm=T),sum=sum(as.numeric(exam10_1.weight),na.rm=T))%>%
+  kbl(caption = "Dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+## EXAMPLE 10.1a
+
+![](C:/git_blog/study/img/ch10/10-1a_1.png)
+![](C:/git_blog/study/img/ch10/10-1a_2.png)
+
+- 분석을 위해 결측치 제거해준 뒤 자유도와 제곱합들을 구하도록 한다.
+
+```{r message=F, warning=F}
+ex10_1[15,3]=NA
+ex10_1<-na.omit(ex10_1)
+```
+
+```{r message=F, warning=F}
+ex10_1a <- function(x){
+  sum <- ex10_1 %>% summarize(sum=sum(as.numeric(exam10_1.weight),na.rm=T))
+  mean <- ex10_1 %>% summarize(mean=mean(as.numeric(exam10_1.weight),na.rm=T))
+  total_df<-length(x)-1
+  groups_df<-length(unique(ex10_1$exam10_1.diet))-1
+  error_df<-length(x)-length(unique(ex10_1$exam10_1.diet))
+  y <- rep(0,4)
+  for (i in 1:4){
+    y[i]=length(as.numeric(ex10_1[ex10_1$exam10_1.diet==i,3]))*((mean(as.numeric(ex10_1[ex10_1$exam10_1.diet==i,3]))-mean(x))^2)
+  }
+  SSB=sum(y)
+  SST=sum((x-mean(x))^2)
+  SSE=SST-SSB
+  table <- data.frame(total_DF=total_df,groups_DF=groups_df,error_DF=error_df,Total_SS=SST,Group_SS=SSB,Error_SS=SSE)
+  return(table)
+}
+```
+
+```{r message=F, warning=F}
+ex10_1a(as.numeric(ex10_1$exam10_1.weight))%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+## EXAMPLE 10.1b
+
+![](C:/git_blog/study/img/ch10/10-1b.png)
+
+- “Machine Formulas”라는 새로운 방식을 사용한 결과는 다음과 같다.
+
+$$
+\begin{aligned}
+Total\ SS&=\sum_{i=1}^k\ \sum_{j=1}^{n_i}X_{ij}^2-C\\\\
+group\ SS&=\sum_{i=1}^k \frac{(\sum_{j=1}^{n_i}X_{ij})^2}{n_i}-C\\\\
+error\ SS&=\sum_{i=1}^k\ \sum_{j=1}^{n_i}X_{ij}^2-\sum_{i=1}^k \frac{(\sum_{j=1}^{n_i}X_{ij})^2}{n_i}\\\\
+where\ C&=\frac{(\sum_{i} \sum_{j} \ X_{ij})^2}{N}
+\end{aligned}
+$$  
+
+```{r message=F, warning=F}
+ex10_1b <- function(){
+  sum <- ex10_1 %>% summarize(sum=sum(as.numeric(exam10_1.weight),na.rm=T))
+  sum_s <- ex10_1 %>% summarize(sum_s=sum((as.numeric(exam10_1.weight))^2,na.rm=T))
+  c <- sum^2/length(as.numeric(ex10_1$exam10_1.weight))
+  y <- rep(0,4)
+  for (i in 1:4){
+    y[i]=(sum(as.numeric(ex10_1[ex10_1$exam10_1.diet==i,3]))^2)/(length(as.numeric(ex10_1[ex10_1$exam10_1.diet==i,3])))
+  }
+  ss <- sum(y)
+  tss <- round(sum_s-c,4)
+  gss <- (ss-c)
+  ess <- (round(sum_s-c,4)-(ss-c))
+  table <- data.frame(tss,gss,ess)
+  names(table) <- c("Total_SS","Group_SS","Error_SS")
+  return(table)
+}
+```
+
+```{r message=F, warning=F}
+ex10_1b()%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- “Machine Formulas” 방법을 사용한 결과와 10.1a에서 구한 결과가 같은 것을 확인할 수 있다.
+- 예제 10.1b와 같이 간단한 계산기를 사용할 때 이와 같은 기계식은 매우 편리할 수 있지만, 통계적 계산을 컴퓨터에 의해 수행하는 경우에는 덜 중요하다.
+
+## EXAMPLE 10.1c
+
+![](C:/git_blog/study/img/ch10/10-1c.png)
+
+- 10.1a와 10.1b에서 구한 값들을 토대로 ANOVA를 진행하도록 한다.<br/>
+- 일원분산분석을 진행하기 전에 정규성과 등분산성, 독립성을 만족하는지 부터 확인하도록 한다.
+
+> Shapiro-Wilk test로 네 그룹의 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(subset(as.numeric(ex10_1$exam10_1.weight),ex10_1$exam10_1.diet==1));shapiro.test(subset(as.numeric(ex10_1$exam10_1.weight),ex10_1$exam10_1.diet==2));shapiro.test(subset(as.numeric(ex10_1$exam10_1.weight),ex10_1$exam10_1.diet==3));shapiro.test(subset(as.numeric(ex10_1$exam10_1.weight),ex10_1$exam10_1.diet==4))  
+```
+
+- 네 그룹 모두 정규성 검정 결과 p-value가 0.05보다 매우 크므로 네 그룹 모두 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 따라서 정규성을 만족한다는 사실을 바탕으로 그룹별 등분산성 검정을 진행한다.
+
+> Bartlett's Test를 통해 네 그룹의 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+bartlett.test(ex10_1$exam10_1.weight~ex10_1$exam10_1.diet)
+```
+
+- Bartlett's Test의 유의확률은 p-value = 0.9243으로 유의수준 0.05보다 매우 크므로 등분산성이 아니라는 대립가설을 채택할 근거가 없다.<br/><br/>
+- Runs Test와 Durbin-Watson test을 통하여 잔차의 자기상관성을 확인하여 보겠다.
+
+> Runs Test
+
+```{r message=F, warning=F}
+anova_ex10_1 <- aov(as.numeric(ex10_1$exam10_1.weight)~as.factor(ex10_1$exam10_1.diet))
+library(randtests)
+runs.test(anova_ex10_1$residuals, alternative = "two.sided", plot = TRUE)
+```
+
+-잔차 그림을 확인하여 보면 뚜렷한 패턴이 보이지 않았다.<br/>
+- Runs Test의 경우 양의 계열상관을 검정하기 위해서는 하한임계치를 사용하고,<br/>음의 계열상관을 검정하기 위해서는 상한 임계치를 사용하며, 계열상관의 존재 여부를 위해서는 양쪽 임계치 모두를 사용한다.<br/>
+- 양측 검정을 시행하였으며, p-value = 0.8032이므로 귀무가설 "연속적인 관측값이 임의적이다."를 기각하지 못한다.
+
+> Durbin-Watson test
+
+```{r message=F, warning=F}
+library(lmtest)
+dwtest(anova_ex10_1, alternative = "greater")
+```
+
+- Durbin-Watson test의 경우 DW = 2.2368으로 4보다 2와 가깝게 나왔으며, 2보다 크므로 alternative = "greater" 주었고 p-value = 0.4203으로 귀무가설 "자기상관이 0 이다."를 기각하지 못한다.<br/>
+- 자기상관성이 없다고 독립인 건 아니지만 독립성 가정이 만족된다고 가정할 수 있을 것 같다.<br/><br/>
+- Shapiro-Wilk test와 Bartlett's Test으로 정규성과 등분산성을 확인하였으므로 ANOVA 검정을 진행한다.
+
+```{r message=F, warning=F}
+class(ex10_1$exam10_1.diet)
+```
+
+- diet의 class가 numeric이므로 factor로 변경해서 ANOVA 검정을 실시한다.
+
+```{r message=F, warning=F}
+summary(aov(as.numeric(ex10_1$exam10_1.weight)~as.factor(ex10_1$exam10_1.diet)))
+```
+
+- p-value가 0.000283으로 유의수준 0.05보다 매우 작기 때문에 귀무가설을 기각할 수 있고 따라서 유의수준 5%하에 식단에 따른 돼지의 몸무게 모평균 차이가 있다고 말할 수 있다.
+
+## EXAMPLE 10.2
+
+![](C:/git_blog/study/img/ch10/10-2.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex10_2
+```
+
+- 실험실에서 건초의 인 함량을 측정하는 기술을 사용하는데<br/>
+"인 측정값이 분석을 수행하는 기술자마다 다릅니까?"라는 질문이 발생한다.<br/>
+- 이 질문에 답하기 위해 무작위로 선택된 네 명의 기술자 각각에게 동일한 건초 배치에서 5개의 샘플이 주어졌고, 20개의 인 측정 결과(건초 mg/g)가 표시된다.<br/><br/>
+- Example 10.2는 랜덤 효과 모형에 대한 분산 분석을 보여준다.<br/>
+- Example 10.2의 심각한 결과는 기본 가정으로부터 이탈하는 경우이다.<br/>
+- 다행히도 많은 상황에서 분산 분석은 강력한 테스트이며, 이는 제 1종오류, 제 2종오류 확률이 항상 test 가정 위반에 의해 심각하게 변경되는 것은 아니라는 것을 의미한다.<br/>
+- two-sample t-test과 마찬가지로 비정규성의 부작용은 정규성에서 벗어날수록 더 크지만 표본 크기가 같을 경우 효과는 상대적으로 작다.<br/><br/>
+- 본 검정의 가설은 다음과 같다.
+
+$$  
+\begin{aligned}
+H_0&:\ Determinations\ of\ phosphorus\ content\ do\ not\ differ\ among\ technicians.\\
+H_A&:\ Determinations\ of\ phosphorus\ content\ do\ differ\ among\ technicians.\\
+\end{aligned}
+$$
+
+- F 통계량을 구하는 공식은 다음과 같다.
+  
+$$
+\begin{aligned}
+\sum_i\ \sum_j\ X_{ij}&=710,\ \ \ \sum_i\ \sum_j\ X_{ij}^2=25234,\ \ \ \ N=20,\ \ \ C=\frac{(710)^2}{20}=25205.00\\
+total\ SS&=25234-25202.00=29.00\\group\ SS&=\frac{(173)^2}{5}+\frac{(182)^2}{5}+\frac{(179)^2}{5}+\frac{(176)^2}{5}-25205.00=25214.00-25205.00=9.00\\
+error\ SS&=29.00-9.00=20.00\\
+F&=\frac{3.00}{1.25}=2.40,\ \ \ \ F_{0.05(1),3,16}=3.24\ \ \ \ Do\ not\ reject\ H_0.\ \ \ \ 0.10<P<0.25[P=0.11]
+\end{aligned}
+$$
+
+- 이를 분산분석을 통해 알아보기 위해 정규성과 등분산성을 만족하는지 확인하도록 한다.
+
+> Shapiro-Wilk test로 네 그룹의 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(subset(ex10_2$exam10_2.phosphorus,ex10_2$exam10_2.technician==1));shapiro.test(subset(ex10_2$exam10_2.phosphorus,ex10_2$exam10_2.technician==2));shapiro.test(subset(ex10_2$exam10_2.phosphorus,ex10_2$exam10_2.technician==3));shapiro.test(subset(ex10_2$exam10_2.phosphorus,ex10_2$exam10_2.technician==4))
+```
+
+- Shapiro-Wilk test로 1,2 그룹은 모두 정규성 검정한 결과 p-value가 0.05보다 작으므로 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 있고, 3,4 그룹은 모두 정규성 검정한 결과 p-value가 0.05보다 매우 크므로 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 등분산성 검정으로 Bartlett's Test가 아닌 normal상태가 아닌것에 대해 덜 민감한 Levene's Test를 진행하여 보자.<br/>
+
+
+```{r message=F, warning=F}
+class(ex10_2$exam10_2.technician)
+```
+
+- technician의 class가 numeric이므로 factor로 변경해서 등분산성 검정을 실시한다.<br/>
+- R에서 car, lawstat 패키지에서 Levene's Test를 제공하여 준다.
+
+> Levene's Test를 통해 네 그룹의 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+library(car)
+leveneTest(ex10_2$exam10_2.phosphorus~as.factor(ex10_2$exam10_2.technician),center=mean)
+```
+
+```{r message=F, warning=F}
+library(lawstat)
+levene.test(ex10_2$exam10_2.phosphorus,as.factor(ex10_2$exam10_2.technician), location="mean")
+```
+
+- p-value = 0.5755으로 유의수준 0.05보다 매우 크므로 등분산성이 아니라는 대립가설을 채택할 근거가 없다.<br/><br/>
+- Runs Test와 Durbin-Watson test을 통하여 잔차의 자기상관성을 확인하여 보겠다.
+
+> Runs Test
+
+```{r message=F, warning=F}
+anova_ex10_2 <- aov(ex10_2$exam10_2.phosphorus~as.factor(ex10_2$exam10_2.technician))
+runs.test(anova_ex10_2$residuals, alternative = "two.sided", plot = TRUE)
+```
+
+- p-value = 0.06608로써 만족스럽게 귀무가설을 기각하지 못하였다.
+
+> Durbin-Watson test
+
+```{r message=F, warning=F}
+dwtest(anova_ex10_2, alternative = "greater")
+```
+
+- Durbin-Watson test의 경우 DW = 3.228로써 4에 가까운 값이 나왔으며, 2보다 크므로 alternative = "greater" 주었고 p-value = 0.994로 귀무가설 "자기상관이 0 이다."를 기각하지 못한다.<br/>
+- 자기상관성이 없다고 독립인 건 아니지만 독립성 가정이 만족된다고 가정할 수 있을 것 같다.<br/><br/>
+- 표본이 정규분포를 따르지 않지만 유사한 분포를 가지고 있고 분산도 유사하다면 Kruskal-Wallis Test가 적절하다. 
+
+```{r message=F, warning=F}
+kruskal.test(ex10_2$exam10_2.phosphorus~as.factor(ex10_2$exam10_2.technician))
+```
+
+- Kruskal-Wallis Test 결과 p-value가 0.1113으로 유의수준 0.05 보다 크기 때문에 귀무가설을 기각할 수 없고 따라서 유의수준 5%하에 인 함량의 모평균이 기술자마다 다르다고 말할만한 충분한 근거가 없다고 말할 수 있다.
+
+## EXAMPLE 10.3
+
+![](C:/git_blog/study/img/ch10/10-3_1.png)
+![](C:/git_blog/study/img/ch10/10-3_2.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex10_3
+```
+
+- 포타슘 함량(식물 조직 100mg당 포타슘의 mg)은 세 가지 종류의 밀 각각 6개의 모종에서 측정되었다.<br/>
+- 본 검정의 가설은 다음과 같다.
+  
+$$
+\begin{aligned}
+H_0&:\ \mu_1=\mu_2=\mu_3\\
+H_A&:\ The\ mean\ potassium\ content\ is\ not\ the\ same\ for\ seedlings\ of\ all\ three\ wheat\ varieties.\\
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+F'&=\frac{\sum_{i=1}^k\ c_i(\bar{X}_i-\bar{X}_w)^2}{(k-1)[1+\frac{2A(k-2)}{K^2-1}]}\\\\
+c_i&=\frac{n_i}{s_i^2},\ \ \ \ \ C=\sum_{i=1}^kc_i,\ \ \ \ \ \bar{X_w}=\frac{\sum_{i=1}^kc_i\bar{X_i}}{C},\ \ \ A=\sum_{i=1}^k\frac{(1-\frac{c_i}{C})^2}{v_i},\ where\ v_i=n_i-1 \\
+For & \ critical \ value \ of \ F: \ v_1=k-1, \ v_2=\frac{k^2-1}{3A}
+\end{aligned}
+$$
+
+> Shapiro-Wilk test로 네 그룹의 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(subset(ex10_3$exam10_3.potassium,ex10_3$exam10_3.variety==1));shapiro.test(subset(ex10_3$exam10_3.potassium,ex10_3$exam10_3.variety==2));shapiro.test(subset(ex10_3$exam10_3.potassium,ex10_3$exam10_3.variety==3))
+```
+
+- Shapiro-Wilk test 결과 p-value가 0.05보다 매우 크므로 세 그룹 모두 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 따라서 정규성을 만족한다는 사실을 바탕으로 그룹별 등분산성 검정을 진행한다.
+
+```{r message=F, warning=F}
+class(ex10_3$exam10_3.variety)
+```
+
+- variety의 class가 numeric이므로 factor로 변경해서 등분산성 검정을 실시한다.
+
+> Bartlett's Test를 통해 네 그룹의 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+bartlett.test(ex10_3$exam10_3.potassium~as.factor(ex10_3$exam10_3.variety))
+```
+
+- Bartlett's Test의 유의확률은 p-value = 0.4166으로 유의수준 0.05보다 매우 크므로 등분산성이 아니라는 대립가설을 채택할 근거가 없다.<br/><br/>
+- Runs Test와 Durbin-Watson test을 통하여 잔차의 자기상관성을 확인하여 보겠다.
+
+> Runs Test
+
+```{r message=F, warning=F}
+anova_ex10_3 <- aov(ex10_3$exam10_3.potassium~as.factor(ex10_3$exam10_3.variety))
+runs.test(anova_ex10_3$residuals, alternative = "two.sided", plot = TRUE)
+```
+
+- Runs Test 결과 p-value = 0.6616이므로 귀무가설 "연속적인 관측값이 임의적이다."를 기각하지 못한다.
+
+> Durbin-Watson test
+
+```{r message=F, warning=F}
+dwtest(anova_ex10_3, alternative = "less")
+```
+
+- Durbin-Watson test의 경우 DW = 1.7019로써 0보다 2와 가깝게 나왔으며, 2보다 작으므로 alternative = "less" 주었고 p-value = 0.8811로 귀무가설 "자기상관이 0 이다."를 기각하지 못한다.<br/>
+- 자기상관성이 없다고 독립인 건 아니지만 독립성 가정이 만족된다고 가정할 수 있을 것 같다.<br/><br/>
+- Shapiro-Wilk test와 Bartlett's Test으로 정규성과 등분산성을 확인하였으므로 ANOVA 검정을 진행한다.
+
+```{r message=F, warning=F}
+summary(aov(ex10_3$exam10_3.potassium~as.factor(ex10_3$exam10_3.variety)))
+```
+
+- p-value가 0.0000452으로 유의수준 0.05보다 매우 작기 때문에 귀무가설을 기각할 수 있고 따라서 유의수준 5%하에 그룹에 따라 밀의 칼륨 함유량의 모평균이 다르다고 말할 수 있다.<br/><br/>
+-이 문제의 데이터는 정규성 가정과 등분산 가정을 만족하여 일원분산분석을 시행할 수 있지만, 문제에 나와 있는 대로 Welch’s test를 수행하도록 하겠다.<br/>
+- Welch’s test란 표본의 정규성은 만족되지만 그룹별 분산이 동일하지 않은 경우에 매우 강력한 검정이다. 
+
+> Welch’s test
+
+```{r message=F, warning=F}
+library(onewaytests)
+welch.test(ex10_3$exam10_3.potassium~as.factor(ex10_3$exam10_3.variety),data=ex10_3)
+```
+
+- onewqy.test()에서 var.equal=F를 주면 같은 결과를 출력하여 준다.
+
+```{r message=F, warning=F}
+oneway.test(ex10_3$exam10_3.potassium~as.factor(ex10_3$exam10_3.variety),var.equal=F)
+```
+
+- Welch’s test 결과도 동일하게 p-value가 유의수준 0.05보다 매우 작기 때문에 귀무가설을 기각할 수 있고 따라서 유의수준 5%하에 그룹에 따라 밀의 칼륨 함유량의 모평균이 다르다고 말할 수 있다.
+
+## EXAMPLE 10.4
+
+![](C:/git_blog/study/img/ch10/10-4_1.png)
+![](C:/git_blog/study/img/ch10/10-4_2.png)
+
+- 식물 뿌리 신장의 분산에 대한 제안된 분석은 4가지 화학 처리 각각에서 10개의 뿌리를 포함하는 것이다.<br/>
+- 실험을 수행하고 실험에서 데이터를 수집하기 전에 제안된 시험의 검정력을 추정하는 것이 적절하고 바람직하다.<br/><br/>
+- 검정력을 계산할 때 대립가설 하에서 계산을 하게된다.<br/>
+- 그 때 나오는 검정통계량은 $$\phi$$ 를 따르게 되며 이를 구하는 공식및 결과는 다음과 같다.
+
+$$
+\begin{aligned}
+\phi&=\sqrt{\frac{n\sum{(\mu_i-\mu)^2}}{ks^2}} \\
+\mu&=\frac{\sum_{i=1}^k{\mu_i}}{k}
+\end{aligned}
+$$
+
+- 문제에서 주어진 조건 하에서의 검정력을 구해 보자.
+
+$$
+\begin{aligned}
+k&=4,\ \ \ \ \ \ \ \ \ n=10,\ \ \ \ \ \ \  \nu_1=k-1=3,\ \ \ \ \ \ \  \nu_2=k(n-1)=4(9)=36,\ \ \ \ \ \ \ \mu=\frac{8.0+8.0+9.0+12.0}{4}=9.25\\\\
+\phi&=\sqrt{\frac{n\sum{(\mu_i-\mu)^2}}{ks^2}}=1.88
+\end{aligned}
+$$
+
+```{r message=F, warning=F}
+groups<-c(8,8,9,12)
+power.anova.test(groups=4, n=10, between.var =var(groups), within.var = 7.5888, sig.level = 0.05, power=NULL)
+```
+
+- power=0.862로 높게 나왔다.<br/>
+- 모집단 평균 간의 변동성이 지정된 경우 분산 분석의 검정력을 구할 수 있는 공식에 따라 $$\phi=1.88$$ 나온다.<br/>
+- 이를 이용해 power and sample size in analysis of variance: ν1=3 그래프에서 $$\phi=1.88$$ 일때를 보면 그때의 검정력은 대략 0.88이고 이는 대립가설 하에서 제2종 오류를 범할 확률이 12%임을 의미한다.
+
+![](C:/git_blog/study/img/ch10/table1.jpg)
+
+## EXAMPLE 10.5
+
+![](C:/git_blog/study/img/ch10/10-5.png)
+
+- 최소 검출차가 주어졌을 때 분산의 검정력을 구하는 문제로써 구하는 공식은 다음과 같다.
+
+$$
+\begin{aligned}
+\phi&=\sqrt{\frac{n\delta^2}{2ks^2}}
+\end{aligned}
+$$
+
+> 공식을 함수로 작성하였다.
+
+```{r message=F, warning=F}
+sample_size <- function(d,k,s,n){
+  phi=sqrt((n*d^2)/(2*k*s))
+  sample=data.frame(phi)
+  return(sample)
+}
+```
+
+- 문제에서 주어진 조건하에 공식에 대입하여 보자.
+
+$$
+\begin{aligned}
+k&=4,\ \ \ \ \ \ \ \ \ n=10,\ \ \ \ \ \ \  \nu_1=3,\ \ \ \ \ \ \  \nu_2=36,\ \ \ \ \ \delta=4.0mm,\ \ \ \ \ \ s^2=7.5888mm^2\\\\
+\phi&=\sqrt{\frac{n\delta^2}{2ks^2}}=1.62
+\end{aligned}
+$$
+
+- 작성한 sample_size 공식에 대입하여 $$\phi$$를 구하였다.
+
+```{r message=F, warning=F}
+sample_size(d=4, k=4, s=7.5888, n=10)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 다음은 pwr.1way 함수를 이용하여 power을 구하였다.
+
+```{r message=F, warning=F}
+library(pwr2)
+n <- 10
+k <- 4
+s2 <- 7.5888
+delta<-4.0
+phi<-round(sqrt((n*delta^2)/(2*k*s2)),2)
+pwr.1way(k=4, n=10,f=NULL, alpha = 0.05, delta=4.0, sigma=sqrt(7.5888))
+```
+
+- power=0.735로 나왔다.<br/>
+- 최소 검출 차가 지정된 경우 분산 분석의 검정력을 구할 수 있는 공식에 따라 $$\phi=1.62$$가 나온다<br/>
+- 이를 이용해 power and sample size in analysis of variance: ν1=3 그래프에서 $$\phi=1.62$$일때를 보면 그때의 검정력은 대략 0.72이고 이는 대립가설 하에서 제2종 오류를 범할 확률이 28%임을 의미한다.<br/>
+- 최소 탐지 가능한 차이가 지정된 경우 anova test의 power를 테스트하는 Balanced one-way analysis of variance power calculation 방법을 이용해 검정력을 구한 결과 또한 power=0.73으로 직접 구한 수치와 매우 유사한것을 볼 수 있다.
+
+![](C:/git_blog/study/img/ch10/table2.jpg)
+
+• 그룹 평균 간의 차이가 클수록 검정력은 커진다.
+
+• 검정력은 표본 크기가 클수록 크다.
+
+• 검정력은 더 적은 수의 그룹이 더 크다.
+
+• 군내 변동성이 작을 경우 검정력이 더 크다.
+
+• 검정력은 유의수준이 클수록 크다.
+
+## EXAMPLE 10.6
+
+![](C:/git_blog/study/img/ch10/10-6_1.png)
+![](C:/git_blog/study/img/ch10/10-6_2.png)
+
+- One-Way Analysis of Variance 에서 필요한 샘플사이즈를 구해보도록 한다. <br/>
+- 80%의 확률로 3.5kg 만큼의 차이를 탐지하기 위해 필요한 샘플사이즈를 계산하여 보겠다.
+
+$$
+\begin{aligned}
+k&=4,\ \ \ \ \ \ \ \ \ \nu_1=3,\ \ \ \ \ \ \ \ \delta=3.5kg,\ \ \ \ \ \ s^2=9.383kg^2\\\\
+\phi&=\sqrt{\frac{n\delta^2}{2ks^2}}
+\end{aligned}
+$$
+
+> 각 그룹에 대해 15만큼의 샘플이 필요하다고 가정하자
+
+```{r message=F, warning=F}
+sample_size(d=3.5, k=4, s=9.383, n=15)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 각 그룹에 대해 15만큼의 샘플이 필요하다고 가정하면 $$\phi=1.5645$$이고 표에서 찾아보면 이는 73%의 검정력에 해당한다.
+
+> 각 그룹에 대해 20만큼의 샘플이 필요하다고 가정하자
+
+```{r message=F, warning=F}
+sample_size(d=3.5, k=4, s=9.383, n=20)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 각 그룹에 대해 20만큼의 샘플이 필요하다고 가정하면 $$\phi=1.80622$$이고 표에서 찾아보면 이는 84%의 검정력에 해당한다.
+
+> 각 그룹에 대해 18만큼의 샘플이 필요하다고 가정하자
+
+```{r message=F, warning=F}
+sample_size(d=3.5, k=4, s=9.383, n=18)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 각 그룹에 대해 18만큼의 샘플이 필요하다고 가정하면 $$\phi=1.713912$$이고 표에서 찾아보면 이는 80%의 검정력에 거의 일치한다.<br/>
+- 따라서 80% 이상의 검정력을 갖기 위해 필요한 최소한의 그룹별 샘플 사이즈는 18이라고 볼 수 있다.
+
+## EXAMPLE 10.7
+
+![](C:/git_blog/study/img/ch10/10-7.png)
+
+- One-Way Analysis of Variance 에서 최소검출차를 구해보도록 한다.<br/>
+- ex10_1의 데이터를 이용하여 최소 검출차를 추정하기 위해 다음과 같은 공식을 이용하자.
+
+$$
+\begin{aligned}
+\delta&=\sqrt{\frac{2ks^2\phi^2}{n}}
+\end{aligned}
+$$
+
+- 주어진 대로 공식을 함수로 작성하였다.
+
+```{r message=F, warning=F}
+Minimum_Detectable_Difference <- function(k,s,p,n){ 
+  delta=sqrt((2*k*s*p^2)/n)
+  mdd = data.frame(delta)
+  return(mdd)
+}
+```
+
+> 검정력: 90%, 그룹수: 4, 그룹별 샘플 수: 10, 유의수준: 0.05일 때 탐지할 수 있는 최소 검출차
+
+```{r message=F, warning=F}
+Minimum_Detectable_Difference(k=4, s=9.3833, p=2.0, n=10)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 검정력이 90%이고 그룹수는 4, 그룹별 샘플 수는 10, 유의수준은 0.05일 때 탐지할 수 있는 최소 검출차는 $$\delta=5.5$$로 계산되었다.<br/>
+- 따라서 효과크기(최소검출차)=5.5일 때 집단간 차이가 유의하게 나타난다고 할 수 있다.
+
+## EXAMPLE 10.8
+
+![](C:/git_blog/study/img/ch10/10-8.png)
+
+- ex10_1과 같은 실험을 생각하여 볼 때 다음과 같은 가정을 하여보자.<br/>
+- 6개의 사료를 테스트할 수 있지만, 총 50마리의 돼지를 검사할 수 있는 공간과 장비만 가지고 있다고 하자.<br/> 유의수준 0.05, 80이상의 검정력으로 테스트하고 모집단 평균 간의 4.5kg의 작은 차이를 발견하고자 한다.<br/><br/>
+- One-Way Analysis of Variance에서 검정력과 유의수준이 정해져 있을 때 필요한 최대 그룹수를 구하도록 해본다.
+
+$$
+\begin{aligned}
+\alpha&=0.05,\ \ \ \beta\leq0.20(power\ of\ at\ least\ 0.8),\ \ \ \ \delta=4.5\\
+If\ k&=6,\ then\ n=\frac{50}{6}=8.3, \ \ \ \nu_1=5, \nu_2=6(8-1)=42
+\end{aligned}
+$$
+
+> 그룹 수 6으로 가정하자
+
+```{r message=F, warning=F}
+sample_size(d=4.5, k=6, s=9.383, n=8)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 그룹 수 6으로 가정하면 $$\phi=1.199488$$이다.
+
+> 그룹 수 5로 가정하자
+
+```{r message=F, warning=F}
+sample_size(d=4.5, k=5, s=9.383, n=10)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 그룹 수 5로 가정하면 $$\phi=1.469067$$이다.
+
+> 그룹 수 4로 가정하자
+
+```{r message=F, warning=F}
+sample_size(d=4.5, k=4, s=9.383, n=12)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 그룹 수 4로 가정하면 $$\phi=1.799233$$이다.<br/>
+- 검정력이 80%일 때 $$\phi=1.8$$이므로 주어진 조건을 만족하기 위해서는 그룹 수를 4이하로 해야한다.<br/>
+- k=4라고 가정하고 power를 산출하여 보면 0.80이므로 그룹 수는 4개라고 할 수 있다.
+
+## EXAMPLE 10.9
+
+![](C:/git_blog/study/img/ch10/10-9_1.png)
+![](C:/git_blog/study/img/ch10/10-9_2.png)
+
+- 랜덤효과가 있는 분선분석의 검정력을 산출하는 공식은 다음과 같다.
+  
+$$
+\begin{aligned}
+Random-Effects\ of\ ANOVA&: \ F_{(1-\beta),\nu_1,\nu_2}=\frac{\nu_2s^2F_{\alpha(1),\nu_1,\nu_2}}{(\nu_2-2)(groups\ MS)}
+\end{aligned}
+$$   
+
+- Example 10.2 데이터의 결과를 사용하여 ANOVA에서의 Random-Effect모델에서의 power를 구하여 보자.
+
+$$
+\begin{aligned}
+Groups\ MS&=3.00,\ \ \ \ \ s^2=1.25,\ \ \ \ \ \nu_1=3,\ \ \ \ \nu_2=16\\\\
+F_{\alpha(1),\nu_1,\nu_2}&=F_{0.05(1),3,16}=3.24\\\\
+Random-Effects\ of\ ANOVA&: F_{(1-\beta),\nu_1,\nu_2}=\frac{\nu_2s^2F_{\alpha(1),\nu_1,\nu_2}}{(\nu_2-2)(groups\ MS)}=1.54
+\end{aligned}
+$$   
+
+```{r message=F, warning=F}
+random_effect<-function(v1, v2, s, alpha, ms){
+  F=((v2*s*qf(alpha, v1, v2, lower.tail = F))/((v2-2)*ms))
+  f=data.frame(F)
+  return(f)
+}
+```
+
+- 계산 결과 F값은 1.54로 나왔으며, 이는 F분포표에서 자유도는 3과 16, 1-β 값이 0.1과 0.25 사이일 때 값임을 확인할 수 있다.<br/>
+- 따라서 정확한 수치를 알수는 없지만 이들 사이의 값이 해당 분석의 검정력임을 알 수 있다.
+
+```{r message=F, warning=F}
+random_effect(3, 16, 1.25, 0.05, 3.0)%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+F_value <- random_effect(3, 16, 1.25, 0.05, 3.0)[1,]
+pf(F_value, 3, 16, lower.tail = F)
+```
+
+- 이 랜덤효과 모델의 검정력은 약 0.24임을 알 수 있다.
+
+## EXAMPLE 10.10
+
+![](C:/git_blog/study/img/ch10/10-10.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex10_10%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 한 곤충학자는 낙엽 활엽수림에서 파리 종의 수직 분포를 연구하고 있으며,<br/> 세 가지 다른 식물 층인 허브, 관목, 나무에서 각각 다섯 개의 파리 모음을 얻는다.<br/>
+- 세 초목에 따른 파리들의 모이는 수의 분산에 차이가 있는지 검정해보도록 한다.
+
+> Shapiro-Wilk test로 세 그룹의 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(subset(ex10_10$exam10_10.abundance,ex10_10$exam10_10.layer==1));shapiro.test(subset(ex10_10$exam10_10.abundance,ex10_10$exam10_10.layer==2));shapiro.test(subset(ex10_10$exam10_10.abundance,ex10_10$exam10_10.layer==3))
+```
+
+- Shapiro-Wilk test로 1,2,3 그룹 모두 정규성 검정한 결과 p-value가 0.05보다 매우 크므로 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 등분산성 검정으로 Bartlett's Test를 진행하여 보자.<br/>
+
+
+```{r message=F, warning=F}
+class(ex10_10$exam10_10.layer)
+```
+
+- layer의 class가 numeric이므로 factor로 변경해서 등분산성 검정을 실시한다.<br/>
+
+> Bartlett's Test를 통해 네 그룹의 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+bartlett.test(ex10_10$exam10_10.abundance~as.factor(ex10_10$exam10_10.layer))
+```
+
+- Bartlett's Test의 유의확률은 p-value = 0.4262으로 유의수준 0.05보다 매우 크므로 등분산성이 아니라는 대립가설을 채택할 근거가 없다.<br/><br/>
+- Runs Test와 Durbin-Watson test을 통하여 잔차의 자기상관성을 확인하여 보겠다.
+
+> Runs Test
+
+```{r message=F, warning=F}
+anova_ex10_10 <- aov(ex10_10$exam10_10.abundance~as.factor(ex10_10$exam10_10.layer))
+runs.test(anova_ex10_10$residuals, alternative = "two.sided", plot = TRUE)
+```
+
+- p-value = 0.2658로써 귀무가설을 기각하지 못하였다.
+
+> Durbin-Watson test
+
+```{r message=F, warning=F}
+dwtest(anova_ex10_10, alternative = "less")
+```
+
+- Durbin-Watson test의 경우 DW = 1.2926로써 0보다 2와 가깝게 나왔으며, 2보다 작으므로 alternative = "less" 주었고 p-value = 0.9829로 귀무가설 "자기상관이 0 이다."를 기각하지 못한다.<br/>
+- 자기상관성이 없다고 독립인 건 아니지만 독립성 가정이 만족된다고 가정할 수 있을 것 같다.<br/><br/>
+- 정규성, 등분산성, 독립성이 만족되므로 ANOVA 검정을 실시한다.
+
+```{r message=F, warning=F}
+summary(anova_ex10_10)
+```
+
+-  p-value는 0.0009로 유의수준보다 매우 작기 때문에 귀무가설을 기각할 수 있고 따라서 식물에 따라 파리의 개체수 분포가 다르다고 말할 수 있다.<br/><br/>
+- Kruskal-Wallis검정은 표본이 정규분포를 따르지 않지만 유사한 분포, 유사한 분산을 가질 때 적절한 비모수적 검정 방법이다.
+
+```{r message=F, warning=F}
+kruskal.test(ex10_10$exam10_10.abundance~as.factor(ex10_10$exam10_10.layer))
+```
+
+- 같은 데이터에 대해 비모수적 방법, 즉 rank를 이용한 검정을 진행해 본 결과 p-value는 0.01278로써 유의수준보다 작기 때문에 귀무가설을 기각할 수 있다.<br/>
+- 따라서 식물에 따라 파리의 개체수 분포가 다르다고 말할 수 있다.
+
+```{r message=F, warning=F}
+library(pgirmess)
+kruskalmc(ex10_10$exam10_10.abundance~as.factor(ex10_10$exam10_10.layer))
+```
+
+- Multiple comparison test after Kruskal-Wallis 실시한 결과 유의수준 5%하에 1-2, 1-3 그룹간 차이가 있다고 말할 수 있다.
+
+## EXAMPLE 10.11
+
+![](C:/git_blog/study/img/ch10/10-11_1.png)
+![](C:/git_blog/study/img/ch10/10-11_2.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex10_11%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 이 예제는 데이터 정렬 후 tied rank 데이터가 있는 비모수 anova 검정을 사용하는 예제이다.<br/>
+- 데이터는 4개의 연못에서의 산성도를 측정한 데이터이다. <br/>
+- 가설은 다음과 같다.
+
+$$
+\begin{aligned}
+H_0&: pH\ is\ the\ same\ in\ all\ four\ ponds.\\
+H_A&: pH\ is\ not\ the\ same\ in\ all\ four\ ponds.\\
+\end{aligned}
+$$
+
+- 네 연못의 pH농도가 같은지 검정하기 위해 먼저 그룹별 정규성 검정을 한다.
+
+> Shapiro-Wilk test로 세 그룹의 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(subset(ex10_11$exam10_11.ph,ex10_11$exam10_11.pond==1));shapiro.test(subset(ex10_11$exam10_11.ph,ex10_11$exam10_11.pond==2));shapiro.test(subset(ex10_11$exam10_11.ph,ex10_11$exam10_11.pond==3));shapiro.test(subset(ex10_11$exam10_11.ph,ex10_11$exam10_11.pond==4))
+```
+
+- Shapiro-Wilk test로 1,2,3,4 그룹 모두 정규성 검정한 결과 p-value가 0.05보다 매우 크므로 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 등분산성 검정으로 Bartlett's Test를 진행하여 보자.
+
+
+```{r message=F, warning=F}
+class(ex10_11$exam10_11.pond)
+```
+
+- pond의 class가 numeric이므로 factor로 변경해서 등분산성 검정을 실시한다.<br/>
+
+> Bartlett's Test를 통해 네 그룹의 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+bartlett.test(ex10_11$exam10_11.ph~as.factor(ex10_11$exam10_11.pond))
+```
+
+- Bartlett's Test의 유의확률은 p-value = 0.03168으로 유의수준 0.05보다 작으므로 등분산성이 아니라는 대립가설을 채택할 근거가 있다.<br/>
+- 따라서 이 예제는 등분산성 가정을 만족하지 못한다.<br/>
+- 등분산성 가정이 위배된 경우의 ANOVA test로 Welch's test와 Brown and Forsythe 방법을 사용한다.
+
+> Welch's test는 그룹별 표본크기는 동일하나 모분산이 동일하지 않은 경우 더 우수하지만 데이터의 분포가 매우 치우친 분포인 경우 귀무가설을 쉽게 기각하는 단점이 있다.
+
+> Brown and Forsythe 방법은 극단적인 평균값이 큰 분산과 관련 있는 경우에 검정력이 더 크다. 
+
+- 이 예제의 경우 Kruskal-Wallis test로 진행하였으므로 Kruskal-Wallis test를 진행하여 보자.
+
+> 등분산성이 만족되지 않고 그룹별 샘플 수가 다르므로 비모수적 방법인 Kruskal-Wallis test 진행하여보자.
+
+```{r message=F, warning=F}
+kruskal.test(ex10_11$exam10_11.ph~as.factor(ex10_11$exam10_11.pond))
+```
+
+- p=0.0076로 귀무가설을 기각하므로 PH는 모든 네 개 연못이 같다고 할 수 없다.<br/>
+- Kruskal-Wallis test에서 처리간의 차이가 있다고 할 때, 추가적으로 어느 처리에서 차이가 있는지 확인하여보자.<br/>
+- R에서 pgirmess 패키지의 kruskalmc() 함수를 사용하여 순위합 개념을 이용한 다중비교 검정을 하겠다. 
+
+```{r message=F, warning=F}
+kruskalmc(ex10_11$exam10_11.ph, as.factor(ex10_11$exam10_11.pond))
+```
+
+- 결과를 확인하여 보면, 유의수준 0.05하에서 1-3, 1-4 차이가 있다고 할 수 있다. <br/><br/>
+- 4 그룹의 분산을 각각 확인하여 보면,
+
+```{r message=F, warning=F}
+var(ex10_11[ex10_11$exam10_11.pond==1,3]);var(ex10_11[ex10_11$exam10_11.pond==2,3]);var(ex10_11[ex10_11$exam10_11.pond==3,3]);var(ex10_11[ex10_11$exam10_11.pond==4,3])
+```
+
+- 각 그룹별 분산의 크기가 매우 작은 것을 볼 수 있다.<br/>
+- 등분산성 가정이 위배되고 낮은 분산을 취했으므로 Welch's test 비모수적 검정을 통하여 네 연못의 모평균 pH가 같은지 여부를 검정하여 보겠다.
+
+```{r message=F, warning=F}
+welch.test(ex10_11$exam10_11.ph~as.factor(ex10_11$exam10_11.pond),data=ex10_11)
+```
+
+- p-value가 유의수준 0.05보다 작기 때문에 귀무가설을 기각할 수 있으며 연못에 따라 pH농도의 모평균 차이가 있다고 말할 수 있다.<br/>
+- 등분산성이 만족되지 않고 그룹별 샘플 수가 다를 때 사용할 수 있는 사후검정법으로 Dunnett’s C test를 진행하여보겠다.<br/>
+- R에서 DescTools 패키지의 DunnettTest() 함수를 사용하겠다.
+
+```{r message=F, warning=F}
+library(DescTools)
+DunnettTest(ex10_11$exam10_11.ph~as.factor(ex10_11$exam10_11.pond),control=1);DunnettTest(ex10_11$exam10_11.ph~as.factor(ex10_11$exam10_11.pond),control=2);DunnettTest(ex10_11$exam10_11.ph~as.factor(ex10_11$exam10_11.pond),control=3)
+```
+
+- 결과를 확인하여 보면 그룹 3과 그룹1, 그룹4와 그룹1의 p-value가 0.05보다 작게 나왔다.<br/>
+- 따라서 연못1과 연못3, 그리고 연못1과 연못4의 모평균 pH농도가 다르다고 말할 수 있다.
+
+## EXAMPLE 10.12
+
+![](C:/git_blog/study/img/ch10/10-12_1.png)
+![](C:/git_blog/study/img/ch10/10-12_2.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex10_12%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 이 예제는 다표본 중위수 검정에 대한 예제이다.<br/>
+- 데이터는 느릅나무의 길이를 건물의 4면에서 보았을 때의 높이를 기록한 데이터이다.<br/>
+- 가설은 다음과 같다.
+
+$$
+\begin{aligned}
+H_0&:Median\ elm\ tree\ height\ is\ the\ same\ on\ all\ four\ sides\ of\ a\ building.\\
+H_A&:Median\ elm\ tree\ height\ is\ not\ the\ same\ on\ all\ four\ sides\ of\ a\ building.\\
+&medians:7.7m\ \ \ 7.35m\ \ \ 8.4m \ \ \ 8.0m,\ \ \ grand\ median=7.9m\\
+\end{aligned}
+$$
+
+- 느릅나무 높이의 중앙값이 건물의 4면 모두에서 동일한지 검정하기 위해 먼저 각 샘플에 대해 정규성 검정을 진행한다.
+
+> Shapiro-Wilk test로 세 그룹의 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(subset(ex10_12$exam10_12.height,ex10_12$exam10_12.side==1));shapiro.test(subset(ex10_12$exam10_12.height,ex10_12$exam10_12.side==2));shapiro.test(subset(ex10_12$exam10_12.height,ex10_12$exam10_12.side==3));shapiro.test(subset(ex10_12$exam10_12.height,ex10_12$exam10_12.side==4))
+```
+
+- Shapiro-Wilk test로 1,2,3,4 그룹 모두 정규성 검정한 결과 p-value가 0.05보다 매우 크므로 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 등분산성 검정으로 Bartlett's Test를 진행하여 보자.<br/>
+
+
+```{r message=F, warning=F}
+class(ex10_12$exam10_12.side)
+```
+
+- side의 class가 numeric이므로 factor로 변경해서 등분산성 검정을 실시한다.<br/>
+
+> Bartlett's Test를 통해 네 그룹의 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+bartlett.test(ex10_12$exam10_12.height~as.factor(ex10_12$exam10_12.side))
+```
+
+- Bartlett's Test의 유의확률은 p-value = 0.09196으로 유의수준 0.05보다 크므로 등분산성이 아니라는 대립가설을 채택할 근거가 없다.<br/>
+- 따라서 이 예제는 등분산성 가정을 만족한다.<br/>
+- 중앙값에 대한 검정 중 비모수적인 방법인 Mood’s median test를 수행하도록 한다.<br/>
+- R에서 RVAideMemoire패키지의 mood.medtest() 함수를 사용하였다.
+
+```{r message=F, warning=F}
+median=median(ex10_12$exam10_12.height)
+ex10_12$height <- ex10_12$exam10_12.height # height의 중앙값을 NA로 만들어줄 변수 생성
+ex10_12$height[ex10_12$exam10_12.height == median]<-NA # height의 중앙값을 NA로 변경
+ex10_12_na_rm<-na.omit(ex10_12) # height의 중앙값 7.9 제거
+mood.medtest(ex10_12_na_rm$height~ex10_12_na_rm$exam10_12.side, data=ex10_12_na_rm, exact=F)
+```
+
+- Mood’s median test 검정 결과 p-value=0.01078으로 유의수준 0.05하에 귀무가설을 기각할 충분한 근거가 있다.<br/>
+- 따라서 건물 4면에 서 보는 방향에 따라 느릅나무의 길이에 대한 중앙값의 분포에 차이가 있다는 충분한 근거가 있다.
+
+**카이제곱 검정**
+
+- 해당 문제는 분할표자료에서 카이제곱 검정을 수행해도 된다.<br/>
+- 검정과정<br/>
+모든 관측치를 통합한 수  중위수를 구한다.<br/>
+중위수보다 크거나 작은 관측치의 개수를 센다.<br/>
+분할표를 작성한다.<br/>
+카이제곱 검정을 한다.
+
+   
+|                |North |East  |South  |West  |  |
+|----------------|------|------|-------|------|--|
+|Above median    |4(5.5)|3(6.0)|10(5.5)|6(6.0)|23|
+|Not above median|7(5.5)|9(6.0)|1(5.5) |6(6.0)|23|
+|Total           |11    |12    |11     |12    |46|  
+  
+
+$$
+\begin{aligned}
+\chi^2=11.182,\ \ \ \chi_{0.05,3}^2=7.815\ \ \rightarrow Reject\ H_0.\\
+0.0005<P<0.001\ \ \ \ [P=0.00083]
+\end{aligned}
+$$
+
+## EXAMPLE 10.13
+
+![](C:/git_blog/study/img/ch10/10-13.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex10_13%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 이 예제는 Example 10.1 데이터를 사용하여 분산의 동질성 검정을 하는 예제이다.
+
+$$
+\begin{aligned}
+H_0&: \sigma_1^2=\sigma_2^2=\sigma_3^2=\sigma_4^2\\
+H_A&: The\ four\ population\ variances\ are\ not\ all\ equal.\\
+B&=(ln{s_p}^2)(\sum_{i=1}^k{\nu_i})-\sum_{i=1}^k\nu_i\ ln{s_i^2}=0.530\\\\
+C&=1+\frac{1}{3(k-1)}(\sum_{i=1}^k{\frac{1}{\nu_i}-\frac{1}{\sum_{i=1}^k{\nu_i}}})=1.113\\
+B_c&=\frac{B}{C}=0.476,\ \ \ \chi_{0.05,3}^2=7.815\ \ \ \ \ Do\ not\ reject\ H_0.\\
+0.9&<P<0.95\ \ \ \ [P=0.92]
+\end{aligned}
+$$
+
+- Example 10.1에서 보았듯이 네 그룹 모두 정규성 검정 결과 p-value가 0.05보다 매우 컸고 따라서 정규성을 만족하지 않는다고 볼만한 충분한 근거가 없었다.<br/> 정규성을 만족한다는 사실을 바탕으로 그룹별 등분산성 검정인 Bartlett's Test를 진행한 결과 p-value가 0.9243으로 유의수준 0.05보다 매우 큰 수치이므로 귀무가설을 기각할 수 없고 따라서 네 그룹의 분산이 다르다고 볼만한 충분한 근거가 없다.
+
+## EXAMPLE 10-14
+![](C:/git_blog/study/img/ch10/10-14_1.png)
+![](C:/git_blog/study/img/ch10/10-14_2.png)
+
+- 이 예제는 Example 10.1 데이터를 사용하여 변동계수에 대한 동질성 검정을 하는 예제이다.<br/>
+- 본 검정의 가설은 다음과 같다.
+
+$$
+\begin{aligned}
+H_0&: The\ coefficients\ of\ the\ four\ sampled\ populations\ are\ the\ same:\ i.e., \\ \\
+&\frac{\sigma_1}{\mu_1}= \frac{\sigma_2}{\mu_2}= \frac{\sigma_3}{\mu_3}= \frac{\sigma_4}{\mu_4}\\ \\
+H_A&: The\ coefficients\ of\ variation\ of\ the\ four\ populations\ are\ not\ all\ the\ same.\\
+\end{aligned}
+$$
+
+- Homogeneity of Coefficients of variation 검정하는 함수를 작성하였다.
+
+```{r message=F, warning=F}
+Homogeneity_CV<-function(n,m,ss){
+  v<-n-1
+  s<-sqrt(ss) 
+  cv<-s/m
+  vv=sum(v*cv)
+  vp=sum(v*cv)/sum(v) 
+  vp2=vp^2
+  vv2=sum(v*(cv)^2)
+  chisq=(vv2-(vv^2/sum(v)))/(vp2*(0.5+vp2)) 
+  pvalue=pchisq(chisq,3, lower.tail=F) 
+  return(data.frame(chisq,pvalue))
+}
+```
+
+```{r message=F, warning=F}
+Homogeneity_CV(tapply(as.numeric(ex10_1$exam10_1.weight),as.factor(ex10_1$exam10_1.diet), length), tapply(as.numeric(ex10_1$exam10_1.weight),as.factor(ex10_1$exam10_1.diet), mean), tapply(as.numeric(ex10_1$exam10_1.weight),as.factor(ex10_1$exam10_1.diet), var))%>%
+  kbl(caption = "Result") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 그룹 수가 여러 개일 때 변동계수의 동일성 검정을 위해 주어진 공식을 사용하여 검정통계량을 구한 결과 0.37이었고, 임계값은 7.815였다.<br/>
+- 따라서 귀무가설을 기각할 수 없고 그룹별 변동계수가 같지 않다고 말할만한 충분한 근거가 없다.
