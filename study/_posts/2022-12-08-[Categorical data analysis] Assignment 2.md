@@ -37,7 +37,7 @@ library("VGAM")
 
 ![](/study/img/[Categorical data analysis] Assignment 2/Q-1.png)
 
-> [예제 데이터 바로가기](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical-data-analysis_Assignment/Auto.csv?raw=true)
+> [예제 데이터 다운로드](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical%20data%20analysis_Assignment/Auto.csv)
 
 ``` r
 auto <- read.csv("C:/Biostat/Categorical data analysis/Assignment 2/Auto.csv")
@@ -1437,7 +1437,7 @@ calibrate.plot(auto1$mpg_G,auto1$pred3)
 
 ![](/study/img/[Categorical data analysis] Assignment 2/Q-2-1.png) ![](/study/img/[Categorical data analysis] Assignment 2/Q-2-2.png)
 
-> [예제 데이터 바로가기](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical-data-analysis_Assignment/esteo1.sav?raw=true)
+> [예제 데이터 다운로드](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical%20data%20analysis_Assignment/esteo1.sav)
 
 ``` r
 library(foreign)
