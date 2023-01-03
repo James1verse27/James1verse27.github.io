@@ -3911,7 +3911,7 @@ $$ E(price) = -7.4521938 + 0.0944569 * size -77.9033275 * new + 0.0649207	* (siz
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-5.jpg)
 
-> [예제 데이터 다운로드](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical%20data%20analysis_Assignment/Auto.csv)
+> [예제 데이터 바로가기](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical%20data%20analysis_Assignment/Auto.csv)
 
 ### 데이터셋 설명
 
