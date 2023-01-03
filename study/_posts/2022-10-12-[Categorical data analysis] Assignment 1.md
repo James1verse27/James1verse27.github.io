@@ -463,6 +463,8 @@ confint(poi_reg)[2,1:2]%>%
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-4.jpg)
 
+> [예제 데이터 바로가기](https://users.stat.ufl.edu/~aa/glm/data/Crabs.dat)
+
 ## Crabs dataset
 
 ``` r
@@ -840,6 +842,8 @@ vif
 > VIF=4.68474의 결과가 출력된다.
 
 ## Houses selling price dataset
+
+> [예제 데이터 바로가기](https://users.stat.ufl.edu/~aa/glm/data/Houses.dat)
 
 ### 데이터셋 설명
 
@@ -3906,6 +3910,8 @@ $$ E(price) = -7.4521938 + 0.0944569 * size -77.9033275 * new + 0.0649207	* (siz
 # Q-5
 
 ![](/study/img/[Categorical data analysis] Assignment 1/Q-5.jpg)
+
+> [예제 데이터 바로가기](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical-data-analysis_Assignment/Auto.csv?raw=true)
 
 ### 데이터셋 설명
 
