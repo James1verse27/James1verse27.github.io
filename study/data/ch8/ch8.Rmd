@@ -1134,6 +1134,13 @@ library(RVAideMemoire)
 mood.medtest(ex8_15$data~ex8_15$group,exact=F)
 ```
 
+- gmodels 패키지 내에 있는 CrossTable() 함수를 사용한 결과를 확인하여 보자.
+
+```{r message=F, warning=F}
+library(gmodels)
+CrossTable(ex8_15$number,ex8_15$group, prop.r=F, prop.c=F, prop.t=F, chisq=T,digits=3,prop.chisq=F)
+```
+
 ## EXAMPLE 8.16
 
 ![](C:/git_blog/study/img/ch8/8-16.png)
