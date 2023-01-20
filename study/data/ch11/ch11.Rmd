@@ -1,0 +1,368 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+
+```{r message=F, warning=F}
+getwd()
+library(readxl)
+library(dplyr)
+library(kableExtra)
+library(MBESS)
+library(DescTools)
+library(PMCMRplus)
+```
+
+**엑셀파일불러오기**
+```{r message=F, warning=F}
+#모든 시트를 하나의 리스트로 불러오는 함수
+read_excel_allsheets <- function(file, tibble = FALSE) {
+  sheets <- readxl::excel_sheets(file)
+  x <- lapply(sheets, function(X) readxl::read_excel(file, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- sheets
+  x
+}
+```
+
+## 11장
+
+**11장 연습문제 불러오기**
+
+```{r ex11}
+#data_chap11에 연습문제 7장 모든 문제 저장
+data_chap11 <- read_excel_allsheets("data_chap11.xls")
+
+#연습문제 각각 데이터 생성
+for (x in 1:length(data_chap11)){
+  assign(paste0('ex11_',c(1,10))[x],data_chap11[x])
+  }
+
+#연습문제 데이터 형식을 리스트에서 데이터프레임으로 변환
+for (x in 1:length(data_chap11)){
+  assign(paste0('ex11_',c(1,10))[x],data.frame(data_chap11[x]))
+  }
+```
+
+## EXAMPLE 11.1
+
+![](C:/git_blog/study/img/ch11/11-1_1.png)
+
+![](C:/git_blog/study/img/ch11/11-1_2.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex11_1%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 해당 데이터는 5가지 다른 수역의 strontium 농도(mg/ml) 데이터이다.<br/>
+- 분산분석을 실시 후 그룹간 차이가 있다는 결론이 났을 때, 어느 그룹간 평균이 차이가 있는지 사후검정을 통해 살펴볼 것이다.<br/>
+- 이 문제에서는 튜키 검정을 통해 사후검정을 시행해 보았다.
+
+$$
+\begin{aligned}
+H_0 &: \mu_1=\mu_2=\mu_3=\mu_4=\mu_5 \\
+H_1 &: Mean \ strontium \ concentrations \ are \ not \ the \ same \ in \ all \ five \ bodies \ of \ water
+\end{aligned}
+$$
+
+- 우선 분산분석의 가정인 independence, homoscedasticity, normality 살펴보자.<br/>
+
+> Independence test with residuals
+
+```{r message=F, warning=F}
+plot(glm(exam11_1.strontium~factor(exam11_1.pond),data=ex11_1)$residual)
+```
+
+- 잔차에 대한 scatter plot을 봤을 때 골고루 분포 되어 있으므로 독립성을 만족한다 할 수 있다.
+
+> Normality test with shapiro test
+
+```{r message=F, warning=F}
+library(rstatix)
+exam11_1.normal<-ex11_1 %>%
+  group_by(exam11_1.pond) %>%
+  shapiro_test(exam11_1.strontium)
+
+exam11_1.normal %>%
+  kbl(caption = "Example11_1 : 정규성 가정") %>%
+  kable_styling()
+```
+- 각 수역에서 strontium 농도가 6번씩 측정이 되어 전체 표본의 수는 30이다.<br/>
+- 표본의 크기가 크지 않으므로 정규성 검정으로 Shapiro-Wilk test를 시행하였으며,<br/> p-value는 각 수역별로 0.7943, 0.8322, 0.9044, 0.9433, 0.9876으로 모두 유의수준 5%하에 귀무가설을 기각할 수 없다.<br/>
+- 따라서 정규성 가정을 만족한다는 귀무가설을 기각할 수 없으므로 정규성 가정을 만족한다고 볼 것이다.
+
+> Homoscedasticity test with bartlett test
+
+```{r message=F, warning=F}
+bartlett.test(ex11_1$exam11_1.strontium,ex11_1$exam11_1.pond)
+```
+
+- 정규성 가정이 모두 만족되었으므로 등분산 검정으로 Bartlett’s Test를 시행하였다.<br/>
+- p-value는 0.9586으로 유의수준 5%하에 모분산이 서로 동일하다는 귀무가설을 기각하지 못한다.<br/>
+- 즉, 유의수준 5%하에 등분산 가정을 만족한다고 볼 것이다.<br/><br/>
+- 분산분석 가정을 모두 만족하였으므로 일원분산분석을 시행하여 보겠다.
+
+```{r message=F, warning=F}
+ex11_1.anova<-aov(ex11_1$exam11_1.strontium ~ as.factor(ex11_1$exam11_1.pond))
+summary(ex11_1.anova)
+```
+
+- 일원분산분석 결과 p-value는 <.0001으로 유의수준 5%하에 귀무가설을 기각한다. <br/>
+- 유의수준 5%하에 적어도 하나의 수역에서 strontium 농도의 모평균이 다르다고 볼 수 있는 충분한 증거가 있다.
+
+> tukey 다중비교
+
+```{r message=F, warning=F}
+ex11_1.tukey <- TukeyHSD(ex11_1.anova,ordered=T)
+ex11_1.tukey$`as.factor(ex11_1$exam11_1.pond)` %>%
+  kbl(caption = "Example11_1 : Tukey 다중비교") %>%
+  kable_styling()
+```
+
+```{r message=F, warning=F}
+plot(ex11_1.tukey, col="forestgreen")
+```
+
+- Appletree Lake-Beaver Lake(4-2), Angler's Cove-Beaver Lake(3-2), Angler's Cove-Appletree Lake(3-4) 간의 모평균의 유의한 차이가 없었으며 나머지 수역간에 비교시 유의수준 5% 하에 모평균의 유의한 차이가 있다고 할 수 있다.
+
+## EXAMPLE 11.2
+
+![](C:/git_blog/study/img/ch11/11-2.png)
+```{r message=F, warning=F}
+ex11_2 <- read_excel(path = 'C:/git_blog/study/data/ch10/data_chap10.xls',sheet = 'exam10_1')
+ex11_2[15,3]=NA
+ex11_2<-na.omit(ex11_2)
+```
+
+- 독립성, 정규성, 등분산성 가정을 만족함을 Example 10.1에서 이미 확인하였으므로 생략하겠다.
+
+```{r message=F, warning=F}
+ex11_2.anova <- aov(ex11_2$weight ~ as.factor(ex11_2$diet))
+ex11_2.tukey <- TukeyHSD(ex11_2.anova,ordered=T)
+ex11_2.tukey$`as.factor(ex11_2$diet)` %>%
+  kbl(caption = "Example11_2 : Tukey 다중비교") %>%
+  kable_styling()
+```
+
+```{r message=F, warning=F}
+plot(ex11_2.tukey, col = "forestgreen")
+```
+
+- Feed1-Feed4(1-4), Feed3-Feed2(3-2) 간의 모평균의 유의한 차이가 없었으며 나머지 사료간의 비교시 유의수준 5% 하에 모평균의 유의한 차이가 있다고 할 수 있다.
+
+## EXAMPLE 11.3
+
+![](C:/git_blog/study/img/ch11/11-3.png)
+
+- 이 예제는 Example 11.1 데이터를 사용하여 모평균에 대한 신뢰구간을 구해본다.
+
+```{r message=F, warning=F}
+library(MBESS)
+exam11_1.mean<-aggregate(ex11_1$exam11_1.strontium, by=list(ex11_1$exam11_1.pond), mean)
+exam11_1.n <- aggregate(ex11_1$exam11_1.strontium, by=list(ex11_1$exam11_1.pond), length)
+
+ci <- ci.c(means=exam11_1.mean$x, s.anova=sqrt(9.7652),c.weights=c(-3/3,1/3,1/3,1/3,0), n=exam11_1.n$x, N=sum(exam11_1.n$x), conf.level= .95)
+data.frame(ci)%>%
+  kbl(caption = "CI for the Population Means from ex11_1",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 그룹2,4,3과 그룹1의 모평균 차이의 95% 신뢰구간은 (6.69, 12.76)으로 계산되었다.
+
+
+```{r message=F, warning=F}
+ci <- ci.c(means=exam11_1.mean$x, s.anova=sqrt(9.7652),c.weights=c(0,-1/3,-1/3,-1/3,1), n=exam11_1.n$x, N=sum(exam11_1.n$x), conf.level= .95)
+data.frame(ci)%>%
+  kbl(caption = "CI for the Population Means from ex11_1",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 그룹5의 모평균과 그룹2,4,3의 모평균의 차의 95% 신뢰구간은 (13.46, 19.53)으로 계산되었다.
+
+## EXAMPLE 11.4
+
+![](C:/git_blog/study/img/ch11/11-4.png)
+
+- 해당 데이터는 5가지 비료에 따른 감자 수확량을 mean과 size로 기록한 데이터이다.
+
+```{r message=F, warning=F}
+mean=c(17.3,21.7,22.1,23.6,27.8)
+size= c(14,24,14,14,14)
+group=c(1,2,3,4,5)
+ex11_4= data.frame(group,mean,size)
+ex11_4%>%
+  kbl(caption = "Dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+$$
+\begin{aligned}
+H_0 &: \mu_2 \ge \mu_A \\
+H_1 &: \mu_2 < \mu_A
+\end{aligned}
+$$
+
+- 기존 2번 비료와 나머지 새로운 비료(1,3,4)를 이용했을 때 감자 수확량의 모평균의 차이가 있는지 확인하기 위해 Dunnett 검정을 사용할 것이다.
+
+> Dunnett’s test
+
+```{r message=F, warning=F}
+k=5
+group_index = c(1, 2, 3, 4, 5)
+group_n = c(14, 24, 14, 14, 14)
+group_mean=c(17.3, 21.7, 22.1, 23.6, 27.8)
+N = sum(group_n);
+s2 = 10.42;
+errorDF=N-k;
+se_value = round(sqrt(s2*(1/group_n[1]+1/group_n[2])), 1);
+SE = rep(se_value, k)
+Difference = rep(group_mean[2], k) - group_mean;
+q_prime = abs(round(Difference/se_value, 2));
+control = rep(2,k);
+
+exam11_4<-cbind("control"=control, "group_index"=group_index, "Difference"=Difference, "SE"=SE, "q_prime"=q_prime)
+exam11_4 %>%
+  kbl(caption = "Example11_4 : dunnett") %>%
+  kable_styling()
+```  
+
+- 비료 2과 1를 비교한 결과, 표본 평균의 차이가 양수이므로 귀무가설을 기각할 수 없다. <br/>
+- 이와 달리 비료 2와 비료 4,5 각각 비교한 결과 표본 평균의 차이가 음수이므로 귀무가설을 기각한다.<br/>
+- 즉, 기존 2번 비료 보다 새로운 4번 5번 비료를 사용할 때, 감자 수확량의 모평균이 더 크다고 할 수 있다.
+
+$\bar{X}_{2}>\bar{X}_{1}$ 이므로 귀무가설 $H_{0} :  \mu_{2} \geq \mu_{A}$을 기각할 수 없다. <br/>
+- 그룹2와 그룹5를 비교하면 $|q'|=5.55$가 기각역보다 크므로 귀무가설을 기각한다. <br/>
+- 즉, 유의수준 5%하에서 그룹2의 모평균이 그룹5의 모평균보다 작다고 말할 수 있다. <br/><br/>
+- 그룹2와 그룹4를 비교하면 $|q'|=1.73$이 기각역보다 크므로 귀무가설을 기각한다. <br/>
+- 즉, 유의수준 5%하에서 그룹2의 모평균이 그룹5의 모평균보다 작다고 말할 수 있다.
+
+## EXAMPLE 11.5
+
+![](C:/git_blog/study/img/ch11/11-5.png)
+
+- Dunneet’s test 는 집단과 하나의 control 집단을 이용했다면 Scheffee’s test 에서는 위 문제의 2번 그룹의 대조군과 나머지를 비교하였다.
+
+```{r message=F, warning=F}
+contrast= matrix(c(0, 1/3, 1/3, 1/3, -1, 
+                   1, -1/3, -1/3, -1/3, 0, 
+                   1/2, -1/3, -1/3, -1/3, 1/2, 
+                   1/2, -1/2, -1/2, 1/2, 0), ncol=4)
+library(DescTools)
+ex11.6<-ScheffeTest(ex11_1.anova, contrasts=contrast)
+ex11.6$`as.factor(ex11_1$exam11_1.pond)` %>%
+  kbl(caption = "Example 11.5 & 11.6: SCHEFFE") %>%
+  kable_styling()
+```
+
+- 검정 결과 그룹 1,5와 그룹 2,3,4 외에 다른 경우는 유의수준 5%하에 귀무가설을 기각할 충분한 근거를 가지고 있다. 
+
+## EXAMPLE 11.6
+
+![](C:/git_blog/study/img/ch11/11-6.png)
+
+EXAMPLE 11.5 문제의 신뢰구간을 구해본다.
+
+```{r message=F, warning=F}
+ex11.6$`as.factor(ex11_1$exam11_1.pond)` %>%
+  kbl(caption = "Example 11.5 & 11.6: SCHEFFE") %>%
+  kable_styling()
+```
+
+- 그룹 (2,3,4)와 그룹 5에 대한 95% 신뢰구간은 (-21.39, -11.60), 그룹 1과 그룹 (2,3,4)에 대한 95% 신뢰구간은 (-14.62,-4.83)이다.
+
+## EXAMPLE 11.7
+
+![](C:/git_blog/study/img/ch11/11-7.png)
+
+- 이 예제는 EXAMPLE 10.10를 Nemenyi test를 이용하여 비모수적 다중비교를 하는 문제이다.
+
+> Nemenyi test
+
+```{r message=F, warning=F}
+ex11_7 <- read_excel(path = 'C:/git_blog/study/data/ch10/data_chap10.xls',sheet = 'exam10_10')
+library(PMCMRplus)
+kwAllPairsNemenyiTest(abundance~factor(layer), data=ex11_7, dist='Tukey')
+```
+
+- PMCMRplus 패키지의 kwAllPairsNemenyiTest() 함수는 Nemenyi test를 이용하여 비모수적인 다중비교 후 p-value를 나타낸 것이다. <br/>
+- 그룹 1과 2, 그리고 그룹 1과 3간의 비교에서 p-value는 각각 0.043, 0.020으로 유의수준 5%하에서 귀무가설을 기각하였다.<br/>
+- 그룹 2와 3간의 비교에서 p-value는 0.957이므로 유의수준 5%하에서 귀무가설을 기각하지 못한다. <br/>
+- 즉, 파리는 2번 식물의 layer와 3번 식물의 layer에서 같지만 1번 식물의 layer에서는 다르다고 할 수 있다.
+
+
+## EXAMPLE 11.8
+
+![](C:/git_blog/study/img/ch11/11-8.png)
+
+- 이 예제는 EXAMPLE 10.11를 Dunn test를 이용하여 비모수적 다중비교를 하는 문제이다.<br/>
+- 위 Nemenyi test와 비슷한 방법이지만 표본크기가 다른 데이터이므로 그룹간의 차이가 어떤 그룹간에 있는지 Dunn test를 사용하였다.
+
+> Dunn test
+
+```{r message=F, warning=F}
+ex11_8 <- read_excel(path = 'C:/git_blog/study/data/ch10/data_chap10.xls',sheet = 'exam10_11')
+kwAllPairsDunnTest(ex11_8$ph, ex11_8$pond, p.adjust.method = "bonferroni")
+```
+
+- 검정 결과 그룹 [1,3], 그룹 [1,4]은 서로 다른 분포를 가지고 있음을 확인할 수 있다.
+
+## EXAMPLE 11.9
+
+![](C:/git_blog/study/img/ch11/11-9.png)
+
+- 이 예제는 EXAMPLE 10.12를 Tukey-Type multiple comparison를 이용하여 그룹간 중앙값의 차이가 있는지 다중비교하는 문제이다.<br/>
+
+```{r message=F, warning=F}
+ex11_9 <- read_excel(path = 'C:/git_blog/study/data/ch10/data_chap10.xls',sheet = 'exam10_12')
+median(ex11_9$height)
+```
+
+![](C:/git_blog/study/img/ch11/10-12_1.png)
+
+- 중앙값은 7.9 값이 나왔으며, 7.9보다 큰 첫번째 수인 8.1보다 큰 수를 빈도로 잡아 North:3, East:2, South:9, West:6 값이 나온다.
+
+```{r message=F, warning=F}
+s.size <- c(11,12,11,12)
+N <- 46 ; n <- round(4/sum(1/s.size),2) ; se <- round(sqrt(n*N /(4*(N-1))),3)
+freq <- c()
+for (i in 1:4) {
+  freq[i] = length(which(ex11_9$height[ex11_9$side==i] > 8.1))
+}
+diff <- c(freq[3]-freq[2],freq[3]-freq[1],freq[4]-freq[2])
+
+table <- data.frame(Comparison=c("3 vs. 2", "3 vs. 1", "4 vs. 2"), Difference=diff, SE=se, q= round(diff/se,3), Critical_Value = 3.633)
+table %>%
+  kbl(caption = "") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+-4개의 그룹을 두 그룹 씩 중앙값을 통해 차이 검정을 실시하였다. <br/>
+- 귀무가설은 ‘두 모집단의 중앙값은 동일하다.’, 대립가설은 ‘두 모집단의 중앙값은 동일하지 않다.’ 이며, <br/> q 통계량이 임계값 3.633 보다 클 경우 귀무가설을 기각한다.<br/>
+- 검정 결과 그룹 3과 2를 비교했을 때, q 통계량이 임계값보다 크므로 귀무가설을 기각하여 3번과 2번 모집단의 중앙값이 서로 동일하지 않음을 알 수 있다.
+
+## EXAMPLE 11.10
+
+![](C:/git_blog/study/img/ch11/11-10.png)
+
+- 이 예제는 분산이 동일하지 않은 결과에 대한 다중비교를 하는 문제이다.
+
+```{r message=F, warning=F}
+var <- c(2.74,2.83,2.20,6.42) ; n<- c(50,48,50,50) ; v <- n-1 ; treat <- c("1","2","3","4")
+q_crit <- 3.633 ; Difference = round(log(c(var[4]/var[3], var[4]/var[1],var[4]/var[2], var[2]/var[3])),4)
+SE = round(sqrt(c(1/v[4]+1/v[3], 1/v[4]+1/v[1],1/v[4]+1/v[2],1/v[2]+1/v[3])),3)
+table <- data.frame(Comparison=c("4 vs. 3","4 vs. 1","4 vs. 2","2 vs. 3"), Difference,SE, q = round(Difference/SE,3), Critical_Value=q_crit)
+
+table %>%
+  kbl(caption = "") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+- 4개의 그룹을 두 그룹 씩 등분산 검정을 실시하였다.<br/>
+- 귀무가설은 ‘두 그룹의 모분산은 동일하다.’, 대립가설은 ‘두 그룹의 모분산은 동일하지 않다.’ 이며, <br/>검정 결과 q 통계량이 임계값 3.633 보다 클 경우 귀무가설을 기각한다.<br/>
+- 검정 결과 그룹 4는 나머지 그룹 전체와 서로 모분산이 동일하지 않으며, 그 외 그룹들의 모분산들은 서로 동일함을 알 수 있다.
