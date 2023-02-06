@@ -1,0 +1,320 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+```{r message=F, warning=F}
+getwd()
+library(readxl)
+library(dplyr)
+library(kableExtra)
+```
+
+**엑셀파일불러오기**
+```{r message=F, warning=F}
+#모든 시트를 하나의 리스트로 불러오는 함수
+read_excel_allsheets <- function(file, tibble = FALSE) {
+  sheets <- readxl::excel_sheets(file)
+  x <- lapply(sheets, function(X) readxl::read_excel(file, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- sheets
+  x
+}
+```
+
+## 13장
+
+**13장 연습문제 불러오기**
+
+```{r message=F, warning=F}
+#data_chap13에 연습문제 13장 모든 문제 저장
+data_chap13 <- read_excel_allsheets("data_chap13.xls")
+
+#연습문제 각각 데이터 생성
+for (x in 1:length(data_chap13)){
+  assign(paste0('ex13_',c(1:4))[x],data_chap13[x])
+  }
+
+#연습문제 데이터 형식을 리스트에서 데이터프레임으로 변환
+for (x in 1:length(data_chap13)){
+  assign(paste0('ex13_',c(1:4))[x],data.frame(data_chap13[x]))
+  }
+```
+
+## EXAMPLE 13.1
+
+![](C:/git_blog/study/img/ch13/13-1.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex13_1%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 해당 데이터는 a)와 multiplicate된 데이터 b)와 b)의 로그변환된 데이터 c)로 구성되어 있으며<br/>
+세개의 데이터로 Interaction plot을 그려보고자 한다.
+
+> Interaction plot
+
+```{r message=F, warning=F}
+par(mfrow=c(1,3))
+
+interaction.plot(ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.A,ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.B,ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.mean,bty="l",xlab="Factor A", ylab="mean", trace.label = "Factor B",main="Interaction plot of a)", las=1, type="b", pch=16, col=c("orange","#8f7450"))
+interaction.plot(ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.A,ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.B,ex13_1[ex13_1$exam13_1.part=='b)',]$exam13_1.mean,bty="l",xlab="Factor A", ylab="mean", trace.label = "Factor B",main="Interaction plot of b)", las=1, type="b", pch=16, col=c("orange","#8f7450"))
+interaction.plot(ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.A,ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.B,ex13_1[ex13_1$exam13_1.part=='c)',]$exam13_1.mean,bty="l",xlab="Factor A", ylab="mean", trace.label = "Factor B",main="Interaction plot of b)", las=1, type="b", pch=16, col=c("orange","#8f7450"))
+```
+
+- 교호작용 그래프를 그려본 결과 위와 같은 결과가 나왔다.<br/>
+- a), b), c)의 경우 Factor A가 level 3이고 Factor B가 level 2 일 때 최대의 평균을 가지며 <br/>
+그 중 b)를 로그변환한 자료인 c)의 교호작용 그래프를 보면 보다 조금 더 추세적으로 안정화된 교호작용 그래프가 그려짐을 볼 수 있다.
+
+## EXAMPLE 13.2
+
+![](C:/git_blog/study/img/ch13/13-2_1.png)
+
+![](C:/git_blog/study/img/ch13/13-2_2.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex13_2%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 해당 데이터를 사용하여 로그변환을 고려해볼 것이다. <br/>
+- 로그변환은 분산이 동질적이지 않으면서 표준편차는 평균에 비례적인 경우 사용할 수 있다.<br/>
+- original data를 로그변환한 데이터로 신뢰구간을 구하고, 그 값의 역로그변환을 하여 original data의 신뢰구간을 구하는 것도 볼 것이다.
+
+```{r message=F, warning=F}
+Group1 <- subset(ex13_2$exam13_2.Y,ex13_2$exam13_2.Group==1)
+Group2 <- subset(ex13_2$exam13_2.Y,ex13_2$exam13_2.Group==2)
+ex13_2_split <- data.frame(Group1,Group2)
+ex13_2_split%>%
+  kbl(caption = "Dataset of Example 13.2") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+> 로그변환
+
+$$
+\begin{aligned}
+X' = log_{10}(X+1)
+\end{aligned}
+$$
+
+- 위 식을 사용하여 로그변환을 시도하겠다.
+
+```{r message=F, warning=F}
+log_ex13_2 <- log10(ex13_2_split+1)
+log_ex13_2%>%
+  kbl(caption = "Logarithmic transformation of Example 13.2") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+parameter <- c("Mean","Variance","Std","CV")
+f13_2 <- function(x){
+  mean <- mean(x)
+  s2 <- var(x)
+  s <- round(sd(x),2)
+  V <- round(sd(x)/mean(x),2)
+  res <- list(mean,s2,s,V)
+  return(res)
+}
+
+Group_1_original <- f13_2(ex13_2_split$Group1)
+Group_2_original <- f13_2(ex13_2_split$Group2)
+
+origin <- data.frame(cbind(parameter,Group_1_original,Group_2_original))
+
+origin%>%
+  kbl(caption = "Result of Original dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+parameter <- c("Mean","Variance","Std","CV","s_p","Lower CI","Upper CI","Original Lower CI","Original Upper CI")
+log_f13_2 <- function(x){
+  mean <- mean(x)
+  s2 <- var(x)
+  s <- round(sd(x),4)
+  V <- round(sd(x)/mean(x),2)
+  s_p <- s/sqrt(length(x))
+  L1_log <- round(mean(x)-((qt(1-(0.05/2), length(x)-1))*s_p), 5)
+  L2_log <- round(mean(x)+((qt(1-(0.05/2), length(x)-1))*s_p), 5)
+  L1_origin=round(10^(L1_log)-1, 2)
+  L2_origin=round(10^(L2_log)-1, 2)
+  res <- list(mean,s2,s,V,s_p,L1_log,L2_log,L1_origin,L2_origin)
+  return(res)
+}
+
+Group_1_logtrans <- log_f13_2(log_ex13_2$Group1)
+Group_2_logtrans <- log_f13_2(log_ex13_2$Group2)
+
+logtrans <- data.frame(cbind(parameter,Group_1_logtrans,Group_2_logtrans))
+
+logtrans%>%
+  kbl(caption = "Result of logarithmic transformation dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+## EXAMPLE 13.3
+
+![](C:/git_blog/study/img/ch13/13-3.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex13_3%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 해당 데이터를 사용하여 제곱근변환을 고려해볼 것이다. <br/>
+- 제곱근변환은 분산이 평균과 같이 증가하는 경향이 있는 경우, 포아송 분포를 따르는 데이터들 혹은 그룹의 분산이 평균들에 비례적일 경우 고려할 수 있다.
+
+```{r message=F, warning=F}
+Group1 <- subset(ex13_3$exam13_3.Y,ex13_3$exam13_3.Group==1)
+Group2 <- subset(ex13_3$exam13_3.Y,ex13_3$exam13_3.Group==2)
+Group3 <- subset(ex13_3$exam13_3.Y,ex13_3$exam13_3.Group==3)
+Group4 <- subset(ex13_3$exam13_3.Y,ex13_3$exam13_3.Group==4)
+ex13_3_split <- data.frame(Group1,Group2,Group3,Group4)
+ex13_3_split%>%
+  kbl(caption = "Dataset of Example 13.3") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+> 제곱근변환
+
+$$
+\begin{aligned}
+X^* = \sqrt{X+0.5}
+\end{aligned}
+$$
+
+- 위 식을 사용하여 제곱근변환을 시도하겠다.
+
+```{r message=F, warning=F}
+sqrt_ex13_3 <- sqrt(ex13_3_split+0.5)
+sqrt_ex13_3%>%
+  kbl(caption = "Sqruare root transformation of Example 13.3") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+parameter <- c("Mean","Variance","Std","Lower CI","Upper CI")
+f13_3 <- function(x){
+  mean <- mean(x)
+  s2 <- var(x)
+  s <- sd(x)
+  L1 <- mean-(qt(0.975,4)*(s/sqrt(length(x))))
+  L2 <- mean+(qt(0.975,4)*(s/sqrt(length(x))))
+  res <- list(mean,s2,s,L1,L2)
+  return(res)
+}
+```
+
+```{r message=F, warning=F}
+Group_1_original <- f13_3(ex13_3_split$Group1)
+Group_2_original <- f13_3(ex13_3_split$Group2)
+Group_3_original <- f13_3(ex13_3_split$Group3)
+Group_4_original <- f13_3(ex13_3_split$Group4)
+
+origin <- data.frame(cbind(parameter,Group_1_original,Group_2_original,Group_3_original,Group_4_original))
+
+origin%>%
+  kbl(caption = "Result of Original dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+Group_1_sqrtrans <- f13_3(sqrt_ex13_3$Group1)
+Group_2_sqrtrans <- f13_3(sqrt_ex13_3$Group2)
+Group_3_sqrtrans <- f13_3(sqrt_ex13_3$Group3)
+Group_4_sqrtrans <- f13_3(sqrt_ex13_3$Group4)
+
+sqrtrans <- data.frame(cbind(parameter,Group_1_sqrtrans,Group_2_sqrtrans,Group_3_sqrtrans,Group_4_sqrtrans))
+
+sqrtrans%>%
+  kbl(caption = "Result of logarithmic transformation dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+- 이렇게 변수변환 한 후에는 모수적 검정법을 적용하여 추후 분석을 진행할 수 있다.
+
+## EXAMPLE 13.4
+
+![](C:/git_blog/study/img/ch13/13-4.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex13_4%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 해당 데이터를 사용하여 역싸인변환을 고려해볼 것이다. <br/>
+- 역싸인변환은 이항형의 데이터 즉, 0~100% 까지의 퍼센티지 데이터 혹은 0과 1의 비율 데이터에 대해서 고려할 수 있다.
+
+```{r message=F, warning=F}
+Group1 <- subset(ex13_4$exam13_4.Y,ex13_4$exam13_4.Group==1)
+Group2 <- subset(ex13_4$exam13_4.Y,ex13_4$exam13_4.Group==2)
+ex13_4_split <- data.frame(Group1,Group2)
+ex13_4_split%>%
+  kbl(caption = "Dataset of Example 13.4") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+> 역싸인변환
+
+$$
+\begin{aligned}
+p^* &= arcsin \sqrt{p} \\
+&=arcsin\sqrt{\frac{p}{100}} \times \frac{180}{\pi}
+\end{aligned}
+$$
+
+- 위 식을 사용하여 역싸인변환을 시도하겠다.
+
+```{r message=F, warning=F}
+arcsin_ex13_4 <- asin(sqrt(ex13_4_split/100))*(180/pi)
+arcsin_ex13_4%>%
+  kbl(caption = "Arcsine tranformation of Example 13.4") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+parameter <- c("Mean","Variance","Std","Lower CI","Upper CI")
+f13_4 <- function(x){
+  mean <- mean(x)
+  s2 <- var(x)
+  s <- sd(x)
+  L1 <- mean-(qt(0.975,6)*(s/sqrt(length(x))))
+  L2 <- mean+(qt(0.975,6)*(s/sqrt(length(x))))
+  res <- list(mean,s2,s,L1,L2)
+  return(res)
+}
+```
+
+```{r message=F, warning=F}
+Group_1_original <- f13_4(ex13_4_split$Group1)
+Group_2_original <- f13_4(ex13_4_split$Group2)
+
+origin <- data.frame(cbind(parameter,Group_1_original,Group_2_original))
+
+origin%>%
+  kbl(caption = "Result of Original dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+Group_1_arctrans <- f13_4(arcsin_ex13_4$Group1)
+Group_2_arctrans <- f13_4(arcsin_ex13_4$Group2)
+
+arctrans <- data.frame(cbind(parameter,Group_1_arctrans,Group_2_arctrans))
+
+arctrans%>%
+  kbl(caption = "Result of arcsine transformation dataset") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
