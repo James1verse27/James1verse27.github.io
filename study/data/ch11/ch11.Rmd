@@ -274,7 +274,7 @@ ex11.6$`as.factor(ex11_1$exam11_1.pond)` %>%
   kable_styling()
 ```
 
-- 그룹 (2,3,4)와 그룹 5에 대한 95% 신뢰구간은 (-21.39, -11.60), 그룹 1과 그룹 (2,3,4)에 대한 95% 신뢰구간은 (-14.62,-4.83)이다.
+- 그룹 (2,3,4)와 그룹 5에 대한 95% 신뢰구간은 (-21.39, -11.60), <br/> 그룹 1과 그룹 (2,3,4)에 대한 95% 신뢰구간은 (-14.62,-4.83)이다.
 
 ## EXAMPLE 11.7
 
@@ -316,7 +316,7 @@ kwAllPairsDunnTest(ex11_8$ph, ex11_8$pond, p.adjust.method = "bonferroni")
 
 ![](C:/git_blog/study/img/ch11/11-9.png)
 
-- 이 예제는 EXAMPLE 10.12를 Tukey-Type multiple comparison를 이용하여 그룹간 중앙값의 차이가 있는지 다중비교하는 문제이다.<br/>
+- 이 예제는 EXAMPLE 10.12를 Tukey-Type multiple comparison를 이용하여 그룹간 중앙값의 차이가 있는지 다중비교하는 문제이다.
 
 ```{r message=F, warning=F}
 ex11_9 <- read_excel(path = 'C:/git_blog/study/data/ch10/data_chap10.xls',sheet = 'exam10_12')

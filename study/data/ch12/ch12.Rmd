@@ -1,0 +1,581 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+
+```{r message=F, warning=F}
+getwd()
+library(readxl)
+library(dplyr)
+library(kableExtra)
+library(broom)
+library(ggplot2)
+library(agricolae)
+library(nonpar)
+```
+
+**엑셀파일불러오기**
+```{r message=F, warning=F}
+#모든 시트를 하나의 리스트로 불러오는 함수
+read_excel_allsheets <- function(file, tibble = FALSE) {
+  sheets <- readxl::excel_sheets(file)
+  x <- lapply(sheets, function(X) readxl::read_excel(file, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- sheets
+  x
+}
+```
+
+## 12장
+
+**12장 연습문제 불러오기**
+
+```{r ex12}
+#data_chap12에 연습문제 12장 모든 문제 저장
+data_chap12 <- read_excel_allsheets("data_chap12.xls")
+
+#연습문제 각각 데이터 생성
+for (x in 1:length(data_chap12)){
+  assign(paste0('ex12_',c(1,4,5,6))[x],data_chap12[x])
+  }
+
+#연습문제 데이터 형식을 리스트에서 데이터프레임으로 변환
+for (x in 1:length(data_chap12)){
+  assign(paste0('ex12_',c(1,4,5,6))[x],data.frame(data_chap12[x]))
+  }
+```
+
+## EXAMPLE 12.1
+
+![](C:/git_blog/study/img/ch12/12-1.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex12_1%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 해당 데이터는 성별에 따른 새의 혈청 내 칼슘 농도를 기록한 데이터이다.<br/>
+- 호르몬 치료 유무와 성별에 따른 혈청 내 칼슘 농도에 차이가 있는지 이요인 분산분석을 시행한다.
+
+$$
+\begin{aligned}
+H_0 &: There\ is\ no\ effect\ of\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+H_A &: There\ is\ an\ effect\ of\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+\\
+H_0 &: There\ is\ no\ difference\ \ in\ mean\ plasma\ calcium\ concentration\ between\ female\ and\ male\ birds\  \\
+H_A &: There\ is\ a\ difference\ \ in\ mean\ plasma\ calcium\ concentration\ between\ female\ and\ male\ birds\  \\
+\\
+H_0 &: There\ is\ no\ interaction\ of\ sex\ and\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+H_A &: There\ is\ interaction\ of\ sex\ and\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+\end{aligned}
+$$  
+
+```{r message=F, warning=F}
+nf <- subset(ex12_1$exam12_1.plasma_calcium, ex12_1$exam12_1.Hormone=="No Hormone" & ex12_1$exam12_1.Sex=="Female")
+nm <- subset(ex12_1$exam12_1.plasma_calcium, ex12_1$exam12_1.Hormone=="No Hormone" & ex12_1$exam12_1.Sex=="Male")
+yf <- subset(ex12_1$exam12_1.plasma_calcium, ex12_1$exam12_1.Hormone=="Yes Hormone" & ex12_1$exam12_1.Sex=="Female")
+ym <- subset(ex12_1$exam12_1.plasma_calcium, ex12_1$exam12_1.Hormone=="Yes Hormone" & ex12_1$exam12_1.Sex=="Male")
+ex12_1a <- data.frame(no_hormone_female=nf,no_hormone_male=nm,yes_hormone_female=yf,yes_hormone_male=ym)
+ex12_1a%>%
+  kbl(caption = "Dataset of ex12_1") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+```{r message=F, warning=F}
+cell_totals <- c(sum(nf),sum(nm),sum(yf),sum(ym))
+cell_means <- c(mean(nf),mean(nm),mean(yf),mean(ym))
+cell <- data.frame(rbind(cell_totals,cell_means))
+names(cell) <- c("X_11","X_12","X_21","X_22")
+cell%>%
+  kbl(caption = "Cell totals and Cell means") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```  
+
+## EXAMPLE 12.1a
+
+![](C:/git_blog/study/img/ch12/12-1a_1.png)
+
+![](C:/git_blog/study/img/ch12/12-1a_2.png)
+
+- 예제에서 나온 식으로 제곱합 및 자유도를 구하는 함수를 직접 작성하여 ANOVA table을 작성하여 보았다.
+
+```{r message=F, warning=F}
+f12_1a <- function(x){
+  N <- (length(x)*nrow(x))
+  grand_mean <- sum(x)/N
+  no_hormone_means <- sum(x[,1:2])/10
+  hormone_means <- sum(x[,3:4])/10
+  female_means <- sum(x[,c(1,3)])/10
+  male_means <- sum(x[,c(2,4)])/10
+  total_SS <- sum((x-grand_mean)^2)
+  total_DF <- N-1
+  cells <- vector()
+  for (i in 1:4){
+    cells[i] <- (mean(ex12_1a[,i]) - grand_mean)^2
+  }
+  cells_SS <- sum(5*cells)
+  cells_DF <- 3
+  within_cells_SS <- total_SS - cells_SS
+  within_cells_DF <- total_DF - cells_DF
+  Factor_A_SS <- 2*5*((no_hormone_means-grand_mean)^2+(hormone_means-grand_mean)^2)
+  Factor_A_DF <- 1
+  Factor_B_SS <- 2*5*((female_means-grand_mean)^2+(male_means-grand_mean)^2)
+  Factor_B_DF <- 1
+  AXB_interaction_SS <- cells_SS-Factor_A_SS-Factor_B_SS
+  AXB_interaction_DF <- cells_DF - Factor_A_DF - Factor_B_DF
+  SS <- c(total_SS,cells_SS,Factor_A_SS,Factor_B_SS,round(AXB_interaction_SS,4),round(within_cells_SS,4))
+  DF <- c(total_DF,cells_DF,Factor_A_DF,Factor_B_DF,AXB_interaction_DF,within_cells_DF)
+  source <- c("Total","Cells","Factor A (hormone)","Facor B (sex)","A X B","Within-Cells (Error)")
+  MS <- c("","",Factor_A_SS/Factor_A_DF,Factor_B_SS/Factor_B_DF,round(AXB_interaction_SS/AXB_interaction_DF,4),within_cells_SS/within_cells_DF)
+  res <- data.frame(source,SS,DF,MS)
+  return(res)
+}
+```
+
+```{r message=F, warning=F}
+f12_1a(ex12_1a)%>%
+  kbl(caption = "Analysis of Variance Summary table") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+## EXAMPLE 12.2
+
+![](C:/git_blog/study/img/ch12/12-2.png)
+
+```{r message=F, warning=F}
+ex12_1$Hormone <- as.factor(ex12_1$exam12_1.Hormone)
+ex12_1$Sex <- as.factor(ex12_1$exam12_1.Sex)
+```
+
+- 이원분산분석을 진행하기 전에 정규성과 등분산성, 독립성을 만족하는지 부터 확인하도록 한다.
+
+> Shapiro-Wilk Test로 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(ex12_1$exam12_1.plasma_calcium)
+```
+
+- p-value가 0.05보다 매우 크므로 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 따라서 정규성을 만족한다는 사실을 바탕으로 등분산성 검정을 진행한다.
+
+> Bartlett's Test를 통해 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+bartlett.test(ex12_1$exam12_1.plasma_calcium~ex12_1$exam12_1.Hormone)
+
+bartlett.test(ex12_1$exam12_1.plasma_calcium~ex12_1$exam12_1.Sex)
+```
+
+- p-value가 모두 0.05보다 크므로 등분산성이 아니라는 아니라는 대립가설을 채택할 근거가 없다.
+
+> 첫번째 가설
+
+$$
+\begin{aligned}
+H_0 &: There\ is\ no\ effect\ of\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+H_A &: There\ is\ an\ effect\ of\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+\end{aligned}
+$$  
+
+```{r message=F, warning=F}
+f12_2_1 <- function(x){
+  f <- f12_1a(x)$SS[3]/as.numeric(f12_1a(x)$MS[6])
+  f_0.05 <- qf(0.95,1,16)
+  p_value <- 1-pf(f,1,16)
+  if (f<f_0.05){
+    reject_H0 <- "No"
+  }else{
+    reject_H0 <- "Yes"
+  }
+  res <- data.frame(f,f_0.05,p_value,reject_H0)
+  return(res)
+}
+
+f12_2_1(ex12_1a)%>%
+  kbl(caption = "Result of hypotheses for Hormone treatment") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- F-값이 73.6으로 임계값 4.49보다 큰 값이 나왔고, p-value가 0.05보다 매우 작으므로 유의수준 5%하에 귀무가설을 기각한다.<br/>
+- 따라서 호르몬 치료에 따른 혈청 내 칼슘 함량의 평균이 다르다고 할 수 있다.
+
+
+> 두번째 가설
+
+$$
+\begin{aligned}
+H_0 &: There\ is\ no\ difference\ \ in\ mean\ plasma\ calcium\ concentration\ between\ female\ and\ male\ birds\  \\
+H_A &: There\ is\ a\ difference\ \ in\ mean\ plasma\ calcium\ concentration\ between\ female\ and\ male\ birds\  \\
+\end{aligned}
+$$  
+
+```{r message=F, warning=F}
+f12_2_2 <- function(x){
+  f <- f12_1a(x)$SS[4]/as.numeric(f12_1a(x)$MS[6])
+  f_0.05 <- qf(0.95,1,16)
+  p_value <- 1-pf(f,1,16)
+  if (f<f_0.05){
+    reject_H0 <- "No"
+  }else{
+    reject_H0 <- "Yes"
+  }
+  res <- data.frame(f,f_0.05,p_value,reject_H0)
+  return(res)
+}
+
+f12_2_2(ex12_1a)%>%
+  kbl(caption = "Result of hypotheses for sex") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- F-값이 3.73으로 임계값 4.49보다 작은 값이 나왔고, p-value가 0.05보다 크므로 유의수준 5%하에 귀무가설을 기각할 수 없다.<br/>
+- 따라서 성별에 따른 혈청 내 칼슘 함량의 평균이 다르다고 할 수 없다.
+
+> 세번째 가설
+
+$$
+\begin{aligned}
+H_0 &: There\ is\ no\ interaction\ of\ sex\ and\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+H_A &: There\ is\ interaction\ of\ sex\ and\ hormone\ treatment\ on\ the\ mean\ plasma\ calcium\ concentration\ of\ birds\ \\
+\end{aligned}
+$$  
+
+```{r message=F, warning=F}
+f12_2_3 <- function(x){
+  f <- f12_1a(x)$SS[5]/as.numeric(f12_1a(x)$MS[6])
+  f_0.05 <- qf(0.95,1,16)
+  p_value <- 1-pf(f,1,16)
+  if (f<f_0.05){
+    reject_H0 <- "No"
+  }else{
+    reject_H0 <- "Yes"
+  }
+  res <- data.frame(f,f_0.05,p_value,reject_H0)
+  return(res)
+}
+
+f12_2_3(ex12_1a)%>%
+  kbl(caption = "Result of hypotheses for interaction") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- F-값이 0.26으로 임계값 4.49보다 작은 값이 나왔고, p-value가 0.05보다 크므로 유의수준 5%하에 귀무가설을 기각할 수 없다.<br/>
+- 따라서 호르몬과 성별의 교호작용 효과가 있다고 할 수 없다.
+
+> aov()를 사용하여 이원분산분석을 실시한다.
+
+```{r message=F, warning=F}
+library(broom)
+aov(exam12_1.plasma_calcium~exam12_1.Hormone*exam12_1.Sex, data=ex12_1) %>% 
+  tidy() %>% 
+  rename(" "="term","Sum Sq"="sumsq","Mean Sq"="meansq","F value"="statistic","Pr(>F)"="p.value") %>% 
+  kable(caption = "Two-factor ANOVA",booktabs = TRUE, valign = 't')%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+> stripchart() 함수로 1차원 산점도를 확인하여 본다.
+
+```{r message=F, warning=F}
+par(mfrow=c(1,2))
+stripchart(ex12_1$exam12_1.plasma_calcium~ex12_1$exam12_1.Hormone , vertical=T, xlab="Hormone", ylab="calcium", method="jitter", col="#8dd3c7", pch=16) 
+stripchart(ex12_1$exam12_1.plasma_calcium~ex12_1$exam12_1.Sex, vertical=T, xlab="Female / male", ylab="calcium", method="jitter", col="#007266", pch=16)
+```
+
+- stripchart() 함수는 sample size가 작을 때 box plot을 대신하기 좋다.
+
+```{r message=F, warning=F}
+interaction.plot(ex12_1$exam12_1.Hormone,ex12_1$exam12_1.Sex,ex12_1$exam12_1.plasma_calcium, col=c("orange","#8f7450"), bty="l",  main="interaction  plot",  xlab="Hormone",  ylab="mean  of calcium", trace.label = "Sex")
+```
+
+- 교호작용 그래프를 보면 서로 겹치는 부분이 없어 성별과 호르몬 간 교호작용이 존재하지 않음을 확인할 수 있으며, 성별이 여자이고 호르몬치료를 받았을 때 혈청 내 칼슘의 농도가 최대가 됨을 알 수 있다.
+
+
+## EXAMPLE 12.2a
+
+![](C:/git_blog/study/img/ch12/12-2a_1.png)
+
+![](C:/git_blog/study/img/ch12/12-2a_2.png)
+
+> "Machine Formulas"라는 사용하여 Example 12.1a에서 구한 결과와 같은 값을 구하여 보자.
+
+```{r message=F, warning=F}
+f12_2a <- function(x){
+  N <- (length(x)*nrow(x))
+  Xi <- sum(x) 
+  Xi2 <- sum(x^2)
+  C <- sum(x)^2/N
+  no_hormone <- sum(x[,1:2])
+  hormone <- sum(x[,3:4])
+  females <- sum(x[,c(1,3)])
+  males <- sum(x[,c(2,4)])
+  total_SS <- Xi2-C
+  aa <- vector()
+  for (i in 1:4){
+    aa[i] <- sum(ex12_1a[i])^2
+  }
+  cells_SS7 <- (sum(aa)/5) -C
+  within_cells_SS <- total_SS-cells_SS7
+  Factor_A_SS <- ((no_hormone^2+hormone^2)/10)-C
+  Factor_B_SS <- ((females^2+males^2)/10)-C
+  AXB_interaction_SS <- cells_SS7-Factor_A_SS-Factor_B_SS
+  res <- data.frame(total_SS,cells_SS7,within_cells_SS,Factor_A_SS,Factor_B_SS,AXB_interaction_SS)
+  return(res)
+}
+
+f12_2a(ex12_1a)%>%
+  kbl(caption = "Result of Machine formula") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+## EXAMPLE 12.3
+
+![](C:/git_blog/study/img/ch12/12-3_1.png)
+
+![](C:/git_blog/study/img/ch12/12-3_2.png)
+
+```{r message=F, warning=F}
+Xbar_1 = mean(ex12_1[ex12_1$exam12_1.Hormone=="No Hormone",]$exam12_1.plasma_calcium)
+Xbar_2 = mean(ex12_1[ex12_1$exam12_1.Hormone=="Yes Hormone",]$exam12_1.plasma_calcium)
+No.Hormone = ex12_1[ex12_1$exam12_1.Hormone=="No Hormone",]$exam12_1.plasma_calcium
+Yes.Hormone = ex12_1[ex12_1$exam12_1.Hormone=="Yes Hormone",]$exam12_1.plasma_calcium
+Female=ex12_1[ex12_1$exam12_1.Sex=="Female",]$exam12_1.plasma_calcium
+Male=ex12_1[ex12_1$exam12_1.Sex=="Male",]$exam12_1.plasma_calcium
+Xbar_pooled = (sum(Female)+sum(Male))/(length(Female)+length(Male))
+```
+
+- 호르몬을 처리하지 않은 새들의 plasma calcium 농도의 표본평균은 13.50mg/100ml이고, <br/>
+호르몬을 처리한 새들의 plasma calcium 농도의 표본평균은 30.15 mg/100ml이었다. 
+
+```{r message=F, warning=F}
+CI_ex12 <- function(x){
+  exam12_3_results = vector()
+  sample.mean <- mean(x)
+  exam12_3_results <- c(exam12_3_results, "mean"=sample.mean)
+  sample.s2 <- 18.8370
+  sample.n <- length(x)
+  t.score = round(qt(p=0.05/2, df=16,lower.tail=F),3)
+  margin.error <- t.score * sqrt(sample.s2/sample.n)
+  lower.bound <- round(sample.mean - margin.error, 2)
+  upper.bound <- round(sample.mean + margin.error, 2)
+  CI = paste(lower.bound, ",", upper.bound)
+  exam12_3_results <- c(exam12_3_results, "95% CI"=CI)
+  exam12_3_results <- as.data.frame(exam12_3_results)
+  return(exam12_3_results)
+}
+```
+
+```{r message=F, warning=F}
+CI_ex12(No.Hormone)
+CI_ex12(Yes.Hormone)
+CI_ex12(Female)
+CI_ex12(Male)
+```
+
+- 호르몬을 처리하지 않은 새들의 plasma calcium 농도의 모평균에 대한 95% 신뢰구간 (10.59mg/100ml , 16.41mg/100ml) <br/>
+- 호르몬 처리를 한 새들의 plasma calcium 농도의 모평균에 대한 95% 신뢰구간 (27.24mg/100ml, 33.06mg/100ml) <br/>
+- 암컷 새들의 plasma calcium 농도의 모평균에 대한 95% 신뢰구간 (20.79mg/100ml, 26.61mg/100ml) <br/>
+- 수컷 새들의 plasma calcium 농도의 모평균에 대한 95% 신뢰구간 (17.04mg/100ml, 22.86mg/100ml)
+
+```{r message=F, warning=F}
+CI_ex12_difference <- function(x){
+  exam12_3_results = vector()
+  sample.mean <- mean(x)
+  exam12_3_results <- c(exam12_3_results, "mean"=sample.mean)
+  sample.s2 <- 18.8370
+  sample.n <- length(x)
+  q.score = round(qtukey(p=0.95,2,16),3)
+  margin.error <- q.score * sqrt(sample.s2/sample.n)
+  lower.bound <- round(sample.mean - margin.error, 2)
+  upper.bound <- round(sample.mean + margin.error, 2)
+  CI = paste(lower.bound, ",", upper.bound)
+  exam12_3_results <- c(exam12_3_results, "95% CI"=CI)
+  exam12_3_results <- as.data.frame(exam12_3_results)
+  return(exam12_3_results)
+}
+```
+
+```{r message=F, warning=F}
+CI_ex12_difference(No.Hormone - Yes.Hormone)
+CI_ex12_difference(Female - Male)
+```
+
+- 호르몬을 처리하지 않은 새들의 plasma calcium 농도의 모평균과 호르몬 처리를 한 새들의 plasma calcium 농도의 모평균의 차에 대한 95% 신뢰구간 (-20.76mg/100ml, -12.54mg/100ml) <br/>
+- 신뢰구간이 0을 포함하지 않으므로 유의수준 5%하에 호르몬 처리에 따라 새들의 plasma calcium 농도의 모평균에는 차이가 있다고 볼 수 있다. <br/>
+- 암컷 새들의 plasma calcium 농도의 모평균과 수컷 새들의 plasma calcium 농도의 모평균의 차에 대한 95% 신뢰구간 (-0.36mg/100ml, 7.86mg/100ml)<br/>
+- 신뢰구간이 0을 포함하므로, 유의수준 5%하에 plasma calcium 농도의 모평균은 암컷과 수컷 새들 간에 유의미한 차이가 없다고 말할 수 있다.
+
+```{r message=F, warning=F}
+CI_ex12_pooled <- function(x){
+  exam12_3_pooled = vector()
+  exam12_3_pooled = c(exam12_3_pooled, "Xbar_pooed"=x)
+  t.score = qt(p=0.05/2, df=16,lower.tail=F)
+  s2=18.8370
+  margin = t.score * sqrt(s2/(length(Female)+length(Male)))
+  lower.bound = round(x - margin, 3) 
+  upper.bound = round(x + margin, 3) 
+  CI = paste(lower.bound, ",", upper.bound)
+  exam12_3_results <- c(exam12_3_pooled, "95% CI"=CI)
+  exam12_3_results <- as.data.frame(exam12_3_results)
+  return(exam12_3_results)
+}
+```
+
+```{r message=F, warning=F}
+CI_ex12_pooled(Xbar_pooled)
+```
+
+- pooled population mean에 대한 95% 신뢰구간은 (19.76mg/100ml, 23.88mg/100ml)이다.
+
+## EXAMPLE 12.4
+
+![](C:/git_blog/study/img/ch12/12-4_1.png)
+
+![](C:/git_blog/study/img/ch12/12-4_2.png)
+
+- 해당 데이터는 5개의 블록으로 구성되어 있으며, 한 블록에 세 마리의 고양이로 구성되어있다.<br/>
+한 블록 안에서 고양이들은 세가지 마취제 중 하나를 무작위로 배정받는다.<br/>
+배정받은 마취제의 효과 시간(분)을 기록한 데이터이다.<br/>
+- 블록 내에 마취제를 투여함에 있어서는 반복을 하지 않으며, 고양이들이 랜덤으로 설정되었으며 이러한 반복이 없는 경우를 난괴법(Randomized Block Design)이라 한다.
+
+```{r message=F, warning=F}
+#데이터셋
+ex12_4%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+
+```{r message=F, warning=F}
+library(ggplot2)
+ex12_4$exam12_4.Treatment <- as.factor(ex12_4$exam12_4.Treatment)
+ex12_4$exam12_4.Block <- as.factor(ex12_4$exam12_4.Block)
+```
+
+
+```{r message=F, warning=F}
+ggplot(ex12_4, aes(x = exam12_4.Block, y = exam12_4.Time, fill=exam12_4.Block)) +
+  geom_boxplot()+
+  ggtitle("Boxplot of Time by Block")
+```
+- 블록의 따른 마취 지속효과를 박스플롯으로 확인하여 보았다.
+
+```{r message=F, warning=F}
+ggplot(ex12_4, aes(x = exam12_4.Treatment, y = exam12_4.Time, fill=exam12_4.Treatment)) +
+  geom_boxplot()+
+  ggtitle("Boxplot of Time by Treatment")
+```
+
+- 마취제의 따른 마취 지속효과를 박스플롯으로 확인하여 보았다.
+
+> Shapiro-Wilk Test로 정규성을 평가하였다.
+
+```{r message=F, warning=F}
+shapiro.test(ex12_4$exam12_4.Time)
+```
+
+- p-value가 0.05보다 매우 크므로 모집단이 정규성을 따르지 않는다는 대립가설을 채택할 충분한 근거가 없다.<br/>
+- 따라서 정규성을 만족한다는 사실을 바탕으로 등분산성 검정을 진행한다.
+
+> Bartlett's Test를 통해 등분산성 검정을 진행하였다.
+
+```{r message=F, warning=F}
+bartlett.test(ex12_4$exam12_4.Time~ex12_4$exam12_4.Treatment)
+```
+
+- p-value가 모두 0.05보다 크므로 등분산성이 아니라는 아니라는 대립가설을 채택할 근거가 없다.<br/>
+- 본 검정의 가설은 다음과 같다.
+
+$$
+\begin{aligned} 
+H_0 &:The\ mean\ time\ for\ effectiveness\ is\ the\ same\ for\ all\ three\ anesthetics. \\ 
+H_1 &: The\ mean\ time\ for\ effectiveness\ is\ not\ the\ same\ for\ all\ three\ anesthetics. 
+\end{aligned}
+$$
+
+> Randomized Complete Block ANOVA
+
+```{r message=F, warning=F}
+aov(exam12_4.Time~exam12_4.Treatment+exam12_4.Block, data = ex12_4) %>% 
+  tidy() %>% 
+  rename(" "="term","Sum Sq"="sumsq","Mean Sq"="meansq","F value"="statistic","Pr(>F)"="p.value") %>% 
+  kable(caption = "Randomized Complete Block ANOVA",booktabs = TRUE, valign = 't') %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 블록이 있는 분산분석을 수행한 결과이다.<br/>
+- 분산분석 결과를 보면 Treatement와 블록의 p-value는 모두 0.05 보다 작으므로 귀무가설을 기각할 충분한 근거를 가지고 있다.<br/> 그러므로 마취약에 따라 마취의 효과 시간에 대한 모평균이 다르다라고 할 수 있다.
+
+## EXAMPLE 12.5
+
+![](C:/git_blog/study/img/ch12/12-5.png)
+
+- Example 12.4의 데이터를 사용하여 비모수적 방법인 Friedman’s test를 수행하도록 한다.<br/>
+- 이 검정 방법은 각 블록 내에 있는 Treatment 즉, 마취제의 효과가 있는 시간에 대한 평균을 가지고 Rank를 매긴다.
+
+> Friedman’s Test
+
+```{r message=F, warning=F}
+library(agricolae)
+fr <- friedman(ex12_4$exam12_4.Block, trt=ex12_4$exam12_4.Treatment, ex12_4$exam12_4.Time, alpha=0.05)
+  kable(fr[[1]], caption = paste0("Friedman's Test"))%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"));kable(fr[[2]], caption = paste0("Parameters"))%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"));kable(fr[[3]], caption = paste0("Means"))%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"));kable(fr[[5]], caption = paste0("Post Hoc"))%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 본 검정의 귀무가설은 다음과 같다.
+
+$$
+\begin{aligned} 
+H_0 &:The\ time\ for\ effectiveness\ is\ the\ same\ for\ all\ three\ anesthetics. \\ 
+H_1 &: The\ time\ for\ effectiveness\ is\ not\ the\ same\ for\ all\ three\ anesthetics. 
+\end{aligned}
+$$
+
+```{r message=F, warning=F}
+pf(as.numeric(fr$statistics[4]),2,4,lower.tail=F)
+```
+
+- 프리드만 검정 결과 검정통계량 F값은 21로 나왔으며 p-value=0.0076으로 유의수준 0.05보다 작아 귀무가설을 기각할 충분한 근거를 가진다. <br/>
+따라서 유의수준 5%하에 마취제에 따른 마취시간이 다르다고 할 수 있다.
+
+## EXAMPLE 12.6
+
+![](C:/git_blog/study/img/ch12/12-6.png)
+
+- 본 데이터는 5가지의 옷에 대해 모기에 공격을 당하는지 안당하는지를 기록한 데이터이다.<br/>
+- Cochran’s Q test는 이항형으로 반복 관측된 데이터에 사용하는 방법으로 이항데이터에 대한 프리드만 검정이라고 할 수 있다. 
+
+```{r message=F, warning=F}
+ex12_6%>%
+  kbl(caption = "Dataset of Example 12.2") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 본 검정의 가설은 다음과 같다.
+
+$$
+\begin{aligned} 
+H_0 &:The\ proportion\ of\ humans\ attacked\ by\ mosquitoes\ is\ the\ same\ for\ all\ five\ clothing\ types.\\ 
+H_1 &: The\ proportion\ of\ humans\ attacked\ by\ mosquitoes\ is\ not\ the\ same\ for\ all\ five\ clothing\ types.\\ \end{aligned}
+$$
+
+> Cochran’s Test
+
+```{r message=F, warning=F}
+library(nonpar)
+ex12_6_del <- ex12_6[ex12_6$exam12_6.Person !=2,]
+x = ex12_6_del[,-1]
+cochrans.q(x)
+```
+
+- 모든 종류의 옷을 입었을 때 모기에 물린 사람의 데이터는 삭제한다. <br/>
+- Cochran’s Q Test를 수행한 결과, 검정통계량 값은 6.947, p-value는 0.14로 계산되었다. <br/>
+- p-value가 0.05보다 크므로, 유의수준 5%하에 모기의 공격을 받은 사람의 비율은 옷의 종류에 따라 차이가 있다고 결론 내릴 수 없다.
+
