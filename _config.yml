@@ -60,7 +60,7 @@ menu:
       - title:  SAS
         url:      /sas/
       - title:  Categorical_data_analysis
-        url:      /categorical_data_analysis/
+        url:      /categorical-data-analysis/
       - title:  의학통계방법론
         url:      /의학통계방법론/
       - title:  Papers

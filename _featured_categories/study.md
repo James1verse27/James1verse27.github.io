@@ -20,7 +20,7 @@ description: >
 * [Blog-etc]{:.heading.flip-title} --- 기타, 이것저것
 
 [SAS]: /sas/
-[Categorical_data_analysis]: /categorical_data_analysis/
+[Categorical_data_analysis]: /categorical-data-analysis/
 [의학통계방법론]: /의학통계방법론/
 [Papers]: /papers/
 [Blog-etc]: /blog-etc/
