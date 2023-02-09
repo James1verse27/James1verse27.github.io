@@ -19,8 +19,8 @@ description: >
 * [Papers]{:.heading.flip-title} --- 논문 읽기, 논문 공부
 * [Blog-etc]{:.heading.flip-title} --- 기타, 이것저것
 
-[SAS]: /SAS/
-[Categorical_data_analysis]: /Categorical_data_analysis/
+[SAS]: /sas/
+[Categorical_data_analysis]: /categorical_data_analysis/
 [의학통계방법론]: /의학통계방법론/
 [Papers]: /papers/
 [Blog-etc]: /blog-etc/

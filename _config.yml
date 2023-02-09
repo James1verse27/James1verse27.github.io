@@ -58,14 +58,14 @@ menu:
     url:               /study/
     submenu:
       - title:  SAS
-        url:      /SAS/
+        url:      /sas/
       - title:  Categorical_data_analysis
-        url:      /Categorical_data_analysis/
+        url:      /categorical_data_analysis/
       - title:  의학통계방법론
         url:      /의학통계방법론/
       - title:  Papers
-        url:      /Papers/
-      - title:  blog-etc
+        url:      /papers/
+      - title:  Blog-etc
         url:      /blog-etc/
   - title:             Blog
     url:               /blog/
