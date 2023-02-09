@@ -56,6 +56,17 @@ menu:
     url:               /research/
   - title:             Study log
     url:               /study/
+    submenu:
+      - title:  SAS
+        url:      /SAS/
+      - title:  Categorical_data_analysis
+        url:      /Categorical_data_analysis/
+      - title:  의학통계방법론
+        url:      /의학통계방법론/
+      - title:  Papers
+        url:      /Papers/
+      - title:  blog-etc
+        url:      /blog-etc/
   - title:             Blog
     url:               /blog/
   - title:             QT
