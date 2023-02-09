@@ -35,21 +35,21 @@ library('ggplot2')
 
 # Q-1
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1a.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1a.jpg)
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1b.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1b.jpg)
 
 ## Q-1 1)
 
 >**1) Is the Weibull distribution the exponential dispersion family?**
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1-1.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1-1.jpg)
 
 ## Q-1 2)
 
 >**2) Please find the score function and estimate $$\theta$$ when $$\lambda=2$$.**
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1-2.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1-2.jpg)
 
 ``` r
 y <- c(1051, 1337, 1389, 1921, 1942, 
@@ -71,20 +71,20 @@ sqrt(sum(y^2)/length(y))
 
 >**3) Please derive the fisher information formula for $$\theta$$.**
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1-3.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1-3.jpg)
 
 ## Q-1 4)
 
 >**4) Use the Newton-Raphson formula to find $$\theta$$.**
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1-4.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1-4.jpg)
 
 ## Q-1 5)
 
 >**5) Suppose that $$\theta^{𝓀}$$ the $$𝓀^{th}$$ iterated value based on the NewtonRapson formmula.**
 **Obtain the fifth iterated value $$\theta^{5}$$ given $$\lambda=2$$.**
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1-5.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1-5.jpg)
 
 ``` r
 a0 <- mean(y)
@@ -115,13 +115,13 @@ print(a0)
 
 >**Please construct 95% confidence interval vasd on Wald test for testing $$H_0 : \theta = 0 \ vs \ H_1 : \theta \neq 0$$.**
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-1-6.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-1-6.jpg)
 
 # Q-2
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2a.jpg){: width="600" height="700"}
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-2a.jpg){: width="600" height="700"}
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2b.jpg){: width="600" height="700"}
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-2b.jpg){: width="600" height="700"}
 
 ``` r
 y <- c(2,3,6,7,8,9,10,12,15)
@@ -295,7 +295,7 @@ x
 </tbody>
 </table>
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2-1.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-2-1.jpg)
 
 ``` r
 a11 <- sum(1/(2+1*x))
@@ -403,7 +403,7 @@ x
 </tbody>
 </table>
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2-2.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-2-2.jpg)
 
 ``` r
 solve(J)
@@ -415,7 +415,7 @@ solve(J)
 
 ## Q-2 3)
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-2-3.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-2-3.jpg)
 
 ``` r
 confint(poi_reg)[2,1:2]%>% 
@@ -453,15 +453,15 @@ confint(poi_reg)[2,1:2]%>%
 
 # Q-3
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-3.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-3.jpg)
 
 ## Q-3 1,2)
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-3-1-2.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-3-1-2.jpg)
 
 # Q-4
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-4.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-4.jpg)
 
 > [예제 데이터 바로가기](https://users.stat.ufl.edu/~aa/glm/data/Crabs.dat)
 
@@ -1167,7 +1167,7 @@ baths
 pairs(cbind(Houses$price,Houses$size,Houses$taxes)) # scatterplot matrix for pairs of var’s
 ```
 
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-17-1.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-17-1.png)
 
 ### - **Backward Elimination with House Selling Price Data**
 
@@ -2666,10 +2666,10 @@ new home의 경우, 이 세 가지 값에 각각 +$5441달러가 된다.
 plot(fit8)
 ```
 
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-1.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-2.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-3.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-27-4.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-27-1.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-27-2.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-27-3.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-27-4.png)
 
 > fit8에서 beds변수를 제거한 모형을 fit9라고 하겠다. 
 
@@ -3023,7 +3023,7 @@ ggplot(data = Houses, aes(x = price))+
   geom_density(alpha=0.3, color="#ffffb3", fill="#CED46A")
 ```
 
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-3-1.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-3-1.png)
 
 
 > 따라서 Gamma GLM을 적합시켜 보도록 하겠다.
@@ -3517,10 +3517,10 @@ AIC of Normal linear glm
 plot(glm(price ~ size + new + size:new, family=Gamma(link=identity), data=Houses))
 ```
 
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-1.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-2.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-3.png)
-![](/study/img/[Categorical data analysis] Assignment 1/unnamed-chunk-37-4.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-37-1.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-37-2.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-37-3.png)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/unnamed-chunk-37-4.png)
 
 > 위의 결과를 보아 효과들은 전체적으로 비슷하지만 감마분포를 가정했을 때
 > interaction term에서 더 큰 SE 값을 가지고 있는다.
@@ -3909,7 +3909,7 @@ $$ E(price) = -7.4521938 + 0.0944569 * size -77.9033275 * new + 0.0649207	* (siz
 
 # Q-5
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-5.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-5.jpg)
 
 > [예제 데이터 바로가기](https://github.com/James1verse27/James1verse27.github.io/blob/main/study/data/Categorical%20data%20analysis_Assignment/Auto.csv)
 
@@ -5179,26 +5179,26 @@ BIC(autoModel5)
 
 ## Q-6 4.9
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-9.jpg)
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-9.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-4-9.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-9.jpg)
 
 ## Q-6 4.13
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-13.jpg)
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-13.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-4-13.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-13.jpg)
 
 ## Q-6 4.16
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-16.jpg)
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-16.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-4-16.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-16.jpg)
 
 ## Q-6 4.22
 
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-22.jpg)
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-22.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-4-22.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-22.jpg)
 
 ## Q-6 4.25
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-4-25.jpg)
-![](/study/img/[Categorical data analysis] Assignment 1/Q-6-25.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-4-25.jpg)
+![](/study/img/Categorical data analysis/[Categorical data analysis] Assignment 1/Q-6-25.jpg)
 
 
