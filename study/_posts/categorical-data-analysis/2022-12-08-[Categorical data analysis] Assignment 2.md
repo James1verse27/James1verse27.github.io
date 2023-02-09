@@ -3,7 +3,7 @@ layout: post
 title:  "[Categorical data analysis] Assignment(2)"
 category:
     - Study
-    - Categorical_data_analysis
+    - categorical-data-analysis
 tag: [R, blog, jekyll, Data, Categorical data analysis, GLM]
 toc: true
 ---
