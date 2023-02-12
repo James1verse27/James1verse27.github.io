@@ -496,7 +496,7 @@ one_tailed_chi2_test(ex7_4$gastricjuice,1.5,up_or_down = "up")%>%
 $$
 \begin{aligned}
 H_0 &: \sigma^2 \leq 1.5\ sec^2\\
-H_1 &: \sigma^2 > 1.5\ sec^2
+H_A &: \sigma^2 > 1.5\ sec^2
 \end{aligned}
 $$
 > 가설 검정 결과 $SS=18.8281$ 이고 카이제곱 검정통계량 $\chi^2=12.552$ 이며 유의수준 0.05 아래에서 검정통계량 값이 기각역인 $\chi_{0.05,7}^2=14.067$ 에 포함되지 않아 귀무가설 $H_0 : \sigma^2 \leq 1.5\ sec^2$ 를 기각할 수 없다.

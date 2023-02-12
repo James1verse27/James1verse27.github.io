@@ -64,7 +64,7 @@ ex8_1%>%
 $$
 \begin{aligned}
 H_0 &: \mu_1 = \mu_2 \\
-H_1 &: \mu_1 \not=\ \mu_2
+H_A &: \mu_1 \not=\ \mu_2
 \end{aligned}
 $$
 
@@ -145,7 +145,7 @@ ex8_2%>%
 $$
 \begin{aligned}
 H_0 &: \mu_1 \geq \mu_2 \\
-H_1 &: \mu_1 < \ \mu_2
+H_A &: \mu_1 < \ \mu_2
 \end{aligned}
 $$
 
@@ -220,7 +220,7 @@ ex8_2a%>%
 $$
 \begin{aligned}
 H_0 &: \mu_{30} = \mu_{10} \\
-H_1 &: \mu_{30} \not=\ \mu_{10}
+H_A &: \mu_{30} \not=\ \mu_{10}
 \end{aligned}
 $$
 - 30도에서 7개의 알을, 10도에서 8개의 알이 부화하는 시간을 관찰하여 기록하였고 두개의 표본은 독립적이게 추출하였다.
@@ -519,7 +519,7 @@ $$
 - trap 종류에 따라 잡힌 나방의 수에 대한 분산의 비가 다른가에 대한 검정으로 모집단의 분산 차이가 있는지 알아보고자 한다.
 
 $$
-\ H_0:\sigma^2_1 = \sigma^2_2 \ vs \ H_1: \sigma^2_1 \not= \sigma^2_2
+\ H_0:\sigma^2_1 = \sigma^2_2 \ vs \ H_A: \sigma^2_1 \not= \sigma^2_2
 $$
 
 ```{r message=F, warning=F}
@@ -568,7 +568,7 @@ ex8_8%>%
 - 두 상황에서 추출한 두 데이터로 Outside에서의 소나무 종자 발아 시간의 모분산이 Greenhouse에서 보다 모분산이 더 큰지 검정하고자 한다.
 
 $$
-\ H_0:\sigma^2_1 \geq \sigma^2_2 \ vs \ H_1: \sigma^2_1 < \sigma^2_2
+\ H_0:\sigma^2_1 \geq \sigma^2_2 \ vs \ H_A: \sigma^2_1 < \sigma^2_2
 $$
 
 ```{r message=F, warning=F}
@@ -638,7 +638,7 @@ ex8_10%>%
 $$
 \begin{aligned}
 H_0 &:\frac{\sigma_1}{\mu_1}=\frac{\sigma_2}{\mu_2}, \\
-H_1 &:\frac{\sigma_1}{\mu_1} \neq \frac{\sigma_2}{\mu_2}
+H_A &:\frac{\sigma_1}{\mu_1} \neq \frac{\sigma_2}{\mu_2}
 \end{aligned}
 $$
 
@@ -1159,8 +1159,8 @@ ex8_16%>%
 
 $$
 \begin{aligned}
-H_0 &: H_1 = H_2\\
-H_A &: H_1 \ne H_2
+H_0 &: H_A = H_2\\
+H_A &: H_A \ne H_2
 \end{aligned}
 $$
 
@@ -1171,9 +1171,9 @@ $$
 \begin{aligned}
 H' &= \frac{n\ \log n\ -\ \sum f_i \log f_i}{n}\\
 s_{H'}^2 &=\frac{\sum f_i \log^2 f_i\ -\ (\sum f_i \log^2 f_i)^2/n}{n^2}\\
-s_{H_1'-H_2'} &= \sqrt{s_{H_1'}^2+s_{H_2'}^2}\\
-t &= \frac{H_1'-H_2'}{s_{H_1'-H_2'}} \sim t(\nu)\\
-\nu&=\frac{(s_{H_1'}^2+s_{H_2'}^2)^2}{\frac{(s_{H_1'})^2}{n_1}+\frac{(s_{H_2'})^2}{n_2}}
+s_{H_A'-H_2'} &= \sqrt{s_{H_A'}^2+s_{H_2'}^2}\\
+t &= \frac{H_A'-H_2'}{s_{H_A'-H_2'}} \sim t(\nu)\\
+\nu&=\frac{(s_{H_A'}^2+s_{H_2'}^2)^2}{\frac{(s_{H_A'})^2}{n_1}+\frac{(s_{H_2'})^2}{n_2}}
 \end{aligned}
 $$
 

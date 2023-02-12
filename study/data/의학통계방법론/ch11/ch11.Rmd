@@ -67,7 +67,7 @@ ex11_1%>%
 $$
 \begin{aligned}
 H_0 &: \mu_1=\mu_2=\mu_3=\mu_4=\mu_5 \\
-H_1 &: Mean \ strontium \ concentrations \ are \ not \ the \ same \ in \ all \ five \ bodies \ of \ water
+H_A &: Mean \ strontium \ concentrations \ are \ not \ the \ same \ in \ all \ five \ bodies \ of \ water
 \end{aligned}
 $$
 
@@ -204,7 +204,7 @@ ex11_4%>%
 $$
 \begin{aligned}
 H_0 &: \mu_2 \ge \mu_A \\
-H_1 &: \mu_2 < \mu_A
+H_A &: \mu_2 < \mu_A
 \end{aligned}
 $$
 

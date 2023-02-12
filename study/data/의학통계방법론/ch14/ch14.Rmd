@@ -58,7 +58,7 @@ anova(aov(oxygen ~ species*temperature*sex)) %>%
 $$
 \begin{aligned}
 H_0 &: Mean \ respiratory \ rate \ is \ the \ same \ in \ all \ three \ crab \ species. \ (i.e., \ \mu_1=\mu_2=\mu_3) \\
-H_1 &: Mean \ respiratory \ rate \ is \ not \ the \ same \ in \ all \ three \ crab \ species.
+H_A &: Mean \ respiratory \ rate \ is \ not \ the \ same \ in \ all \ three \ crab \ species.
 \end{aligned}
 $$
 
@@ -69,7 +69,7 @@ $$
 $$
 \begin{aligned}
 H_0 &: Mean \ respiratory \ rate \ is \ the \ same \ at \ all \ three \ experimental \ temperatures. \ (i.e., \ \mu_{low}=\mu_{med}=\mu_{high}) \\
-H_1 &: Mean \ respiratory \ rate \ is \ not \ the \ same \ at \ all \ three \ experimental \ temperatures.
+H_A &: Mean \ respiratory \ rate \ is \ not \ the \ same \ at \ all \ three \ experimental \ temperatures.
 \end{aligned}
 $$
 
@@ -80,7 +80,7 @@ $$
 $$
 \begin{aligned}
 H_0 &: Mean \ respiratory \ rate \ is \ the \ same \ for \ males \ and \ females. \ (i.e., \ \mu_{male}=\mu_{female}) \\
-H_1 &: Mean \ respiratory \ rate \ is \ not \ the \ same \ for \ males \ and \ females.
+H_A &: Mean \ respiratory \ rate \ is \ not \ the \ same \ for \ males \ and \ females.
 \end{aligned}
 $$
 

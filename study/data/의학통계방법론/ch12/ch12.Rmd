@@ -493,7 +493,7 @@ bartlett.test(ex12_4$exam12_4.Time~ex12_4$exam12_4.Treatment)
 $$
 \begin{aligned} 
 H_0 &:The\ mean\ time\ for\ effectiveness\ is\ the\ same\ for\ all\ three\ anesthetics. \\ 
-H_1 &: The\ mean\ time\ for\ effectiveness\ is\ not\ the\ same\ for\ all\ three\ anesthetics. 
+H_A &: The\ mean\ time\ for\ effectiveness\ is\ not\ the\ same\ for\ all\ three\ anesthetics. 
 \end{aligned}
 $$
 
@@ -534,7 +534,7 @@ fr <- friedman(ex12_4$exam12_4.Block, trt=ex12_4$exam12_4.Treatment, ex12_4$exam
 $$
 \begin{aligned} 
 H_0 &:The\ time\ for\ effectiveness\ is\ the\ same\ for\ all\ three\ anesthetics. \\ 
-H_1 &: The\ time\ for\ effectiveness\ is\ not\ the\ same\ for\ all\ three\ anesthetics. 
+H_A &: The\ time\ for\ effectiveness\ is\ not\ the\ same\ for\ all\ three\ anesthetics. 
 \end{aligned}
 $$
 
@@ -563,7 +563,7 @@ ex12_6%>%
 $$
 \begin{aligned} 
 H_0 &:The\ proportion\ of\ humans\ attacked\ by\ mosquitoes\ is\ the\ same\ for\ all\ five\ clothing\ types.\\ 
-H_1 &: The\ proportion\ of\ humans\ attacked\ by\ mosquitoes\ is\ not\ the\ same\ for\ all\ five\ clothing\ types.\\ \end{aligned}
+H_A &: The\ proportion\ of\ humans\ attacked\ by\ mosquitoes\ is\ not\ the\ same\ for\ all\ five\ clothing\ types.\\ \end{aligned}
 $$
 
 > Cochran’s Test

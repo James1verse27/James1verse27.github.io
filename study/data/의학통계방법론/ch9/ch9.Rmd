@@ -61,7 +61,7 @@ ex9_1%>%
 $$
 \begin{aligned}
 H_0 &: \mu_d = 0 \\
-H_1 &: \mu_d \not=\ 0
+H_A &: \mu_d \not=\ 0
 \end{aligned}
 $$
 
@@ -105,7 +105,7 @@ ex9_2%>%
 $$
 \begin{aligned}
 H_0 &: \mu_d \leq25 kg/ha \\
-H_1 &: \mu_d>250kg/ha
+H_A &: \mu_d>250kg/ha
 \end{aligned}
 $$
 
@@ -133,7 +133,7 @@ t.test(ex9_2$exam9_2.new, ex9_2$exam9_2.old, mu=250, alt='greater', paired=T) # 
 $$
 \begin{aligned}
 H_0 &: \sigma_1^2=\sigma_2^2 \\
-H_1 &: \sigma_1^2\neq\sigma_2^2
+H_A &: \sigma_1^2\neq\sigma_2^2
 \end{aligned}
 $$
 
@@ -178,7 +178,7 @@ var.test(ex9_1$exam9_1.hindleg,ex9_1$exam9_1.foreleg,ratio=1,alternative = "two.
 - 이 예제에서는 Example 9.1 데이터가 정규성 가정을 만족하지 못하였으므로 비모수 검정을 시행하여보겠다.
 
 $$
-H_o:\ Deer\ hindleg\ length\ is\ the\ same\ as\ foreleg\ length.\\ 
+H_0:\ Deer\ hindleg\ length\ is\ the\ same\ as\ foreleg\ length.\\ 
 H_A: eer\ hind\ leg\ length\ is\ not\ the\ same\ as\ forele\ length.
 $$
 
