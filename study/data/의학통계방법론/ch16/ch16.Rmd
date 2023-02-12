@@ -60,7 +60,7 @@ ex16%>%
 $$
 \begin{aligned}
 H_0 &: \mu_{11}=\mu_{12}=\mu_{13}=\mu_{14} \ and \ \mu_{21}=\mu_{22}=\mu_{23}=\mu_{24} \\
-H_1 &: \ Sparrows \ do \ not \ have \ the \ same \ weight \ of \ fat \ and \ the \ same \ weight \ of \ fat-free \ dry \ body \ tissue \ at \ these \ four \ times \ of \ the \ year.
+H_A &: \ Sparrows \ do \ not \ have \ the \ same \ weight \ of \ fat \ and \ the \ same \ weight \ of \ fat-free \ dry \ body \ tissue \ at \ these \ four \ times \ of \ the \ year.
 \end{aligned}
 $$
 

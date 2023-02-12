@@ -49,9 +49,9 @@ for (x in 1:length(data_chap11)){
 
 ## EXAMPLE 11.1
 
-![](C:/git_blog/study/img/ch11/11-1_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-1_1.png)
 
-![](C:/git_blog/study/img/ch11/11-1_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-1_2.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -133,7 +133,7 @@ plot(ex11_1.tukey, col="forestgreen")
 
 ## EXAMPLE 11.2
 
-![](C:/git_blog/study/img/ch11/11-2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-2.png)
 ```{r message=F, warning=F}
 ex11_2 <- read_excel(path = 'C:/git_blog/study/data/ch10/data_chap10.xls',sheet = 'exam10_1')
 ex11_2[15,3]=NA
@@ -158,7 +158,7 @@ plot(ex11_2.tukey, col = "forestgreen")
 
 ## EXAMPLE 11.3
 
-![](C:/git_blog/study/img/ch11/11-3.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-3.png)
 
 - 이 예제는 Example 11.1 데이터를 사용하여 모평균에 대한 신뢰구간을 구해본다.
 
@@ -187,7 +187,7 @@ data.frame(ci)%>%
 
 ## EXAMPLE 11.4
 
-![](C:/git_blog/study/img/ch11/11-4.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-4.png)
 
 - 해당 데이터는 5가지 비료에 따른 감자 수확량을 mean과 size로 기록한 데이터이다.
 
@@ -244,7 +244,7 @@ $\bar{X}_{2}>\bar{X}_{1}$ 이므로 귀무가설 $H_{0} :  \mu_{2} \geq \mu_{A}$
 
 ## EXAMPLE 11.5
 
-![](C:/git_blog/study/img/ch11/11-5.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-5.png)
 
 - Dunneet’s test 는 집단과 하나의 control 집단을 이용했다면 Scheffee’s test 에서는 위 문제의 2번 그룹의 대조군과 나머지를 비교하였다.
 
@@ -264,7 +264,7 @@ ex11.6$`as.factor(ex11_1$exam11_1.pond)` %>%
 
 ## EXAMPLE 11.6
 
-![](C:/git_blog/study/img/ch11/11-6.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-6.png)
 
 EXAMPLE 11.5 문제의 신뢰구간을 구해본다.
 
@@ -278,7 +278,7 @@ ex11.6$`as.factor(ex11_1$exam11_1.pond)` %>%
 
 ## EXAMPLE 11.7
 
-![](C:/git_blog/study/img/ch11/11-7.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-7.png)
 
 - 이 예제는 EXAMPLE 10.10를 Nemenyi test를 이용하여 비모수적 다중비교를 하는 문제이다.
 
@@ -298,7 +298,7 @@ kwAllPairsNemenyiTest(abundance~factor(layer), data=ex11_7, dist='Tukey')
 
 ## EXAMPLE 11.8
 
-![](C:/git_blog/study/img/ch11/11-8.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-8.png)
 
 - 이 예제는 EXAMPLE 10.11를 Dunn test를 이용하여 비모수적 다중비교를 하는 문제이다.<br/>
 - 위 Nemenyi test와 비슷한 방법이지만 표본크기가 다른 데이터이므로 그룹간의 차이가 어떤 그룹간에 있는지 Dunn test를 사용하였다.
@@ -314,7 +314,7 @@ kwAllPairsDunnTest(ex11_8$ph, ex11_8$pond, p.adjust.method = "bonferroni")
 
 ## EXAMPLE 11.9
 
-![](C:/git_blog/study/img/ch11/11-9.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-9.png)
 
 - 이 예제는 EXAMPLE 10.12를 Tukey-Type multiple comparison를 이용하여 그룹간 중앙값의 차이가 있는지 다중비교하는 문제이다.
 
@@ -323,7 +323,7 @@ ex11_9 <- read_excel(path = 'C:/git_blog/study/data/ch10/data_chap10.xls',sheet 
 median(ex11_9$height)
 ```
 
-![](C:/git_blog/study/img/ch11/10-12_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/10-12_1.png)
 
 - 중앙값은 7.9 값이 나왔으며, 7.9보다 큰 첫번째 수인 8.1보다 큰 수를 빈도로 잡아 North:3, East:2, South:9, West:6 값이 나온다.
 
@@ -348,7 +348,7 @@ table %>%
 
 ## EXAMPLE 11.10
 
-![](C:/git_blog/study/img/ch11/11-10.png)
+![](C:/git_blog/study/img/의학통계방법론/ch11/11-10.png)
 
 - 이 예제는 분산이 동일하지 않은 결과에 대한 다중비교를 하는 문제이다.
 

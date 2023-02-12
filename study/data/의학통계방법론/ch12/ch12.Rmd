@@ -50,7 +50,7 @@ for (x in 1:length(data_chap12)){
 
 ## EXAMPLE 12.1
 
-![](C:/git_blog/study/img/ch12/12-1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-1.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -98,9 +98,9 @@ cell%>%
 
 ## EXAMPLE 12.1a
 
-![](C:/git_blog/study/img/ch12/12-1a_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-1a_1.png)
 
-![](C:/git_blog/study/img/ch12/12-1a_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-1a_2.png)
 
 - 예제에서 나온 식으로 제곱합 및 자유도를 구하는 함수를 직접 작성하여 ANOVA table을 작성하여 보았다.
 
@@ -145,7 +145,7 @@ f12_1a(ex12_1a)%>%
 
 ## EXAMPLE 12.2
 
-![](C:/git_blog/study/img/ch12/12-2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-2.png)
 
 ```{r message=F, warning=F}
 ex12_1$Hormone <- as.factor(ex12_1$exam12_1.Hormone)
@@ -297,9 +297,9 @@ interaction.plot(ex12_1$exam12_1.Hormone,ex12_1$exam12_1.Sex,ex12_1$exam12_1.pla
 
 ## EXAMPLE 12.2a
 
-![](C:/git_blog/study/img/ch12/12-2a_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-2a_1.png)
 
-![](C:/git_blog/study/img/ch12/12-2a_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-2a_2.png)
 
 > "Machine Formulas"라는 사용하여 Example 12.1a에서 구한 결과와 같은 값을 구하여 보자.
 
@@ -334,9 +334,9 @@ f12_2a(ex12_1a)%>%
 
 ## EXAMPLE 12.3
 
-![](C:/git_blog/study/img/ch12/12-3_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-3_1.png)
 
-![](C:/git_blog/study/img/ch12/12-3_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-3_2.png)
 
 ```{r message=F, warning=F}
 Xbar_1 = mean(ex12_1[ex12_1$exam12_1.Hormone=="No Hormone",]$exam12_1.plasma_calcium)
@@ -433,9 +433,9 @@ CI_ex12_pooled(Xbar_pooled)
 
 ## EXAMPLE 12.4
 
-![](C:/git_blog/study/img/ch12/12-4_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-4_1.png)
 
-![](C:/git_blog/study/img/ch12/12-4_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-4_2.png)
 
 - 해당 데이터는 5개의 블록으로 구성되어 있으며, 한 블록에 세 마리의 고양이로 구성되어있다.<br/>
 한 블록 안에서 고양이들은 세가지 마취제 중 하나를 무작위로 배정받는다.<br/>
@@ -512,7 +512,7 @@ aov(exam12_4.Time~exam12_4.Treatment+exam12_4.Block, data = ex12_4) %>%
 
 ## EXAMPLE 12.5
 
-![](C:/git_blog/study/img/ch12/12-5.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-5.png)
 
 - Example 12.4의 데이터를 사용하여 비모수적 방법인 Friedman’s test를 수행하도록 한다.<br/>
 - 이 검정 방법은 각 블록 내에 있는 Treatment 즉, 마취제의 효과가 있는 시간에 대한 평균을 가지고 Rank를 매긴다.
@@ -547,7 +547,7 @@ pf(as.numeric(fr$statistics[4]),2,4,lower.tail=F)
 
 ## EXAMPLE 12.6
 
-![](C:/git_blog/study/img/ch12/12-6.png)
+![](C:/git_blog/study/img/의학통계방법론/ch12/12-6.png)
 
 - 본 데이터는 5가지의 옷에 대해 모기에 공격을 당하는지 안당하는지를 기록한 데이터이다.<br/>
 - Cochran’s Q test는 이항형으로 반복 관측된 데이터에 사용하는 방법으로 이항데이터에 대한 프리드만 검정이라고 할 수 있다. 

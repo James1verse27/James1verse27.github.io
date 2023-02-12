@@ -44,7 +44,7 @@ for (x in 1:length(data_chap07)){
 
 ### EXAMPLE 7.1
 
-![](C:/git_blog/study/img/ch7/7-1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-1.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -128,8 +128,8 @@ legend("topright",legend=c("ν=1","ν=2","ν=50"),fil=c("red","blue","darkgreen"
 
 ### EXAMPLE 7.2
 
-![](C:/git_blog/study/img/ch7/7-2-1.png)
-![](C:/git_blog/study/img/ch7/7-2-2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-2-1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-2-2.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -165,7 +165,7 @@ text(x=2.201,y=0.1,labels = "2.201")
 
 ### EXAMPLE 7.3
 
-![](C:/git_blog/study/img/ch7/7-3.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-3.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -220,7 +220,7 @@ text(x=-1.796,y=0.12,labels = "-1.796")
 
 ### EXAMPLE 7.4
 
-![](C:/git_blog/study/img/ch7/7-4.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-4.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -252,7 +252,7 @@ text(x=1.895,y=0.12,labels = "1.895")
 
 ### EXAMPLE 7.5
 
-![](C:/git_blog/study/img/ch7/7-5.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-5.png)
 
 ```{r message=F, warning=F}
 t.test(ex7_1,alternative = c("two.sided"),conf.level = 0.95)
@@ -274,7 +274,7 @@ t.test(ex7_1,alternative = c("two.sided"),conf.level = 0.99)
 
 ### EXAMPLE 7.6
 
-![](C:/git_blog/study/img/ch7/7-6.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-6.png)
 
 > Example 7.1 데이터에 게를 추가하여 예측구간을 구하여 보겠다.
 
@@ -318,7 +318,7 @@ cat(" Mean = ",M,"℃","\n","Std.Err = ",SR,"℃","\n", "df = ",n-1,"\n","95% co
 
 ### EXAMPLE 7.7
 
-![](C:/git_blog/study/img/ch7/7-7.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-7.png)
 
 > 95% 신뢰구간의 길이가 0.5보다 길지 않도록 하려면 d=0.25, α=0.05로 설정해야 하고, Example7_3을 통해 구한 분산은 0.4008이다.
 
@@ -353,7 +353,7 @@ cat("nessesary sample size = 27, n = ",n2)
 
 ### EXAMPLE 7.8
 
-![](C:/git_blog/study/img/ch7/7-8.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-8.png)
 
 > Example 7.2 데이터를 사용해서 귀무가설 $H_0: \mu \ = \mu_0$ 를 기각할 수 있는 최소 표본크기를 계산해보도록한다.
   
@@ -408,7 +408,7 @@ pwr.t.test(n=,d=dd, sig.level=0.05, power=0.90, type="one.sample")
 
 ### EXAMPLE 7.9
 
-![](C:/git_blog/study/img/ch7/7-9.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-9.png)
 
 > Example 7.8에서는 양측 t-test를 검정할 때 smallest difference 인 $delta$ 를 알고있었다. 
 
@@ -433,7 +433,7 @@ $$
 
 ### EXAMPLE 7.10
 
-![](C:/git_blog/study/img/ch7/7-10.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-10.png)
 
 > 이 예제의 경우 가설 $H_0 : \mu =0$에 대한 t-test의 검정력을 추정하는 문제로 아래와 같은 식을 통해 β값을 찾을 수 있다.
 
@@ -467,8 +467,8 @@ pwr.test결과에서 좀 더 정확한 검정력을 보면 power=0.82로 1-power
 
 ### EXAMPLE 7.11
 
-![](C:/git_blog/study/img/ch7/7-11-1.png)
-![](C:/git_blog/study/img/ch7/7-11-2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-11-1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-11-2.png)
 
 ```{r message=F, warning=F}
 one_tailed_chi2_test <- function(x,sig,up_or_down){
@@ -531,7 +531,7 @@ text(x=20, y=0.1, expression(chi^2 == paste(frac(SS, sigma[0]^2), " ",)), cex = 
 
 ### EXAMPLE 7.12
 
-![](C:/git_blog/study/img/ch7/7-12.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-12.png)
 
 > 앞의 예제에서는 Example 7.4데이터를 이용하여 모분산에 대한 가설검정을 하였다. 
 
@@ -617,7 +617,7 @@ cat("If n = 51, then ratio =", ratio <- round(chi_1/chi_2, 3))
 
 ### EXAMPLE 7.13
 
-![](C:/git_blog/study/img/ch7/7-13.png)
+![](C:/git_blog/study/img/의학통계방법론/ch7/7-13.png)
 
 > 데이터가 정규성을 따르지 않거나 데이터의 분포를 모르고 1 sample일 때 비모수적 검정으로 Wilcoxon singed rank test를 사용할 수 있다.
 

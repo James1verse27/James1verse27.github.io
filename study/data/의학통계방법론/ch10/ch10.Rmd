@@ -60,7 +60,7 @@ for (x in 1:length(data_chap10)){
 
 ## EXAMPLE 10.1
 
-![](C:/git_blog/study/img/ch10/10-1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-1.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -109,8 +109,8 @@ ex10_1 %>%
 
 ## EXAMPLE 10.1a
 
-![](C:/git_blog/study/img/ch10/10-1a_1.png)
-![](C:/git_blog/study/img/ch10/10-1a_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-1a_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-1a_2.png)
 
 - 분석을 위해 결측치 제거해준 뒤 자유도와 제곱합들을 구하도록 한다.
 
@@ -146,7 +146,7 @@ ex10_1a(as.numeric(ex10_1$exam10_1.weight))%>%
 
 ## EXAMPLE 10.1b
 
-![](C:/git_blog/study/img/ch10/10-1b.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-1b.png)
 
 - “Machine Formulas”라는 새로운 방식을 사용한 결과는 다음과 같다.
 
@@ -189,7 +189,7 @@ ex10_1b()%>%
 
 ## EXAMPLE 10.1c
 
-![](C:/git_blog/study/img/ch10/10-1c.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-1c.png)
 
 - 10.1a와 10.1b에서 구한 값들을 토대로 ANOVA를 진행하도록 한다.<br/>
 - 일원분산분석을 진행하기 전에 정규성과 등분산성, 독립성을 만족하는지 부터 확인하도록 한다.
@@ -249,7 +249,7 @@ summary(aov(as.numeric(ex10_1$exam10_1.weight)~as.factor(ex10_1$exam10_1.diet)))
 
 ## EXAMPLE 10.2
 
-![](C:/git_blog/study/img/ch10/10-2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-2.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -344,8 +344,8 @@ kruskal.test(ex10_2$exam10_2.phosphorus~as.factor(ex10_2$exam10_2.technician))
 
 ## EXAMPLE 10.3
 
-![](C:/git_blog/study/img/ch10/10-3_1.png)
-![](C:/git_blog/study/img/ch10/10-3_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-3_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-3_2.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -438,8 +438,8 @@ oneway.test(ex10_3$exam10_3.potassium~as.factor(ex10_3$exam10_3.variety),var.equ
 
 ## EXAMPLE 10.4
 
-![](C:/git_blog/study/img/ch10/10-4_1.png)
-![](C:/git_blog/study/img/ch10/10-4_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-4_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-4_2.png)
 
 - 식물 뿌리 신장의 분산에 대한 제안된 분석은 4가지 화학 처리 각각에서 10개의 뿌리를 포함하는 것이다.<br/>
 - 실험을 수행하고 실험에서 데이터를 수집하기 전에 제안된 시험의 검정력을 추정하는 것이 적절하고 바람직하다.<br/><br/>
@@ -471,11 +471,11 @@ power.anova.test(groups=4, n=10, between.var =var(groups), within.var = 7.5888, 
 - 모집단 평균 간의 변동성이 지정된 경우 분산 분석의 검정력을 구할 수 있는 공식에 따라 $$\phi=1.88$$ 나온다.<br/>
 - 이를 이용해 power and sample size in analysis of variance: ν1=3 그래프에서 $$\phi=1.88$$ 일때를 보면 그때의 검정력은 대략 0.88이고 이는 대립가설 하에서 제2종 오류를 범할 확률이 12%임을 의미한다.
 
-![](C:/git_blog/study/img/ch10/table1.jpg)
+![](C:/git_blog/study/img/의학통계방법론/ch10/table1.jpg)
 
 ## EXAMPLE 10.5
 
-![](C:/git_blog/study/img/ch10/10-5.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-5.png)
 
 - 최소 검출차가 주어졌을 때 분산의 검정력을 구하는 문제로써 구하는 공식은 다음과 같다.
 
@@ -529,7 +529,7 @@ pwr.1way(k=4, n=10,f=NULL, alpha = 0.05, delta=4.0, sigma=sqrt(7.5888))
 - 이를 이용해 power and sample size in analysis of variance: ν1=3 그래프에서 $$\phi=1.62$$일때를 보면 그때의 검정력은 대략 0.72이고 이는 대립가설 하에서 제2종 오류를 범할 확률이 28%임을 의미한다.<br/>
 - 최소 탐지 가능한 차이가 지정된 경우 anova test의 power를 테스트하는 Balanced one-way analysis of variance power calculation 방법을 이용해 검정력을 구한 결과 또한 power=0.73으로 직접 구한 수치와 매우 유사한것을 볼 수 있다.
 
-![](C:/git_blog/study/img/ch10/table2.jpg)
+![](C:/git_blog/study/img/의학통계방법론/ch10/table2.jpg)
 
 • 그룹 평균 간의 차이가 클수록 검정력은 커진다.
 
@@ -543,8 +543,8 @@ pwr.1way(k=4, n=10,f=NULL, alpha = 0.05, delta=4.0, sigma=sqrt(7.5888))
 
 ## EXAMPLE 10.6
 
-![](C:/git_blog/study/img/ch10/10-6_1.png)
-![](C:/git_blog/study/img/ch10/10-6_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-6_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-6_2.png)
 
 - One-Way Analysis of Variance 에서 필요한 샘플사이즈를 구해보도록 한다. <br/>
 - 80%의 확률로 3.5kg 만큼의 차이를 탐지하기 위해 필요한 샘플사이즈를 계산하여 보겠다.
@@ -589,7 +589,7 @@ sample_size(d=3.5, k=4, s=9.383, n=18)%>%
 
 ## EXAMPLE 10.7
 
-![](C:/git_blog/study/img/ch10/10-7.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-7.png)
 
 - One-Way Analysis of Variance 에서 최소검출차를 구해보도록 한다.<br/>
 - ex10_1의 데이터를 이용하여 최소 검출차를 추정하기 위해 다음과 같은 공식을 이용하자.
@@ -623,7 +623,7 @@ Minimum_Detectable_Difference(k=4, s=9.3833, p=2.0, n=10)%>%
 
 ## EXAMPLE 10.8
 
-![](C:/git_blog/study/img/ch10/10-8.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-8.png)
 
 - ex10_1과 같은 실험을 생각하여 볼 때 다음과 같은 가정을 하여보자.<br/>
 - 6개의 사료를 테스트할 수 있지만, 총 50마리의 돼지를 검사할 수 있는 공간과 장비만 가지고 있다고 하자.<br/> 유의수준 0.05, 80이상의 검정력으로 테스트하고 모집단 평균 간의 4.5kg의 작은 차이를 발견하고자 한다.<br/><br/>
@@ -670,8 +670,8 @@ sample_size(d=4.5, k=4, s=9.383, n=12)%>%
 
 ## EXAMPLE 10.9
 
-![](C:/git_blog/study/img/ch10/10-9_1.png)
-![](C:/git_blog/study/img/ch10/10-9_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-9_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-9_2.png)
 
 - 랜덤효과가 있는 분선분석의 검정력을 산출하는 공식은 다음과 같다.
   
@@ -717,7 +717,7 @@ pf(F_value, 3, 16, lower.tail = F)
 
 ## EXAMPLE 10.10
 
-![](C:/git_blog/study/img/ch10/10-10.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-10.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -796,8 +796,8 @@ kruskalmc(ex10_10$exam10_10.abundance~as.factor(ex10_10$exam10_10.layer))
 
 ## EXAMPLE 10.11
 
-![](C:/git_blog/study/img/ch10/10-11_1.png)
-![](C:/git_blog/study/img/ch10/10-11_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-11_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-11_2.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -893,8 +893,8 @@ DunnettTest(ex10_11$exam10_11.ph~as.factor(ex10_11$exam10_11.pond),control=1);Du
 
 ## EXAMPLE 10.12
 
-![](C:/git_blog/study/img/ch10/10-12_1.png)
-![](C:/git_blog/study/img/ch10/10-12_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-12_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-12_2.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -981,7 +981,7 @@ $$
 
 ## EXAMPLE 10.13
 
-![](C:/git_blog/study/img/ch10/10-13.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-13.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -1006,8 +1006,8 @@ $$
 - Example 10.1에서 보았듯이 네 그룹 모두 정규성 검정 결과 p-value가 0.05보다 매우 컸고 따라서 정규성을 만족하지 않는다고 볼만한 충분한 근거가 없었다.<br/> 정규성을 만족한다는 사실을 바탕으로 그룹별 등분산성 검정인 Bartlett's Test를 진행한 결과 p-value가 0.9243으로 유의수준 0.05보다 매우 큰 수치이므로 귀무가설을 기각할 수 없고 따라서 네 그룹의 분산이 다르다고 볼만한 충분한 근거가 없다.
 
 ## EXAMPLE 10-14
-![](C:/git_blog/study/img/ch10/10-14_1.png)
-![](C:/git_blog/study/img/ch10/10-14_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-14_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch10/10-14_2.png)
 
 - 이 예제는 Example 10.1 데이터를 사용하여 변동계수에 대한 동질성 검정을 하는 예제이다.<br/>
 - 본 검정의 가설은 다음과 같다.

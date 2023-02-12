@@ -45,7 +45,7 @@ for (x in 1:length(data_chap13)){
 
 ## EXAMPLE 13.1
 
-![](C:/git_blog/study/img/ch13/13-1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch13/13-1.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -73,9 +73,9 @@ interaction.plot(ex13_1[ex13_1$exam13_1.part=='a)',]$exam13_1.A,ex13_1[ex13_1$ex
 
 ## EXAMPLE 13.2
 
-![](C:/git_blog/study/img/ch13/13-2_1.png)
+![](C:/git_blog/study/img/의학통계방법론/ch13/13-2_1.png)
 
-![](C:/git_blog/study/img/ch13/13-2_2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch13/13-2_2.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -163,7 +163,7 @@ logtrans%>%
 
 ## EXAMPLE 13.3
 
-![](C:/git_blog/study/img/ch13/13-3.png)
+![](C:/git_blog/study/img/의학통계방법론/ch13/13-3.png)
 
 ```{r message=F, warning=F}
 #데이터셋
@@ -245,7 +245,7 @@ sqrtrans%>%
 
 ## EXAMPLE 13.4
 
-![](C:/git_blog/study/img/ch13/13-4.png)
+![](C:/git_blog/study/img/의학통계방법론/ch13/13-4.png)
 
 ```{r message=F, warning=F}
 #데이터셋

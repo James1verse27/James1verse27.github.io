@@ -24,11 +24,11 @@ ex14_1a <- read.spss('Exam 14.1A.sav', to.data.frame=T)
 
 ## EXAMPLE 14.1
 
-![](C:/git_blog/study/img/ch14/14-1a-1.png)
+![](C:/git_blog/study/img/의학통계방법론/의학통계방법론/ch14/14-1a-1.png)
 
-![](C:/git_blog/study/img/ch14/14-1a-2.png)
+![](C:/git_blog/study/img/의학통계방법론/ch14/14-1a-2.png)
 
-![](C:/git_blog/study/img/ch14/14-1b.png)
+![](C:/git_blog/study/img/의학통계방법론/ch14/14-1b.png)
 
 ```{r message=F, warning=F}
 #데이터셋
