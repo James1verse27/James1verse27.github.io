@@ -1,0 +1,133 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+```{r message=F, warning=F}
+getwd()
+library("foreign")
+library("dplyr")
+library("kableExtra")
+```
+
+## 19장
+
+**19장 연습문제 불러오기**
+
+```{r message=F, warning=F}
+ex19_1a <- read.spss('Exam 19.1A.sav', to.data.frame=T)
+```
+
+### EXAMPLE 19.1a
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-1a.png)
+
+```{r message=F, warning=F}
+#데이터셋
+ex19_1a%>%
+  kbl(caption = "Dataset",escape=F) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+- 분석을 위하여 데이터를 정제하도록 하겠다.
+
+
+### EXAMPLE 19.1b
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-1b.png)
+
+
+### EXAMPLE 19.2
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-2.png)
+
+### EXAMPLE 19.3
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-3.png)
+
+### EXAMPLE 19.4
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-4.png)
+
+
+### EXAMPLE 19.5a
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-5a.png)
+
+
+### EXAMPLE 19.5b
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-5b-1.png)
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-5b-2.png)
+
+
+### EXAMPLE 19.6
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-6.png)
+
+
+### EXAMPLE 19.7
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-7.png)
+
+
+### EXAMPLE 19.8
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-8.png)
+
+
+### EXAMPLE 19.9
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-9.png)
+
+
+
+### EXAMPLE 19.10
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-10.png)
+
+
+### EXAMPLE 19.11
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-11.png)
+
+
+### EXAMPLE 19.12
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-12.png)
+
+
+### EXAMPLE 19.13
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-13.png)
+
+
+### EXAMPLE 19.14
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-14.png)
+
+
+### EXAMPLE 19.15
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-15.png)
+
+
+### EXAMPLE 19.16
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-16.png)
+
+
+
+### EXAMPLE 19.17
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-17.png)
+
+
+### EXAMPLE 19.18
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-18-1.png)
+
+![](C:/git_blog/study/img/의학통계방법론/ch19/19-18-2.png)
