@@ -1,0 +1,2254 @@
+---
+title: "simulation"
+author: "김재혁"
+date: "2022-09-05"
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+```{r warning=F, message=F}
+library(kableExtra)
+library(exactRankTests)
+library(plyr)
+alpha.p <- 0.05
+n.simulations <- 10000
+```
+
+# Type I error
+
+## N=10000,등분산,표본크기가 같은 경우
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+n1 <- function(mu,sigma){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+    type.one.error.w<- replicate(n.simulations, wilcox.exact(rnorm(n.obs[x],mean=mu,sd=sigma),rnorm(n.obs[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)<alpha.p
+    type.one.error.t<-replicate(n.simulations,t.test(rnorm(n.obs[x],mean=mu,sd=sigma),rnorm(n.obs[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)<alpha.p
+    m.w <- mean(type.one.error.w)
+    m.t <- mean(type.one.error.t)
+    data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+
+a <- n1(0,1)
+colnames(a)[2:3] = c("N(0,1) N(0,1) t-test","N(0,1) N(0,1) Wilcoxon")
+b <- n1(0,sqrt(2))
+colnames(b)[2:3] = c("N(0,2) N(0,2) t-test","N(0,2) N(0,2) Wilcoxon")
+c <- n1(0,sqrt(3))
+colnames(c)[2:3] = c("N(0,3) N(0,3) t-test","N(0,3) N(0,3) Wilcoxon")
+d <- n1(0,sqrt(4))
+colnames(d)[2:3] = c("N(0,4) N(0,4) t-test","N(0,4) N(0,4) Wilcoxon")
+e <- n1(0,sqrt(5))
+colnames(e)[2:3] = c("N(0,5) N(0,5) t-test","N(0,5) N(0,5) Wilcoxon")
+f <- n1(0,sqrt(6))
+colnames(f)[2:3] = c("N(0,6) N(0,6) t-test","N(0,6) N(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 1] Type I error, 등분산,표본크기가 같은 경우: Normal distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,1) N(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,1) N(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2) N(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2) N(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3) N(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3) N(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,4) N(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,4) N(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,5) N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,5) N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,6) N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,6) N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+u1 <- function(min,max){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(runif(n.obs[x],min,max),runif(n.obs[x],min,max),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(runif(n.obs[x],min,max),runif(n.obs[x],min,max),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- u1(0,1)
+colnames(a)[2:3] = c("U(0,1) U(0,1) t-test","U(0,1) U(0,1) Wilcoxon")
+b <- u1(0,2)
+colnames(b)[2:3] = c("U(0,2) U(0,2) t-test","U(0,2) U(0,2) Wilcoxon")
+c <- u1(0,3)
+colnames(c)[2:3] = c("U(0,3) U(0,3) t-test","U(0,3) U(0,3) Wilcoxon")
+d <- u1(0,4)
+colnames(d)[2:3] = c("U(0,4) U(0,4) t-test","U(0,4) U(0,4) Wilcoxon")
+e <- u1(0,5)
+colnames(e)[2:3] = c("U(0,5) U(0,5) t-test","U(0,5) U(0,5) Wilcoxon")
+f <- u1(0,6)
+colnames(f)[2:3] = c("U(0,6) U(0,6) t-test","U(0,6) U(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 2] Type I error, 등분산,표본크기가 같은 경우: Uniform distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,1) U(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,1) U(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2) U(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2) U(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3) U(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3) U(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,4) U(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,4) U(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,5) U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,5) U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,6) U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,6) U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+c1 <- function(df){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(rchisq(n.obs[x],df),rchisq(n.obs[x],df),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(rchisq(n.obs[x],df),rchisq(n.obs[x],df),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- c1(1)
+colnames(a)[2:3] = c("chisq(1) chisq(1) t-test","chisq(1) chisq(1) Wilcoxon")
+b <- c1(2)
+colnames(b)[2:3] = c("chisq(2) chisq(2) t-test","chisq(2) chisq(2) Wilcoxon")
+c <- c1(3)
+colnames(c)[2:3] = c("chisq(3) chisq(3) t-test","chisq(3) chisq(3) Wilcoxon")
+d <- c1(4)
+colnames(d)[2:3] = c("chisq(4) chisq(4) t-test","chisq(4) chisq(4) Wilcoxon")
+e <- c1(5)
+colnames(e)[2:3] = c("chisq(5) chisq(5) t-test","chisq(5) chisq(5) Wilcoxon")
+f <- c1(6)
+colnames(f)[2:3] = c("chisq(6) chisq(6) t-test","chisq(6) chisq(6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 3] Type I error, 등분산,표본크기가 같은 경우: Chi-squared distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(1) chisq(1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(1) chisq(1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2) chisq(2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2) chisq(2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3) chisq(3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3) chisq(3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b',  xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(4) chisq(4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(4) chisq(4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(5) chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(5) chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(6) chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(6) chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+e1 <- function(rate){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(rexp(n.obs[x],rate),rexp(n.obs[x],rate),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(rexp(n.obs[x],rate),rexp(n.obs[x],rate),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- e1(1)
+colnames(a)[2:3] = c("exp(1/1) exp(1/1) t-test","exp(1/1) exp(1/1) Wilcoxon")
+b <- e1(1/2)
+colnames(b)[2:3] = c("exp(1/2) exp(1/2) t-test","exp(1/2) exp(1/2) Wilcoxon")
+c <- e1(1/3)
+colnames(c)[2:3] = c("exp(1/3) exp(1/3) t-test","exp(1/3) exp(1/3) Wilcoxon")
+d <- e1(1/4)
+colnames(d)[2:3] = c("exp(1/4) exp(1/4) t-test","exp(1/4) exp(1/4) Wilcoxon")
+e <- e1(1/5)
+colnames(e)[2:3] = c("exp(1/5) exp(1/5) t-test","exp(1/5) exp(1/5) Wilcoxon")
+f <- e1(1/6)
+colnames(f)[2:3] = c("exp(1/6) exp(1/6) t-test","exp(1/6) exp(1/6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 4] Type I error, 등분산,표본크기가 같은 경우: Exponential distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/1) exp(1/1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/1) exp(1/1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2) exp(1/2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2) exp(1/2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3) exp(1/3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3) exp(1/3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/4) exp(1/4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/4) exp(1/4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/5) exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/5) exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/6) exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/6) exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+```
+
+## N=10000,등분산,표본크기가 다른 경우
+
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+n11 <- function(mu,sigma){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+    type.one.error.w<- replicate(n.simulations, wilcox.exact(rnorm(n.obs1[x],mean=mu,sd=sigma),rnorm(n.obs2[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)<alpha.p
+    type.one.error.t<-replicate(n.simulations,t.test(rnorm(n.obs1[x],mean=mu,sd=sigma),rnorm(n.obs2[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)<alpha.p
+    m.w <- mean(type.one.error.w)
+    m.t <- mean(type.one.error.t)
+    data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+
+a <- n11(0,1)
+colnames(a)[2:3] = c("N(0,1) N(0,1) t-test","N(0,1) N(0,1) Wilcoxon")
+b <- n11(0,sqrt(2))
+colnames(b)[2:3] = c("N(0,2) N(0,2) t-test","N(0,2) N(0,2) Wilcoxon")
+c <- n11(0,sqrt(3))
+colnames(c)[2:3] = c("N(0,3) N(0,3) t-test","N(0,3) N(0,3) Wilcoxon")
+d <- n11(0,sqrt(4))
+colnames(d)[2:3] = c("N(0,4) N(0,4) t-test","N(0,4) N(0,4) Wilcoxon")
+e <- n11(0,sqrt(5))
+colnames(e)[2:3] = c("N(0,5) N(0,5) t-test","N(0,5) N(0,5) Wilcoxon")
+f <- n11(0,sqrt(6))
+colnames(f)[2:3] = c("N(0,6) N(0,6) t-test","N(0,6) N(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 5] Type I error, 등분산,표본크기가 다른 경우: Normal distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,1) N(0,1)", cex.main=1)
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b',xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,1) N(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2) N(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2) N(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3) N(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3) N(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,4) N(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,4) N(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b',xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,5) N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,5) N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,6) N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,6) N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+u11 <- function(min,max){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(runif(n.obs1[x],min,max),runif(n.obs2[x],min,max),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(runif(n.obs1[x],min,max),runif(n.obs2[x],min,max),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- u11(0,1)
+colnames(a)[2:3] = c("U(0,1) U(0,1) t-test","U(0,1) U(0,1) Wilcoxon")
+b <- u11(0,2)
+colnames(b)[2:3] = c("U(0,2) U(0,2) t-test","U(0,2) U(0,2) Wilcoxon")
+c <- u11(0,3)
+colnames(c)[2:3] = c("U(0,3) U(0,3) t-test","U(0,3) U(0,3) Wilcoxon")
+d <- u11(0,4)
+colnames(d)[2:3] = c("U(0,4) U(0,4) t-test","U(0,4) U(0,4) Wilcoxon")
+e <- u11(0,5)
+colnames(e)[2:3] = c("U(0,5) U(0,5) t-test","U(0,5) U(0,5) Wilcoxon")
+f <- u11(0,6)
+colnames(f)[2:3] = c("U(0,6) U(0,6) t-test","U(0,6) U(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 6] Type I error, 등분산,표본크기가 다른 경우: Uniform distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,1) U(0,1)", cex.main=1)
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,1) U(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2) U(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2) U(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3) U(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3) U(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,4) U(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,4) U(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,5) U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,5) U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,6) U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,6) U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+c11 <- function(df){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(rchisq(n.obs1[x],df),rchisq(n.obs2[x],df),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(rchisq(n.obs1[x],df),rchisq(n.obs2[x],df),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- c11(1)
+colnames(a)[2:3] = c("chisq(1) chisq(1) t-test","chisq(1) chisq(1) Wilcoxon")
+b <- c11(2)
+colnames(b)[2:3] = c("chisq(2) chisq(2) t-test","chisq(2) chisq(2) Wilcoxon")
+c <- c11(3)
+colnames(c)[2:3] = c("chisq(3) chisq(3) t-test","chisq(3) chisq(3) Wilcoxon")
+d <- c11(4)
+colnames(d)[2:3] = c("chisq(4) chisq(4) t-test","chisq(4) chisq(4) Wilcoxon")
+e <- c11(5)
+colnames(e)[2:3] = c("chisq(5) chisq(5) t-test","chisq(5) chisq(5) Wilcoxon")
+f <- c11(6)
+colnames(f)[2:3] = c("chisq(6) chisq(6) t-test","chisq(6) chisq(6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 7] Type I error, 등분산,표본크기가 다른 경우: Chi-squared distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(1) chisq(1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(1) chisq(1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2) chisq(2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2) chisq(2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3) chisq(3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3) chisq(3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b',  xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(4) chisq(4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(4) chisq(4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(5) chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(5) chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(6) chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(6) chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+e11 <- function(rate){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(rexp(n.obs1[x],rate),rexp(n.obs2[x],rate),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(rexp(n.obs1[x],rate),rexp(n.obs2[x],rate),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- e11(1)
+colnames(a)[2:3] = c("exp(1/1) exp(1/1) t-test","exp(1/1) exp(1/1) Wilcoxon")
+b <- e11(1/2)
+colnames(b)[2:3] = c("exp(1/2) exp(1/2) t-test","exp(1/2) exp(1/2) Wilcoxon")
+c <- e11(1/3)
+colnames(c)[2:3] = c("exp(1/3) exp(1/3) t-test","exp(1/3) exp(1/3) Wilcoxon")
+d <- e11(1/4)
+colnames(d)[2:3] = c("exp(1/4) exp(1/4) t-test","exp(1/4) exp(1/4) Wilcoxon")
+e <- e11(1/5)
+colnames(e)[2:3] = c("exp(1/5) exp(1/5) t-test","exp(1/5) exp(1/5) Wilcoxon")
+f <- e11(1/6)
+colnames(f)[2:3] = c("exp(1/6) exp(1/6) t-test","exp(1/6) exp(1/6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 8] Type I error, 등분산,표본크기가 다른 경우: Exponential distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/1) exp(1/1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/1) exp(1/1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2) exp(1/2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2) exp(1/2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3) exp(1/3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3) exp(1/3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/4) exp(1/4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/4) exp(1/4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/5) exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/5) exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/6) exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/6) exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+## N=10000, 분산이 다르고, 표본크기는 같은 경우
+
+```{r warning=F, message=F, echo=F}
+
+n.obs <- c(5,10,25,50,75,100)
+n12 <- function(mu,sigma1,sigma2){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+    type.one.error.w<- replicate(n.simulations, wilcox.exact(rnorm(n.obs[x],mean=mu,sd=sigma1),rnorm(n.obs[x],mean=mu,sd=sigma2),var.equal=TRUE)$p.value)<alpha.p
+    type.one.error.t<-replicate(n.simulations,t.test(rnorm(n.obs[x],mean=mu,sd=sigma1),rnorm(n.obs[x],mean=mu,sd=sigma2),var.equal=TRUE)$p.value)<alpha.p
+    m.w <- mean(type.one.error.w)
+    m.t <- mean(type.one.error.t)
+    data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- n12(0,sqrt(1.5),1)
+colnames(a)[2:3] = c("N(0,1.5) N(0,1) t-test","N(0,1.5) N(0,1) Wilcoxon")
+b <- n12(0,sqrt(2),sqrt(2))
+colnames(b)[2:3] = c("N(0,2) N(0,2) t-test","N(0,2) N(0,2) Wilcoxon")
+c <- n12(0,sqrt(2.5),sqrt(3))
+colnames(c)[2:3] = c("N(0,2.5) N(0,3) t-test","N(0,2.5) N(0,3) Wilcoxon")
+d <- n12(0,sqrt(3),sqrt(4))
+colnames(d)[2:3] = c("N(0,3) N(0,4) t-test","N(0,3) N(0,4) Wilcoxon")
+e <- n12(0,sqrt(3.5),sqrt(5))
+colnames(e)[2:3] = c("N(0,3.5) N(0,5) t-test","N(0,3.5) N(0,5) Wilcoxon")
+f <- n12(0,sqrt(4),sqrt(6))
+colnames(f)[2:3] = c("N(0,4) N(0,6) t-test","N(0,4) N(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 9] Type I error, 분산이 다르고, 표본크기는 같은 경우: Normal distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,1.5) N(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,1.5) N(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2) N(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2) N(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2.5) N(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,2.5) N(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3) N(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3) N(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3.5) N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,3.5) N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,4) N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="N(0,4) N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+u12 <- function(max1,a,max2){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(runif(n.obs[x],0,max1)+a,runif(n.obs[x],0,max2),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(runif(n.obs[x],0,max1)+a,runif(n.obs[x],0,max2),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- u12(2.46,-0.73,1)
+colnames(a)[2:3] = c("U(0,2.46)-0.73 U(0,1) t-test","U(0,2.46)-0.73 U(0,1) Wilcoxon")
+b <- u12(2.84,-0.42,2)
+colnames(b)[2:3] = c("U(0,2.84)-0.42 U(0,2) t-test","U(0,2.84)-0.42 U(0,2) Wilcoxon")
+c <- u12(3.16,-0.08,3)
+colnames(c)[2:3] = c("U(0,3.16)-0.08 U(0,3) t-test","U(0,3.16)-0.08 U(0,3) Wilcoxon")
+d <- u12(3.5,0.25,4)
+colnames(d)[2:3] = c("U(0,3.5)+0.25 U(0,4) t-test","U(0,3.5)+0.25 U(0,4) Wilcoxon")
+e <- u12(3.76,0.62,5)
+colnames(e)[2:3] = c("U(0,3.76)+0.62 U(0,5) t-test","U(0,3.76)+0.62 U(0,5) Wilcoxon")
+f <- u12(4,1,6)
+colnames(f)[2:3] = c("U(0,4.0)+1 U(0,6) t-test","U(0,4.0)+1 U(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 10] Type I error, 분산이 다르고, 표본크기는 같은 경우: Uniform distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2.46)-0.73 U(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2.46)-0.73 U(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2.84)-0.42 U(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,2.84)-0.42 U(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3.16)-0.08 U(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3.16)-0.08 U(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3.5)+0.25 U(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3.5)+0.25 U(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3.76)+0.62 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,3.76)+0.62 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,4.0)+1 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="U(0,4.0)+1 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+c12 <- function(df1,a,df2){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(rchisq(n.obs[x],df1)+a,rchisq(n.obs[x],df2),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(rchisq(n.obs[x],df1)+a,rchisq(n.obs[x],df2),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- c12(1.5,-0.5,1)
+colnames(a)[2:3] = c("chisq(1.5)-0.5 chisq(1) t-test","chisq(1.5)-0.5 chisq(1) Wilcoxon")
+b <- c12(2,0,2)
+colnames(b)[2:3] = c("chisq(2)-0 chisq(2) t-test","chisq(2)-0 chisq(2) Wilcoxon")
+c <- c12(2.5,0.5,3)
+colnames(c)[2:3] = c("chisq(2.5)+0.5 chisq(3) t-test","chisq(2.5)+0.5 chisq(3) Wilcoxon")
+d <- c12(3,1,4)
+colnames(d)[2:3] = c("chisq(3)+1 chisq(4) t-test","chisq(3)+1 chisq(4) Wilcoxon")
+e <- c12(3.5,1.5,5)
+colnames(e)[2:3] = c("chisq(3.5)+1.5 chisq(5) t-test","chisq(3.5)+1.5 chisq(5) Wilcoxon")
+f <- c12(4,2,6)
+colnames(f)[2:3] = c("chisq(4)+2 chisq(6) t-test","chisq(4)+2 chisq(6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 11] Type I error, 분산이 다르고, 표본크기는 같은 경우: Chi-squared distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(1.5)-0.5 chisq(1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(1.5)-0.5 chisq(1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2)-0 chisq(2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2)-0 chisq(2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2.5)+0.5 chisq(3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(2.5)+0.5 chisq(3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b',  xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3)+1 chisq(4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3)+1 chisq(4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3.5)+1.5 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(3.5)+1.5 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(4)+2 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="chisq(4)+2 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+e12 <- function(rate1,a,rate2){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.one.error.w<- replicate(n.simulations, wilcox.exact(rexp(n.obs[x],rate1)+a,rexp(n.obs[x],rate2),var.equal=TRUE)$p.value)<alpha.p
+      type.one.error.t<-replicate(n.simulations,t.test(rexp(n.obs[x],rate1)+a,rexp(n.obs[x],rate2),var.equal=TRUE)$p.value)<alpha.p
+      m.w <- mean(type.one.error.w)
+      m.t <- mean(type.one.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- e12(1/1.5,-0.5,1)
+colnames(a)[2:3] = c("exp(1/1.5)-0.5 exp(1/1) t-test","exp(1/1.5)-0.5 exp(1/1) Wilcoxon")
+b <- e12(1/2,0,1/2)
+colnames(b)[2:3] = c("exp(1/2)-0 exp(1/2) t-test","exp(1/2)-0 exp(1/2) Wilcoxon")
+c <- e12(1/2.5,0.5,1/3)
+colnames(c)[2:3] = c("exp(1/2.5)+0.5 exp(1/3) t-test","exp(1/2.5)+0.5 exp(1/3) Wilcoxon")
+d <- e12(1/3,1,1/4)
+colnames(d)[2:3] = c("exp(1/3)+1 exp(1/4) t-test","exp(1/3)+1 exp(1/4) Wilcoxon")
+e <- e12(1/3.5,1.5,1/5)
+colnames(e)[2:3] = c("exp(1/3.5)+1.5 exp(1/5) t-test","exp(1/3.5)+1.5 exp(1/5) Wilcoxon")
+f <- e12(1/4,2,1/6)
+colnames(f)[2:3] = c("exp(1/4)+2 exp(1/6) t-test","exp(1/4)+2 exp(1/6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 12] Type I error, 분산이 다르고, 표본크기는 같은 경우: Exponential distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/1.5)-0.5 exp(1/1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/1.5)-0.5 exp(1/1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2)-0 exp(1/2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2)-0 exp(1/2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2.5)+0.5 exp(1/3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/2.5)+0.5 exp(1/3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3)+1 exp(1/4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3)+1 exp(1/4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3.5)+1.5 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/3.5)+1.5 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/4)+2 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type I error", main="exp(1/4)+2 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+```
+
+# Type II error
+
+## N=10000,등분산,표본크기가 같은 경우
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+n2 <- function(mu,sigma){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+    type.two.error.w<- replicate(n.simulations, wilcox.exact(rnorm(n.obs[x],mean=mu+2,sd=sigma),rnorm(n.obs[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)>=alpha.p
+    type.two.error.t<-replicate(n.simulations,t.test(rnorm(n.obs[x],mean=mu+2,sd=sigma),rnorm(n.obs[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)>=alpha.p
+    m.w <- mean(type.two.error.w)
+    m.t <- mean(type.two.error.t)
+    data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+
+a <- n2(0,1)
+colnames(a)[2:3] = c("N(0,1)+2 N(0,1) t-test","N(0,1)+2 N(0,1) Wilcoxon")
+b <- n2(0,sqrt(2))
+colnames(b)[2:3] = c("N(0,2)+2 N(0,2) t-test","N(0,2)+2 N(0,2) Wilcoxon")
+c <- n2(0,sqrt(3))
+colnames(c)[2:3] = c("N(0,3)+2 N(0,3) t-test","N(0,3)+2 N(0,3) Wilcoxon")
+d <- n2(0,sqrt(4))
+colnames(d)[2:3] = c("N(0,4)+2 N(0,4) t-test","N(0,4)+2 N(0,4) Wilcoxon")
+e <- n2(0,sqrt(5))
+colnames(e)[2:3] = c("N(0,5)+2 N(0,5) t-test","N(0,5)+2 N(0,5) Wilcoxon")
+f <- n2(0,sqrt(6))
+colnames(f)[2:3] = c("N(0,6)+2 N(0,6) t-test","N(0,6)+2 N(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 13] Type II error, 등분산,표본크기가 같은 경우: Normal distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,1)+2 N(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,1)+2 N(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2)+2 N(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2)+2 N(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3)+2 N(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3)+2 N(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,4)+2 N(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,4)+2 N(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,5)+2 N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,5)+2 N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,6)+2 N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,6)+2 N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+u2 <- function(min,max){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(runif(n.obs[x],min,max)+0.5,runif(n.obs[x],min,max),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(runif(n.obs[x],min,max)+0.5,runif(n.obs[x],min,max),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- u2(0,1)
+colnames(a)[2:3] = c("U(0,1)+0.5 U(0,1) t-test","U(0,1)+0.5 U(0,1) Wilcoxon")
+b <- u2(0,2)
+colnames(b)[2:3] = c("U(0,2)+0.5 U(0,2) t-test","U(0,2)+0.5 U(0,2) Wilcoxon")
+c <- u2(0,3)
+colnames(c)[2:3] = c("U(0,3)+0.5 U(0,3) t-test","U(0,3)+0.5 U(0,3) Wilcoxon")
+d <- u2(0,4)
+colnames(d)[2:3] = c("U(0,4)+0.5 U(0,4) t-test","U(0,4)+0.5 U(0,4) Wilcoxon")
+e <- u2(0,5)
+colnames(e)[2:3] = c("U(0,5)+0.5 U(0,5) t-test","U(0,5)+0.5 U(0,5) Wilcoxon")
+f <- u2(0,6)
+colnames(f)[2:3] = c("U(0,6)+0.5 U(0,6) t-test","U(0,6)+0.5 U(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 14] Type II error, 등분산,표본크기가 같은 경우: Uniform distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,1)+0.5 U(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,1)+0.5 U(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2)+0.5 U(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2)+0.5 U(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3)+0.5 U(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3)+0.5 U(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,4)+0.5 U(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,4)+0.5 U(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,5)+0.5 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,5)+0.5 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,6)+0.5 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,6)+0.5 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+c2 <- function(df){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(rchisq(n.obs[x],df)+0.5,rchisq(n.obs[x],df),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(rchisq(n.obs[x],df)+0.5,rchisq(n.obs[x],df),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- c2(1)
+colnames(a)[2:3] = c("chisq(1)+0.5 chisq(1) t-test","chisq(1)+0.5 chisq(1) Wilcoxon")
+b <- c2(2)
+colnames(b)[2:3] = c("chisq(2)+0.5 chisq(2) t-test","chisq(2)+0.5 chisq(2) Wilcoxon")
+c <- c2(3)
+colnames(c)[2:3] = c("chisq(3)+0.5 chisq(3) t-test","chisq(3)+0.5 chisq(3) Wilcoxon")
+d <- c2(4)
+colnames(d)[2:3] = c("chisq(4)+0.5 chisq(4) t-test","chisq(4)+0.5 chisq(4) Wilcoxon")
+e <- c2(5)
+colnames(e)[2:3] = c("chisq(5)+0.5 chisq(5) t-test","chisq(5)+0.5 chisq(5) Wilcoxon")
+f <- c2(6)
+colnames(f)[2:3] = c("chisq(6)+0.5 chisq(6) t-test","chisq(6)+0.5 chisq(6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 15] Type II error, 등분산,표본크기가 같은 경우: Chi-squared distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(1)+0.5 chisq(1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(1)+0.5 chisq(1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2)+0.5 chisq(2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2)+0.5 chisq(2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3)+0.5 chisq(3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3)+0.5 chisq(3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b',  xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(4)+0.5 chisq(4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(4)+0.5 chisq(4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,0.15),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(5)+0.5 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(5)+0.5 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(6)+0.5 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(6)+0.5 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+e2 <- function(rate){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(rexp(n.obs[x],rate),rexp(n.obs[x],rate)+0.5,var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(rexp(n.obs[x],rate)+0.5,rexp(n.obs[x],rate),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- e2(1)
+colnames(a)[2:3] = c("exp(1/1)+0.5 exp(1/1) t-test","exp(1/1)+0.5 exp(1/1) Wilcoxon")
+b <- e2(1/2)
+colnames(b)[2:3] = c("exp(1/2)+0.5 exp(1/2) t-test","exp(1/2)+0.5 exp(1/2) Wilcoxon")
+c <- e2(1/3)
+colnames(c)[2:3] = c("exp(1/3)+0.5 exp(1/3) t-test","exp(1/3)+0.5 exp(1/3) Wilcoxon")
+d <- e2(1/4)
+colnames(d)[2:3] = c("exp(1/4)+0.5 exp(1/4) t-test","exp(1/4)+0.5 exp(1/4) Wilcoxon")
+e <- e2(1/5)
+colnames(e)[2:3] = c("exp(1/5)+0.5 exp(1/5) t-test","exp(1/5)+0.5 exp(1/5) Wilcoxon")
+f <- e2(1/6)
+colnames(f)[2:3] = c("exp(1/6)+0.5 exp(1/6) t-test","exp(1/6)+0.5 exp(1/6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 16] Type II error, 등분산,표본크기가 같은 경우: Exponential distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/1)+0.5 exp(1/1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/1)+0.5 exp(1/1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2)+0.5 exp(1/2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2)+0.5 exp(1/2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3)+0.5 exp(1/3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3)+0.5 exp(1/3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/4)+0.5 exp(1/4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/4)+0.5 exp(1/4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/5)+0.5 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/5)+0.5 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/6)+0.5 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/6)+0.5 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+## N=10000,등분산,표본크기가 다른 경우
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+n21 <- function(mu,sigma){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+    type.two.error.w<- replicate(n.simulations, wilcox.exact(rnorm(n.obs1[x],mean=mu,sd=sigma)+0.5,rnorm(n.obs2[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)>=alpha.p
+    type.two.error.t<-replicate(n.simulations,t.test(rnorm(n.obs1[x],mean=mu,sd=sigma)+0.5,rnorm(n.obs2[x],mean=mu,sd=sigma),var.equal=TRUE)$p.value)>=alpha.p
+    m.w <- mean(type.two.error.w)
+    m.t <- mean(type.two.error.t)
+    data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+
+a <- n21(0,1)
+colnames(a)[2:3] = c("N(0,1)+0.5 N(0,1) t-test","N(0,1)+0.5 N(0,1) Wilcoxon")
+b <- n21(0,sqrt(2))
+colnames(b)[2:3] = c("N(0,2)+0.5 N(0,2) t-test","N(0,2)+0.5 N(0,2) Wilcoxon")
+c <- n21(0,sqrt(3))
+colnames(c)[2:3] = c("N(0,3)+0.5 N(0,3) t-test","N(0,3)+0.5 N(0,3) Wilcoxon")
+d <- n21(0,sqrt(4))
+colnames(d)[2:3] = c("N(0,4)+0.5 N(0,4) t-test","N(0,4)+0.5 N(0,4) Wilcoxon")
+e <- n21(0,sqrt(5))
+colnames(e)[2:3] = c("N(0,5)+0.5 N(0,5) t-test","N(0,5)+0.5 N(0,5) Wilcoxon")
+f <- n21(0,sqrt(6))
+colnames(f)[2:3] = c("N(0,6)+0.5 N(0,6) t-test","N(0,6)+0.5 N(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 17] Type II error, 등분산,표본크기가 다른 경우: Normal distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,1)+0.5 N(0,1)", cex.main=1)
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b',xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,1)+0.5 N(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2)+0.5 N(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2)+0.5 N(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3)+0.5 N(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3)+0.5 N(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,4)+0.5 N(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,4)+0.5 N(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b',xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,5)+0.5 N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,5)+0.5 N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,6)+0.5 N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,6)+0.5 N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+u21 <- function(min,max){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(runif(n.obs1[x],min,max)+0.5,runif(n.obs2[x],min,max),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(runif(n.obs1[x],min,max)+0.5,runif(n.obs2[x],min,max),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- u21(0,1)
+colnames(a)[2:3] = c("U(0,1)+0.5 U(0,1) t-test","U(0,1)+0.5 U(0,1) Wilcoxon")
+b <- u21(0,2)
+colnames(b)[2:3] = c("U(0,2)+0.5 U(0,2) t-test","U(0,2)+0.5 U(0,2) Wilcoxon")
+c <- u21(0,3)
+colnames(c)[2:3] = c("U(0,3)+0.5 U(0,3) t-test","U(0,3)+0.5 U(0,3) Wilcoxon")
+d <- u21(0,4)
+colnames(d)[2:3] = c("U(0,4)+0.5 U(0,4) t-test","U(0,4)+0.5 U(0,4) Wilcoxon")
+e <- u21(0,5)
+colnames(e)[2:3] = c("U(0,5)+0.5 U(0,5) t-test","U(0,5)+0.5 U(0,5) Wilcoxon")
+f <- u21(0,6)
+colnames(f)[2:3] = c("U(0,6)+0.5 U(0,6) t-test","U(0,6)+0.5 U(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 18] Type II error, 등분산,표본크기가 다른 경우: Uniform distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,1)+0.5 U(0,1)", cex.main=1)
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,1)+0.5 U(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2)+0.5 U(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2)+0.5 U(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3)+0.5 U(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3)+0.5 U(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,4)+0.5 U(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,4)+0.5 U(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,5)+0.5 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,5)+0.5 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,6)+0.5 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,6)+0.5 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+c21 <- function(df){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(rchisq(n.obs1[x],df)+0.5,rchisq(n.obs2[x],df),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(rchisq(n.obs1[x],df)+0.5,rchisq(n.obs2[x],df),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- c21(1)
+colnames(a)[2:3] = c("chisq(1)+0.5 chisq(1) t-test","chisq(1)+0.5 chisq(1) Wilcoxon")
+b <- c21(2)
+colnames(b)[2:3] = c("chisq(2)+0.5 chisq(2) t-test","chisq(2)+0.5 chisq(2) Wilcoxon")
+c <- c21(3)
+colnames(c)[2:3] = c("chisq(3)+0.5 chisq(3) t-test","chisq(3)+0.5 chisq(3) Wilcoxon")
+d <- c21(4)
+colnames(d)[2:3] = c("chisq(4)+0.5 chisq(4) t-test","chisq(4)+0.5 chisq(4) Wilcoxon")
+e <- c21(5)
+colnames(e)[2:3] = c("chisq(5)+0.5 chisq(5) t-test","chisq(5)+0.5 chisq(5) Wilcoxon")
+f <- c21(6)
+colnames(f)[2:3] = c("chisq(6)+0.5 chisq(6) t-test","chisq(6)+0.5 chisq(6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 19] Type II error, 등분산,표본크기가 다른 경우: Chi-squared distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(1)+0.5 chisq(1)", cex.main=1)
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(1)+0.5 chisq(1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2)+0.5 chisq(2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2)+0.5 chisq(2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3)+0.5 chisq(3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3)+0.5 chisq(3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b',  xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(4)+0.5 chisq(4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(4)+0.5 chisq(4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(5)+0.5 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(5)+0.5 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(6)+0.5 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(6)+0.5 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs1 <- c(15,30,45,75,105)
+n.obs2 <- c(5,10,15,25,35)
+n.obs3 <- n.obs1+n.obs2
+
+e21 <- function(rate){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs3)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(rexp(n.obs1[x],rate)+0.5,rexp(n.obs2[x],rate),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(rexp(n.obs1[x],rate)+0.5,rexp(n.obs2[x],rate),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- e21(1)
+colnames(a)[2:3] = c("exp(1/1)+0.5 exp(1/1) t-test","exp(1/1)+0.5 exp(1/1) Wilcoxon")
+b <- e21(1/2)
+colnames(b)[2:3] = c("exp(1/2)+0.5 exp(1/2) t-test","exp(1/2)+0.5 exp(1/2) Wilcoxon")
+c <- e21(1/3)
+colnames(c)[2:3] = c("exp(1/3)+0.5 exp(1/3) t-test","exp(1/3)+0.5 exp(1/3) Wilcoxon")
+d <- e21(1/4)
+colnames(d)[2:3] = c("exp(1/4)+0.5 exp(1/4) t-test","exp(1/4)+0.5 exp(1/4) Wilcoxon")
+e <- e21(1/5)
+colnames(e)[2:3] = c("exp(1/5)+0.5 exp(1/5) t-test","exp(1/5)+0.5 exp(1/5) Wilcoxon")
+f <- e21(1/6)
+colnames(f)[2:3] = c("exp(1/6)+0.5 exp(1/6) t-test","exp(1/6)+0.5 exp(1/6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:5]=c("n15, n5","n30, n10","n45, n15","n75, n25","n105, n35")
+
+table %>%
+  kbl(caption = "[Table 20] Type II error, 등분산,표본크기가 다른 경우: Exponential distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs3, unlist(a[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/1)+0.5 exp(1/1)", cex.main=1)
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(a[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/1)+0.5 exp(1/1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(b[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2)+0.5 exp(1/2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(b[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2)+0.5 exp(1/2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(c[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3)+0.5 exp(1/3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(c[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3)+0.5 exp(1/3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(d[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/4)+0.5 exp(1/4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(d[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/4)+0.5 exp(1/4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(e[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/5)+0.5 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(e[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/5)+0.5 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs3, unlist(f[2]), type='b', xlim=c(0,150), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/6)+0.5 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,150,by=50),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs3, unlist(f[3]), type='b', xlim=c(0,150), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/6)+0.5 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+## N=10000, 분산이 다르고, 표본크기는 같은 경우
+
+```{r warning=F, message=F, echo=F}
+
+n.obs <- c(5,10,25,50,75,100)
+n22 <- function(mu,sigma1,sigma2){
+  type.one.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+    type.one.error.w<- replicate(n.simulations, wilcox.exact(rnorm(n.obs[x],mean=mu,sd=sigma1)+0.5,rnorm(n.obs[x],mean=mu,sd=sigma2),var.equal=TRUE)$p.value)>=alpha.p
+    type.one.error.t<-replicate(n.simulations,t.test(rnorm(n.obs[x],mean=mu,sd=sigma1)+0.5,rnorm(n.obs[x],mean=mu,sd=sigma2),var.equal=TRUE)$p.value)>=alpha.p
+    m.w <- mean(type.one.error.w)
+    m.t <- mean(type.one.error.t)
+    data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- n22(0,sqrt(1.5),1)
+colnames(a)[2:3] = c("N(0,1.5)+0.5 N(0,1) t-test","N(0,1.5)+0.5 N(0,1) Wilcoxon")
+b <- n22(0,sqrt(2),sqrt(2))
+colnames(b)[2:3] = c("N(0,2)+0.5 N(0,2) t-test","N(0,2)+0.5 N(0,2) Wilcoxon")
+c <- n22(0,sqrt(2.5),sqrt(3))
+colnames(c)[2:3] = c("N(0,2.5)+0.5 N(0,3) t-test","N(0,2.5)+0.5 N(0,3) Wilcoxon")
+d <- n22(0,sqrt(3),sqrt(4))
+colnames(d)[2:3] = c("N(0,3)+0.5 N(0,4) t-test","N(0,3)+0.5 N(0,4) Wilcoxon")
+e <- n22(0,sqrt(3.5),sqrt(5))
+colnames(e)[2:3] = c("N(0,3.5)+0.5 N(0,5) t-test","N(0,3.5)+0.5 N(0,5) Wilcoxon")
+f <- n22(0,sqrt(4),sqrt(6))
+colnames(f)[2:3] = c("N(0,4)+0.5 N(0,6) t-test","N(0,4)+0.5 N(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 21] Type II error, 표본크기는 같고 분산이 다른 경우: Normal distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,1.5)+0.5 N(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,1.5)+0.5 N(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2)+0.5 N(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2)+0.5 N(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2.5)+0.5 N(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,2.5)+0.5 N(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3)+0.5 N(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3)+0.5 N(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3.5)+0.5 N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,3.5)+0.5 N(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,4)+0.5 N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="N(0,4)+0.5 N(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+u22 <- function(max1,a,max2){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(runif(n.obs[x],0,max1)+a,runif(n.obs[x],0,max2),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(runif(n.obs[x],0,max1)+a,runif(n.obs[x],0,max2),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- u22(2.46,-0.23,1)
+colnames(a)[2:3] = c("U(0,2.46)-0.23 U(0,1) t-test","U(0,2.46)-0.23 U(0,1) Wilcoxon")
+b <- u22(2.84,0.08,2)
+colnames(b)[2:3] = c("U(0,2.84)+0.08 U(0,2) t-test","U(0,2.84)+0.08 U(0,2) Wilcoxon")
+c <- u22(3.16,0.42,3)
+colnames(c)[2:3] = c("U(0,3.16)+0.42 U(0,3) t-test","U(0,3.16)+0.42 U(0,3) Wilcoxon")
+d <- u22(3.5,0.75,4)
+colnames(d)[2:3] = c("U(0,3.5)+0.75 U(0,4) t-test","U(0,3.5)+0.75 U(0,4) Wilcoxon")
+e <- u22(3.76,1.12,5)
+colnames(e)[2:3] = c("U(0,3.76)+1.12 U(0,5) t-test","U(0,3.76)+1.12 U(0,5) Wilcoxon")
+f <- u22(4,1.5,6)
+colnames(f)[2:3] = c("U(0,4.0)+1.5 U(0,6) t-test","U(0,4.0)+1.5 U(0,6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 22] Type II error, 표본크기는 같고 분산이 다른 경우: Uniform distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2.46)-0.23 U(0,1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2.46)-0.23 U(0,1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2.84)+0.08 U(0,2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,2.84)+0.08 U(0,2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3.16)+0.42 U(0,3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3.16)+0.42 U(0,3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3.5)+0.75 U(0,4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3.5)+0.75 U(0,4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3.76)+1.12 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,3.76)+1.12 U(0,5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,4.0)+1.5 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="U(0,4.0)+1.5 U(0,6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+c22 <- function(df1,a,df2){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(rchisq(n.obs[x],df1)+a,rchisq(n.obs[x],df2),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(rchisq(n.obs[x],df1)+a,rchisq(n.obs[x],df2),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- c22(1.5,-0,1)
+colnames(a)[2:3] = c("chisq(1.5)-0 chisq(1) t-test","chisq(1.5)-0 chisq(1) Wilcoxon")
+b <- c22(2,0.5,2)
+colnames(b)[2:3] = c("chisq(2)-0.5 chisq(2) t-test","chisq(2)-0.5 chisq(2) Wilcoxon")
+c <- c22(2.5,1,3)
+colnames(c)[2:3] = c("chisq(2.5)+1 chisq(3) t-test","chisq(2.5)+1 chisq(3) Wilcoxon")
+d <- c22(3,1.5,4)
+colnames(d)[2:3] = c("chisq(3)+1.5 chisq(4) t-test","chisq(3)+1.5 chisq(4) Wilcoxon")
+e <- c22(3.5,2,5)
+colnames(e)[2:3] = c("chisq(3.5)+2 chisq(5) t-test","chisq(3.5)+2 chisq(5) Wilcoxon")
+f <- c22(4,2.5,6)
+colnames(f)[2:3] = c("chisq(4)+2.5 chisq(6) t-test","chisq(4)+2.5 chisq(6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 23] Type II error, 표본크기는 같고 분산이 다른 경우: Chi-squared distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(1.5)-0 chisq(1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(1.5)-0 chisq(1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2)-0.5 chisq(2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2)-0.5 chisq(2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2.5)+1 chisq(3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(2.5)+1 chisq(3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b',  xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3)+1.5 chisq(4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3)+1.5 chisq(4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3.5)+2 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(3.5)+2 chisq(5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(4)+2.5 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="chisq(4)+2.5 chisq(6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+```
+
+```{r warning=F, message=F, echo=F}
+n.obs <- c(5,10,25,50,75,100)
+e22 <- function(rate1,a,rate2){
+  type.two.error=vector()
+  data <- data.frame()
+  for (x in 1:length(n.obs)){
+      type.two.error.w<- replicate(n.simulations, wilcox.exact(rexp(n.obs[x],rate1)+a,rexp(n.obs[x],rate2),var.equal=TRUE)$p.value)>=alpha.p
+      type.two.error.t<-replicate(n.simulations,t.test(rexp(n.obs[x],rate1)+a,rexp(n.obs[x],rate2),var.equal=TRUE)$p.value)>=alpha.p
+      m.w <- mean(type.two.error.w)
+      m.t <- mean(type.two.error.t)
+      data <- rbind(data,c(x,m.t,m.w))
+  }
+  names(data) <- c("Method","t-test","Wilcoxon")
+  return(data)
+}
+
+a <- e22(1/1.5,-0,1)
+colnames(a)[2:3] = c("exp(1/1.5)-0 exp(1/1) t-test","exp(1/1.5)-0 exp(1/1) Wilcoxon")
+b <- e22(1/2,0.5,1/2)
+colnames(b)[2:3] = c("exp(1/2)+0.5 exp(1/2) t-test","exp(1/2)+0.5 exp(1/2) Wilcoxon")
+c <- e22(1/2.5,1,1/3)
+colnames(c)[2:3] = c("exp(1/2.5)+1 exp(1/3) t-test","exp(1/2.5)+1 exp(1/3) Wilcoxon")
+d <- e22(1/3,1.5,1/4)
+colnames(d)[2:3] = c("exp(1/3)+1.5 exp(1/4) t-test","exp(1/3)+1.5 exp(1/4) Wilcoxon")
+e <- e22(1/3.5,2,1/5)
+colnames(e)[2:3] = c("exp(1/3.5)+2 exp(1/5) t-test","exp(1/3.5)+2 exp(1/5) Wilcoxon")
+f <- e22(1/4,2.5,1/6)
+colnames(f)[2:3] = c("exp(1/4)+2.5 exp(1/6) t-test","exp(1/4)+2.5 exp(1/6) Wilcoxon")
+
+g<- join(a,b,by="Method") %>% 
+  join(.,c,by="Method")%>% 
+   join(.,d,by="Method")%>% 
+     join(.,e,by="Method")%>% 
+      join(.,f,by="Method")
+
+table <- data.frame(t(g)[-1,])
+colnames(table)[1:6]=c("n5","n10","n25","n50","n75","n100")
+
+table %>%
+  kbl(caption = "[Table 24] Type II error, 표본크기는 같고 분산이 다른 경우: Exponential distribution") %>%
+  kable_classic_2(full_width = T, html_font = "Cambria", font_size = 15)
+
+
+
+par(mfrow=c(2,3))
+
+plot(n.obs, unlist(a[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/1.5)-0 exp(1/1)", cex.main=1)
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(a[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="olivedrab2",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/1.5)-0 exp(1/1)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('olivedrab2'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(b[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2)+0.5 exp(1/2)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightsalmon1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(b[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightsalmon1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2)+0.5 exp(1/2)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(c[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2.5)+1 exp(1/3)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightgoldenrod'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(c[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightgoldenrod",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/2.5)+1 exp(1/3)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(d[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3)+1.5 exp(1/4)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('orangered1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(d[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="orangered1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3)+1.5 exp(1/4)", cex.main=1)
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(e[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3.5)+2 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(e[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="lightpink1",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/3.5)+2 exp(1/5)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('lightpink1'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+plot(n.obs, unlist(f[2]), type='b', xlim=c(0,100), ylim=c(0,1),lty=1, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/4)+2.5 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+axis(side=1,at=seq(0,100,by=20),lwd = 1,cex.axis=0.8)
+par(new=T)
+plot(n.obs, unlist(f[3]), type='b', xlim=c(0,100), ylim=c(0,1),lty=2, lwd=2, col="peachpuff4",xaxt='n', xlab="sample size", ylab="Type II error", main="exp(1/4)+2.5 exp(1/6)", cex.main=1)
+legend('bottomright',legend =c('T-test','Wilcoxon') , lty=1:2, col=c('peachpuff4'), cex=0.8 )
+abline(h=0.05,col="red",lty=3)
+
+```
