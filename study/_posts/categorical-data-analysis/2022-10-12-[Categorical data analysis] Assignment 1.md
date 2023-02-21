@@ -4213,7 +4213,7 @@ attach(auto1)
 
 > 감마분포를 identity link function을 사용하여 모델을 적합하여 보았다.
 
-```r
+``` r
 autoModel1 <- glm(mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin,family=Gamma(link=identity), data = auto1)
 
 sum_autoModel1 <- summary(autoModel1)

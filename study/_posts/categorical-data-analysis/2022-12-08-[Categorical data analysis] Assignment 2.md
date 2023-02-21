@@ -349,7 +349,7 @@ attach(auto1)
 
 > 풀모델에서 각 변수마다 Coefficients를 확인하여 p-value가 가장 큰 값부터 하나씩 제거하여 model을 생성하겠다.
 
-``` r
+``` python
 fit.cloglog <- glm(mpg_G ~ cylinders + displacement + horsepower + weight + acceleration + year_70 + origin, family=binomial(link=cloglog), data=auto1)
 summary(fit.cloglog)
 ```
