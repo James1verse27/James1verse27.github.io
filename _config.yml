@@ -149,7 +149,6 @@ defaults:
       comments:        true
       # https://applause-button.com/
       applause_button:       true
-      toc_sticky: true
       
   # `jekyll-seo-tag` will mark collection outputs as `BlogPosting`,
   # but we want them to be `WebPage`s:
