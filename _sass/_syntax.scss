@@ -1,143 +1,174 @@
-@mixin lightmode-syntax() {
-  .highlight,
-  pre.highlight {
-    // background: #fafafa;
-    color: #383a42;
-  }
-  // .highlight pre {
-  //   background: #fafafa;
-  // }
-  .highlight .ge {
-    font-style: italic;
-  }
-  .highlight .gs {
-    font-weight: 700;
-  }
-  .highlight .ow {
-    font-weight: 700;
-  }
-  .highlight .n,
-  .highlight .nf,
-  .highlight .nn,
-  .highlight .o,
-  .highlight .p {
-    color: #383a42;
-  }
-  .highlight .c,
-  .highlight .c1,
-  .highlight .cm,
-  .highlight .cp,
-  .highlight .cs {
-    color: #a0a1a7;
-    font-style: italic;
-  }
-  .highlight .sr,
-  .highlight .ss {
-    color: #0184bc;
-  }
-  .highlight .k,
-  .highlight .kc,
-  .highlight .kd,
-  .highlight .kn,
-  .highlight .kp,
-  .highlight .kr,
-  .highlight .kt {
-    color: #a626a4;
-  }
-  .highlight .l,
-  .highlight .ld,
-  .highlight .s,
-  .highlight .s1,
-  .highlight .s2,
-  .highlight .sb,
-  .highlight .sc,
-  .highlight .sd,
-  .highlight .se,
-  .highlight .sh,
-  .highlight .si,
-  .highlight .sx {
-    color: #50a14f;
-  }
-  .highlight .nt,
-  .highlight .nx,
-  .highlight .vi {
-    color: #e45649;
-  }
-  .highlight .il,
-  .highlight .m,
-  .highlight .mf,
-  .highlight .mh,
-  .highlight .mi,
-  .highlight .mo,
-  .highlight .na {
-    color: #986801;
-  }
-  .highlight .bp,
-  .highlight .nb,
-  .highlight .nc,
-  .highlight .nd,
-  .highlight .ne,
-  .highlight .ni,
-  .highlight .nl,
-  .highlight .no,
-  .highlight .nv,
-  .highlight .py,
-  .highlight .vc,
-  .highlight .vg {
-    color: #c18401;
-  }
-  // .highlight .err {
-  //   color: #fff;
-  //   background-color: #ff1414;
-  // }
-  .highlight .gd {
-    color: #ff1414;
-  }
-  .highlight .gi {
-    color: #2db448;
-  }
-  .highlight .w {
-    color: #f8f8f2;
-  }
-  .highlight .cpf {
-    color: navy;
-  }
-  .highlight .gu {
-    color: #75715e;
-  }
-  .highlight .lineno {
-    color: #9d9d9f;
-    user-select: none;
-  }
-  .highlight .ln {
-    color: #9d9d9f;
-    user-select: none;
-  }
-  .highlight .ln:after {
-    content: " ";
-  }
-  .highlight .hll {
-    color: #383a42;
-    background-color: #e5e5e6;
-  }
-  .highlight .hl {
-    color: #383a42;
-    background-color: #e5e5e6;
-  }
-  .highlight .language-json .w + .s2 {
-    color: #e45649;
-  }
-  .highlight .language-json .kc {
-    color: #0184bc;
-  }
+// Cools
+$paleblue:   #BDDCDC !default;
+$blue:       #92BFBF !default;
+$slate:      #5F777E !default;
+$palegreen:  #D0EDA7 !default;
+$green:      #B4D388 !default;
+$darkgreen:  #809161 !default;
+
+// Warms
+$paleyellow: #F5F5AE !default;
+$yellow:     #EDE480 !default;
+$orange:     #F49D62 !default;
+$red:        #CF5340 !default;
+$darkred:    #893121 !default;
+$maroon:     #55201B !default;
+
+//====================================================
+//  Code Blocks
+//====================================================
+
+pre { margin-bottom: $margin; }
+
+pre[class*="language-"],
+code[class*="language-"] {
+  position: relative;
+  color: $yellow;
 }
 
-body {
-  @include lightmode-syntax();
+pre::-webkit-scrollbar        { height: 12px; width: 12px; overflow: visible; }
+pre::-webkit-scrollbar-track  { background: none; }
+pre::-webkit-scrollbar-corner { background: none; }
+pre::-webkit-scrollbar-thumb  { background: $accent; border: 5px solid $black; }
+
+//====================================================
+//  Syntax Highlighting
+//====================================================
+
+
+pre[class*="language-"].language-markup,
+code[class*="language-"].language-markup,
+pre[class*="language-"].language-html,
+code[class*="language-"].language-html,
+pre[class*="language-"].language-javascript,
+code[class*="language-"].language-javascript {
+  color: $white;
 }
 
-@media screen {
-  body.light-mode {
-    @include lightmode-syntax();
-  }
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata,
+.token.entity,
+.language-css .token.string,
+.language-scss .token.string,
+.style .token.string {
+  color: $midgrey;
+}
+
+.token.property,
+.language-markup .token.punctuation {
+  color: $blue;
+}
+
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted,
+.language-css .token.selector,
+.language-scss .token.selector {
+  color: $green;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted,
+.language-clike .token.boolean,
+.language-javascript .token.keyword,
+.language-javascript .token.number,
+.language-css .token.keyword,
+.language-scss .token.keyword {
+  color: $yellow;
+}
+
+.token.punctuation {
+  color: $silver;
+}
+
+.token.attr-value,
+.token.keyword,
+.language-clike .token.string,
+.language-javascript .token.string {
+  color: $paleblue;
+}
+
+.token.operator,
+.token.atrule,
+.token.function,
+.token.url,
+.token.regex,
+.token.variable {
+  color: $orange;
+}
+
+.token.important, {
+  color: $red;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+//====================================================
+//  Lanquage Indicator
+//====================================================
+
+pre[class*='language-'][data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px 8px;
+  font-family: $base-font;
+  font-size: 10px;
+  background: $darkgrey;
+  color: $grey;
+  text-transform: uppercase;
+  border-radius: 0 0 0 5px;
+}
+
+.no-indicator:before {
+  display: none;
+}
+
+//====================================================
+//  Line Numbers
+//====================================================
+
+pre.line-numbers {
+  padding-left: 4.5em;
+  counter-reset: linenumber;
+}
+
+pre.line-numbers > code {
+  position: relative;
+}
+
+.line-numbers .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: -4.5em;
+  width: 3em; /* works for line-numbers below 1000 lines */
+  border-right: 1px solid $darkgrey;
+  user-select: none;
+}
+
+.line-numbers-rows > span {
+  pointer-events: none;
+  display: block;
+  counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+  content: counter(linenumber);
+  color: lighten($darkgrey, 10%) ;
+  display: block;
+  padding-right: 0.8em;
+  text-align: right;
 }
