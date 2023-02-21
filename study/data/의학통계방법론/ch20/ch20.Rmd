@@ -1,0 +1,223 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
+---
+
+
+```{r message=F, warning=F}
+getwd()
+library("dplyr")
+library("kableExtra")
+library("broom")
+library("corrplot")
+library("GGally")
+```
+
+## 20장
+
+### EXAMPLE 20.1a
+
+![](C:/git_blog/study/img/의학통계방법론/의학통계방법론/ch20/20-1a.png)
+
+```{r message=F, warning=F}
+#데이터셋
+X1 = c(6, 1, -2, 11, -1, 2, 5, 1, 1, 3, 11, 9, 5, -3, 1, 8, -2, 3, 6, 10, 4, 5, 5, 3, 8, 8, 6, 6, 3, 5, 1, 8, 10)
+X2 = c(9.9, 9.3, 9.4, 9.1, 6.9, 9.3, 7.9, 7.4, 7.3, 8.8, 9.8, 10.5, 9.1, 10.1, 7.2, 11.7, 8.7, 7.6, 8.6, 10.9, 7.6, 7.3, 9.2, 7.0, 7.2, 7.0, 8.8, 10.1, 12.1, 7.7, 7.8, 11.5, 10.4)
+X3 = c(5.7, 6.4, 5.7, 6.1, 6.0, 5.7, 5.9, 6.2, 5.5, 5.2, 5.7, 6.1, 6.4, 5.5, 5.5, 6.0, 5.5, 6.2, 5.9, 5.6, 5.8, 5.8, 5.2, 6.0, 5.5, 6.4, 6.2, 5.4, 5.4, 6.2, 6.8, 6.2, 6.4)
+X4 = c(1.6, 3.0, 3.4, 3.4, 3.0, 4.4, 2.2, 2.2, 1.9, 0.2, 4.2, 2.4, 3.4, 3.0, 0.2, 3.9, 2.2, 4.4, 0.2, 2.4, 2.4, 4.4, 1.6, 1.9, 1.6, 4.1, 1.9, 2.2, 4.1, 1.6, 2.4, 1.9, 2.2)
+X5 = c(2.12, 3.39, 3.61, 1.72, 1.80, 3.21, 2.59, 3.25, 2.86, 2.32, 1.57, 1.50, 2.69, 4.06, 1.98, 2.29, 3.55, 3.31, 1.83, 1.69, 2.42, 2.98, 1.84, 2.48, 2.83, 2.41, 1.78, 2.22, 2.72, 2.36, 2.81, 1.64, 1.82)
+
+ex20_1 <- data.frame(X1, X2, X3, X4, X5)
+```
+
+```{r message=F, warning=F}
+shapiro.test(ex20_1$X1) %>% tidy %>% 
+  kable(caption = "Normality test for x1") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+shapiro.test(ex20_1$X2) %>% tidy %>% 
+  kable(caption = "Normality test for x2") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+shapiro.test(ex20_1$X3) %>% tidy %>% 
+  kable(caption = "Normality test for x3") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+shapiro.test(ex20_1$X4) %>% tidy %>% 
+  kable(caption = "Normality test for x4") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+shapiro.test(ex20_1$X5) %>% tidy %>% 
+  kable(caption = "Normality test for x5") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+### EXAMPLE 20.1b
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-1b.png)
+
+
+```{r message=F, warning=F}
+round(cor(ex20_1), 5) %>% 
+  kbl(caption = "Ex 20.1b : A Matrix of Simple Correlation Coefficients") %>%  
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+```{r message=F, warning=F}
+library("corrplot")
+corrplot(cor(ex20_1),
+         method = "number",
+         type = "upper" # show only upper side
+         )
+```
+
+```{r message=F, warning=F}
+library("GGally")
+ggpairs(ex20_1, columns=1:5)
+
+```
+
+
+### EXAMPLE 20.1c
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-1c.png)
+
+
+### EXAMPLE 20.1d
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-1d.png)
+
+
+### EXAMPLE 20.1e
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-1e.png)
+
+
+
+
+### EXAMPLE 20.2
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-2.png)
+
+
+### EXAMPLE 20.3
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-3-1.png)
+
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-3-2.png)
+
+### EXAMPLE 20.4
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-4.png)
+
+
+
+### EXAMPLE 20.5
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-5-1.png)
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-5-2.png)
+
+
+
+### EXAMPLE 20.6
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-6.png)
+
+
+### EXAMPLE 20.7
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-7-1.png)
+
+
+![](C:/git_blog/study/img/의학통계방법론/ch20/20-7-2.png)
+
+
+
+
+- 해당 데이터는 3 종류의 게의 데이터로 온도에 의한 산소 소비량을 기록한 데이터이다. <br/>
+- 이 데이터를 사용하여 가능한 효과를 전부 포함한 완전모형에 대한 분산분석표를 작성하도록 한다.
+
+
+```{r message=F, warning=F}
+species <- as.factor(ex14_1a$Species)
+temperature <- as.factor(ex14_1a$Temp)
+sex <- as.factor(ex14_1a$Sex)
+oxygen <- ex14_1a$Y
+
+anova(aov(oxygen ~ species*temperature*sex)) %>% 
+  tidy() %>% 
+  rename(" "="term","Sum Sq"="sumsq","Mean Sq"="meansq","F value"="statistic","Pr(>F)"="p.value") %>% 
+  kable(caption = "Three-factor ANOVA",booktabs = TRUE, valign = 't') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+> 첫번째 가설
+
+$$
+\begin{aligned}
+H_0 &: Mean \ respiratory \ rate \ is \ the \ same \ in \ all \ three \ crab \ species. \ (i.e., \ \mu_1=\mu_2=\mu_3) \\
+H_A &: Mean \ respiratory \ rate \ is \ not \ the \ same \ in \ all \ three \ crab \ species.
+\end{aligned}
+$$
+
+- Species에 대한 F값은 24.475이며, p-value<0.0001 이므로 유의수준 5%하에 게들의 종류들 간에 차이가 있다고 할 수 있다.
+
+> 두번째 가설
+
+$$
+\begin{aligned}
+H_0 &: Mean \ respiratory \ rate \ is \ the \ same \ at \ all \ three \ experimental \ temperatures. \ (i.e., \ \mu_{low}=\mu_{med}=\mu_{high}) \\
+H_A &: Mean \ respiratory \ rate \ is \ not \ the \ same \ at \ all \ three \ experimental \ temperatures.
+\end{aligned}
+$$
+
+- Temperature에 대한 F값은 333.02이며, p-value<0.0001 이므로 유의수준 5%하에 온도 간 유의미한 차이가 있다고 할 수 있다.
+
+> 세번째 가설
+
+$$
+\begin{aligned}
+H_0 &: Mean \ respiratory \ rate \ is \ the \ same \ for \ males \ and \ females. \ (i.e., \ \mu_{male}=\mu_{female}) \\
+H_A &: Mean \ respiratory \ rate \ is \ not \ the \ same \ for \ males \ and \ females.
+\end{aligned}
+$$
+
+- 성별에 대한 F값은 0.24이며, p-value=0.626 이므로 유의수준 5%하에 성별 간 유의미한 차이가 있다고 할 수 없다.
+
+> 네번째 가설
+
+- 종과 온도의 상호작용에 대한 F값은 7.418이며, p-value<0.0001 이므로 유의수준 5%하에 게의 종과 온도에 대한 상호작용 효과가 있다고 할 수 있다.
+
+```{r message=F, warning=F}
+interaction.plot(temperature,species,oxygen,col=c("orange","#8f7450","#8dd3c7"),main="Interaction plot of temperature and species",lwd=2)
+```
+
+- 그래프를 보면 온도가 높고 2번째 종인 경우가 평균 산소 소비량이 제일 큰 조합임을 알 수 있다.
+
+> 다섯번째 가설
+
+- 종과 성별의 상호작용에 대한 F값은 4.99이며, p-value=0.01 이므로 유의수준 5%하에 게의 종과 성별에 대한 상호작용 효과가 있다고 할 수 있다.
+
+```{r message=F, warning=F}
+interaction.plot(species,sex,oxygen,col=c("orange","#8f7450"),main="Interaction plot of species and sex",lwd=2)
+```
+
+- 그래프를 보면 성별이 남자고 2번째 종인 경우가 평균 산소 소비량이 제일 큰 조합임을 알 수 있다.
+
+> 여섯번째 가설
+
+- 온도와 성별의 상호작용에 대한 F값은 2.36이며, p-value=0.104 이므로 유의수준 5%하에 온도와 성별에 대한 상호작용 효과가 있다고 할 수 없다.
+
+```{r message=F, warning=F}
+interaction.plot(temperature,sex,oxygen,col=c("orange","#8f7450"),main="Interaction plot of temperature and sex",lwd=2)
+```
+
+- 그래프를 보면 성별이 남자고 온도가 높은 경우가 평균 산소 소비량이 제일 큰 조합임을 알 수 있다.
+
+> 일곱번째 가설
+
+-온도와 종과 성별 간의 상호작용에 대한 F값은 1.49이며, p-value=0.22로 유의수준 5%하에 온도와 종과 성별에 대한 상호작용 효과가 존재한다고 할 수 없다.
