@@ -445,6 +445,3 @@ tipue_search:
          files: [search.html, index.html, tags.html]
          categories: []
          tags: []
-  
-# Table of contents
-toc: true

@@ -24,13 +24,3 @@ applause-button {
     color: inherit;
   }
 }
-
-.toc {
-  position: sticky;
-  top: 20px;
-  max-height: calc(100vh - 80px);
-  overflow-y: auto;
-}
-
-
-@import 'hydejack/toc';
