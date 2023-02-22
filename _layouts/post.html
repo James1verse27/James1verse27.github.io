@@ -24,6 +24,9 @@ layout: base
    <div class="tipue_search_right">
      <input type="text" name="q" id="tipue_search_input" pattern=".{1,}" title="At least 1 characters" required></div>
    <div style="clear: both;"></div>
+   <div class="toc sticky-container">
+    {{ content }}
+  </div>
  </form>
  
 {% assign version = jekyll.version | split:'.' %}
