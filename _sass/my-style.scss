@@ -25,13 +25,8 @@ applause-button {
   }
 }
 
-// Make the table of contents sticky
-@include media('>large') {
-  .toc.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 1rem;
-    max-height: calc(100vh - 3rem);
-    overflow: auto;
-  }
+.toc {
+  position: sticky;
+  top: 20px;
 }
+
