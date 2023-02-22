@@ -17,21 +17,6 @@
 layout: base
 ---
 
-<div class="post">
-  {% if page.tags %} | 
-  {% for tag in page.tags %}
-    <a href="{{ site.baseurl }}{{ site.tag_page }}#{{ tag | slugify }}" class="post-tag">{{ tag }}</a>
-  {% endfor %}
-  {% endif %}
-  <article class="post-article">
-    <div class="toc">
-      <a href="#">&lt;맨 위로&gt;</a>
-      {% include toc.html html=content %}
-    </div>
-    {{ content }}
-  </article>
-</div>
-
   <form action="/search">
    <div class="tipue_search_left">
      <img src="/assets/tipuesearch/search.png" class="tipue_search_icon">
