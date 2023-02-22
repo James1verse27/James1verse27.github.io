@@ -1245,6 +1245,8 @@ legend("bottomright",bty='n', lty=c(1,3,5), c('auc=0.9753488'))
 
 > fit.logit3 모델을 최종적으로 선택하겠다.
 
+## Q-1 6)
+
 ``` r
 #install.packages("glmtoolbox")
 
