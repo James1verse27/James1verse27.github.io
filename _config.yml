@@ -95,7 +95,7 @@ remote_theme: hydecorp/hydejack@v9
 # ----------------------------------------------------------------------------------------
  
 # Sidebar image and theme color of the site.
-accent_image:          /assets/img/Clinical.jpg
+accent_image:          <img src="https://bnz06pap001files.storage.live.com/y4mi68N0nIeLrtJlFfnp_0oEIiOZY0ICCk_UCC3xUFQtD2_pdlBTNEnxRtl4uYCNOtU6qhSSnsyh3LPsY728_A7T0LRm-1KGf0DjkKsKEWnpYdUxgqFW8SQVDcGV0lvWX2wl60WalfAWrnhZwvpBy6Pmf52lSDt7G6dSQmFjVX_8LI8qlqIbIQZdz5L_ErrXAx_?width=3632&height=5448&cropmode=none">
 accent_color:          rgb(26,61,57)
 
 # This is used for the `theme-color` meta tag,
