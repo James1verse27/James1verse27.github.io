@@ -17,6 +17,7 @@ permalink: /about/
 
 [CV, last updated at 2023.02](/assets/cv/CV.pdf)
 
+[Portfolio](https://twisty-supply-407.notion.site/Biostatistics-91123a91157c46b5a7e7f081621aa52a?pvs=4)
 
 ## Education
 - 고려대학교 의과대학 의학통계학전공 석사과정 재학 (Mar 2022 - Present)
