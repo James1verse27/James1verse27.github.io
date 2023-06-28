@@ -8,6 +8,7 @@ This blog is to post whatever I feel like to.<br>
 ### ✉ You can reach me
 
 - CV(Korean): https://James1verse27.github.io/about/
+- Portfolio: twisty-supply-407.notion.site/Biostatistics-91123a91157c46b5a7e7f081621aa52a?pvs=4 
 - Email : kjh8661@gmail.com
 - Blog(Korean) : https://James1verse27.github.io/
 - Linkedin : https://www.linkedin.com/in/jaehyuk-kim-337684244/
