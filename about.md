@@ -15,7 +15,7 @@ permalink: /about/
 
 [Korea Univ Biostatistics](https://kubiostat.korea.ac.kr/) 
 
-[CV, last updated at 2023.02](/assets/cv/CV.pdf)
+[CV, last updated at 2023.07](/assets/cv/CV.pdf)
 
 [Portfolio](https://twisty-supply-407.notion.site/Biostatistics-91123a91157c46b5a7e7f081621aa52a?pvs=4)
 
@@ -25,7 +25,7 @@ permalink: /about/
 
 
 ## Experience
-- 고려대학교 구로병원 통계상담실 연구조교 (Mar 2022 - Aug 2023)
+- 고려대학교 구로병원 통계상담실 연구조교 (Mar 2022 - Feb 2024)
 - 농업인 업무상 질병 및 손상조사 (국립농업과학원) 농업인 재해조사 조사원 (Jun 2021 - Jul 2021)
 - 2020년 보건의료빅데이터를 활용한 창업경진대회 참가 (보건복지부) (Jun 2020)
 
